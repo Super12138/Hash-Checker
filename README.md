@@ -4,6 +4,7 @@ A free, open source, easy-to-use hash checker.<br/>
 
 ## Features 特性
 - 支持 Windows 和 macOS 系统
+- 支持深色模式
 - 校验文件 md5 或 sha256 值
 - 生成文件的 md5 或 sha256 值，以便后续使用
 
@@ -12,7 +13,13 @@ A free, open source, easy-to-use hash checker.<br/>
 - 在线版 [Github Page]()
 
 ## Screenshots 截图
-
+![](docs/Screenshot%20-%201.png)
+<br>
+![](docs/Screenshot%20-%202.png)
+<br>
+![](docs/Screenshot%20-%203.png)
+<br>
+![](docs/Screenshot%20-%204.png)
 
 ## Developer 开发者
 - Super12138
