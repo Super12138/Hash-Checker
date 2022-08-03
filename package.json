@@ -1,0 +1,65 @@
+{
+  "name": "hash-checker",
+  "version": "1.0.0",
+  "description": "A free, open source, easy-to-use hash checker.",
+  "main": "index.js",
+  "scripts": {
+    "build": "electron-builder -w",
+    "buildmacos": "electron-builder -m"
+  },
+  "build": {
+    "appId": "Hash Checker",
+    "productName": "Hash Checker",
+    "copyright": "Copyright © 2019-2022 Super12138",
+    "win": {
+      "icon": "build/AppIcon.ico",
+      "publish": [
+        {
+          "provider": "generic",
+          "url": "http://192.168.1.6:8080"
+        }
+      ],
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "deleteAppDataOnUninstall": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "icon": "build/AppIcon.icns",
+      "category": "com.Super12138.HashChecker",
+      "darkModeSupport": true,
+      "target": [
+        {
+          "arch": "universal",
+          "target": "dmg"
+        }
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Super12138/Hash-Checker.git"
+  },
+  "keywords": [
+    "security",
+    "crypto",
+    "Hash",
+    "MD5",
+    "SHA256"
+  ],
+  "author": "Super12138",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Super12138/Hash-Checker/issues"
+  },
+  "homepage": "https://github.com/Super12138/Hash-Checker#readme",
+  "devDependencies": {
+    "electron": "^20.0.0",
+    "electron-builder": "^23.3.3",
+    "electron-icon-builder": "^2.0.1"
+  }
+}
