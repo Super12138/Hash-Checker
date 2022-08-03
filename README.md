@@ -10,8 +10,7 @@ A free, open source, easy-to-use hash checker.<br/>
 
 ## Download 下载
 - 从 [GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 上下载（版本v1.0.0）
-- 在线版 [Github Page]()
-
+- 在线版 [Github Page](https://super12138.github.io/Hash-Checker/)
 ## Screenshots 截图
 ![](docs/Screenshot%20-%201.png)
 <br>
