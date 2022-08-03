@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="css/mdui.min.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <meta name="description" content="免费好用且开源的文件校验工具">
+    <title>Hash Checker</title>
+</head>
+
+<body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-typo mdui-loaded">
+    <div class="mdui-container">
+        <div class="mdui-row">
+            <h1>Hash Checker</h1>
+            <br>
+            <div>仅校验模式：
+                <label class="mdui-switch">
+                    <input type="checkbox" id="generateonly">
+                    <i class="mdui-switch-icon"></i>
+                </label>
+            </div>
+            <div id="drop">
+                <input type="file" id="getfile" style="display: none;" onchange="getfilename();">
+                <button class="mdui-btn mdui-btn-block mdui-ripple" onclick="openfile();">点击上传文件</button>
+                <p>文件：<span><em id="fm">未选择文件</em></span>&nbsp;&nbsp;大小：<span><em
+                            id="fsize">未选择文件</em></span>&nbsp;&nbsp;<span class="mdui-text-color-red-700"
+                        id="etips"></span></p>
+                <strong class="mdui-text-color-red-700">· 我们不会上传或查看您文件的内容，且所有操作均在您的计算机上进行，请放心使用！</strong>
+            </div>
+            <br>
+            <div>方法：
+                <select class="mdui-select" id="method" mdui-select>
+                    <option value="md5" selected>MD5</option>
+                    <option value="sha256">SHA256</option>
+                </select>
+            </div>
+            <div class="mdui-textfield mdui-textfield-floating-label txta">
+                <label class="mdui-textfield-label">校验值</label>
+                <input class="mdui-textfield-input" id="a" type="text">
+                <div class="mdui-textfield-helper">在此处粘贴您获取到的校验值</div>
+            </div>
+            <br>
+            <button class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple mdui-color-theme-accent"
+                onclick="calch();">
+                <i class="mdui-icon mdui-icon-left material-icons">&#xe877;</i>检查
+            </button>
+            <br>
+            <h4 id="ttitle"></h4>
+            <p id="tips"></p>
+        </div>
+    </div>
+    <script src="js/mdui.min.js"></script>
+    <script src="cryptojs/crypto-js.js"></script>
+    <script src="js/getfilehash.js"></script>
+</body>
+
+</html>
