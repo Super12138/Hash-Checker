@@ -47,15 +47,6 @@ function calch() {
         var only = document.getElementById('generateonly').checked;
         console.log(only);
         if (only == true) {
-            mdui.dialog({
-                title: '提示',
-                content: '您选择了“仅校验模式”，此模式只会计算校验值，并不会校验文件，真的要继续吗？<br>当选择的文件过大时本窗口可能会无响应。如果本窗口无响应请稍稍等片刻！',
-                buttons: [
-                    {
-                        text: '确认'
-                    }
-                ]
-            });
             var filec = document.querySelector('#getfile');
             var ttitle = document.querySelector('#ttitle');
             var tips = document.querySelector('#tips');
@@ -77,7 +68,7 @@ function calch() {
                     var b = ch.toLowerCase();
                     var calcmethod = document.querySelector('#method').value;
                     navigator.clipboard.writeText(calchash).catch(e => console.error(e));
-                    tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！（WebKit内核的浏览器暂不支持写入剪贴板）<br>" + calcmethod + "值：" + calchash;
+                    tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + calchash;
                 }
                 else {
                     tips.innerHTML = "正在计算...";
