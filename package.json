@@ -1,6 +1,6 @@
 {
-  "name": "hash-checker",
-  "version": "1.0.0",
+  "name": "HashChecker",
+  "version": "1.0.1",
   "description": "A free, open source, easy-to-use hash checker.",
   "main": "index.js",
   "scripts": {
@@ -58,7 +58,7 @@
   },
   "homepage": "https://github.com/Super12138/Hash-Checker#readme",
   "devDependencies": {
-    "electron": "^20.0.0",
+    "electron": "^20.0.2",
     "electron-builder": "^23.3.3",
     "electron-icon-builder": "^2.0.1"
   }
