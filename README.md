@@ -1,4 +1,6 @@
 # Hash-Checker
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/Super12138/Hash-Checker?style=flat-square)
+
 A free, open source, easy-to-use hash checker.<br/>
 一个免费的，开源的，简单易用的文件校验器。
 
@@ -7,11 +9,11 @@ A free, open source, easy-to-use hash checker.<br/>
 - 支持深色模式
 - 校验文件 md5 或 sha256 值
 - 生成文件的 md5 或 sha256 值，以便后续使用
+- 自动检查更新
 
 ## Download 下载
 - 从 [GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 上下载（版本v1.0.0）
 - 在线版 [Github Page](https://super12138.github.io/Hash-Checker/)
-
 ## Screenshots 截图
 ![](docs/Screenshot%20-%201.png)
 <br>

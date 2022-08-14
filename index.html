@@ -7,7 +7,7 @@
     <meta name="renderer" content="webkit">
     <meta name="force-rendering" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="stylesheet" href="css/mdui.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icons/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -18,27 +18,30 @@
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-typo mdui-loaded">
     <div class="mdui-container">
         <div class="mdui-row">
-            <h1>Hash Checker</h1>
+            <h1 id="title">Hash Checker</h1>
             <br>
-            <div>仅校验模式：
-                <label class="mdui-switch">
-                    <input type="checkbox" id="generateonly">
-                    <i class="mdui-switch-icon"></i>
-                </label>
-            </div>
             <div id="drop">
-                <input type="file" id="getfile" style="display: none;" onchange="getfilename();">
+                <input id="getfile" type="file" style="display: none;" onchange="getfilename();">
                 <button class="mdui-btn mdui-btn-block mdui-ripple" onclick="openfile();">点击上传文件</button>
                 <p>文件：<span><em id="fm">未选择文件</em></span>&nbsp;&nbsp;大小：<span><em
                             id="fsize">未选择文件</em></span>&nbsp;&nbsp;<span class="mdui-text-color-red-700"
                         id="etips"></span></p>
-                <strong class="mdui-text-color-red-700">· 我们不会上传或查看您文件的内容，且所有操作均在您的计算机上进行，请放心使用！</strong>
+                <strong class="mdui-text-color-red-700">我们不会上传或查看您文件的内容，且所有操作均在您的计算机上进行，请放心使用！</strong>
             </div>
             <br>
-            <div>方法：
+            <div>
+                方法：
                 <select class="mdui-select" id="method" mdui-select>
-                    <option value="md5" selected>MD5</option>
+                    <option value="nullselect" selected>请选择方法...</option>
+                    <option value="md5">MD5</option>
                     <option value="sha256">SHA256</option>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                模式：
+                <select class="mdui-select" id="mod" mdui-select>
+                    <option value="nullselect" selected>请选择模式...</option>
+                    <option value="gengerateacheck">校验</option>
+                    <option value="generate">生成</option>
                 </select>
             </div>
             <div class="mdui-textfield mdui-textfield-floating-label txta">
@@ -54,9 +57,15 @@
             <br>
             <h4 id="ttitle"></h4>
             <p id="tips"></p>
+            <br>
+            <br>
+            <footer class="mdui-center mdui-text-center">
+                <div class="mdui-divider"></div>
+                <p>本应用在GitHub上开源，遵循 GPL-3.0 协议<br>由 Super12138 开发</p>
+            </footer>
         </div>
     </div>
-    <script src="js/mdui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
     <script src="cryptojs/crypto-js.js"></script>
     <script src="js/getfilehash.js"></script>
 </body>

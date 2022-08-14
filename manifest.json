@@ -1,5 +1,5 @@
 {
-    "start_url": "/",
+    "start_url": "index.html",
     "name": "Hash Checker",
     "short_name": "Hash Checker",
     "description": "检查文件是否被修改",
