@@ -9,6 +9,7 @@ A free, open source, easy-to-use hash checker.<br/>
 - 支持深色模式
 - 校验文件 md5 或 sha256 值
 - 生成文件的 md5 或 sha256 值，以便后续使用
+- 自动检查更新
 
 ## Download 下载
 - 从 [GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 上下载（版本v1.0.0）

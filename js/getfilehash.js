@@ -175,7 +175,7 @@ function calch() {
                                     var b = ch.toLowerCase();
                                     var calcmethod = document.querySelector('#method').value;
                                     if (b === a) {
-                                        tips.innerHTML = "计算完成<br>" + calcmethod + "值：" + calchash;
+                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + calchash;
                                         mdui.dialog({
                                             title: '校验成功',
                                             content: '请放心使用',
@@ -187,7 +187,7 @@ function calch() {
                                         });
                                     }
                                     else {
-                                        tips.innerHTML = "计算完成<br>" + calcmethod + "值：" + calchash;
+                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + calchash;
                                         mdui.dialog({
                                             title: '校验失败',
                                             content: '请检查获取的校验值是否有误（如多余的空格），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决',
@@ -210,7 +210,7 @@ function calch() {
                                     var b = ch.toLowerCase();
                                     var calcmethod = document.querySelector('#method').value;
                                     if (b === a) {
-                                        tips.innerHTML = "计算完成<br>" + calcmethod + "值：" + calchash;
+                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + calchash;
                                         mdui.dialog({
                                             title: '校验成功',
                                             content: '请放心使用',
@@ -222,7 +222,7 @@ function calch() {
                                         });
                                     }
                                     else {
-                                        tips.innerHTML = "计算完成<br>" + calcmethod + "值：" + calchash;
+                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + calchash;
                                         mdui.dialog({
                                             title: '校验失败',
                                             content: '请检查获取的校验值是否有误（如多余的空格），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决',
