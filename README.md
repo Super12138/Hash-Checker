@@ -1,5 +1,6 @@
 # Hash-Checker
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Super12138/Hash-Checker?style=flat-square)
+![GitHub all releases](https://img.shields.io/github/downloads/Super12138/Hash-Checker/total?style=flat-square)
 
 A free, open source, easy-to-use hash checker.<br/>
 一个免费的，开源的，简单易用的文件校验器。
