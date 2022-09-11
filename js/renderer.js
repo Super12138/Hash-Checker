@@ -1,4 +1,4 @@
-const { shell } = require("electron");
+const { shell } = require('electron');
 
 let uplink = document.querySelector("#uplink");
 uplink.onclick = (e) => {
