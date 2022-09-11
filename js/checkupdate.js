@@ -1,7 +1,7 @@
 onload = function update() {
     if (navigator.onLine) {
-        $.get("#upurl", function (data) {
-            var n = 5050;
+        $.get("https://cdn.jsdelivr.net/gh/Super12138/UpdateServer@master/hc-ver.txt", function (data) {
+            var n = 1010;
             var l = data;
             document.querySelector('#ttitle').innerHTML = "检测更新"
             if (n == l) {
@@ -25,13 +25,11 @@ onload = function update() {
                                 text: '立即更新',
                                 onClick: function (inst) {
                                     mdui.dialog({
-                                        title: '更新',
-                                        content: '更新链接以拷贝到您的剪贴板，请前往浏览器更新。',
+                                        title: '点击下方链接更新',
+                                        content: '请前往<a id="uplink" href="https://github.com/Super12138/Hash-Checker/releases">GitHub Release</a>上下载最新版本',
                                         buttons: [
                                             {
-                                                text: '知道了',
-                                                onClick: function (inst){
-                                                }
+                                                text: '知道了'
                                             }
                                         ]
                                     });
