@@ -1,7 +1,7 @@
 onload = function update() {
     if (navigator.onLine) {
         $.get("https://cdn.jsdelivr.net/gh/Super12138/UpdateServer@main/hc-ver.txt", function (data) {
-            var n = 1000;
+            var n = 1010;
             var l = data;
             document.querySelector('#ttitle').innerHTML = "检测更新"
             if (n == l) {
