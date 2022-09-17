@@ -1,31 +1,31 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: 反馈 Bug | Bug report
+about: 发现并反馈问题以帮助我们改进Hash Checker ｜ Create a report to help us improve
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**说明这个 Bug ｜ Describe the bug**
+必须，简单明了的说明这个 Bug。
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**触发该 Bug 的步骤 ｜ To Reproduce**
+必须，下方提供了一个示例：
+1. 前往 '...'
+2. 点击 '...'
+3. 出现错误
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**问题截图 ｜ Screenshots**
+非必需，如果可以的话请提供问题截图。
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**相关信息 ｜ More information**
+必须，请按照如下格式填写（替换掉下方斜体文本）：
 
-**Desktop (please complete the following information):**
- - OS: [e.g. Windows]
- - Version [e.g. 10]
+ - 操作系统: *如：Windows*
+ - 操作系统版本：*如：Windows 11*
+ - 应用版本：*如 1.0.1*
 
-**Additional context**
-Add any other context about the problem here.
+
+**备注 ｜ Additional context**
+非必需，如果你需要的话。
