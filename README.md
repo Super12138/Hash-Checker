@@ -23,7 +23,7 @@
 （更详细的教程会在后续公开）
 
 ## ⬇️ 下载
-- 从 [GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 上下载（版本v1.0.0）
+- 从 [GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 上下载（版本v1.0.1）
 - 在线版 [Github Page](https://super12138.github.io/Hash-Checker/)
 ## 📸 截图
 ![](docs/Screenshot%20-%201.png)
