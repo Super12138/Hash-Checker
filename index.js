@@ -1,6 +1,7 @@
 const {
   app,
-  BrowserWindow
+  BrowserWindow,
+  Menu
 } = require('electron')
 
 function createWindow() {
@@ -14,6 +15,35 @@ function createWindow() {
     },
   })
   win.loadFile('index.html')
+  const template = [
+    {
+      label: app.name,
+      submenu: [
+        {
+          label: '关于',
+          role: 'about'
+        },
+        {
+          label: '退出',
+          role: 'quit'
+        }
+      ]
+    },
+    {
+      label: '帮助',
+      submenu: [
+        {
+          label: '使用说明',
+          click: async () => {
+            const { shell } = require('electron')
+            await shell.openExternal('https://super')
+          }
+        }
+      ]
+    }
+  ]
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
 }
 
 app.whenReady().then(() => {
