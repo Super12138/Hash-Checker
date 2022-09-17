@@ -9,13 +9,40 @@ function createWindow() {
     width: 1200,
     height: 800,
     center: true,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
-    },
+    //webPreferences: {
+      //nodeIntegration: true,
+      //contextIsolation: false
+    //},
   })
   win.loadFile('index.html')
-  const template = [
+  const wintemplate = [
+    {
+      label: '文件',
+      submenu: [
+        {
+          label: '关于',
+          role: 'about'
+        },
+        {
+          label: '退出',
+          role: 'quit'
+        }
+      ]
+    },
+    {
+      label: '帮助',
+      submenu: [
+        {
+          label: '使用说明',
+          click: async () => {
+            const { shell } = require('electron')
+            await shell.openExternal('https://super12138.github.io/Hash-Checker/')
+          }
+        }
+      ]
+    }
+  ]
+  const darwintemplate = [
     {
       label: app.name,
       submenu: [
@@ -36,14 +63,20 @@ function createWindow() {
           label: '使用说明',
           click: async () => {
             const { shell } = require('electron')
-            await shell.openExternal('https://super')
+            await shell.openExternal('https://super12138.github.io/Hash-Checker/')
           }
         }
       ]
     }
   ]
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
+  if (process.platform == 'darwin') {
+    const dmenu = Menu.buildFromTemplate(darwintemplate)
+    Menu.setApplicationMenu(dmenu)
+  }
+  else {
+    const wmenu = Menu.buildFromTemplate(wintemplate)
+    Menu.setApplicationMenu(wmenu)
+  }
 }
 
 app.whenReady().then(() => {
