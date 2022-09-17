@@ -4,6 +4,7 @@
   "description": "A free, open source, easy-to-use hash checker.",
   "main": "index.js",
   "scripts": {
+    "start": "electron ./",
     "build": "electron-builder -w",
     "buildm": "electron-builder -m"
   },
