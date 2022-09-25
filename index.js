@@ -10,8 +10,8 @@ function createWindow() {
     height: 800,
     center: true,
     //webPreferences: {
-      //nodeIntegration: true,
-      //contextIsolation: false
+    //nodeIntegration: true,
+    //contextIsolation: false
     //},
   })
   win.loadFile('index.html')
@@ -36,7 +36,7 @@ function createWindow() {
           label: '使用说明',
           click: async () => {
             const { shell } = require('electron')
-            await shell.openExternal('https://super12138.github.io/Hash-Checker/')
+            await shell.openExternal('https://Super12138.github.io/Hash-Checker/tutorial')
           }
         }
       ]
@@ -63,7 +63,7 @@ function createWindow() {
           label: '使用说明',
           click: async () => {
             const { shell } = require('electron')
-            await shell.openExternal('https://super12138.github.io/Hash-Checker/')
+            await shell.openExternal('https://Super12138.github.io/Hash-Checker/tutorial')
           }
         }
       ]
