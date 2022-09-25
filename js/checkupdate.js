@@ -16,18 +16,16 @@ onload = function update() {
                         modal: true,
                         buttons: [
                             {
-                                text: '取消',
-                                onClick: function () {
-                                    document.querySelector('#title').innerHTML = "Hash Checker（旧版本）"
-                                    document.querySelector('#ttitle').innerHTML = ""
-                                }
+                                text: '取消'
                             },
                             {
                                 text: '立即更新',
                                 onClick: function () {
+                                    var upl = 'https://github.com/Super12138/Hash-Checker/releases';
+                                    navigator.clipboard.writeText(upl).catch(e => console.error(e));
                                     mdui.dialog({
-                                        title: '点击下方链接更新',
-                                        content: '请前往<pre>https://github.com/Super12138/Hash-Checker/releases</pre>上下载最新版本',
+                                        title: '更新链接已复制到您的剪贴板',
+                                        content: '请前往浏览器中粘贴链接更新',
                                         modal: true,
                                         buttons: [
                                             {
