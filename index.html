@@ -9,7 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css">
     <link rel="manifest" href="manifest.webmanifest">
-    <link rel="manifest" href="data:application/json;base64,ew0KICAgICJuYW1lIjogIkhhc2ggQ2hlY2tlciIsDQogICAgInNob3J0X25hbWUiOiAiSGFzaCBDaGVja2VyIiwNCiAgICAiZGVzY3JpcHRpb24iOiAi5qOA5p+l5paH5Lu25piv5ZCm6KKr5L+u5pS5IiwNCiAgICAiaWNvbnMiOiBbDQogICAgICAgIHsNCiAgICAgICAgICAgICJzcmMiOiAiaWNvbnMvZmF2aWNvbi5pY28iLA0KICAgICAgICAgICAgInR5cGUiOiAiaW1hZ2UveC1pY29uIiwNCiAgICAgICAgICAgICJzaXplcyI6ICIxNngxNiINCiAgICAgICAgfSwNCiAgICAgICAgew0KICAgICAgICAgICAgInNyYyI6ICJpY29ucy9mYXZpY29uLmljbyIsDQogICAgICAgICAgICAidHlwZSI6ICJpbWFnZS94LWljb24iLA0KICAgICAgICAgICAgInNpemVzIjogIjMyeDMyIg0KICAgICAgICB9LA0KICAgICAgICB7DQogICAgICAgICAgICAic3JjIjogImljb25zL2ljb24tMTkyLnBuZyIsDQogICAgICAgICAgICAidHlwZSI6ICJpbWFnZS9wbmciLA0KICAgICAgICAgICAgInNpemVzIjogIjE5MngxOTIiDQogICAgICAgIH0sDQogICAgICAgIHsNCiAgICAgICAgICAgICJzcmMiOiAiaWNvbnMvaWNvbi01MTIucG5nIiwNCiAgICAgICAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsDQogICAgICAgICAgICAic2l6ZXMiOiAiNTEyeDUxMiINCiAgICAgICAgfSwNCiAgICAgICAgew0KICAgICAgICAgICAgInNyYyI6ICJpY29ucy9pY29uLTE5Mi1tYXNrYWJsZS5wbmciLA0KICAgICAgICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwNCiAgICAgICAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwNCiAgICAgICAgICAgICJwdXJwb3NlIjogIm1hc2thYmxlIg0KICAgICAgICB9LA0KICAgICAgICB7DQogICAgICAgICAgICAic3JjIjogImljb25zL2ljb24tNTEyLW1hc2thYmxlLnBuZyIsDQogICAgICAgICAgICAidHlwZSI6ICJpbWFnZS9wbmciLA0KICAgICAgICAgICAgInNpemVzIjogIjUxMng1MTIiLA0KICAgICAgICAgICAgInB1cnBvc2UiOiAibWFza2FibGUiDQogICAgICAgIH0NCiAgICBdLA0KICAgICJzdGFydF91cmwiOiAiaW5kZXguaHRtbCIsDQogICAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsDQogICAgImJhY2tncm91bmRfY29sb3IiOiAiI0M1QzVDNSIsDQogICAgInRoZW1lX2NvbG9yIjogIiNGRkZGRkYiDQp9DQo=">
     <link rel="icon" href="icons/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <meta name="description" content="免费好用且开源的文件校验工具">
@@ -69,6 +68,18 @@
     <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
     <script src="cryptojs/crypto-js.js"></script>
     <script src="js/getfilehash.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw-test/sw.js', { scope: '/sw-test/' }).then(function (reg) {
+                    // registration worked
+                    console.log('Registration succeeded. Scope is ' + reg.scope);
+                }).catch(function (error) {
+                    // registration failed
+                    console.log('Registration failed with ' + error);
+                });
+            }
+
+    </script>
 </body>
 
 </html>
