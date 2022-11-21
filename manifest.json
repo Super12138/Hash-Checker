@@ -1,0 +1,58 @@
+{
+    "name": "Hash Checker",
+    "short_name": "Hash Checker",
+    "start_url": "index.html",
+    "display": "standalone",
+    "description": "检查文件是否被修改",
+    "lang": "zh_cn",
+    "dir": "auto",
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "icons/icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "icons/icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "icons/icon-192-maskable.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/icon-512-maskable.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "*",
+            "sizes": "2880x1800",
+            "type": "image/png",
+            "description": "Hash Checker"
+        }
+    ],
+    "related_applications": [
+        {
+            "platform": "windows",
+            "url": " The URL to your app in that app store"
+        }
+    ],
+    "prefer_related_applications": "false",
+    "shortcuts": [
+        {
+            "name": "Hash Checker",
+            "url": "index.html",
+            "description": "Hash Checker"
+        }
+    ]
+}

@@ -8,10 +8,11 @@
     <meta name="force-rendering" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css">
-    <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" href="icons/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <meta name="description" content="免费好用且开源的文件校验工具">
+    <script>navigator.serviceWorker.register("js/service-worker.js")</script>
+    <link rel="manifest" href="manifest.json">
     <title>Hash Checker</title>
 </head>
 
@@ -68,18 +69,6 @@
     <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
     <script src="cryptojs/crypto-js.js"></script>
     <script src="js/getfilehash.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/Hash-Checker/js/sw.js', { scope: '/Hash-Checker/' }).then(function (reg) {
-                    // registration worked
-                    console.log('Registration succeeded. Scope is ' + reg.scope);
-                }).catch(function (error) {
-                    // registration failed
-                    console.log('Registration failed with ' + error);
-                });
-            }
-
-    </script>
 </body>
 
 </html>
