@@ -1,4 +1,4 @@
-# Hash-Checker | 文件校验器 | 哈希检查器
+# Hash Checker | 文件校验器 | 哈希检查器
 ![GitHub](https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square)
 ![GitHub all releases](https://img.shields.io/github/downloads/Super12138/Hash-Checker/total?style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Super12138/Hash-Checker?style=flat-square)
@@ -20,19 +20,15 @@
 4. 校验
 5. 完成
 
-（更详细的教程会在后续公开）
-
 ## ⬇️ 下载
-- 从 [GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 上下载（版本v1.0.1）
-- 在线版 [Github Page](https://super12138.github.io/Hash-Checker/)
+- 离线版 V1.0.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- 在线版 V1.0.1[Github Page](https://super12138.github.io/Hash-Checker/)
 ## 📸 截图
-![](docs/Screenshot%20-%201.png)
-<br>
-![](docs/Screenshot%20-%202.png)
-<br>
-![](docs/Screenshot%20-%203.png)
-<br>
-![](docs/Screenshot%20-%204.png)
 
 ## 💻 开发者
 - Super12138
+
+## 🚀 使用库/鸣谢
+ - [PWABuilder](https://www.pwabuilder.com/)
+ - [MDUI](https://github.com/zdhxiong/mdui)
+ - [CryptoJS](https://github.com/brix/crypto-js)
