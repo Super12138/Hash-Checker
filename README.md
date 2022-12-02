@@ -29,6 +29,8 @@
 - Super12138
 
 ## 🚀 使用库/鸣谢
- - [PWABuilder](https://www.pwabuilder.com/)
+ - [Electron](https://www.electronjs.org/)
+ - [Electron-builder](https://www.electron.build/)
  - [MDUI](https://github.com/zdhxiong/mdui)
  - [CryptoJS](https://github.com/brix/crypto-js)
+ - [PWABuilder](https://www.pwabuilder.com/)
