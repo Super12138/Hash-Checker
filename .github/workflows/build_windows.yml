@@ -1,0 +1,17 @@
+name: Build Windows Release
+on:
+  workflow_dispatch:
+jobs:
+  pack:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install and Build
+      run: |
+        npm install
+        npm run build
+    - name: Upload file
+      uses: actions/upload-artifact@v3
+      with:
+        name: build # 上传后的名字
+        path: dist # 将 packs 目录进行上传
