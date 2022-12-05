@@ -10,12 +10,13 @@ function createWindow() {
     width: 1200,
     height: 800,
     center: true,
-    //webPreferences: {
-    //nodeIntegration: true,
-    //contextIsolation: false
-    //},
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    },
   })
   win.loadFile('index.html')
+  win.webContents.openDevTools()
   const wintemplate = [
     {
       label: '文件',
@@ -28,6 +29,31 @@ function createWindow() {
           label: '退出',
           role: 'quit'
         }
+      ]
+    },
+    {
+      label: '编辑',
+      submenu: [
+        { 
+          label: '撤销',
+          role: 'undo' 
+        },
+        { 
+          label: '恢复',
+          role: 'redo' 
+        },
+        { 
+          label: '剪切',
+          role: 'cut' 
+        },
+        { 
+          label: '复制',
+          role: 'copy' 
+        },
+        { 
+          label: '粘贴',
+          role: 'paste' 
+        },
       ]
     },
     {
@@ -54,6 +80,31 @@ function createWindow() {
           label: '退出',
           role: 'quit'
         }
+      ]
+    },
+    {
+      label: '编辑',
+      submenu: [
+        { 
+          label: '撤销',
+          role: 'undo' 
+        },
+        { 
+          label: '恢复',
+          role: 'redo' 
+        },
+        { 
+          label: '剪切',
+          role: 'cut' 
+        },
+        { 
+          label: '复制',
+          role: 'copy' 
+        },
+        { 
+          label: '粘贴',
+          role: 'paste' 
+        },
       ]
     },
     {

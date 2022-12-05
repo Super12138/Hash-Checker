@@ -1,3 +1,4 @@
+
 function openfile() {
     document.querySelector('#getfile').click();
 }
@@ -88,6 +89,7 @@ function calch() {
                         });
                     }
                     else {
+                        const { clipboard } = require('electron')
                         var filec = document.querySelector('#getfile');
                         var ttitle = document.querySelector('#ttitle');
                         var tips = document.querySelector('#tips');
@@ -108,7 +110,7 @@ function calch() {
                                 var a = f.toLowerCase();
                                 var b = ch.toLowerCase();
                                 var calcmethod = document.querySelector('#method').value;
-                                navigator.clipboard.writeText(calchash).catch(e => console.error(e));
+                                clipboard.writeText(calchash);
                                 tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + calchash;
                             }
                             else {
@@ -121,7 +123,7 @@ function calch() {
                                 var a = f.toLowerCase();
                                 var b = ch.toLowerCase();
                                 var calcmethod = document.querySelector('#method').value;
-                                navigator.clipboard.writeText(calchash).catch(e => console.error(e));
+                                clipboard.writeText(calchash);
                                 tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + calchash;
                             };
                         }
