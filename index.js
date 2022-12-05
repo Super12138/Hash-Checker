@@ -1,7 +1,8 @@
 const {
   app,
   BrowserWindow,
-  Menu
+  Menu,
+  shell
 } = require('electron')
 
 function createWindow() {
@@ -35,8 +36,7 @@ function createWindow() {
         {
           label: '使用说明',
           click: async () => {
-            const { shell } = require('electron')
-            await shell.openExternal('https://Super12138.github.io/Hash-Checker/tutorial')
+            await shell.openExternal('https://github.com/Super12138/Hash-Checker')
           }
         }
       ]
@@ -62,8 +62,7 @@ function createWindow() {
         {
           label: '使用说明',
           click: async () => {
-            const { shell } = require('electron')
-            await shell.openExternal('https://Super12138.github.io/Hash-Checker/tutorial')
+            await shell.openExternal('https://github.com/Super12138/Hash-Checker')
           }
         }
       ]
