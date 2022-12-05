@@ -1,4 +1,3 @@
-
 function openfile() {
     document.querySelector('#getfile').click();
 }
