@@ -16,7 +16,6 @@ function createWindow() {
     },
   })
   win.loadFile('index.html')
-  win.webContents.openDevTools()
   const wintemplate = [
     {
       label: '文件',
