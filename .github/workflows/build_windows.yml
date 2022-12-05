@@ -13,5 +13,5 @@ jobs:
     - name: Upload file
       uses: actions/upload-artifact@v3
       with:
-        name: build # 上传后的名字
-        path: dist # 将 packs 目录进行上传
+        name: HashChecker  # 上传后的名字
+        path: dist
