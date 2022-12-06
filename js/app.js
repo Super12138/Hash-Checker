@@ -1,3 +1,5 @@
+const { clipboard } = require('electron')
+
 function openfile() {
     document.querySelector('#getfile').click();
 }
@@ -88,7 +90,6 @@ function calch() {
                         });
                     }
                     else {
-                        const { clipboard } = require('electron')
                         var filec = document.querySelector('#getfile');
                         var ttitle = document.querySelector('#ttitle');
                         var tips = document.querySelector('#tips');
