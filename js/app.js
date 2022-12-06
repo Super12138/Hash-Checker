@@ -1,4 +1,16 @@
-const { clipboard } = require('electron')
+const { 
+    clipboard,
+    shell
+} = require('electron')
+  
+const links = document.querySelectorAll('a[href]');
+links.forEach(link => {
+    link.addEventListener('click', e => {
+        const url = link.getAttribute('href');
+        e.preventDefault();
+        shell.openExternal(url);
+    });
+});
 
 function openfile() {
     document.querySelector('#getfile').click();
@@ -18,7 +30,7 @@ function getfilename() {
         if (file.size >= 104857600) {
             wfilename.innerHTML = file.name;
             wfilesize.innerHTML = file.size + "&nbsp; Byte";
-            wetips.innerHTML = "推荐上传小于100MB的文件";
+            wetips.innerHTML = "文件大小较大，计算时间可能较长";
             console.log(file);
         } else {
             wfilename.innerHTML = file.name;
@@ -111,7 +123,7 @@ function calch() {
                                 var b = ch.toLowerCase();
                                 var calcmethod = document.querySelector('#method').value;
                                 clipboard.writeText(calchash);
-                                tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + calchash;
+                                tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + "<code>" +  calchash + "</code>";
                             }
                             else {
                                 tips.innerHTML = "正在计算...";
@@ -124,7 +136,7 @@ function calch() {
                                 var b = ch.toLowerCase();
                                 var calcmethod = document.querySelector('#method').value;
                                 clipboard.writeText(calchash);
-                                tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + calchash;
+                                tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod+ "值：" + "<code>" +  calchash + "</code>";
                             };
                         }
                     }
@@ -177,7 +189,7 @@ function calch() {
                                     var b = ch.toLowerCase();
                                     var calcmethod = document.querySelector('#method').value;
                                     if (b === a) {
-                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + calchash;
+                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + "<code>" +  calchash + "</code>";
                                         mdui.dialog({
                                             title: '校验成功',
                                             content: '请放心使用',
@@ -189,7 +201,7 @@ function calch() {
                                         });
                                     }
                                     else {
-                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + calchash;
+                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + "<code>" +  calchash + "</code>";
                                         mdui.dialog({
                                             title: '校验失败',
                                             content: '请检查获取的校验值是否有误（如多余的空格），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决',
@@ -212,7 +224,7 @@ function calch() {
                                     var b = ch.toLowerCase();
                                     var calcmethod = document.querySelector('#method').value;
                                     if (b === a) {
-                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + calchash;
+                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + "<code>" +  calchash + "</code>";
                                         mdui.dialog({
                                             title: '校验成功',
                                             content: '请放心使用',
@@ -224,7 +236,7 @@ function calch() {
                                         });
                                     }
                                     else {
-                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + calchash;
+                                        tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + "<code>" +  calchash + "</code>";
                                         mdui.dialog({
                                             title: '校验失败',
                                             content: '请检查获取的校验值是否有误（如多余的空格），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决',

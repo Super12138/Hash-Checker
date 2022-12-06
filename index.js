@@ -7,15 +7,19 @@ const {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1200,
+    width: 1100,
     height: 800,
     center: true,
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
     },
   })
   win.loadFile('index.html')
+  win.once('ready-to-show', () => {
+    win.show()
+  })
   const wintemplate = [
     {
       label: '文件',
@@ -33,25 +37,25 @@ function createWindow() {
     {
       label: '编辑',
       submenu: [
-        { 
+        {
           label: '撤销',
-          role: 'undo' 
+          role: 'undo'
         },
-        { 
+        {
           label: '恢复',
-          role: 'redo' 
+          role: 'redo'
         },
-        { 
+        {
           label: '剪切',
-          role: 'cut' 
+          role: 'cut'
         },
-        { 
+        {
           label: '复制',
-          role: 'copy' 
+          role: 'copy'
         },
-        { 
+        {
           label: '粘贴',
-          role: 'paste' 
+          role: 'paste'
         },
       ]
     },
@@ -84,25 +88,25 @@ function createWindow() {
     {
       label: '编辑',
       submenu: [
-        { 
+        {
           label: '撤销',
-          role: 'undo' 
+          role: 'undo'
         },
-        { 
+        {
           label: '恢复',
-          role: 'redo' 
+          role: 'redo'
         },
-        { 
+        {
           label: '剪切',
-          role: 'cut' 
+          role: 'cut'
         },
-        { 
+        {
           label: '复制',
-          role: 'copy' 
+          role: 'copy'
         },
-        { 
+        {
           label: '粘贴',
-          role: 'paste' 
+          role: 'paste'
         },
       ]
     },
@@ -136,6 +140,13 @@ app.whenReady().then(() => {
       createWindow()
     }
   })
+})
+
+app.setAboutPanelOptions({
+  applicationName: 'Hash Checker',
+  applicationVersion: '1.0.3',
+  copyright: 'Copyright © 2019-2022 Super12138',
+  version: '1030'
 })
 
 app.on('window-all-closed', () => {
