@@ -9,10 +9,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css">
     <link rel="icon" href="icons/favicon.ico" sizes="any">
-    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <meta name="description" content="免费好用且开源的文件校验工具">
-    <script>navigator.serviceWorker.register("js/service-worker.js")</script>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/Hash-Checker/manifest.json">
+    <script>navigator.serviceWorker.register("js/service-worker.js")</script> 
     <title>Hash Checker</title>
 </head>
 
@@ -22,10 +22,66 @@
             <img class="mdui-center" width="20%" src="" />
             <h1 class="mdui-text-center">Hash Checker</h1>
             <p class="mdui-text-center">一个开源免费的文件校验工具</p>
-            
+            <img class="mdui-center"
+                src="https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square" />
+            <br>
+            <div class="mdui-divider"></div>
+            <div id="download" class="mdui-center mdui-text-center">
+                <h1>下载</h1>
+                <p>最新版本：v1.0.3</p>
+                <p>Hash Checker 支持 Windows 和 macOS 双平台</p>
+                <br>
+                <h2>Windows</h2>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="win64();">Windows x64</button>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="win32();">Windows x32</button>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="wina64();">Windows arm64</button>
+                <br>
+                <h2>macOS</h2>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="macu();">macOS（通用芯片）</button>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="mac();">macOS（Intel 芯片）</button>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="maca64();">Windows（Apple 芯片）</button>
+                <br>
+                <br>
+                <p>当然，你也可以使用网页版（支持UWP应用）：<a href="https://super12138.github.io/Hash-Checker/webapp">点击前往</a></p>
+            </div>
+            <br>
+            <div class="mdui-divider"></div>
+            <div id="bug" class="mdui-center mdui-text-center">
+                <h1>问题反馈</h1>
+                <p>请在Github上反馈：<a href="https://github.com/Super12138/Hash-Checker/issues/new/choose">点击前往</a></p>
+                <br>
+            </div>
+            <div class="mdui-divider"></div>
+            <footer class="mdui-text-center">
+                <br>
+                <p>由 <a href="https://github.com/Super12138">Super12138</a> 制作</p>
+                <p>Hash Checker 免费且<a href="https://github.com/Super12138/Hash-Checker">开源</a>，遵循 GPL-3.0 协议</p>
+                <br>
+                <br>
+            </footer>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
+    <script>
+        function win64(){
+            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker.Setup.1.0.3-x64.exe';
+        }
+        function win32(){
+            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker.Setup.1.0.3-x32.exe';
+        }
+        function wina64(){
+            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker.Setup.1.0.3-arm64.exe';
+        }
+        function macu(){
+            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker-1.0.3-universal.dmg';
+        }
+        function mac(){
+            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker-1.0.3.dmg';
+        }
+        function maca64(){
+            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker-1.0.3-arm64.dmg';
+        }
+    </script>
 </body>
 
 </html>
