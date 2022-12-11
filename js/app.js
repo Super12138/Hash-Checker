@@ -21,27 +21,42 @@ function openfile() {
 }
 
 function getfilename() {
-    var wfilename = document.querySelector('#fm');
-    var wfilesize = document.querySelector('#fsize');
-    var wetips = document.querySelector('#etips');
-    var file = document.querySelector('#getfile').files[0];
+    const wfilename = document.querySelector('#fm');
+    const wfilesize = document.querySelector('#fsize');
+    const wetips = document.querySelector('#etips');
+    const file = document.querySelector('#getfile').files[0];
+
     if (!file || file.length == 0) {
         wfilename.innerHTML = "未选择文件";
         wfilesize.innerHTML = "未选择文件";
         console.log("未选择文件");
-    }
-    else {
+    } else {
         if (file.size >= 104857600) {
             wfilename.innerHTML = file.name;
             wfilesize.innerHTML = file.size + "&nbsp; Byte";
             wetips.innerHTML = "文件大小较大，计算时间可能较长";
-            console.log(file);
         } else {
             wfilename.innerHTML = file.name;
             wfilesize.innerHTML = file.size + "&nbsp; Byte";
-            console.log(file);
         }
+        console.log(file);
     }
+    //备选方案（三元运算符，更简洁）
+    //const wfilename = document.querySelector('#fm');
+    //const wfilesize = document.querySelector('#fsize');
+    //const wetips = document.querySelector('#etips');
+    //const file = document.querySelector('#getfile').files[0];
+
+    //if (!file || file.length == 0) {
+        //wfilename.innerHTML = "未选择文件";
+        //wfilesize.innerHTML = "未选择文件";
+        //console.log("未选择文件");
+    //} else {
+        //wfilename.innerHTML = file.name;
+        //wfilesize.innerHTML = file.size + "&nbsp; Byte";
+        //wetips.innerHTML = file.size >= 104857600 ? "文件大小较大，计算时间可能较长" : "";
+        //console.log(file);
+    //}
 }
 
 function calch() {
@@ -126,10 +141,6 @@ function calch() {
                                 var calchash = CryptoJS.SHA256(wordArray).toString(CryptoJS.enc.Hex);
                             }
                             console.log(calchash);
-                            var ch = calchash;
-                            var f = document.getElementById('a').value;
-                            var a = f.toLowerCase();
-                            var b = ch.toLowerCase();
                             var calcmethod = document.querySelector('#method').value;
                             clipboard.writeText(calchash);
                             tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + "<code>" + calchash + "</code>";
