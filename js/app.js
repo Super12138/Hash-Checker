@@ -133,7 +133,6 @@ function calch() {
                             tips.innerHTML = "获取到计算" + calcmethod + "值";
                             tips.innerHTML = "正在计算...";
                             var wordArray = CryptoJS.lib.WordArray.create(reader.result);
-                            //化简代码
                             if (calcmethod == 'md5') {
                                 var calchash = CryptoJS.MD5(wordArray).toString(CryptoJS.enc.Hex);
                             }
@@ -144,6 +143,13 @@ function calch() {
                             var calcmethod = document.querySelector('#method').value;
                             clipboard.writeText(calchash);
                             tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + "<code>" + calchash + "</code>";
+                            new Notification(
+                                calcmethod + '计算完成', 
+                                {
+                                    dir: 'auto',
+                                    body: '值为：' + calchash + '，已写入您的剪贴板'
+                                }
+                            )
                         }
                     }
                 }
@@ -199,6 +205,13 @@ function calch() {
                                 var b = calchash.toLowerCase();
                                 var calcmethod = document.querySelector('#method').value;
                                 if (b === a) {
+                                    new Notification(
+                                        calcmethod + '校验完成', 
+                                        {
+                                            dir: 'auto',
+                                            body: '恭喜🎉！您的文件是完好的，请放心使用！'
+                                        }
+                                    )
                                     tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + "<code>" + calchash + "</code>";
                                     mdui.dialog({
                                         title: '校验成功',
@@ -211,6 +224,13 @@ function calch() {
                                     });
                                 }
                                 else {
+                                    new Notification(
+                                        calcmethod + '校验失败', 
+                                        {
+                                            dir: 'auto',
+                                            body: '详细信息请在应用于内查看'
+                                        }
+                                    )
                                     tips.innerHTML = "校验完成<br>" + calcmethod + "值：" + "<code>" + calchash + "</code>";
                                     mdui.dialog({
                                         title: '校验失败',
