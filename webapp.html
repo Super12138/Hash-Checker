@@ -11,7 +11,7 @@
     <link rel="icon" href="icons/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <meta name="description" content="免费好用且开源的文件校验工具">
-    <script>navigator.serviceWorker.register("js/service-worker.js")</script> 
+    <script>navigator.serviceWorker.register("js/service-worker.js")</script>
     <link rel="manifest" href="manifest.json">
     <title>Hash Checker</title>
 </head>
@@ -20,7 +20,7 @@
     <div class="mdui-container">
         <div class="mdui-row">
             <h1 id="title">Hash Checker</h1>
-            <p>版本：v1.0.1</p>
+            <p>版本：v1.0.2</p>
             <br>
             <div id="drop">
                 <input id="getfile" type="file" style="display: none;" onchange="getfilename();">
@@ -64,12 +64,13 @@
             <footer class="mdui-center mdui-text-center">
                 <div class="mdui-divider"></div>
                 <p>本应用在GitHub上开源，遵循 GPL-3.0 协议<br>由 Super12138 开发</p>
+                <br>
             </footer>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
     <script src="cryptojs/crypto-js.js"></script>
-    <script src="js/getfilehash.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>
