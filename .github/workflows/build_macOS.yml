@@ -1,4 +1,4 @@
-name: Build Windows Release (Test)
+name: Build macOS Release (Test)
 on:
   workflow_dispatch:
 jobs:
@@ -9,9 +9,9 @@ jobs:
     - name: Install and Build
       run: |
         npm install
-        npm run build
+        npm run buildm
     - name: Upload file
       uses: actions/upload-artifact@v3
       with:
-        name: HashChecker-Release  # 上传后的名字
+        name: HashChecker  # 上传后的名字
         path: dist
