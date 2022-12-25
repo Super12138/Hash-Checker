@@ -6,6 +6,16 @@ const {
 //let ctypto = require('crypto');
 //let xxx = crypto.createHash('sha256').update(file).digest('hex');
 //console.log(xxx);
+//// 处理拖拽事件
+var dropzone = document.getElementById('drop');
+dropzone.addEventListener('dragover', function (e) {
+    e.preventDefault();
+});
+dropzone.addEventListener('drop', function (e) {
+    e.preventDefault()
+    var file = e.dataTransfer.files[0];
+    dropzone.innerHTML = file.name;
+});
 
 const links = document.querySelectorAll('a[href]');
 links.forEach(link => {

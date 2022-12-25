@@ -10,16 +10,14 @@ function createWindow() {
     width: 1100,
     height: 800,
     center: true,
-    show: false,
+    // frame: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
     },
   })
   win.loadFile('index.html')
-  win.once('ready-to-show', () => {
-    win.show()
-  })
+  // win.setWindowButtonVisibility(true)
   const wintemplate = [
     {
       label: '文件',
