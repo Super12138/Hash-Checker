@@ -11,7 +11,7 @@
     <link rel="icon" href="icons/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <meta name="description" content="免费好用且开源的文件校验工具">
-    <link rel="manifest" href="/Hash-Checker/manifest.json">
+    <link rel="manifest" href="https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker@gh-pages/manifest.json">
     <script>navigator.serviceWorker.register("js/service-worker.js")</script>
     <title>Hash Checker</title>
 </head>
@@ -21,7 +21,7 @@
         <div class="mdui-row">
             <img class="mdui-center" width="20%" src="" />
             <h1 class="mdui-text-center">Hash Checker</h1>
-            <p class="mdui-text-center">一个开源免费的文件校验工具</p>
+            <p class="mdui-text-center" i18n="intro">一个开源免费的文件校验工具</p>
             <img class="mdui-center"
                 src="https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square" />
             <br>
@@ -41,11 +41,11 @@
                 <br>
                 <h2>macOS</h2>
                 <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple"
-                    onclick="macu();">macOS（通用芯片）</button>
+                    onclick="macu();" i18n="macos">macOS（通用芯片）</button>
                 <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple"
-                    onclick="mac();">macOS（Intel 芯片）</button>
+                    onclick="mac();" i18n="macos-intel">macOS（Intel 芯片）</button>
                 <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple"
-                    onclick="maca64();">macOS（Apple 芯片）</button>
+                    onclick="maca64();" i18n="macos-apple">macOS（Apple 芯片）</button>
                 <br>
                 <br>
                 <p>当然，你也可以使用网页版（PWA正在适配）：<a href="https://super12138.github.io/Hash-Checker/webapp">点击前往</a></p>
@@ -53,7 +53,7 @@
             <br>
             <div class="mdui-divider"></div>
             <div id="bug" class="mdui-center mdui-text-center">
-                <h1>问题反馈</h1>
+                <h1 i18n="bug-report">问题反馈</h1>
                 <p>请在Github上反馈：<a href="https://github.com/Super12138/Hash-Checker/issues/new/choose">点击前往</a></p>
                 <br>
             </div>
@@ -67,27 +67,11 @@
             </footer>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
-    <script>
-        function win64() {
-            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker.Setup.1.0.3-x64.exe';
-        }
-        function win32() {
-            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker.Setup.1.0.3-x32.exe';
-        }
-        function wina64() {
-            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker.Setup.1.0.3-arm64.exe';
-        }
-        function macu() {
-            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker-1.0.3-universal.dmg';
-        }
-        function mac() {
-            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker-1.0.3.dmg';
-        }
-        function maca64() {
-            window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker-1.0.3-arm64.dmg';
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mdui/dist/js/mdui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jquery-i18n-properties/jquery-i18n-properties/jquery.i18n.properties.min.js"></script>
+    <script src="js/link.js"></script>
+    <script src="js/lang.js"></script>
 </body>
 
 </html>
