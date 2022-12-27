@@ -16,3 +16,6 @@ function mac() {
 function maca64() {
     window.location.href = 'https://github.com/Super12138/Hash-Checker/releases/download/1.0.3/Hash.Checker-1.0.3-arm64.dmg';
 }
+function hashchecker() {
+    window.location.href = 'hash-checker://'
+}
