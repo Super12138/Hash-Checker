@@ -1,6 +1,6 @@
 {
   "name": "HashChecker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A free, open source, easy-to-use hash checker.",
   "main": "index.js",
   "scripts": {
