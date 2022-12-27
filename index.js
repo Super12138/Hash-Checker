@@ -5,6 +5,32 @@ const {
   shell
 } = require('electron')
 
+// 设置深链接（应用协议）
+if (process.defaultApp) {
+  if (process.argv.length >= 2) {
+    app.setAsDefaultProtocolClient('hash-checker', process.execPath, [path.resolve(process.argv[1])])
+  }
+} else {
+    app.setAsDefaultProtocolClient('hash-checker')
+}
+
+const gotTheLock = app.requestSingleInstanceLock()
+
+if (!gotTheLock) {
+  app.quit()
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+
+  app.whenReady().then(() => {
+    createWindow()
+  })
+}
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1100,
@@ -142,9 +168,9 @@ app.whenReady().then(() => {
 
 app.setAboutPanelOptions({
   applicationName: 'Hash Checker',
-  applicationVersion: '1.0.3',
+  applicationVersion: '1.0.4',
   copyright: 'Copyright © 2019-2022 Super12138',
-  version: '1030'
+  version: '1040'
 })
 
 app.on('window-all-closed', () => {
