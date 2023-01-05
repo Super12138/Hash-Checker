@@ -202,7 +202,7 @@ ipcMain.on('check-fail', (event) => {
   const options = {
     type: 'error',
     buttons: ['确定'],
-    message: '校验失败，详情请在“输出”面板查看'
+    message: '校验失败，详情请在“状态”面板查看'
   }
   dialog.showMessageBox(options)
 })
