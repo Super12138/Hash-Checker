@@ -40,7 +40,7 @@ function createWindow() {
     },
   })
   win.loadFile('index.html')
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
   // win.setWindowButtonVisibility(true)
   const wintemplate = [
     {
@@ -200,7 +200,7 @@ ipcMain.on('check-ok', (event) => {
 // 校验失败
 ipcMain.on('check-fail', (event) => {
   const options = {
-    type: 'info',
+    type: 'error',
     buttons: ['确定'],
     message: '校验失败，详情请在“输出”面板查看'
   }
