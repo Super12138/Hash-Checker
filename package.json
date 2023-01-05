@@ -11,7 +11,7 @@
   "build": {
     "appId": "Hash Checker",
     "productName": "Hash Checker",
-    "copyright": "Copyright © 2019-2022 Super12138",
+    "copyright": "Copyright © 2019-2023 Super12138",
     "win": {
       "icon": "build/AppIcon.ico",
       "publish": [
