@@ -1,9 +1,6 @@
-const {
-  app,
-  BrowserWindow,
-  Menu,
-  shell
-} = require('electron')
+const { app, BrowserWindow, Menu, shell, ipcMain, dialog } = require('electron')
+const date = new Date()
+const year = date.getFullYear()
 
 // 设置深链接（应用协议）
 if (process.defaultApp) {
@@ -11,7 +8,7 @@ if (process.defaultApp) {
     app.setAsDefaultProtocolClient('hash-checker', process.execPath, [path.resolve(process.argv[1])])
   }
 } else {
-    app.setAsDefaultProtocolClient('hash-checker')
+  app.setAsDefaultProtocolClient('hash-checker')
 }
 
 const gotTheLock = app.requestSingleInstanceLock()
@@ -43,6 +40,7 @@ function createWindow() {
     },
   })
   win.loadFile('index.html')
+  win.webContents.openDevTools();
   // win.setWindowButtonVisibility(true)
   const wintemplate = [
     {
@@ -168,13 +166,93 @@ app.whenReady().then(() => {
 
 app.setAboutPanelOptions({
   applicationName: 'Hash Checker',
-  applicationVersion: '1.0.4',
-  copyright: 'Copyright © 2019-2022 Super12138',
-  version: '1040'
+  applicationVersion: '1.0.5',
+  copyright: 'Copyright © 2019-' + year + ' Super12138',
+  version: '1050'
 })
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+// 生成成功
+ipcMain.on('gen-ok', (event) => {
+  const options = {
+    type: 'info',
+    buttons: ['确定'],
+    message: '计算完成，校验值已写入您的剪贴板'
+  }
+  dialog.showMessageBox(options)
+})
+
+// 校验成功
+ipcMain.on('check-ok', (event) => {
+  const options = {
+    type: 'info',
+    buttons: ['确定'],
+    message: '🎉 校验成功！请放心使用您的文件'
+  }
+  dialog.showMessageBox(options)
+})
+
+// 校验失败
+ipcMain.on('check-fail', (event) => {
+  const options = {
+    type: 'info',
+    buttons: ['确定'],
+    message: '校验失败，详情请在“输出”面板查看'
+  }
+  dialog.showMessageBox(options)
+})
+
+// 什么也没选
+ipcMain.on('no-modmeth', (event) => {
+  const options = {
+    type: 'error',
+    buttons: ['确定'],
+    message: '请选择方法和模式后再进行校验'
+  }
+  dialog.showMessageBox(options)
+})
+
+// 未选文件
+ipcMain.on('no-file', (event) => {
+  const options = {
+    type: 'error',
+    buttons: ['确定'],
+    message: '请选择文件后再进行校验'
+  }
+  dialog.showMessageBox(options)
+})
+
+// 未选方法
+ipcMain.on('no-method', (event) => {
+  const options = {
+    type: 'error',
+    buttons: ['确定'],
+    message: '请选择校验方法后再进行校验'
+  }
+  dialog.showMessageBox(options)
+})
+
+// 未选模式
+ipcMain.on('no-model', (event) => {
+  const options = {
+    type: 'error',
+    buttons: ['确定'],
+    message: '请选择校验模式后再进行校验'
+  }
+  dialog.showMessageBox(options)
+})
+
+// 没有校验值
+ipcMain.on('no-checksum', (event) => {
+  const options = {
+    type: 'error',
+    buttons: ['确定'],
+    message: '请输入校验值后再进行校验'
+  }
+  dialog.showMessageBox(options)
 })
