@@ -166,9 +166,9 @@ app.whenReady().then(() => {
 
 app.setAboutPanelOptions({
   applicationName: 'Hash Checker',
-  applicationVersion: '1.0.5',
+  applicationVersion: '1.0.4',
   copyright: 'Copyright © 2019-' + year + ' Super12138',
-  version: '1050'
+  version: '1041'
 })
 
 app.on('window-all-closed', () => {
