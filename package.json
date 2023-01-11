@@ -14,12 +14,6 @@
     "copyright": "Copyright © 2019-2023 Super12138",
     "win": {
       "icon": "build/AppIcon.ico",
-      "publish": [
-        {
-          "provider": "generic",
-          "url": "http://192.168.1.6:8080"
-        }
-      ],
       "target": [
         "nsis"
       ]
