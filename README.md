@@ -25,6 +25,18 @@
 - 在线版 V1.0.2[Github Page](https://super12138.github.io/Hash-Checker/)
 ## 📸 截图
 
+|             主界面（浅色）          |
+| :----------------------------------------------------------: |
+|   ![Hash Checker-01.png](https://s2.loli.net/2023/01/31/yzZVWa72I6tJl9O.png) |
+|             主界面（深色）          |
+|   ![Hash Checker-02.png](https://s2.loli.net/2023/01/31/Tad5zkMi6spIKYj.png) |
+|             生成哈希值              |
+|   ![Hash Checker-03.png](https://s2.loli.net/2023/01/31/IxBRY4Gs2c7Hmkb.png) |
+|             校验哈希值（成功）       |
+|   ![Hash Checker-04.png](https://s2.loli.net/2023/01/31/ctiylSA4HeBLbEY.png) |
+|             校验哈希值（失败）       |
+|   ![Hash Checker-05.png](https://s2.loli.net/2023/01/31/GNl9ZdMq4thfBKp.png) |
+
 ## 💻 开发者
 - Super12138
 
