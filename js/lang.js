@@ -1,4 +1,4 @@
-const webLanguage = ['zh', 'us']
+const webLanguage = ['zh', 'en']
 
 /* i18nLanguage = "zh" 设置默认繁体 */
 const i18nExecute = (i18nLanguage = "zh") => {
