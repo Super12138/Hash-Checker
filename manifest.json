@@ -1,7 +1,7 @@
 {
     "name": "Hash Checker",
     "short_name": "Hash Checker",
-    "start_url": "webapp.html",
+    "start_url": "/Hash-Checker/webapp",
     "display": "standalone",
     "description": "检查文件是否被修改",
     "lang": "zh",

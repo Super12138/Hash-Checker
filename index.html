@@ -11,13 +11,13 @@
     <link rel="icon" href="icons/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <meta name="description" content="免费好用且开源的文件校验工具">
-    <link rel="manifest" href="https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker@gh-pages/manifest.json">
-    <script>navigator.serviceWorker.register("js/service-worker.js")</script>
+    <link rel="manifest" href="manifest.json">
+    <script>navigator.serviceWorker.register("js/sw/service-worker.js")</script> 
     <title>Hash Checker</title>
 </head>
 
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
-    <div class="mdui-container">
+    <div class="mdui-container mdui-typo">
         <div class="mdui-row">
             <img class="mdui-center" width="20%" src="" />
             <h1 class="mdui-text-center">Hash Checker</h1>
@@ -31,7 +31,8 @@
                 <p>最新版本：v1.0.4</p>
                 <p>Hash Checker 支持 Windows 和 macOS 双平台</p>
                 <p>如果您已经下载并安装好了Hash Checker，也可以通过下方按钮打开</p>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="hashchecker();">打开 Hash Checker</button>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="hashchecker();">打开
+                    Hash Checker</button>
                 <br>
                 <h2>Windows</h2>
                 <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="win64();">Windows
@@ -42,15 +43,18 @@
                     arm64</button>
                 <br>
                 <h2>macOS</h2>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple"
-                    onclick="macu();" i18n="macos">macOS（通用芯片）</button>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple"
-                    onclick="mac();" i18n="macos-intel">macOS（Intel 芯片）</button>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple"
-                    onclick="maca64();" i18n="macos-apple">macOS（Apple 芯片）</button>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="macu();"
+                    i18n="macos">macOS（通用芯片）</button>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="mac();"
+                    i18n="macos-intel">macOS（Intel 芯片）</button>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="maca64();"
+                    i18n="macos-apple">macOS（Apple 芯片）</button>
                 <h2>Android（Beta）</h2>
-                <p>Android 版本为 Web 端修改后的版本，需要设备支持<code>Android System Webview</code>（或<code>Huawei Webview</code>），且系统API版本需 ≥19（4.4+）。</p>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="android();" i18n="android">Android（Beta）</button>
+                <p>Android 版本为 Web
+                    端修改后的版本，需要设备支持<code>Android System Webview</code>（或<code>Huawei Webview</code>），且系统API版本需 ≥19（4.4+）。
+                </p>
+                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="android();"
+                    i18n="android">Android（Beta）</button>
                 <br>
                 <br>
                 <p>当然，你也可以选用网页版：<a href="https://super12138.github.io/Hash-Checker/webapp">点击前往</a></p>
@@ -59,7 +63,8 @@
             <div class="mdui-divider"></div>
             <div id="bug" class="mdui-center mdui-text-center">
                 <h1 i18n="bug-report">问题反馈</h1>
-                <p>我们十分希望听取您的建议，您可在 Github 上反馈您遇到的问题：<a href="https://github.com/Super12138/Hash-Checker/issues/new/choose">点击前往</a></p>
+                <p>我们十分希望听取您的建议，您可在 Github 上反馈您遇到的问题：<a
+                        href="https://github.com/Super12138/Hash-Checker/issues/new/choose">点击前往</a></p>
                 <br>
             </div>
             <div class="mdui-divider"></div>
@@ -74,7 +79,8 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/mdui/dist/js/mdui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/jquery-i18n-properties/jquery-i18n-properties/jquery.i18n.properties.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/gh/jquery-i18n-properties/jquery-i18n-properties/jquery.i18n.properties.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker@gh-pages/js/link.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker@gh-pages/js/lang.js"></script>
 </body>
