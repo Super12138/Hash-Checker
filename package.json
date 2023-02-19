@@ -1,6 +1,6 @@
 {
   "name": "HashChecker",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A free, use mateial design, open source, easy-to-use hash checker.",
   "main": "index.js",
   "scripts": {
@@ -41,7 +41,16 @@
           "target": "dmg"
         }
       ]
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Super12138",
+        "repo": "Hash-Checker",
+        "channel": "latest",
+        "releaseType": "draft"
+      }
+    ]
   },
   "repository": {
     "type": "git",
@@ -60,8 +69,11 @@
     "url": "https://github.com/Super12138/Hash-Checker/issues"
   },
   "homepage": "https://github.com/Super12138/Hash-Checker#readme",
+  "dependencies": {
+    "electron-updater": "^5.3.0"
+  },
   "devDependencies": {
-    "electron": "^22.1.0",
+    "electron": "^23.1.0",
     "electron-builder": "^23.6.0"
   }
 }
