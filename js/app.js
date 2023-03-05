@@ -114,9 +114,9 @@ function calch() {
             console.log(calchash);
             if (isClipboard) {
                 clipboard.writeText(calchash);
-                tips.innerHTML = calcmethod + "计算完成<br>" + calcmethod + "值：" + "<code>" + calchash + "</code>";
+                tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + "<code>" + calchash + "</code>";
             }
-            tips.innerHTML = "计算完成，" + calcmethod + "值已写入您的剪贴板！<br>" + calcmethod + "值：" + "<code>" + calchash + "</code>";
+            tips.innerHTML = calcmethod + "计算完成<br>" + calcmethod + "值：" + "<code>" + calchash + "</code>";
             ipcRenderer.send('gen-ok');
         }
     } else {
