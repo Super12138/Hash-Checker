@@ -7,7 +7,7 @@ const {
 //let ctypto = require('crypto');
 //let xxx = crypto.createHash('sha256').update(file).digest('hex');
 //console.log(xxx);
-//// 处理拖拽事件
+// 处理拖拽事件
 var dropzone = document.getElementById('drop');
 dropzone.addEventListener('dragover', function (e) {
     e.preventDefault();
@@ -35,6 +35,7 @@ function getfilename() {
     const wfilename = document.querySelector('#fm');
     const wfilesize = document.querySelector('#fsize');
     const wetips = document.querySelector('#etips');
+    const wdate = document.querySelector('#fdate');
     const file = document.querySelector('#getfile').files[0];
 
     if (!file || file.length == 0) {
@@ -45,10 +46,12 @@ function getfilename() {
         if (file.size >= 104857600) {
             wfilename.innerHTML = file.name;
             wfilesize.innerHTML = file.size + "&nbsp; Byte";
+            wdate.innerHTML = file.lastModifiedDate;
             wetips.innerHTML = "文件大小较大，计算时间可能较长";
         } else {
             wfilename.innerHTML = file.name;
             wfilesize.innerHTML = file.size + "&nbsp; Byte";
+            wdate.innerHTML = file.lastModifiedDate;
         }
         console.log(file);
     }
