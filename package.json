@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron ./",
     "build": "electron-builder -w",
-    "buildm": "electron-builder -m"
+    "buildm": "electron-builder -m --universal"
   },
   "build": {
     "appId": "Hash Checker",

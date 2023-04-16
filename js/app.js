@@ -108,7 +108,7 @@ function calch() {
         ttitle.innerHTML = "状态：";
         tips.innerHTML = "正在将文件缓存...";
         reader.readAsArrayBuffer(filec.files[0]);
-        reader.onload = ()=>{
+        reader.onload = () => {
             const calcmethod = document.querySelector('#method').value;
             tips.innerHTML = "获取到计算" + calcmethod + "值";
             tips.innerHTML = "正在计算...";
@@ -135,7 +135,7 @@ function calch() {
         ttitle.innerHTML = "状态：";
         tips.innerHTML = "正在将文件缓存...";
         reader.readAsArrayBuffer(filec.files[0]);
-        reader.onload = ()=>{
+        reader.onload = () => {
             const calcmethod = document.querySelector('#method').value;
             tips.innerHTML = "获取到计算" + calcmethod + "值";
             tips.innerHTML = "正在计算...";
