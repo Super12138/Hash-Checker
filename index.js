@@ -2,30 +2,8 @@ const { app, BrowserWindow, Menu, shell, ipcMain, dialog } = require('electron')
 const { autoUpdater } = require('electron-updater');
 const date = new Date()
 const year = date.getFullYear()
-
-// 设置深链接（应用协议）
-if (process.defaultApp) {
-  if (process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient('hash-checker', process.execPath, [path.resolve(process.argv[1])])
-  }
-} else {
-  app.setAsDefaultProtocolClient('hash-checker')
-}
-const gotTheLock = app.requestSingleInstanceLock()
-if (!gotTheLock) {
-  app.quit()
-} else {
-  app.on('second-instance', (event, commandLine, workingDirectory) => {
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore()
-      mainWindow.focus()
-    }
-  })
-
-  app.whenReady().then(() => {
-    createWindow()
-  })
-}
+const isProduction = process.env.NODE_ENV === 'production'
+const platform = process.platform
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -223,7 +201,7 @@ autoUpdater.on('update-downloaded', function () {
 
 app.setAboutPanelOptions({
   applicationName: 'Hash Checker',
-  applicationVersion: '1.0.5-beta',
+  applicationVersion: '1.0.5',
   copyright: 'Copyright © 2019-' + year + ' Super12138',
   version: '1050'
 })
