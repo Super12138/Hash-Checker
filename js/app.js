@@ -55,22 +55,6 @@ function getfilename() {
         }
         console.log(file);
     }
-    //备选方案（三元运算符，更简洁）
-    //const wfilename = document.querySelector('#fm');
-    //const wfilesize = document.querySelector('#fsize');
-    //const wetips = document.querySelector('#etips');
-    //const file = document.querySelector('#getfile').files[0];
-
-    //if (!file || file.length == 0) {
-    //wfilename.innerHTML = "未选择文件";
-    //wfilesize.innerHTML = "未选择文件";
-    //console.log("未选择文件");
-    //} else {
-    //wfilename.innerHTML = file.name;
-    //wfilesize.innerHTML = file.size + "&nbsp; Byte";
-    //wetips.innerHTML = file.size >= 104857600 ? "文件大小较大，计算时间可能较长" : "";
-    //console.log(file);
-    //}
 }
 
 function calch() {
