@@ -1,9 +1,6 @@
 name: Deploy
 on:
   workflow_dispatch: {}
-  push:
-    branches:
-      - gh-pages  
 jobs:
   deploy:
     runs-on: ubuntu-latest
