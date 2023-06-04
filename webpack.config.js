@@ -28,7 +28,6 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
-            manifest: 'manifest.json',
         }),
         new CopyPlugin({
             patterns: [
