@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cmn-Hans">
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">
@@ -7,82 +7,112 @@
     <meta name="renderer" content="webkit">
     <meta name="force-rendering" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css">
     <link rel="icon" href="icons/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <meta name="description" content="免费好用且开源的文件校验工具">
-    <link rel="manifest" href="manifest.json">
-    <script>navigator.serviceWorker.register("js/sw/service-worker.js")</script> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui/dist/css/mdui.min.css" crossorigin="anonymous">
     <title>Hash Checker</title>
+    <style>
+        body::-webkit-scrollbar {
+            width: 6px;
+            height: 4px
+        }
+
+        body::-webkit-scrollbar-thumb {
+            border-radius: 15px;
+            -webkit-box-shadow: inset 0 0 5px #7d7d7d;
+            background: #7d7d7d
+        }
+
+        body::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0);
+            border-radius: 0;
+            background: rgba(0, 0, 0, 0)
+        }
+    </style>
 </head>
 
-<body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
-    <div class="mdui-container mdui-typo">
+<body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-typo mdui-loaded" id="drop">
+    <div class="mdui-container">
         <div class="mdui-row">
-            <img class="mdui-center" width="20%" src="" />
-            <h1 class="mdui-text-center">Hash Checker</h1>
-            <p class="mdui-text-center" i18n="intro">一个开源免费的文件校验工具</p>
-            <img class="mdui-center"
-                src="https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square" />
+            <h1 id="title">Hash Checker</h1>
             <br>
-            <div class="mdui-divider"></div>
-            <div id="download" class="mdui-center mdui-text-center">
-                <h1>下载</h1>
-                <p>最新版本：v1.0.4</p>
-                <p>Hash Checker 支持 Windows 和 macOS 双平台</p>
-                <p>如果您已经下载并安装好了Hash Checker，也可以通过下方按钮打开</p>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="hashchecker();">打开
-                    Hash Checker</button>
-                <br>
-                <h2>Windows</h2>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="win64();">Windows
-                    x64</button>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="win32();">Windows
-                    x32</button>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="wina64();">Windows
-                    arm64</button>
-                <br>
-                <h2>macOS</h2>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="macu();"
-                    i18n="macos">macOS（通用芯片）</button>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="mac();"
-                    i18n="macos-intel">macOS（Intel 芯片）</button>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="maca64();"
-                    i18n="macos-apple">macOS（Apple 芯片）</button>
-                <h2>Android（Beta）</h2>
-                <p>Android 版本为 Web
-                    端修改后的版本，需要设备支持<code>Android System Webview</code>（或<code>Huawei Webview</code>），且系统API版本需 ≥19（4.4+）。
+            <div>
+                <input id="getfile" type="file" style="display: none;">
+                <h1 class="mdui-text-center" id="dragtip" style="display: none;">松开鼠标以读取文件</h1>
+                <button class="mdui-btn mdui-btn-block mdui-ripple" id="openfile">点击选择文件</button>
+                <p class="mdui-text-center">或者拖拽文件到本页</p>
+                <p>
+                    文件：<code id="fm">未选择文件</code>&nbsp;&nbsp;
+                    大小：<code id="fsize">未选择文件</code>&nbsp;&nbsp;
+                    上次修改时间：<code id="fdate">未选择文件</code>&nbsp;&nbsp;
+                    <span class="mdui-text-color-red-700" id="etips"></span>
                 </p>
-                <button class="mdui-btn mdui-btn-raised mdui-color-theme-accent mdui-ripple" onclick="android();"
-                    i18n="android">Android（Beta）</button>
+                <strong class="mdui-text-color-red-700">本应用的所有操作均在您的计算机上运行，不会收集任何信息，请放心使用！</strong>
                 <br>
                 <br>
-                <p>当然，你也可以选用网页版：<a href="https://super12138.github.io/Hash-Checker/webapp">点击前往</a></p>
+                <label class="mdui-checkbox">
+                    <input type="checkbox" id="isclipboard">
+                    <i class="mdui-checkbox-icon"></i>
+                    计算完成后将校验值写入剪贴板（仅在模式为<code>生成</code>下生效）
+                </label>
             </div>
             <br>
-            <div class="mdui-divider"></div>
-            <div id="bug" class="mdui-center mdui-text-center">
-                <h1 i18n="bug-report">问题反馈</h1>
-                <p>我们十分希望听取您的建议，您可在 Github 上反馈您遇到的问题：<a
-                        href="https://github.com/Super12138/Hash-Checker/issues/new/choose">点击前往</a></p>
-                <br>
+            <div>
+                方法：
+                <select class="mdui-select" id="method" mdui-select>
+                    <option value="nullselect" selected>请选择方法...</option>
+                    <option value="md5">MD5</option>
+                    <option value="sha256">SHA256</option>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                模式：
+                <select class="mdui-select" id="mod" mdui-select>
+                    <option value="nullselect" selected>请选择模式...</option>
+                    <option value="check">校验</option>
+                    <option value="gen">生成</option>
+                </select>
             </div>
-            <div class="mdui-divider"></div>
-            <footer class="mdui-text-center">
-                <br>
-                <p>由 <a href="https://github.com/Super12138">Super12138</a> 制作</p>
-                <p>Hash Checker 免费且<a href="https://github.com/Super12138/Hash-Checker">开源</a>，遵循 GPL-3.0 协议</p>
-                <br>
+            <div class="mdui-textfield mdui-textfield-floating-label txta">
+                <label class="mdui-textfield-label">校验值</label>
+                <input class="mdui-textfield-input" id="a" type="text">
+                <div class="mdui-textfield-helper">在此处粘贴您获取到的校验值</div>
+            </div>
+            <br>
+            <button class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="calcbtn">
+                <i class="mdui-icon mdui-icon-left material-icons">&#xe877;</i>检查
+            </button>
+            <br>
+            <h1 id="ttitle"></h1>
+            <p id="tips"></p>
+            <div class="mdui-progress" id="progress" style="display: none;">
+                <div class="mdui-progress-indeterminate" id="progressbar"></div>
+            </div>
+            <br>
+            <br>
+            <footer class="mdui-center mdui-text-center">
+                <div class="mdui-divider"></div>
+                <p>本应用在GitHub上开源，遵循 GPL-3.0 协议<br>由 Super12138 开发</p>
+                <p>版本：在线版 - v1.0.6</p>
                 <br>
             </footer>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/mdui/dist/js/mdui.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-    <script
-        src="https://cdn.jsdelivr.net/gh/jquery-i18n-properties/jquery-i18n-properties/jquery.i18n.properties.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker@gh-pages/js/link.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker@gh-pages/js/lang.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mdui/dist/js/mdui.min.js" crossorigin="anonymous"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker
+                    .register("service-worker.js")
+                    .then((registration) => {
+                        console.log("Service Worker 注册成功：", registration);
+                    })
+                    .catch((registrationError) => {
+                        console.error("Service Worker 注册失败：", registrationError);
+                    });
+            });
+        }
+    </script>
 </body>
 
 </html>
