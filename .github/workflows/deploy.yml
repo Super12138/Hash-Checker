@@ -20,8 +20,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: npm
-      - run: npm ci
+      - run: npm install
       - name: Build
         run: npm run build:prod
       - name: Fix service-worker.js path error
