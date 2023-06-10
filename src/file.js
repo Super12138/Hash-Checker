@@ -1,6 +1,7 @@
+import { formatDate } from "./date";
 let tempfile
 
-export function getfileinfo(file){
+export function getfileinfo(file) {
     const wfilename = document.querySelector('#fm');
     const wfilesize = document.querySelector('#fsize');
     const wetips = document.querySelector('#etips');
@@ -13,24 +14,36 @@ export function getfileinfo(file){
     } else {
         if (file.size >= 104857600) {
             wfilename.innerHTML = file.name;
-            wfilesize.innerHTML = file.size + "&nbsp; Byte";
-            wdate.innerHTML = file.lastModifiedDate;
+            wfilesize.innerHTML = convertbyte(file.size);
+            wdate.innerHTML = formatDate(file.lastModifiedDate);
             wetips.innerHTML = "文件大小较大，计算时间可能较长";
         } else {
             wfilename.innerHTML = file.name;
-            wfilesize.innerHTML = file.size + "&nbsp; Byte";
-            wdate.innerHTML = file.lastModifiedDate;
+            wfilesize.innerHTML = convertbyte(file.size);
+            wdate.innerHTML = formatDate(file.lastModifiedDate);
         }
         console.log(file);
     }
 }
 
-export function sendfile(file){
+export function sendfile(file) {
     tempfile = file
     console.log("收到了来自index.js发送到文件：" + tempfile)
 }
 
-export function getfile(){
+export function getfile() {
     console.log("收到了来自index.js的请求：" + tempfile)
     return tempfile
+}
+
+export function convertbyte(size) {
+    const units = ["Bytes", "KB", "MB", "GB", "TB"];
+    const kb = 1024;
+    let counter = 0;
+    let calcsize = size / 1
+    while (calcsize >= kb) {
+        counter++;
+        calcsize = calcsize / kb;
+    }
+    return calcsize.toFixed(2) + " " + units[counter];
 }

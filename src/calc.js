@@ -9,7 +9,7 @@ export function calc(pattern, method, file, hash) {
     const progressbar = document.querySelector('#progressbar');
 
     // 分片处理文件代码来自 GPT 3.5-Turbo
-    const CHUNK_SIZE = 64 * 1024; // 每片大小为64KB
+    const CHUNK_SIZE = 128 * 1024; // 每片大小为128KB
     const chunkCount = Math.ceil(file.size / CHUNK_SIZE);
     let currentChunk = 0, totalLoaded = 0;
     let hashBuffers = []; // 哈希计算缓冲
@@ -24,13 +24,16 @@ export function calc(pattern, method, file, hash) {
         if (currentChunk === chunkCount) {
             tips.innerHTML = "正在计算...";
             const wordArray = CryptoJS.lib.WordArray.create(hashBuffers.flat());
-            const calchash = method == 'md5' ? CryptoJS.MD5(wordArray).toString(CryptoJS.enc.Hex) : CryptoJS.SHA256(wordArray).toString(CryptoJS.enc.Hex);
+            const cryptoObj = CryptoJS,
+                methodNameStr = method.toString(),
+                tempmethod = cryptoObj[methodNameStr];
+            calchash = tempmethod(wordArray).toString(CryptoJS.enc.Hex);
             console.log(calchash);
             if (pattern == "check") {
                 const userhash = hash.toLowerCase();
                 const genhash = calchash.toLowerCase();
                 if (userhash == genhash) {
-                    tips.innerHTML = "校验成功<br>文件" + method + "值：" + "<code>" + calchash + "</code>";
+                    tips.innerHTML = `校验成功<br>文件${method}值：<code>${calchash}</code>`;
                     mdui.dialog({
                         title: '校验成功',
                         content: '请放心使用',
@@ -42,7 +45,7 @@ export function calc(pattern, method, file, hash) {
                     });
                 }
                 else {
-                    tips.innerHTML = "校验失败<br>文件" + method + "值：<code>" + calchash + "</code><br>请检查获取的校验值是否有误（如多余的空格，复制时少复制了字符），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决";
+                    tips.innerHTML = `校验失败<br>文件${method}值：<code>${calchash}</code><br>请检查获取的校验值是否有误（如多余的空格，复制时少复制了字符），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决`;
                     mdui.dialog({
                         title: '校验失败',
                         content: '请检查获取的校验值是否有误（如多余的空格），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决',
@@ -58,10 +61,10 @@ export function calc(pattern, method, file, hash) {
             else {
                 if (isClipboard) {
                     navigator.clipboard.writeText(calchash).catch(e => console.error(e));
-                    tips.innerHTML = "计算完成，" + method + "值已写入您的剪贴板！<br>" + method + "值：<code>" + calchash + "</code>";
+                    tips.innerHTML = `计算完成，${method}值已写入您的剪贴板！<br>${method}值：<code>${calchash}</code>`;
                 }
                 else {
-                    tips.innerHTML = method + "计算完成<br>" + method + "值：<code>" + calchash + "</code>";
+                    tips.innerHTML = `${method}计算完成<br>${method}值：<code>${calchash}</code>`;
                 }
                 progress.style.display = "none"
             }

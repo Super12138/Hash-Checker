@@ -4,17 +4,17 @@ import { getfileinfo, getfile, sendfile } from "./file";
 const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
 const calcbtn = document.querySelector('#calcbtn');
-const dragtip = document.querySelector('#dragtip')
+const dragtip = document.querySelector('#dragtip');
+let dropzone = document.getElementById('drop');
 
-var dropzone = document.getElementById('drop');
-dropzone.addEventListener('dragover', function (e) {
+dropzone.addEventListener('dragover', (e) => {
     dragtip.style.display = "block";
     e.preventDefault();
 });
-dropzone.addEventListener('drop', function (e) {
+dropzone.addEventListener('drop', (e) => {
     e.preventDefault();
     dragtip.style.display = "none";
-    var file = e.dataTransfer.files[0];
+    let file = e.dataTransfer.files[0];
     getfileinfo(file);
     sendfile(file);
 });
@@ -31,7 +31,7 @@ fileinput.addEventListener('change', () => {
 
 calcbtn.addEventListener('click', () => {
     const file = getfile();
-    const meth = document.querySelector('#method').value;
+    const method = document.querySelector('#method').value;
     const pattern = document.querySelector('#mod').value;
     if (!file || file.length == 0) {
         mdui.dialog({
@@ -45,7 +45,7 @@ calcbtn.addEventListener('click', () => {
         });
         return;
     }
-    if (meth == "nullselect" && pattern == "nullselect") {
+    if (method == "nullselect" && pattern == "nullselect") {
         mdui.dialog({
             title: '错误',
             content: '请选择方法及模式',
@@ -69,7 +69,7 @@ calcbtn.addEventListener('click', () => {
         });
         return;
     }
-    if (meth == "nullselect") {
+    if (method == "nullselect") {
         mdui.dialog({
             title: '错误',
             content: '请选择方法',
@@ -82,7 +82,7 @@ calcbtn.addEventListener('click', () => {
         return;
     }
     if (pattern == "gen") {
-        if (meth == "nullselect") {
+        if (method == "nullselect") {
             mdui.dialog({
                 title: '错误',
                 content: '请选择方法',
@@ -94,8 +94,8 @@ calcbtn.addEventListener('click', () => {
             });
             return;
         }
-        console.log(pattern + meth + file)
-        calc(pattern, meth, file);
+        console.log(pattern + method + file)
+        calc(pattern, method, file);
     } else {
         const inpc = document.getElementById('a').value;
         if (!inpc) {
@@ -110,7 +110,7 @@ calcbtn.addEventListener('click', () => {
             });
             return;
         }
-        console.log(pattern + meth + file + inpc)
-        calc(pattern, meth, file, inpc)
+        console.log(pattern + method + file + inpc)
+        calc(pattern, method, file, inpc)
     }
 })
