@@ -22,7 +22,7 @@ export function calc(pattern, method, file, hash) {
     // 处理分片读取的函数
     function processChunk() {
         if (currentChunk === chunkCount) {
-            tips.innerHTML = "正在计算...";
+            tips.innerHTML = "正在计算，页面可能无响应，请耐心等待...";
             const wordArray = CryptoJS.lib.WordArray.create(hashBuffers.flat());
             const cryptoObj = CryptoJS,
                 methodNameStr = method.toString(),
@@ -88,7 +88,7 @@ export function calc(pattern, method, file, hash) {
             console.log(Math.floor(totalLoaded / file.size * 100) + "%");
             progressbar.style.width = Math.floor(totalLoaded / file.size * 100) + "%";
             hashBuffers.push(new Uint8Array(subReader.result));
-            if (Math.floor(totalLoaded / file.size * 100) > "90") {
+            if (Math.floor(totalLoaded / file.size * 100) > "95") {
                 tips.innerHTML = "正在计算，页面可能无响应，请耐心等待...";
             }
             processChunk();
