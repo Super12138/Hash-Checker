@@ -27,7 +27,7 @@ export function calc(pattern, method, file, hash) {
             const cryptoObj = CryptoJS,
                 methodNameStr = method.toString(),
                 tempmethod = cryptoObj[methodNameStr];
-            calchash = tempmethod(wordArray).toString(CryptoJS.enc.Hex);
+            const calchash = tempmethod(wordArray).toString(CryptoJS.enc.Hex);
             console.log(calchash);
             if (pattern == "check") {
                 const userhash = hash.toLowerCase();
