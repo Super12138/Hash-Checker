@@ -81,14 +81,15 @@ export function calc(pattern, method, file, hash) {
         subReader.onload = () => {
             currentChunk++;
             totalLoaded += subReader.result.byteLength;
+            const percentage = Math.floor(totalLoaded / file.size * 100)
             progressbar.classList.remove('mdui-progress-indeterminate');
             progressbar.classList.add('mdui-progress-determinate');
             progressbar.style.width = "0%";
             tips.innerHTML = "正在将文件缓存...";
-            console.log(Math.floor(totalLoaded / file.size * 100) + "%");
-            progressbar.style.width = Math.floor(totalLoaded / file.size * 100) + "%";
+            console.log(`${percentage}%`);
+            progressbar.style.width = percentage;
             hashBuffers.push(new Uint8Array(subReader.result));
-            if (Math.floor(totalLoaded / file.size * 100) > "95") {
+            if (percentage > "95") {
                 tips.innerHTML = "正在计算，页面可能无响应，请耐心等待...";
             }
             processChunk();
