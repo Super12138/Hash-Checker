@@ -117,7 +117,7 @@ export function calc(pattern, method, file, hash) {
                 sendtext(totalTime, only);
             }
             const totalTime = gettext(only)
-            timetip.innerHTML = `预计缓存完毕需要：${totalTime}秒<br>当前已完成：${percentage}%`;
+            timetip.innerHTML = `预计缓存完毕需要：${totalTime}秒<br><small>注：预计时间可能不准确，仅供参考</small><br>当前已完成：${percentage}%`;
             if (percentage > "95") {
                 tips.innerHTML = "正在计算，页面可能无响应，请耐心等待...";
             }
