@@ -3,7 +3,6 @@ let totalTime
 
 export function sendtext(text, only) {
     if (only == "true") {
-        totalTime = ""
         totalTime = text
     } else {
         temptext = ""
