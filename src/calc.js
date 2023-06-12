@@ -1,4 +1,5 @@
 import CryptoJS from "crypto-js";
+import { sendtext, gettext } from "./transfer";
 
 export function calc(pattern, method, file, hash) {
     console.log("从index.js接收的参数：" + pattern + method + file)
@@ -7,6 +8,7 @@ export function calc(pattern, method, file, hash) {
     const isClipboard = document.querySelector('#isclipboard').checked;
     const progress = document.querySelector('#progress');
     const progressbar = document.querySelector('#progressbar');
+    const timetip = document.querySelector('#timetip');
 
     // 分片处理文件代码来自 GPT 3.5-Turbo
     const CHUNK_SIZE = 128 * 1024; // 每片大小为128KB
@@ -17,7 +19,8 @@ export function calc(pattern, method, file, hash) {
 
     ttitle.innerHTML = "状态：";
     tips.innerHTML = "正在将文件缓存...";
-    progress.style.display = "block"
+    progress.style.display = "block";
+    timetip.style.display = "block";
 
     // 处理分片读取的函数
     function processChunk() {
@@ -57,6 +60,7 @@ export function calc(pattern, method, file, hash) {
                     });
                 }
                 progress.style.display = "none"
+                timetip.style.display = "none"
             }
             else {
                 if (isClipboard) {
@@ -67,6 +71,7 @@ export function calc(pattern, method, file, hash) {
                     tips.innerHTML = `${method}计算完成<br>${method}值：<code>${calchash}</code>`;
                 }
                 progress.style.display = "none"
+                timetip.style.display = "none"
             }
             return;
         }
@@ -89,6 +94,28 @@ export function calc(pattern, method, file, hash) {
             console.log(`${percentage}%`);
             progressbar.style.width = percentage;
             hashBuffers.push(new Uint8Array(subReader.result));
+            const only = "true"
+            if (percentage == "0") {
+                const startTimeorig = Date.now();
+                const startTime = new Date(startTimeorig)
+                sendtext(startTime);
+                console.log(`开始计时 ${startTime}`)
+            }
+            if (percentage == "1") {
+                const endTimeorig = Date.now();
+                const endTime = new Date(endTimeorig)
+                const startTime = gettext()
+                console.log(`停止计时${endTime}，${startTime}`)
+                const orignaltime = endTime - startTime;
+                console.log(`经过时间：${orignaltime}`) // 计算经过的时间
+                const onetime = orignaltime / 1000; // 将毫秒转换成秒
+                // 开始计算剩余时间
+                const totalTimeorig = onetime * 100
+                const totalTime = totalTimeorig.toFixed(3)
+                console.log(onetime)
+                console.log(totalTime)
+                timetip.innerHTML = `预计缓存完毕需要：${totalTime}秒`
+            }
             if (percentage > "95") {
                 tips.innerHTML = "正在计算，页面可能无响应，请耐心等待...";
             }
