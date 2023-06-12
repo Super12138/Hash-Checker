@@ -93,30 +93,31 @@ export function calc(pattern, method, file, hash) {
             tips.innerHTML = "正在将文件缓存...";
             console.log(`${percentage}%`);
             progressbar.style.width = `${percentage}%`;
+            
             hashBuffers.push(new Uint8Array(subReader.result));
             const only = "true"
             if (percentage == "0") {
                 const startTimeorig = Date.now();
-                const startTime = new Date(startTimeorig)
+                const startTime = new Date(startTimeorig);
                 sendtext(startTime);
                 console.log(`开始计时 ${startTime}`)
             }
             if (percentage == "1") {
                 const endTimeorig = Date.now();
-                const endTime = new Date(endTimeorig)
-                const startTime = gettext()
-                console.log(`停止计时${endTime}，${startTime}`)
+                const endTime = new Date(endTimeorig);
+                const startTime = gettext();
+                console.log(`停止计时${endTime}，${startTime}`);
                 const orignaltime = endTime - startTime;
-                console.log(`经过时间：${orignaltime}`) // 计算经过的时间
+                console.log(`经过时间：${orignaltime}`);
                 const onetime = orignaltime / 1000; // 将毫秒转换成秒
                 // 开始计算剩余时间
                 const totalTimeorig = onetime * 100;
                 const totalTime = totalTimeorig.toFixed(3);
-                console.log(onetime)
-                console.log(totalTime)
-                timetip.innerHTML = `预计缓存完毕需要：${totalTime}秒<br>当前已完成：${percentage}％`
-                progressbar.style.width = percentage;
+                progressbar.style.width = `${percentage}%`;
+                sendtext(totalTime, only);
             }
+            const totalTime = gettext(only)
+            timetip.innerHTML = `预计缓存完毕需要：${totalTime}秒<br>当前已完成：${percentage}%`;
             if (percentage > "95") {
                 tips.innerHTML = "正在计算，页面可能无响应，请耐心等待...";
             }
