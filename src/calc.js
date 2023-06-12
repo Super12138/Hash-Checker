@@ -9,7 +9,8 @@ export function calc(pattern, method, file, hash) {
     const progress = document.querySelector('#progress');
     const progressbar = document.querySelector('#progressbar');
     const timetip = document.querySelector('#timetip');
-
+    const calcbtn = document.querySelector('#calcbtn');
+    const choosefilebtn = document.querySelector('#openfile');
     // 分片处理文件代码来自 GPT 3.5-Turbo
     const CHUNK_SIZE = 128 * 1024; // 每片大小为128KB
     const chunkCount = Math.ceil(file.size / CHUNK_SIZE);
@@ -21,6 +22,9 @@ export function calc(pattern, method, file, hash) {
     tips.innerHTML = "正在将文件缓存...";
     progress.style.display = "block";
     timetip.style.display = "block";
+    calcbtn.disabled = true;
+    choosefilebtn.disabled = true;
+
 
     // 处理分片读取的函数
     function processChunk() {
@@ -32,6 +36,10 @@ export function calc(pattern, method, file, hash) {
                 tempmethod = cryptoObj[methodNameStr];
             const calchash = tempmethod(wordArray).toString(CryptoJS.enc.Hex);
             console.log(calchash);
+            calcbtn.disabled = false;
+            choosefilebtn.disabled = false;
+            progress.style.display = "none"
+            timetip.style.display = "none"
             if (pattern == "check") {
                 const userhash = hash.toLowerCase();
                 const genhash = calchash.toLowerCase();
@@ -59,8 +67,6 @@ export function calc(pattern, method, file, hash) {
                         ]
                     });
                 }
-                progress.style.display = "none"
-                timetip.style.display = "none"
             }
             else {
                 if (isClipboard) {
@@ -70,8 +76,6 @@ export function calc(pattern, method, file, hash) {
                 else {
                     tips.innerHTML = `${method}计算完成<br>${method}值：<code>${calchash}</code>`;
                 }
-                progress.style.display = "none"
-                timetip.style.display = "none"
             }
             return;
         }
