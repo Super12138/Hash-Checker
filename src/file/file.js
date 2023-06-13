@@ -39,7 +39,7 @@ export function getfile() {
 
 export function convertbyte(size) {
     const units = ["Bytes", "KB", "MB", "GB", "TB"];
-    const mbunitValuefile = getCookie("mbunit")
+    const mbunitValuefile = getCookie("mbUnit")
     const kb = mbunitValuefile;
     let counter = 0;
     let calcsize = size / 1

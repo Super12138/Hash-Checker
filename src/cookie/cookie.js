@@ -6,3 +6,7 @@ export function getCookie(name) {
     }
     return ""
 }
+
+export function setCookie(name, value, expdate) {
+    document.cookie = `${name}=${value}; expires=${expdate}; path=/`;
+}

@@ -1,6 +1,6 @@
 import { calc } from "./utils/calc";
 import { getfileinfo, getfile, sendfile } from "./file/file";
-import { getCookie } from "./cookie/cookie";
+import { getCookie, setCookie } from "./cookie/cookie";
 
 const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
@@ -9,6 +9,8 @@ const dragtip = document.querySelector('#dragtip');
 const mbunit = document.querySelector('#mbunit');
 const cachesize = document.querySelector('#cachesize');
 const savebtn = document.querySelector('#savebtn');
+const oneWeek = 7 * 24 * 60 * 60 * 1000;
+const expires = new Date(Date.now() + oneWeek).toUTCString();
 let dropzone = document.querySelector('#drop');
 
 dropzone.addEventListener('dragover', (e) => {
@@ -24,14 +26,12 @@ dropzone.addEventListener('drop', (e) => {
 });
 
 window.addEventListener("load", () => {
-    const mbunitValuenew = getCookie("mbunit");
+    const mbunitValuenew = getCookie("mbUnit");
     const cacheSizeValuenew = getCookie("cacheSize");
-    console.log(mbunitValuenew, cacheSizeValuenew)
-    if (cacheSizeValuenew == "") {
-        const oneWeek = 7 * 24 * 60 * 60 * 1000;
-        const expires = new Date(Date.now() + oneWeek).toUTCString();
-        document.cookie = `mbunit=1024; expires=${expires}; path=/`;
-        document.cookie = `cacheSize=128; expires=${expires}; path=/`;
+    console.log(mbunitValuenew, cacheSizeValuenew);
+    if (!mbunitValuenew && !cacheSizeValuenew) {
+        setCookie("mbUnit", "1024", expires)
+        setCookie("cacheSize", "128", expires)
     } else {
         if (mbunitValuenew !== "") {
             mbunit.value = mbunitValuenew;
@@ -140,13 +140,9 @@ calcbtn.addEventListener('click', () => {
 })
 
 savebtn.addEventListener('click', () => {
-    // 获取输入框的值
     const mbunitValue = mbunit.value;
     const cacheSizeValue = cachesize.value;
 
-    // 设置cookie
-    const oneWeek = 7 * 24 * 60 * 60 * 1000;
-    const expires = new Date(Date.now() + oneWeek).toUTCString();
-    document.cookie = `mbunit=${mbunitValue}; expires=${expires}; path=/`;
-    document.cookie = `cacheSize=${cacheSizeValue}; expires=${expires}; path=/`;
+    setCookie("mbUnit", mbunitValue, expires)
+    setCookie("cacheSize", cacheSizeValue, expires)
 })
