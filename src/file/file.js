@@ -1,4 +1,5 @@
-import { formatDate } from "./date";
+import { formatDate } from "../utils/date";
+import { getCookie } from "../cookie/cookie";
 let tempfile
 
 export function getfileinfo(file) {
@@ -28,7 +29,7 @@ export function getfileinfo(file) {
 
 export function sendfile(file) {
     tempfile = file
-    console.log("收到了来自index.js发送到文件：" + tempfile)
+    console.log("收到了来自index.js发送的文件：" + tempfile)
 }
 
 export function getfile() {
@@ -38,7 +39,8 @@ export function getfile() {
 
 export function convertbyte(size) {
     const units = ["Bytes", "KB", "MB", "GB", "TB"];
-    const kb = 1024;
+    const mbunitValuefile = getCookie("mbunit")
+    const kb = mbunitValuefile;
     let counter = 0;
     let calcsize = size / 1
     while (calcsize >= kb) {

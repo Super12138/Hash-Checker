@@ -1,11 +1,15 @@
-import { calc } from "./calc";
-import { getfileinfo, getfile, sendfile } from "./file";
+import { calc } from "./utils/calc";
+import { getfileinfo, getfile, sendfile } from "./file/file";
+import { getCookie } from "./cookie/cookie";
 
 const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
 const calcbtn = document.querySelector('#calcbtn');
 const dragtip = document.querySelector('#dragtip');
-let dropzone = document.getElementById('drop');
+const mbunit = document.querySelector('#mbunit');
+const cachesize = document.querySelector('#cachesize');
+const savebtn = document.querySelector('#savebtn');
+let dropzone = document.querySelector('#drop');
 
 dropzone.addEventListener('dragover', (e) => {
     dragtip.style.display = "block";
@@ -18,6 +22,26 @@ dropzone.addEventListener('drop', (e) => {
     getfileinfo(file);
     sendfile(file);
 });
+
+window.addEventListener("load", () => {
+    const mbunitValuenew = getCookie("mbunit");
+    const cacheSizeValuenew = getCookie("cacheSize");
+    console.log(mbunitValuenew, cacheSizeValuenew)
+    if (cacheSizeValuenew == "") {
+        const oneWeek = 7 * 24 * 60 * 60 * 1000;
+        const expires = new Date(Date.now() + oneWeek).toUTCString();
+        document.cookie = `mbunit=1024; expires=${expires}; path=/`;
+        document.cookie = `cacheSize=128; expires=${expires}; path=/`;
+    } else {
+        if (mbunitValuenew !== "") {
+            mbunit.value = mbunitValuenew;
+        }
+        if (cacheSizeValuenew !== "") {
+            cachesize.value = cacheSizeValuenew;
+        }
+    }
+});
+
 
 openfilebtn.addEventListener('click', () => {
     document.querySelector('#getfile').click();
@@ -113,4 +137,16 @@ calcbtn.addEventListener('click', () => {
         console.log(pattern + method + file + inpc)
         calc(pattern, method, file, inpc)
     }
+})
+
+savebtn.addEventListener('click', () => {
+    // 获取输入框的值
+    const mbunitValue = mbunit.value;
+    const cacheSizeValue = cachesize.value;
+
+    // 设置cookie
+    const oneWeek = 7 * 24 * 60 * 60 * 1000;
+    const expires = new Date(Date.now() + oneWeek).toUTCString();
+    document.cookie = `mbunit=${mbunitValue}; expires=${expires}; path=/`;
+    document.cookie = `cacheSize=${cacheSizeValue}; expires=${expires}; path=/`;
 })

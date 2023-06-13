@@ -36,7 +36,34 @@
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded" id="drop">
     <div class="mdui-container mdui-typo">
         <div class="mdui-row">
-            <h1 id="title">Hash Checker</h1>
+            <h1>Hash Checker
+                <button type="button" class="mdui-btn mdui-ripple mdui-float-right" id="settingsbtn"
+                    mdui-dialog="{target: '#settings'}">
+                    <i class="mdui-icon material-icons">&#xe8b8;</i>
+                </button>
+            </h1>
+            <div class="mdui-dialog" id="settings">
+                <div class="mdui-dialog-title">设置</div>
+                <div class="mdui-dialog-content">你可以在此个性化设置这个应用
+                    <br>
+                    <br>
+                    1MB 单位：
+                    <select class="mdui-select" id="mbunit" mdui-select>
+                        <option value="nullselect" disabled>在此选择你想使用的 1MB 的单位</option>
+                        <option value="1024">1024KB</option>
+                        <option value="1000">1000KB</option>
+                    </select>
+                    <div class="mdui-textfield mdui-textfield-floating-label">
+                        <label class="mdui-textfield-label">单次缓存大小</label>
+                        <input class="mdui-textfield-input" type="number" id="cachesize" min="1" maxlength="10">
+                        <div class="mdui-textfield-helper">在此输入分片缓存文件时单次缓存文件的大小（单位：KB）</div>
+                    </div>
+                </div>
+                <div class="mdui-dialog-actions">
+                    <button class="mdui-btn mdui-ripple" id="cancelbtn" mdui-dialog-close>取消</button>
+                    <button class="mdui-btn mdui-ripple" id="savebtn" mdui-dialog-confirm>保存</button>
+                </div>
+            </div>
             <br>
             <div>
                 <input id="getfile" type="file" style="display: none;">
@@ -62,7 +89,7 @@
             <div>
                 方法：
                 <select class="mdui-select" id="method" mdui-select>
-                    <option value="nullselect" selected>请选择方法...</option>
+                    <option value="nullselect" selected disabled>请选择方法...</option>
                     <option value="MD5">MD5</option>
                     <option value="SHA1">SHA1</option>
                     <option value="SHA3">SHA3</option>
@@ -73,12 +100,12 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 模式：
                 <select class="mdui-select" id="mod" mdui-select>
-                    <option value="nullselect" selected>请选择模式...</option>
+                    <option value="nullselect" selected disabled>请选择模式...</option>
                     <option value="check">校验</option>
                     <option value="gen">生成</option>
                 </select>
             </div>
-            <div class="mdui-textfield mdui-textfield-floating-label txta">
+            <div class="mdui-textfield mdui-textfield-floating-label">
                 <label class="mdui-textfield-label">校验值</label>
                 <input class="mdui-textfield-input" id="a" type="text">
                 <div class="mdui-textfield-helper">在此处粘贴您获取到的校验值</div>
@@ -97,8 +124,9 @@
             <br>
             <footer class="mdui-center mdui-text-center">
                 <div class="mdui-divider"></div>
-                <p>本应用在<a target="_blank" href="https://github.com/Super12138/Hash-Checker/">GitHub</a>上开源，遵循 GPL-3.0 协议<br>由 Super12138 开发</p>
-                <p>版本：在线版 - v1.0.7-03</p>
+                <p>本应用在<a target="_blank" href="https://github.com/Super12138/Hash-Checker/">GitHub</a>上开源，遵循 GPL-3.0
+                    协议<br>由 Super12138 开发</p>
+                <p>版本：在线版 - v1.0.8</p>
                 <br>
             </footer>
         </div>
