@@ -6,9 +6,9 @@ const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
 const calcbtn = document.querySelector('#calcbtn');
 const dragtip = document.querySelector('#dragtip');
-const mbunit = document.querySelector('#mbunit');
-const cachesize = document.querySelector('#cachesize');
-const savebtn = document.querySelector('#savebtn');
+const mbUnit = document.querySelector('#mbunit');
+const cacheSize = document.querySelector('#cachesize');
+const saveBtn = document.querySelector('#savebtn');
 const oneWeek = 7 * 24 * 60 * 60 * 1000;
 const expires = new Date(Date.now() + oneWeek).toUTCString();
 let dropzone = document.querySelector('#drop');
@@ -34,10 +34,10 @@ window.addEventListener("load", () => {
         setCookie("cacheSize", "128", expires)
     } else {
         if (mbunitValuenew !== "") {
-            mbunit.value = mbunitValuenew;
+            mbUnit.value = mbunitValuenew;
         }
         if (cacheSizeValuenew !== "") {
-            cachesize.value = cacheSizeValuenew;
+            cacheSize.value = cacheSizeValuenew;
         }
     }
 });
@@ -139,9 +139,9 @@ calcbtn.addEventListener('click', () => {
     }
 })
 
-savebtn.addEventListener('click', () => {
-    const mbunitValue = mbunit.value;
-    const cacheSizeValue = cachesize.value;
+saveBtn.addEventListener('click', () => {
+    const mbunitValue = mbUnit.value;
+    const cacheSizeValue = cacheSize.value;
 
     setCookie("mbUnit", mbunitValue, expires)
     setCookie("cacheSize", cacheSizeValue, expires)
