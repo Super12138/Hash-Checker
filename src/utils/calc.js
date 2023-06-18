@@ -87,9 +87,37 @@ export function calc(pattern, method, file, hash) {
                 if (isClipboard) {
                     navigator.clipboard.writeText(calchash).catch(e => console.error(e));
                     tips.innerHTML = `计算完成，${method}值已写入您的剪贴板！<br>${method}值：<code>${calchash}</code>`;
+                    if (isSystemNotification) {
+                        sendNotification("计算完成", `${method}值已写入您的剪贴板！\n${method}值：${calchash}`)
+                    }
+                    else{
+                        mdui.dialog({
+                            title: '计算完成',
+                            content: `${method}值已写入您的剪贴板！\n${method}值：${calchash}`,
+                            buttons: [
+                                {
+                                    text: '确定'
+                                }
+                            ]
+                        });
+                    }
                 }
                 else {
                     tips.innerHTML = `${method}计算完成<br>${method}值：<code>${calchash}</code>`;
+                    if (isSystemNotification) {
+                        sendNotification("计算完成", `${method}值：${calchash}`)
+                    }
+                    else{
+                        mdui.dialog({
+                            title: '计算完成',
+                            content: `${method}值：${calchash}`,
+                            buttons: [
+                                {
+                                    text: '确定'
+                                }
+                            ]
+                        });
+                    }
                 }
             }
             return;

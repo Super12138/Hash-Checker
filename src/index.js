@@ -7,6 +7,7 @@ const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
 const calcbtn = document.querySelector('#calcbtn');
 const dragtip = document.querySelector('#dragtip');
+
 const openSettingsBtn = document.querySelector('#settingsBtn');
 const mbUnit = document.querySelector('#mbunit');
 const cacheSize = document.querySelector('#cachesize');
@@ -17,11 +18,13 @@ const deleteCookiesBtn = document.querySelector('#deleteCookies');
 const deleteAllDataBtn = document.querySelector('#deleteAllData');
 const aboutBtn = document.querySelector('#aboutBtn');
 const aboutCloseBtn = document.querySelector('#aboutCloseBtn');
+const sendTestNotification = document.querySelector('#sendTestNotification');
+
 const settingsDialog = new mdui.Dialog('#settings');
 const aboutDialog = new mdui.Dialog('#about');
 
-const oneWeek = 7 * 24 * 60 * 60 * 1000;
-const expires = new Date(Date.now() + oneWeek).toUTCString();
+const exptime = 365.25 * 24 * 60 * 60 * 1000;
+const expires = new Date(Date.now() + exptime).toUTCString();
 let dropzone = document.querySelector('#drop');
 
 dropzone.addEventListener('dragover', (e) => {
@@ -41,18 +44,32 @@ window.addEventListener("load", () => {
     const cacheSizeValuenew = getCookie("cacheSize");
     let isSystemNotificationValuenew = getCookie("SystemNotification");
     console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew);
-    if (mbunitValuenew == "") {
-        setCookie("mbUnit", "1024", expires)
-    } else if (cacheSizeValuenew == "") {
-        setCookie("cacheSize", "128", expires)
-    } else if (isSystemNotificationValuenew == "") {
-        setCookie("SystemNotification", "false", expires)
+    if (mbunitValuenew === "") {
+        setCookie("mbUnit", "1024", expires);
+    } else if (cacheSizeValuenew === "") {
+        setCookie("cacheSize", "128", expires);
+    } else if (isSystemNotificationValuenew === "") {
+        setCookie("SystemNotification", "false", expires);
+        isSystemNotificationValuenew = false;
+    } else {
+        if (isSystemNotificationValuenew === "true") {
+            isSystemNotificationValuenew = true;
+            sendTestNotification.style.display = "block";
+        } else {
+            isSystemNotificationValuenew = false;
+            sendTestNotification.style.display = "none";
+        }
+    }
+    for (let i = 0; i < mbUnit.options.length; i++) {
+        if (mbUnit.options[i].value == mbunitValuenew) {
+            mbUnit.options[i].selected = true;
+            break;
+        }
     }
     mbUnit.value = mbunitValuenew;
     cacheSize.value = cacheSizeValuenew;
     sysNotification.checked = isSystemNotificationValuenew;
 });
-
 
 openfilebtn.addEventListener('click', () => {
     document.querySelector('#getfile').click();
@@ -180,6 +197,74 @@ openSettingsBtn.addEventListener('click', () => {
     settingsDialog.open();
 })
 
+sysNotification.addEventListener('change', () => {
+    if (sysNotification.checked) {
+        if (Notification.permission === 'granted') {
+            console.log("用户之前同意过通知权限")
+            sendTestNotification.style.display = "block";
+            sendNotification("测试通知", "这是一个测试通知")
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    sendTestNotification.style.display = "block";
+                    console.log("用户同意了通知权限");
+                    sendNotification("测试通知", "这是一个测试通知");
+                }
+                else {
+                    console.log("没有获取到通知权限");
+                    sendTestNotification.style.display = "none";
+                    settingsDialog.close();
+                    mdui.dialog({
+                        title: '错误',
+                        content: '您没有同意开启通知权限，本应用无法发送通知，请重新尝试',
+                        buttons: [
+                            {
+                                text: '确定',
+                                onClick: () => {
+                                    settingsDialog.open();
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+        }
+    }
+    else {
+        sendTestNotification.style.display = "none";
+    }
+})
+
+sendTestNotification.addEventListener('click', () => {
+    if (Notification.permission === 'granted') {
+        console.log("用户之前同意过通知权限")
+        sendNotification("测试通知", "这是一个测试通知")
+    } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+                console.log("用户同意了通知权限");
+                sendNotification("测试通知", "这是一个测试通知");
+            }
+            else {
+                console.log("没有获取到通知权限");
+                settingsDialog.close();
+                mdui.dialog({
+                    title: '错误',
+                    content: '请先开启通知权限，再点击本按钮',
+                    buttons: [
+                        {
+                            text: '确定',
+                            onClick: () => {
+                                settingsDialog.open();
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    }
+})
+
 deleteCacheBtn.addEventListener('click', () => {
     settingsDialog.close();
     mdui.dialog({
@@ -294,20 +379,6 @@ deleteAllDataBtn.addEventListener('click', () => {
 aboutBtn.addEventListener('click', () => {
     settingsDialog.close();
     aboutDialog.open();
-    if (Notification.permission === 'granted') {
-        console.log("用户之前同意过通知权限")
-        sendNotification("测试通知", "这是一个测试通知")
-    } else if (Notification.permission !== 'denied') {
-        Notification.requestPermission().then(function (permission) {
-            if (permission === 'granted') {
-                console.log("用户同意了通知权限")
-                sendNotification("测试通知", "这是一个测试通知")
-            }
-            else {
-                console.log("没有获取到通知权限")
-            }
-        });
-    }
 })
 
 aboutCloseBtn.addEventListener('click', () => {
