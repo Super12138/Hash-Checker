@@ -54,15 +54,14 @@
                     </select>
                     <div class="mdui-textfield mdui-textfield-floating-label">
                         <label class="mdui-textfield-label">单次缓存大小</label>
-                        <input class="mdui-textfield-input" type="number" id="cachesize" min="1" maxlength="10">
-                        <div class="mdui-textfield-helper">在此输入分片缓存文件时单次缓存文件的大小（单位：KB）</div>
-                        <div class="mdui-textfield-error">分片单次缓存大小不能为“0”</div>
+                        <input class="mdui-textfield-input" type="number" id="cachesize" min="1" maxlength="5">
+                        <div class="mdui-textfield-helper" id="cacheshelptext">在此输入分片缓存文件时单次缓存文件的大小（单位：KB）</div>
                     </div>
                     <br>
                     <label class="mdui-switch">
                         <input type="checkbox" id="isSystemNotification">
                         <i class="mdui-switch-icon"></i>
-                        &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;<button class="mdui-btn mdui-ripple" id="sendTestNotification">点击发送一条测试通知</button>
+                        &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;<button class="mdui-btn mdui-ripple" id="sendTestNotification" style="display: none;">点击发送一条测试通知</button>
                     </label>
                     <br>
                     <br>
@@ -86,7 +85,7 @@
             <div class="mdui-dialog" id="about">
                 <div class="mdui-dialog-title">关于</div>
                 <div class="mdui-dialog-content">
-                    <p>版本：在线版 - v1.0.8-02-fixed</p>
+                    <p>版本：在线版 - v1.0.8-03</p>
                     <p>本应用在 <a target="_blank" href="https://github.com/Super12138/Hash-Checker/">GitHub</a> 上开源<br>由 <a target="_blank" href="https://github.com/Super12138/">Super12138</a> 开发</p>
                     <img width="50%" src="icons/gpl.svg">
                     <p>遵循 GPL-3.0 协议</p>

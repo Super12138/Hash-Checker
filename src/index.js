@@ -44,11 +44,11 @@ window.addEventListener("load", () => {
     const cacheSizeValuenew = getCookie("cacheSize");
     let isSystemNotificationValuenew = getCookie("SystemNotification");
     console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew);
-    if (mbunitValuenew === "") {
+    if (mbunitValuenew == "") {
         setCookie("mbUnit", "1024", expires);
-    } else if (cacheSizeValuenew === "") {
+    } else if (cacheSizeValuenew == "") {
         setCookie("cacheSize", "128", expires);
-    } else if (isSystemNotificationValuenew === "") {
+    } else if (isSystemNotificationValuenew == "") {
         setCookie("SystemNotification", "false", expires);
         isSystemNotificationValuenew = false;
     } else {
@@ -85,10 +85,35 @@ calcbtn.addEventListener('click', () => {
     const file = getfile();
     const method = document.querySelector('#method').value;
     const pattern = document.querySelector('#mod').value;
+    const cacheSizecheck = getCookie("cacheSize");
     if (!file || file.length == 0) {
         mdui.dialog({
             title: '错误',
             content: '请选择文件',
+            buttons: [
+                {
+                    text: '知道了'
+                }
+            ]
+        });
+        return;
+    }
+    if (cacheSizecheck == "") {
+        mdui.dialog({
+            title: '错误',
+            content: '分片单次缓存大小不能为空，请前往设置进行设置',
+            buttons: [
+                {
+                    text: '知道了'
+                }
+            ]
+        });
+        return;
+    }
+    if (cacheSizecheck == "0") {
+        mdui.dialog({
+            title: '错误',
+            content: '分片单次缓存大小不能为“0”，请前往设置进行设置',
             buttons: [
                 {
                     text: '知道了'
@@ -167,11 +192,11 @@ calcbtn.addEventListener('click', () => {
     }
 })
 
+
 saveBtn.addEventListener('click', () => {
     const mbunitValue = mbUnit.value;
     const cacheSizeValue = cacheSize.value;
     const SystemNotification = document.querySelector('#isSystemNotification').checked;
-
     if (cacheSizeValue == "0") {
         settingsDialog.close();
         mdui.dialog({
@@ -186,8 +211,42 @@ saveBtn.addEventListener('click', () => {
                 }
             ]
         });
+        return
     }
 
+    if (cacheSizeValue == "") {
+        settingsDialog.close();
+        mdui.dialog({
+            title: '错误',
+            content: '分片单次缓存大小不能为空，请重新输入',
+            buttons: [
+                {
+                    text: '确定',
+                    onClick: () => {
+                        settingsDialog.open();
+                    }
+                }
+            ]
+        });
+        return;
+    }
+
+    if(cacheSizeValue.length > 10){
+        settingsDialog.close();
+        mdui.dialog({
+            title: '错误',
+            content: '分片单次缓存大小不能超过5位，请重新输入',
+            buttons: [
+                {
+                    text: '确定',
+                    onClick: () => {
+                        settingsDialog.open();
+                    }
+                }
+            ]
+        });
+        return;
+    }
     setCookie("mbUnit", mbunitValue, expires)
     setCookie("cacheSize", cacheSizeValue, expires)
     setCookie("SystemNotification", SystemNotification, expires)
