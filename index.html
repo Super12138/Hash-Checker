@@ -37,8 +37,7 @@
     <div class="mdui-container mdui-typo">
         <div class="mdui-row">
             <h1>Hash Checker
-                <button type="button" class="mdui-btn mdui-ripple mdui-float-right" id="settingsbtn"
-                    mdui-dialog="{target: '#settings'}">
+                <button type="button" class="mdui-btn mdui-ripple mdui-float-right" id="settingsBtn">
                     <i class="mdui-icon material-icons">&#xe8b8;</i>
                 </button>
             </h1>
@@ -58,11 +57,45 @@
                         <label class="mdui-textfield-label">单次缓存大小</label>
                         <input class="mdui-textfield-input" type="number" id="cachesize" min="1" maxlength="10">
                         <div class="mdui-textfield-helper">在此输入分片缓存文件时单次缓存文件的大小（单位：KB）</div>
+                        <div class="mdui-textfield-error">分片单次缓存大小不能为“0”</div>
                     </div>
+                    <br>
+                    <label class="mdui-switch">
+                        <input type="checkbox" id="isSystemNotification">
+                        <i class="mdui-switch-icon"></i>
+                        &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;<button class="mdui-btn mdui-ripple" id="sendTestNotification">点击发送一条测试通知</button>
+                    </label>
+                    <br>
+                    <br>
+                    <button class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple mdui-color-theme-accent"
+                        id="deleteCache">清除缓存</button>
+                    <br>
+                    <button class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple mdui-color-theme-accent"
+                        id="deleteCookies">清除 Cookies</button>
+                    <br>
+                    <button class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple mdui-color-theme-accent"
+                        id="deleteAllData">清除所有数据</button>
+                    <br>
+                    <button class="mdui-btn mdui-btn-block mdui-btn-raised mdui-ripple mdui-color-theme-accent"
+                        id="aboutBtn">关于</button>
                 </div>
                 <div class="mdui-dialog-actions">
-                    <button class="mdui-btn mdui-ripple" id="cancelbtn" mdui-dialog-close>取消</button>
-                    <button class="mdui-btn mdui-ripple" id="savebtn" mdui-dialog-confirm>保存</button>
+                    <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消</button>
+                    <button class="mdui-btn mdui-ripple" id="saveBtn" mdui-dialog-confirm>保存</button>
+                </div>
+            </div>
+            <div class="mdui-dialog" id="about">
+                <div class="mdui-dialog-title">关于</div>
+                <div class="mdui-dialog-content">
+                    <p>版本：在线版 - v1.0.8-02</p>
+                    <p>本应用在 <a target="_blank" href="https://github.com/Super12138/Hash-Checker/">GitHub</a> 上开源<br>由 <a target="_blank" href="https://github.com/Super12138/">Super12138</a> 开发</p>
+                    <img width="50%" src="icons/gpl.svg">
+                    <p>遵循 GPL-3.0 协议</p>
+                    <p>开源库<br><a target="_blank" href="https://github.com/brix/crypto-js/">CryptoJS</a><br><a target="_blank" href="https://github.com/zdhxiong/mdui/">MDUI</a></p>
+                    <p>感谢<br><a target="_blank" href="https://webpack.js.org/">Webpack</a><br><a target="_blank" href="https://icon.kitchen/">IconKitchen</a></p>
+                </div>
+                <div class="mdui-dialog-actions">
+                    <button class="mdui-btn mdui-ripple" id="aboutCloseBtn" mdui-dialog-confirm>确定</button>
                 </div>
             </div>
             <br>
@@ -123,13 +156,7 @@
                 <div class="mdui-progress-indeterminate" id="progressbar"></div>
             </div>
             <br>
-            <footer class="mdui-center mdui-text-center">
-                <div class="mdui-divider"></div>
-                <p>本应用在 <a target="_blank" href="https://github.com/Super12138/Hash-Checker/">GitHub</a> 上开源，遵循 GPL-3.0
-                    协议<br>由 <a target="_blank" href="https://github.com/Super12138/">Super12138</a> 开发</p>
-                <p>版本：在线版 - v1.0.8-02</p>
-                <br>
-            </footer>
+            <br>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/mdui/dist/js/mdui.min.js" crossorigin="anonymous"></script>

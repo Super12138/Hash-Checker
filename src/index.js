@@ -1,14 +1,25 @@
 import { calc } from "./utils/calc";
 import { getfileinfo, getfile, sendfile } from "./file/file";
-import { getCookie, setCookie } from "./cookie/cookie";
+import { getCookie, setCookie, deleteCookie } from "./cookie/cookie";
+import { sendNotification } from "./utils/notification";
 
 const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
 const calcbtn = document.querySelector('#calcbtn');
 const dragtip = document.querySelector('#dragtip');
+const openSettingsBtn = document.querySelector('#settingsBtn');
 const mbUnit = document.querySelector('#mbunit');
 const cacheSize = document.querySelector('#cachesize');
-const saveBtn = document.querySelector('#savebtn');
+const sysNotification = document.querySelector('#isSystemNotification');
+const saveBtn = document.querySelector('#saveBtn');
+const deleteCacheBtn = document.querySelector('#deleteCache');
+const deleteCookiesBtn = document.querySelector('#deleteCookies');
+const deleteAllDataBtn = document.querySelector('#deleteAllData');
+const aboutBtn = document.querySelector('#aboutBtn');
+const aboutCloseBtn = document.querySelector('#aboutCloseBtn');
+const settingsDialog = new mdui.Dialog('#settings');
+const aboutDialog = new mdui.Dialog('#about');
+
 const oneWeek = 7 * 24 * 60 * 60 * 1000;
 const expires = new Date(Date.now() + oneWeek).toUTCString();
 let dropzone = document.querySelector('#drop');
@@ -28,18 +39,18 @@ dropzone.addEventListener('drop', (e) => {
 window.addEventListener("load", () => {
     const mbunitValuenew = getCookie("mbUnit");
     const cacheSizeValuenew = getCookie("cacheSize");
-    console.log(mbunitValuenew, cacheSizeValuenew);
-    if (!mbunitValuenew && !cacheSizeValuenew) {
+    let isSystemNotificationValuenew = getCookie("SystemNotification");
+    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew);
+    if (mbunitValuenew == "") {
         setCookie("mbUnit", "1024", expires)
+    } else if (cacheSizeValuenew == "") {
         setCookie("cacheSize", "128", expires)
-    } else {
-        if (mbunitValuenew !== "") {
-            mbUnit.value = mbunitValuenew;
-        }
-        if (cacheSizeValuenew !== "") {
-            cacheSize.value = cacheSizeValuenew;
-        }
+    } else if (isSystemNotificationValuenew == "") {
+        setCookie("SystemNotification", "false", expires)
     }
+    mbUnit.value = mbunitValuenew;
+    cacheSize.value = cacheSizeValuenew;
+    sysNotification.checked = isSystemNotificationValuenew;
 });
 
 
@@ -142,7 +153,163 @@ calcbtn.addEventListener('click', () => {
 saveBtn.addEventListener('click', () => {
     const mbunitValue = mbUnit.value;
     const cacheSizeValue = cacheSize.value;
+    const SystemNotification = document.querySelector('#isSystemNotification').checked;
+
+    if (cacheSizeValue == "0") {
+        settingsDialog.close();
+        mdui.dialog({
+            title: '错误',
+            content: '分片单次缓存大小不能为“0”，请重新输入',
+            buttons: [
+                {
+                    text: '确定',
+                    onClick: () => {
+                        settingsDialog.open();
+                    }
+                }
+            ]
+        });
+    }
 
     setCookie("mbUnit", mbunitValue, expires)
     setCookie("cacheSize", cacheSizeValue, expires)
+    setCookie("SystemNotification", SystemNotification, expires)
+})
+
+openSettingsBtn.addEventListener('click', () => {
+    settingsDialog.open();
+})
+
+deleteCacheBtn.addEventListener('click', () => {
+    settingsDialog.close();
+    mdui.dialog({
+        title: '你真的要清除缓存吗',
+        content: '这只适用于网站无法正常更新的情况',
+        buttons: [
+            {
+                text: '取消',
+                onClick: () => {
+                    settingsDialog.open();
+                }
+            },
+            {
+                text: '清除缓存',
+                onClick: () => {
+                    mdui.dialog({
+                        title: '提示',
+                        content: '清除缓存成功，页面即将重载',
+                        buttons: [
+                            {
+                                text: '确定'
+                            }
+                        ]
+                    });
+                    setTimeout(() => {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        caches.keys().then(keys => Promise.all(
+                            keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+                        ));
+                        window.location.reload(true);
+                    }, 500);
+                }
+            }
+        ]
+    });
+})
+
+deleteCookiesBtn.addEventListener('click', () => {
+    settingsDialog.close();
+    mdui.dialog({
+        title: '你真的要清除 Cookies 吗',
+        content: '这也将清除您的所有个人设置',
+        buttons: [
+            {
+                text: '取消',
+                onClick: () => {
+                    settingsDialog.open();
+                }
+            },
+            {
+                text: '清除 Cookies',
+                onClick: () => {
+                    mdui.dialog({
+                        title: '提示',
+                        content: '清除 Cookies 成功，页面即将重载',
+                        buttons: [
+                            {
+                                text: '确定'
+                            }
+                        ]
+                    });
+                    setTimeout(() => {
+                        deleteCookie();
+                        window.location.reload(true);
+                    }, 500);
+                }
+            }
+        ]
+    });
+})
+
+deleteAllDataBtn.addEventListener('click', () => {
+    settingsDialog.close();
+    mdui.dialog({
+        title: '你真的要清除全部数据吗',
+        content: '这将清除网站缓存和您的所有个人设置',
+        buttons: [
+            {
+                text: '取消',
+                onClick: () => {
+                    settingsDialog.open();
+                }
+            },
+            {
+                text: '清除所有数据',
+                onClick: () => {
+                    mdui.dialog({
+                        title: '提示',
+                        content: '清除所有数据成功，页面即将重载',
+                        buttons: [
+                            {
+                                text: '确定'
+                            }
+                        ]
+                    });
+                    setTimeout(() => {
+                        deleteCookie();
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        caches.keys().then(keys => Promise.all(
+                            keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+                        ));
+                        window.location.reload(true);
+                    }, 500);
+                }
+            }
+        ]
+    });
+})
+
+aboutBtn.addEventListener('click', () => {
+    settingsDialog.close();
+    aboutDialog.open();
+    if (Notification.permission === 'granted') {
+        console.log("用户之前同意过通知权限")
+        sendNotification("测试通知", "这是一个测试通知")
+    } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === 'granted') {
+                console.log("用户同意了通知权限")
+                sendNotification("测试通知", "这是一个测试通知")
+            }
+            else {
+                console.log("没有获取到通知权限")
+            }
+        });
+    }
+})
+
+aboutCloseBtn.addEventListener('click', () => {
+    settingsDialog.open();
 })
