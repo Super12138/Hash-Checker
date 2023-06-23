@@ -1,0 +1,69 @@
+{
+    "name": "HashChecker",
+    "version": "1.0.8",
+    "description": "一个开源的、无广告的、遵循 Material Design 的哈希校验&生成器",
+    "main": "index.js",
+    "scripts": {
+      "build": "electron-builder -w",
+      "buildm": "electron-builder -m --universal"
+    },
+    "build": {
+      "appId": "Hash Checker",
+      "productName": "Hash Checker",
+      "copyright": "Copyright © 2019-2023 Super12138",
+      "win": {
+        "icon": "build/AppIcon.ico",
+        "target": [
+          "nsis"
+        ]
+      },
+      "nsis": {
+        "oneClick": false,
+        "deleteAppDataOnUninstall": true,
+        "allowToChangeInstallationDirectory": true
+      },
+      "mac": {
+        "icon": "build/AppIcon.icns",
+        "category": "com.Super12138.HashChecker",
+        "darkModeSupport": true,
+        "target": [
+          {
+            "arch": "universal",
+            "target": "dmg"
+          },
+          {
+            "arch": "x64",
+            "target": "dmg"
+          },
+          {
+            "arch": "arm64",
+            "target": "dmg"
+          }
+        ]
+      },
+      "extraMetadata":{
+        "NODE_ENV":"production"
+      }
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Super12138/Hash-Checker.git"
+    },
+    "keywords": [
+      "security",
+      "crypto",
+      "Hash",
+      "MD5",
+      "SHA256"
+    ],
+    "author": "Super12138",
+    "license": "GPL-3.0",
+    "bugs": {
+      "url": "https://github.com/Super12138/Hash-Checker/issues"
+    },
+    "homepage": "https://github.com/Super12138/Hash-Checker#readme",
+    "devDependencies": {
+      "electron": "^25.2.0",
+      "electron-builder": "^24.4.0"
+    }
+  }

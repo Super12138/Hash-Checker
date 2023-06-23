@@ -1,56 +1,13 @@
 {
   "name": "HashChecker",
-  "version": "1.0.5",
-  "description": "A free, use mateial design, open source, easy-to-use hash checker.",
-  "main": "index.js",
+  "version": "1.0.8",
+  "description": "一个开源的、无广告的、遵循 Material Design 的哈希校验&生成器",
   "scripts": {
-    "start": "electron ./",
-    "build": "electron-builder -w",
-    "buildm": "electron-builder -m --universal"
-  },
-  "build": {
-    "appId": "Hash Checker",
-    "productName": "Hash Checker",
-    "copyright": "Copyright © 2019-2023 Super12138",
-    "win": {
-      "icon": "build/AppIcon.ico",
-      "target": [
-        "nsis"
-      ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "deleteAppDataOnUninstall": true,
-      "allowToChangeInstallationDirectory": true
-    },
-    "mac": {
-      "icon": "build/AppIcon.icns",
-      "category": "com.Super12138.HashChecker",
-      "darkModeSupport": true,
-      "target": [
-        {
-          "arch": "universal",
-          "target": "dmg"
-        },
-        {
-          "arch": "x64",
-          "target": "dmg"
-        },
-        {
-          "arch": "arm64",
-          "target": "dmg"
-        }
-      ]
-    },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "Super12138",
-        "repo": "Hash-Checker",
-        "channel": "latest",
-        "releaseType": "draft"
-      }
-    ]
+    "start": "webpack serve & electron .",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "watch": "webpack --watch",
+    "package": "node script/package"
   },
   "repository": {
     "type": "git",
@@ -69,11 +26,21 @@
     "url": "https://github.com/Super12138/Hash-Checker/issues"
   },
   "homepage": "https://github.com/Super12138/Hash-Checker#readme",
-  "dependencies": {
-    "electron-updater": "^5.3.0"
-  },
   "devDependencies": {
-    "electron": "^25.0.1",
-    "electron-builder": "^23.6.0"
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "babel-loader": "^9.1.2",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "electron": "^25.2.0",
+    "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "mdui": "^1.0.2"
   }
 }
