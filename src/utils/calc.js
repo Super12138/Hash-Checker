@@ -1,10 +1,10 @@
 import CryptoJS from "crypto-js";
-import { sendtext, gettext } from "../utils/transfer";
-import { getCookie } from "../cookie/cookie";
+import { sendText, getText } from "../utils/transfer";
+import { getValue } from "../store/store";
 import { sendNotification } from "./notification";
 import { clipboard } from "electron";
 
-export function calc(pattern, method, file, hash) {
+export async function calc(pattern, method, file, hash) {
     console.log("从index.js接收的参数：" + pattern + method + file)
     const ttitle = document.querySelector('#ttitle');
     const tips = document.querySelector('#tips');
@@ -17,7 +17,7 @@ export function calc(pattern, method, file, hash) {
     const isSystemNotification = document.querySelector('#isSystemNotification').checked;
 
     // 分片处理文件代码来自 GPT 3.5-Turbo + Super12138优化
-    const cacheSizeValuecalc = getCookie("cacheSize");
+    const cacheSizeValuecalc = await getValue("cacheSize");
     const CHUNK_SIZE = cacheSizeValuecalc * 1024;
     const chunkCount = Math.ceil(file.size / CHUNK_SIZE);
     let currentChunk = 0, totalLoaded = 0;
@@ -147,13 +147,13 @@ export function calc(pattern, method, file, hash) {
             if (percentage == "0") {
                 const startTimeorig = Date.now();
                 const startTime = new Date(startTimeorig);
-                sendtext(startTime);
+                sendText(startTime);
                 console.log(`开始计时 ${startTime}`)
             }
             if (percentage == "1") {
                 const endTimeorig = Date.now();
                 const endTime = new Date(endTimeorig);
-                const startTime = gettext();
+                const startTime = getText();
                 console.log(`停止计时${endTime}，${startTime}`);
                 const orignaltime = endTime - startTime;
                 console.log(`经过时间：${orignaltime}`);
@@ -162,12 +162,12 @@ export function calc(pattern, method, file, hash) {
                 const totalTimeorig = onetime * 100;
                 const totalTime = totalTimeorig.toFixed(3);
                 progressbar.style.width = `${percentage}%`;
-                sendtext(totalTime, only);
+                sendText(totalTime, only);
             }
-            const totalTime = gettext(only)
+            const totalTime = getText(only)
             timetip.innerHTML = `预计缓存完毕需要：${totalTime}秒<br><small>注：预计时间可能不准确，仅供参考</small><br>当前已完成：${percentage}%`;
             if (percentage > "95") {
-                tips.innerHTML = "正在计算，页面可能无响应，请耐心等待...";
+                tips.innerHTML = "正在计算，应用可能无响应，请耐心等待……";
             }
             processChunk();
         }

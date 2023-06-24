@@ -1,13 +1,18 @@
-const { app, BrowserWindow, Menu, shell } = require('electron');
+const { app, BrowserWindow, Menu, shell, ipcMain } = require('electron');
+const Store = require('electron-store');
+
 const date = new Date();
 const year = date.getFullYear();
 const isPackaged = app.isPackaged;
+const isMac = process.platform === 'darwin';
+const store = new Store();
 
 function createWindow() {
   const win = new BrowserWindow({
     width: 1100,
     height: 800,
     center: true,
+    title: 'Hash Checker',
     // frame: false,
     // titleBarStyle: 'hidden',
     webPreferences: {
@@ -19,58 +24,58 @@ function createWindow() {
     win.loadFile('index.html')
   } else {
     win.loadURL('http://localhost:8080/')
+    win.webContents.openDevTools();
   }
-  // win.webContents.openDevTools();
   // win.setWindowButtonVisibility(true)
 }
 
-const wintemplate = [
+const template = [
   {
-    label: '文件',
+    label: isMac ? app.name : '文件',
     submenu: [
       {
         label: '关于',
-        role: 'about'
+        role: 'about',
       },
       {
         label: '退出',
-        role: 'quit'
-      }
-    ]
+        role: 'quit',
+      },
+    ],
   },
   {
     label: '编辑',
     submenu: [
       {
         label: '撤销',
-        role: 'undo'
+        role: 'undo',
       },
       {
         label: '恢复',
-        role: 'redo'
+        role: 'redo',
       },
       {
         label: '剪切',
-        role: 'cut'
+        role: 'cut',
       },
       {
         label: '复制',
-        role: 'copy'
+        role: 'copy',
       },
       {
         label: '粘贴',
-        role: 'paste'
+        role: 'paste',
       },
-    ]
+    ],
   },
   {
     label: '开发者选项',
     submenu: [
       {
         label: '打开开发者调试工具',
-        role: 'toggleDevTools'
+        role: 'toggleDevTools',
       },
-    ]
+    ],
   },
   {
     label: '帮助',
@@ -78,80 +83,15 @@ const wintemplate = [
       {
         label: '使用说明',
         click: async () => {
-          await shell.openExternal('https://github.com/Super12138/Hash-Checker')
-        }
-      }
-    ]
-  }
-]
-const darwintemplate = [
-  {
-    label: app.name,
-    submenu: [
-      {
-        label: '关于',
-        role: 'about'
+          await shell.openExternal('https://github.com/Super12138/Hash-Checker');
+        },
       },
-      {
-        label: '退出',
-        role: 'quit'
-      }
-    ]
+    ],
   },
-  {
-    label: '编辑',
-    submenu: [
-      {
-        label: '撤销',
-        role: 'undo'
-      },
-      {
-        label: '恢复',
-        role: 'redo'
-      },
-      {
-        label: '剪切',
-        role: 'cut'
-      },
-      {
-        label: '复制',
-        role: 'copy'
-      },
-      {
-        label: '粘贴',
-        role: 'paste'
-      },
-    ]
-  },
-  {
-    label: '开发者选项',
-    submenu: [
-      {
-        label: '打开开发者调试工具',
-        role: 'toggleDevTools'
-      },
-    ]
-  },
-  {
-    label: '帮助',
-    submenu: [
-      {
-        label: '使用说明',
-        click: async () => {
-          await shell.openExternal('https://github.com/Super12138/Hash-Checker')
-        }
-      }
-    ]
-  }
-]
-if (process.platform == 'darwin') {
-  const dmenu = Menu.buildFromTemplate(darwintemplate)
-  Menu.setApplicationMenu(dmenu)
-}
-else {
-  const wmenu = Menu.buildFromTemplate(wintemplate)
-  Menu.setApplicationMenu(wmenu)
-}
+];
+
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
 
 app.whenReady().then(() => {
   createWindow()
@@ -167,7 +107,7 @@ app.setAboutPanelOptions({
   applicationName: 'Hash Checker',
   applicationVersion: '1.0.8',
   copyright: 'Copyright © 2019-' + year + ' Super12138',
-  version: '1082'
+  version: '1083'
 })
 
 app.on('window-all-closed', () => {
@@ -175,3 +115,16 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+ipcMain.on('setValue', (event, name, value) => {
+  store.set(name, value);
+});
+
+ipcMain.on('getValue', (event, name) => {
+  const getValueResult = store.get(name);
+  event.sender.send('getValueReply', getValueResult);
+});
+
+ipcMain.on('deleteValue', (event, name) => {
+  store.delete(name);
+});

@@ -45,4 +45,3 @@
  - [Electron-builder](https://www.electron.build/)
  - [MDUI](https://github.com/zdhxiong/mdui)
  - [CryptoJS](https://github.com/brix/crypto-js)
- - [PWABuilder](https://www.pwabuilder.com/)

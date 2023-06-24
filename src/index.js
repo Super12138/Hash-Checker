@@ -1,6 +1,6 @@
 import { calc } from "./utils/calc";
 import { getfileinfo, getfile, sendfile } from "./file/file";
-import { getCookie, setCookie, deleteCookie } from "./cookie/cookie";
+import { getValue, setValue, deleteValue } from "./store/store";
 import { sendNotification } from "./utils/notification";
 import { shell } from "electron";
 
@@ -23,10 +23,6 @@ const sendTestNotification = document.querySelector('#sendTestNotification');
 
 const settingsDialog = new mdui.Dialog('#settings');
 const aboutDialog = new mdui.Dialog('#about');
-
-const exptime = 365.25 * 24 * 60 * 60 * 1000;
-const expires = new Date(Date.now() + exptime).toUTCString();
-
 
 const links = document.querySelectorAll('a[href]');
 let dropzone = document.querySelector('#drop');
@@ -51,37 +47,57 @@ dropzone.addEventListener('drop', (e) => {
     sendfile(file);
 });
 
-window.addEventListener("load", () => {
-    const mbunitValuenew = getCookie("mbUnit");
-    const cacheSizeValuenew = getCookie("cacheSize");
-    let isSystemNotificationValuenew = getCookie("SystemNotification");
+window.addEventListener("load", async () => {
+    const firstUse = await getValue("fistUse");
+    const mbunitValuenew = await getValue("mbUnit");
+    const cacheSizeValuenew = await getValue("cacheSize");
+    let isSystemNotificationValuenew = await getValue("SystemNotification");
+    console.log(`初次使用：${firstUse}`)
     console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew);
-    if (mbunitValuenew == "") {
-        setCookie("mbUnit", "1024", expires);
-    } else if (cacheSizeValuenew == "") {
-        setCookie("cacheSize", "128", expires);
-    } else if (isSystemNotificationValuenew == "") {
-        setCookie("SystemNotification", "false", expires);
-        isSystemNotificationValuenew = false;
-    } else {
-        if (isSystemNotificationValuenew === "true") {
-            isSystemNotificationValuenew = true;
-            sendTestNotification.style.display = "block";
-        } else {
+
+    if (firstUse == "1") {
+        if (mbunitValuenew == undefined) {
+            setValue("mbUnit", "1024");
+        } else if (cacheSizeValuenew == undefined) {
+            setValue("cacheSize", "128");
+        } else if (isSystemNotificationValuenew == undefined) {
+            setValue("SystemNotification", false);
             isSystemNotificationValuenew = false;
-            sendTestNotification.style.display = "none";
+        } else {
+            if (isSystemNotificationValuenew === true) {
+                isSystemNotificationValuenew = true;
+                sendTestNotification.style.display = "block";
+            } else {
+                isSystemNotificationValuenew = false;
+                sendTestNotification.style.display = "none";
+            }
         }
-    }
-    for (let i = 0; i < mbUnit.options.length; i++) {
-        if (mbUnit.options[i].value == mbunitValuenew) {
-            mbUnit.options[i].selected = true;
-            break;
+        for (let i = 0; i < mbUnit.options.length; i++) {
+            if (mbUnit.options[i].value == mbunitValuenew) {
+                mbUnit.options[i].selected = true;
+                break;
+            }
         }
+    } 
+    else {
+        setValue("fistUse", "1");
+        setValue("mbUnit", "1024");
+        setValue("cacheSize", "128");
+        setValue("SystemNotification", false);
+        isSystemNotificationValuenew = false;
+        for (let i = 0; i < mbUnit.options.length; i++) {
+            if (mbUnit.options[i].value == "1024") {
+                mbUnit.options[i].selected = true;
+                break;
+            }
+        }
+        window.location.reload(true);
     }
     mbUnit.value = mbunitValuenew;
     cacheSize.value = cacheSizeValuenew;
     sysNotification.checked = isSystemNotificationValuenew;
 });
+
 
 openfilebtn.addEventListener('click', () => {
     document.querySelector('#getfile').click();
@@ -89,15 +105,15 @@ openfilebtn.addEventListener('click', () => {
 
 fileinput.addEventListener('change', () => {
     const file = document.querySelector('#getfile').files[0];
-    getfileinfo(file)
-    sendfile(file)
+    getfileinfo(file);
+    sendfile(file);
 })
 
 calcbtn.addEventListener('click', () => {
     const file = getfile();
     const method = document.querySelector('#method').value;
     const pattern = document.querySelector('#mod').value;
-    const cacheSizecheck = getCookie("cacheSize");
+    const cacheSizecheck = getValue("cacheSize");
     if (!file || file.length == 0) {
         mdui.dialog({
             title: '错误',
@@ -259,9 +275,9 @@ saveBtn.addEventListener('click', () => {
         });
         return;
     }
-    setCookie("mbUnit", mbunitValue, expires)
-    setCookie("cacheSize", cacheSizeValue, expires)
-    setCookie("SystemNotification", SystemNotification, expires)
+    setValue("mbUnit", mbunitValue)
+    setValue("cacheSize", cacheSizeValue)
+    setValue("SystemNotification", SystemNotification)
 })
 
 openSettingsBtn.addEventListener('click', () => {
@@ -270,36 +286,8 @@ openSettingsBtn.addEventListener('click', () => {
 
 sysNotification.addEventListener('change', () => {
     if (sysNotification.checked) {
-        if (Notification.permission === 'granted') {
-            console.log("用户之前同意过通知权限")
-            sendTestNotification.style.display = "block";
-            sendNotification("测试通知", "这是一个测试通知")
-        } else if (Notification.permission !== 'denied') {
-            Notification.requestPermission().then((permission) => {
-                if (permission === 'granted') {
-                    sendTestNotification.style.display = "block";
-                    console.log("用户同意了通知权限");
-                    sendNotification("测试通知", "这是一个测试通知");
-                }
-                else {
-                    console.log("没有获取到通知权限");
-                    sendTestNotification.style.display = "none";
-                    settingsDialog.close();
-                    mdui.dialog({
-                        title: '错误',
-                        content: '您没有同意开启通知权限，本应用无法发送通知，请重新尝试',
-                        buttons: [
-                            {
-                                text: '确定',
-                                onClick: () => {
-                                    settingsDialog.open();
-                                }
-                            }
-                        ]
-                    });
-                }
-            });
-        }
+        sendTestNotification.style.display = "block";
+        sendNotification("测试通知", "这是一个测试通知");
     }
     else {
         sendTestNotification.style.display = "none";
@@ -307,33 +295,7 @@ sysNotification.addEventListener('change', () => {
 })
 
 sendTestNotification.addEventListener('click', () => {
-    if (Notification.permission === 'granted') {
-        console.log("用户之前同意过通知权限")
-        sendNotification("测试通知", "这是一个测试通知")
-    } else if (Notification.permission !== 'denied') {
-        Notification.requestPermission().then((permission) => {
-            if (permission === 'granted') {
-                console.log("用户同意了通知权限");
-                sendNotification("测试通知", "这是一个测试通知");
-            }
-            else {
-                console.log("没有获取到通知权限");
-                settingsDialog.close();
-                mdui.dialog({
-                    title: '错误',
-                    content: '请先开启通知权限，再点击本按钮',
-                    buttons: [
-                        {
-                            text: '确定',
-                            onClick: () => {
-                                settingsDialog.open();
-                            }
-                        }
-                    ]
-                });
-            }
-        });
-    }
+    sendNotification("测试通知", "这是一个测试通知")
 })
 
 deleteCacheBtn.addEventListener('click', () => {
@@ -377,8 +339,8 @@ deleteCacheBtn.addEventListener('click', () => {
 deleteCookiesBtn.addEventListener('click', () => {
     settingsDialog.close();
     mdui.dialog({
-        title: '你真的要清除 Cookies 吗',
-        content: '这也将清除您的所有个人设置',
+        title: '你真的要清除本地数据吗',
+        content: '这将会清除您的所有个人设置',
         buttons: [
             {
                 text: '取消',
@@ -387,11 +349,11 @@ deleteCookiesBtn.addEventListener('click', () => {
                 }
             },
             {
-                text: '清除 Cookies',
+                text: '清除本地数据',
                 onClick: () => {
                     mdui.dialog({
                         title: '提示',
-                        content: '清除 Cookies 成功，应用即将重载',
+                        content: '清除本地数据成功，应用即将重载',
                         buttons: [
                             {
                                 text: '确定'
@@ -399,7 +361,10 @@ deleteCookiesBtn.addEventListener('click', () => {
                         ]
                     });
                     setTimeout(() => {
-                        deleteCookie();
+                        deleteValue("mbUnit");
+                        deleteValue("cacheSize");
+                        deleteValue("SystemNotification");
+                        setValue("fistUse", "0");
                         window.location.reload(true);
                     }, 500);
                 }
@@ -433,7 +398,10 @@ deleteAllDataBtn.addEventListener('click', () => {
                         ]
                     });
                     setTimeout(() => {
-                        deleteCookie();
+                        deleteValue("mbUnit");
+                        deleteValue("cacheSize");
+                        deleteValue("SystemNotification");
+                        setValue("fistUse", "0");
                         localStorage.clear();
                         sessionStorage.clear();
                         caches.keys().then(keys => Promise.all(

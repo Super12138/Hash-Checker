@@ -3,11 +3,12 @@
   "version": "1.0.8",
   "description": "一个开源的、无广告的、遵循 Material Design 的哈希校验&生成器",
   "scripts": {
-    "start": "webpack serve & electron .",
+    "start": "concurrently \"webpack serve\" \"electron .\"",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "watch": "webpack --watch",
-    "package": "node script/package"
+    "package": "node script/package",
+    "clean": "node script/clean"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "babel-loader": "^9.1.2",
+    "concurrently": "^8.2.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "electron": "^25.2.0",
@@ -41,6 +43,7 @@
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
+    "electron-store": "^8.1.0",
     "mdui": "^1.0.2"
   }
 }

@@ -1,8 +1,8 @@
 import { formatDate } from "../utils/date";
-import { getCookie } from "../cookie/cookie";
+import { getValue } from "../store/store";
 let tempfile
 
-export function getfileinfo(file) {
+export async function getfileinfo(file) {
     const wfilename = document.querySelector('#fm');
     const wfilesize = document.querySelector('#fsize');
     const wetips = document.querySelector('#etips');
@@ -15,12 +15,14 @@ export function getfileinfo(file) {
     } else {
         if (file.size >= 104857600) {
             wfilename.innerHTML = file.name;
-            wfilesize.innerHTML = convertbyte(file.size);
+            const cbr = await convertbyte(file.size);
+            wfilesize.innerHTML = cbr;
             wdate.innerHTML = formatDate(file.lastModifiedDate);
             wetips.innerHTML = "文件大小较大，计算时间可能较长";
         } else {
             wfilename.innerHTML = file.name;
-            wfilesize.innerHTML = convertbyte(file.size);
+            const cbr = await convertbyte(file.size);
+            wfilesize.innerHTML = cbr;
             wdate.innerHTML = formatDate(file.lastModifiedDate);
         }
         console.log(file);
@@ -37,15 +39,15 @@ export function getfile() {
     return tempfile
 }
 
-export function convertbyte(size) {
+export async function convertbyte(size) {
     const units = ["Bytes", "KB", "MB", "GB", "TB"];
-    const mbunitValuefile = getCookie("mbUnit")
-    const kb = mbunitValuefile;
+    const mbunitValuefile = await getValue("mbUnit");
     let counter = 0;
-    let calcsize = size / 1
-    while (calcsize >= kb) {
+    let calcsize = size / 1;
+    while (calcsize >= mbunitValuefile) {
         counter++;
-        calcsize = calcsize / kb;
+        calcsize = calcsize / mbunitValuefile;
     }
-    return calcsize.toFixed(2) + " " + units[counter];
+    const result = calcsize.toFixed(2) + " " + units[counter];
+    return result
 }
