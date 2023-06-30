@@ -27,15 +27,19 @@
 
 |             主界面（浅色）          |
 | :----------------------------------------------------------: |
-|   ![Hash Checker-01.png](https://s2.loli.net/2023/01/31/yzZVWa72I6tJl9O.png) |
+|   ![Hash Checker-01.png](https://s2.loli.net/2023/06/30/qoWMl7spyhOGuCt.png) |
 |             主界面（深色）          |
-|   ![Hash Checker-02.png](https://s2.loli.net/2023/01/31/Tad5zkMi6spIKYj.png) |
+|   ![Hash Checker-02.png](https://s2.loli.net/2023/06/30/nXaENxWC6q8riAS.png) |
 |             生成哈希值              |
-|   ![Hash Checker-03.png](https://s2.loli.net/2023/01/31/IxBRY4Gs2c7Hmkb.png) |
+|   ![Hash Checker-03.png](https://s2.loli.net/2023/06/30/FskYWonwH4eEQ1q.png) |
 |             校验哈希值（成功）       |
-|   ![Hash Checker-04.png](https://s2.loli.net/2023/01/31/ctiylSA4HeBLbEY.png) |
+|   ![Hash Checker-04.png](https://s2.loli.net/2023/06/30/a7iQfP93bLn1EuI.png) |
 |             校验哈希值（失败）       |
-|   ![Hash Checker-05.png](https://s2.loli.net/2023/01/31/GNl9ZdMq4thfBKp.png) |
+|   ![Hash Checker-05.png](https://s2.loli.net/2023/06/30/aSPDYW6dyocktl8.png) |
+|             设置                    |
+|   ![Hash Checker-06.png](https://s2.loli.net/2023/06/30/IuAUpx5Zl12nfc6.png) |
+|             关于                    |
+|   ![Hash Checker-07.png](https://s2.loli.net/2023/06/30/KhWM5aHDVBt6T4r.png) |
 
 ## 💻 开发者
 - Super12138
@@ -45,3 +49,5 @@
  - [Electron-builder](https://www.electron.build/)
  - [MDUI](https://github.com/zdhxiong/mdui)
  - [CryptoJS](https://github.com/brix/crypto-js)
+ - [Webpack](https://webpackjs.org/)
+ - [Babel](https://babel.dev/)
