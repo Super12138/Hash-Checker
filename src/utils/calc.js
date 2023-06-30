@@ -2,7 +2,7 @@ import CryptoJS from "crypto-js";
 import { sendText, getText } from "../utils/transfer";
 import { getValue } from "../store/store";
 import { sendNotification } from "./notification";
-import { clipboard } from "electron";
+import { ipcRenderer, clipboard } from "electron";
 
 export async function calc(pattern, method, file, hash) {
     console.log("从index.js接收的参数：" + pattern + method + file)
@@ -10,10 +10,10 @@ export async function calc(pattern, method, file, hash) {
     const tips = document.querySelector('#tips');
     const isClipboard = document.querySelector('#isclipboard').checked;
     const progress = document.querySelector('#progress');
-    const progressbar = document.querySelector('#progressbar');
-    const timetip = document.querySelector('#timetip');
-    const calcbtn = document.querySelector('#calcbtn');
-    const choosefilebtn = document.querySelector('#openfile');
+    const progressBar = document.querySelector('#progressbar');
+    const timeTip = document.querySelector('#timetip');
+    const calcBtn = document.querySelector('#calcbtn');
+    const chooseFileBtn = document.querySelector('#openfile');
     const isSystemNotification = document.querySelector('#isSystemNotification').checked;
 
     // 分片处理文件代码来自 GPT 3.5-Turbo + Super12138优化
@@ -27,9 +27,9 @@ export async function calc(pattern, method, file, hash) {
     ttitle.innerHTML = "状态：";
     tips.innerHTML = "正在将文件缓存...";
     progress.style.display = "block";
-    timetip.style.display = "block";
-    calcbtn.disabled = true;
-    choosefilebtn.disabled = true;
+    timeTip.style.display = "block";
+    calcBtn.disabled = true;
+    chooseFileBtn.disabled = true;
 
 
     // 处理分片读取的函数
@@ -42,10 +42,13 @@ export async function calc(pattern, method, file, hash) {
                 tempmethod = cryptoObj[methodNameStr];
             const calchash = tempmethod(wordArray).toString(CryptoJS.enc.Hex);
             console.log(calchash);
-            calcbtn.disabled = false;
-            choosefilebtn.disabled = false;
-            progress.style.display = "none"
-            timetip.style.display = "none"
+
+            calcBtn.disabled = false;
+            chooseFileBtn.disabled = false;
+            progress.style.display = "none";
+            timeTip.style.display = "none";
+            ipcRenderer.send('clear-progress');
+
             if (pattern == "check") {
                 const userhash = hash.toLowerCase();
                 const genhash = calchash.toLowerCase();
@@ -134,15 +137,17 @@ export async function calc(pattern, method, file, hash) {
         subReader.onload = () => {
             currentChunk++;
             totalLoaded += subReader.result.byteLength;
-            const percentage = Math.floor(totalLoaded / file.size * 100)
-            progressbar.classList.remove('mdui-progress-indeterminate');
-            progressbar.classList.add('mdui-progress-determinate');
-            progressbar.style.width = "0%";
+            const percentage = Math.floor(totalLoaded / file.size * 100);
+            const percentageorig = totalLoaded / file.size
+            progressBar.classList.remove('mdui-progress-indeterminate');
+            progressBar.classList.add('mdui-progress-determinate');
+            progressBar.style.width = "0%";
             tips.innerHTML = "正在将文件缓存...";
             console.log(`${percentage}%`);
-            progressbar.style.width = `${percentage}%`;
-
+            progressBar.style.width = `${percentage}%`;
+            ipcRenderer.send('set-progress', percentageorig);
             hashBuffers.push(new Uint8Array(subReader.result));
+
             const only = "true"
             if (percentage == "0") {
                 const startTimeorig = Date.now();
@@ -161,11 +166,12 @@ export async function calc(pattern, method, file, hash) {
                 // 开始计算剩余时间
                 const totalTimeorig = onetime * 100;
                 const totalTime = totalTimeorig.toFixed(3);
-                progressbar.style.width = `${percentage}%`;
+                progressBar.style.width = `${percentage}%`;
                 sendText(totalTime, only);
             }
+
             const totalTime = getText(only)
-            timetip.innerHTML = `预计缓存完毕需要：${totalTime}秒<br><small>注：预计时间可能不准确，仅供参考</small><br>当前已完成：${percentage}%`;
+            timeTip.innerHTML = `预计缓存完毕需要：${totalTime}秒<br><small>注：预计时间可能不准确，仅供参考</small><br>当前已完成：${percentage}%`;
             if (percentage > "95") {
                 tips.innerHTML = "正在计算，应用可能无响应，请耐心等待……";
             }

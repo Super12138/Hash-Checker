@@ -106,3 +106,5 @@ dist
 
 # 打包产物
 out
+
+package-lock.json

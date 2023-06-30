@@ -15,17 +15,30 @@ function createWindow() {
     title: 'Hash Checker',
     // frame: false,
     // titleBarStyle: 'hidden',
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
     },
   })
+
   if (isPackaged) {
     win.loadFile('index.html')
   } else {
     win.loadURL('http://localhost:8080/')
     win.webContents.openDevTools();
   }
+
+  win.once('ready-to-show', () => {
+    win.show()
+  });
+
+  ipcMain.on('set-progress', (event, progress) => {
+    win.setProgressBar(progress);
+  });
+  ipcMain.on('clear-progress', (event) => {
+    win.setProgressBar(-1);
+  });
   // win.setWindowButtonVisibility(true)
 }
 
