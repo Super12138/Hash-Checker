@@ -96,7 +96,13 @@ const template = [
       {
         label: '使用说明',
         click: async () => {
-          await shell.openExternal('https://github.com/Super12138/Hash-Checker');
+          await shell.openExternal('https://super12138.github.io/hschecker/use.html');
+        },
+      },
+      {
+        label: '反馈 Bug',
+        click: async () => {
+          await shell.openExternal('https://github.com/Super12138/Hash-Checker/issues');
         },
       },
     ],
