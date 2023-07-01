@@ -1,19 +1,14 @@
-let temptext
-let totalTime
+let tempText;
+let totalTime;
 
-export function sendtext(text, only) {
-    if (only == "true") {
-        totalTime = text
+export function sendText(text, only) {
+    if (only === "true") {
+        totalTime = text;
     } else {
-        temptext = ""
-        temptext = text
+        tempText = text;
     }
 }
 
-export function gettext(only) {
-    if (only == "true") {
-        return totalTime
-    } else {
-        return temptext
-    }
+export function getText(only) {
+    return (only === "true") ? totalTime : tempText;
 }
