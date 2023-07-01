@@ -231,7 +231,7 @@ saveBtn.addEventListener('click', () => {
         return;
     }
 
-    if(cacheSizeValue.length > 10){
+    if (cacheSizeValue.length > 10) {
         settingsDialog.close();
         mdui.dialog({
             title: '错误',

@@ -33,6 +33,7 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
+            inject: 'body',
         }),
         new CopyPlugin({
             patterns: [
