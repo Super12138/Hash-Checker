@@ -2,6 +2,7 @@ export function sendNotification(title, content) {
     const options = {
         body: content,
         lang: "zh-Hans-CN",
+        icon: "icons/icon-512.png",
     };
 
     if ('Notification' in window && 'serviceWorker' in navigator) {
