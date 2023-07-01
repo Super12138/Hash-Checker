@@ -1,8 +1,9 @@
+import { shell } from "electron";
 import { calc } from "./utils/calc";
 import { getfileinfo, getfile, sendfile } from "./file/file";
 import { getValue, setValue, deleteValue } from "./store/store";
 import { sendNotification } from "./utils/notification";
-import { shell } from "electron";
+import { update } from "./utils/update";
 
 const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
@@ -27,8 +28,8 @@ const aboutDialog = new mdui.Dialog('#about');
 const links = document.querySelectorAll('a[href]');
 let dropzone = document.querySelector('#drop');
 
-links.forEach(link => {
-    link.addEventListener('click', e => {
+links.forEach((link) => {
+    link.addEventListener('click', (e) => {
         const url = link.getAttribute('href');
         e.preventDefault();
         shell.openExternal(url);
@@ -48,6 +49,12 @@ dropzone.addEventListener('drop', (e) => {
 });
 
 window.addEventListener("load", async () => {
+    if (navigator.onLine) {
+        console.log('在线状态');
+        update();
+    } else {
+        console.log('离线状态');
+    }
     const firstUse = await getValue("fistUse");
     const mbunitValuenew = await getValue("mbUnit");
     const cacheSizeValuenew = await getValue("cacheSize");
@@ -78,7 +85,7 @@ window.addEventListener("load", async () => {
                 break;
             }
         }
-    } 
+    }
     else {
         setValue("fistUse", "1");
         setValue("mbUnit", "1024");
@@ -111,9 +118,10 @@ fileinput.addEventListener('change', () => {
 
 calcbtn.addEventListener('click', () => {
     const file = getfile();
-    const method = document.querySelector('#method').value;
-    const pattern = document.querySelector('#mod').value;
     const cacheSizecheck = getValue("cacheSize");
+    const method = document.querySelector('#method').value;
+    const patternValue = document.querySelector('#mod').value;
+    const checkSumInputValue = document.querySelector('#a').value;
     if (!file || file.length == 0) {
         mdui.dialog({
             title: '错误',
@@ -150,7 +158,7 @@ calcbtn.addEventListener('click', () => {
         });
         return;
     }
-    if (method == "nullselect" && pattern == "nullselect") {
+    if (method == "nullselect" && patternValue == "nullselect") {
         mdui.dialog({
             title: '错误',
             content: '请选择方法及模式',
@@ -162,7 +170,7 @@ calcbtn.addEventListener('click', () => {
         });
         return;
     }
-    if (pattern == "nullselect") {
+    if (patternValue == "nullselect") {
         mdui.dialog({
             title: '错误',
             content: '请选择模式',
@@ -186,7 +194,7 @@ calcbtn.addEventListener('click', () => {
         });
         return;
     }
-    if (pattern == "gen") {
+    if (patternValue == "gen") {
         if (method == "nullselect") {
             mdui.dialog({
                 title: '错误',
@@ -199,11 +207,10 @@ calcbtn.addEventListener('click', () => {
             });
             return;
         }
-        console.log(pattern + method + file)
-        calc(pattern, method, file);
+        console.log(patternValue + method + file)
+        calc(patternValue, method, file);
     } else {
-        const inpc = document.getElementById('a').value;
-        if (!inpc) {
+        if (!checkSumInputValue) {
             mdui.dialog({
                 title: '错误',
                 content: '请输入校验值',
@@ -215,11 +222,10 @@ calcbtn.addEventListener('click', () => {
             });
             return;
         }
-        console.log(pattern + method + file + inpc)
-        calc(pattern, method, file, inpc)
+        console.log(patternValue + method + file + checkSumInputValue)
+        calc(patternValue, method, file, checkSumInputValue)
     }
 })
-
 
 saveBtn.addEventListener('click', () => {
     const mbunitValue = mbUnit.value;

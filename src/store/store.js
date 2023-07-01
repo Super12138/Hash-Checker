@@ -1,7 +1,5 @@
 import { ipcRenderer } from "electron";
 
-let storeValueTemp
-
 export function setValue(name, value) {
     ipcRenderer.send('setValue', name, value)
 }
