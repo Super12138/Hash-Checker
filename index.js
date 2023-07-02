@@ -1,14 +1,20 @@
 const { app, BrowserWindow, Menu, shell, ipcMain } = require('electron');
-const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
 const Store = require('electron-store');
+const path = require('path');
 
 const date = new Date();
 const year = date.getFullYear();
 const isPackaged = app.isPackaged;
 const isMac = process.platform === 'darwin';
 const store = new Store();
+const isCustomTitleBar = store.get("customTitleBar");
+let tBarStyle = 'default';
 
-setupTitlebar();
+if (isCustomTitleBar == true) {
+  const { setupTitlebar } = require('custom-electron-titlebar/main');
+  setupTitlebar();
+  tBarStyle = 'hidden'
+}
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -16,10 +22,10 @@ function createWindow() {
     height: 800,
     center: true,
     title: 'Hash Checker',
-    // frame: false,
     show: false,
-    titleBarStyle: 'hidden',
+    titleBarStyle: tBarStyle,
     webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: false
     },
@@ -32,7 +38,10 @@ function createWindow() {
     win.webContents.openDevTools();
   }
 
-  attachTitlebarToWindow(win);
+  if (isCustomTitleBar == true) {
+    const { attachTitlebarToWindow } = require('custom-electron-titlebar/main');
+    attachTitlebarToWindow(win);
+  }
 
   win.once('ready-to-show', () => {
     win.show()
@@ -171,6 +180,6 @@ ipcMain.on('getValue', (event, name) => {
   event.sender.send('getValueReply', getValueResult);
 });
 
-ipcMain.on('deleteValue', (event, name) => {
-  store.delete(name);
+ipcMain.on('deleteAllValue', (event) => {
+  store.clear;
 });

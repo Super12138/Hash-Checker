@@ -27,17 +27,10 @@
             border-radius: 0;
             background: rgba(0, 0, 0, 0)
         }
-
-        .full-width{
-            width: 100%;
-            height: 5%;
-            background: #000;
-        }
     </style>
 </head>
 
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded" id="drop">
-    <div class="mdui-center full-width" id="titleBar"></div>
     <div class="mdui-container mdui-typo">
         <div class="mdui-row">
             <h1>Hash Checker
@@ -74,6 +67,12 @@
                         <input type="checkbox" id="isStartupUpdate">
                         <i class="mdui-switch-icon"></i>
                         &nbsp;在启动时检查更新
+                    </label>
+                    <br>
+                    <label class="mdui-switch">
+                        <input type="checkbox" id="isCustomTitleBar">
+                        <i class="mdui-switch-icon"></i>
+                        &nbsp;使用自定义标题栏（实验性）
                     </label>
                     <br>
                     <br>

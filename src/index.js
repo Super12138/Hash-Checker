@@ -1,7 +1,7 @@
 import { shell, ipcRenderer } from "electron";
 import { calc } from "./utils/calc";
 import { getfileinfo, getfile, sendfile } from "./file/file";
-import { getValue, setValue, deleteValue } from "./store/store";
+import { getValue, setValue, deleteAllValue } from "./store/store";
 import { sendNotification } from "./utils/notification";
 import { update } from "./utils/update";
 
@@ -22,6 +22,7 @@ const aboutBtn = document.querySelector('#aboutBtn');
 const aboutCloseBtn = document.querySelector('#aboutCloseBtn');
 const sendTestNotification = document.querySelector('#sendTestNotification');
 const isStartupUpdate = document.querySelector('#isStartupUpdate');
+const isCustomTitleBar = document.querySelector('#isCustomTitleBar');
 
 const settingsDialog = new mdui.Dialog('#settings');
 const aboutDialog = new mdui.Dialog('#about');
@@ -62,10 +63,11 @@ window.addEventListener("load", async () => {
     const firstUse = await getValue("fistUse");
     const mbunitValuenew = await getValue("mbUnit");
     const cacheSizeValuenew = await getValue("cacheSize");
-    let isSystemNotificationValuenew = await getValue("SystemNotification");
+    const isCustomTitleBarValue = await getValue("customTitleBar");
+    let isSystemNotificationValuenew = await getValue("systemNotification");
     let isStartupUpdateValuenew = await getValue("checkUpdate");
     console.log(`初次使用：${firstUse}`)
-    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, checkUpdateValue);
+    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, checkUpdateValue, isCustomTitleBarValue);
 
     if (firstUse == "1") {
         if (mbunitValuenew == undefined) {
@@ -73,10 +75,11 @@ window.addEventListener("load", async () => {
         } else if (cacheSizeValuenew == undefined) {
             setValue("cacheSize", "128");
         } else if (isSystemNotificationValuenew == undefined) {
-            setValue("SystemNotification", false);
-            // isSystemNotificationValuenew = false;
+            setValue("systemNotification", false);
         } else if (isStartupUpdate == undefined) {
             setValue("checkUpdate", true)
+        } else if (isCustomTitleBarValue == undefined) {
+            setValue("customTitleBar", false)
         } else {
             if (isSystemNotificationValuenew === true) {
                 isSystemNotificationValuenew = true;
@@ -97,9 +100,9 @@ window.addEventListener("load", async () => {
         setValue("fistUse", "1");
         setValue("mbUnit", "1024");
         setValue("cacheSize", "128");
-        setValue("SystemNotification", false);
-        setValue("checkUpdate", true)
-        // isSystemNotificationValuenew = false;
+        setValue("systemNotification", false);
+        setValue("checkUpdate", true);
+        setValue("customTitleBar", false);
         for (let i = 0; i < mbUnit.options.length; i++) {
             if (mbUnit.options[i].value == "1024") {
                 mbUnit.options[i].selected = true;
@@ -112,6 +115,7 @@ window.addEventListener("load", async () => {
     cacheSize.value = cacheSizeValuenew;
     sysNotification.checked = isSystemNotificationValuenew;
     isStartupUpdate.checked = isStartupUpdateValuenew;
+    isCustomTitleBar.checked = isCustomTitleBarValue;
 });
 
 
@@ -239,8 +243,9 @@ calcbtn.addEventListener('click', () => {
 saveBtn.addEventListener('click', () => {
     const mbunitValue = mbUnit.value;
     const cacheSizeValue = cacheSize.value;
-    const SystemNotification = document.querySelector('#isSystemNotification').checked;
+    const systemNotification = document.querySelector('#isSystemNotification').checked;
     const checkUpdate = document.querySelector('#isStartupUpdate').checked;
+    const customTitleBar = document.querySelector('#isCustomTitleBar').checked;
     if (cacheSizeValue == "0") {
         settingsDialog.close();
         mdui.dialog({
@@ -296,8 +301,9 @@ saveBtn.addEventListener('click', () => {
     }
     setValue("mbUnit", mbunitValue)
     setValue("cacheSize", cacheSizeValue)
-    setValue("SystemNotification", SystemNotification)
+    setValue("systemNotification", systemNotification)
     setValue("checkUpdate", checkUpdate)
+    setValue("customTitleBar", customTitleBar)
 })
 
 openSettingsBtn.addEventListener('click', () => {
@@ -377,10 +383,7 @@ deleteCookiesBtn.addEventListener('click', () => {
                         ]
                     });
                     setTimeout(() => {
-                        deleteValue("mbUnit");
-                        deleteValue("cacheSize");
-                        deleteValue("SystemNotification");
-                        deleteValue("checkUpdate");
+                        deleteAllValue();
                         setValue("fistUse", "0");
                         window.location.reload(true);
                     }, 500);
@@ -415,10 +418,7 @@ deleteAllDataBtn.addEventListener('click', () => {
                         ]
                     });
                     setTimeout(() => {
-                        deleteValue("mbUnit");
-                        deleteValue("cacheSize");
-                        deleteValue("SystemNotification");
-                        deleteValue("checkUpdate");
+                        deleteAllValue();
                         setValue("fistUse", "0");
                         ipcRenderer.send('clear-cache');
                         window.location.reload(true);
