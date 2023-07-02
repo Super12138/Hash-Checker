@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
+    "custom-electron-titlebar": "^4.2.3",
     "electron-store": "^8.1.0",
     "mdui": "^1.0.2"
   }

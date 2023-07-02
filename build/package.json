@@ -67,6 +67,7 @@
     "electron-builder": "^24.4.0"
   },
   "dependencies": {
+    "custom-electron-titlebar": "^4.2.3",
     "electron-store": "^8.1.0"
   }
 }

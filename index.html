@@ -27,10 +27,17 @@
             border-radius: 0;
             background: rgba(0, 0, 0, 0)
         }
+
+        .full-width{
+            width: 100%;
+            height: 5%;
+            background: #000;
+        }
     </style>
 </head>
 
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded" id="drop">
+    <div class="mdui-center full-width" id="titleBar"></div>
     <div class="mdui-container mdui-typo">
         <div class="mdui-row">
             <h1>Hash Checker
@@ -61,6 +68,12 @@
                         <i class="mdui-switch-icon"></i>
                         &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;<button class="mdui-btn mdui-ripple" id="sendTestNotification"
                             style="display: none;">点击发送一条测试通知</button>
+                    </label>
+                    <br>
+                    <label class="mdui-switch">
+                        <input type="checkbox" id="isStartupUpdate">
+                        <i class="mdui-switch-icon"></i>
+                        &nbsp;在启动时检查更新
                     </label>
                     <br>
                     <br>

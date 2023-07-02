@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu, shell, ipcMain } = require('electron');
+const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
 const Store = require('electron-store');
 
 const date = new Date();
@@ -7,6 +8,8 @@ const isPackaged = app.isPackaged;
 const isMac = process.platform === 'darwin';
 const store = new Store();
 
+setupTitlebar();
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1100,
@@ -14,8 +17,8 @@ function createWindow() {
     center: true,
     title: 'Hash Checker',
     // frame: false,
-    // titleBarStyle: 'hidden',
     show: false,
+    titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -29,6 +32,8 @@ function createWindow() {
     win.webContents.openDevTools();
   }
 
+  attachTitlebarToWindow(win);
+
   win.once('ready-to-show', () => {
     win.show()
   });
@@ -39,6 +44,28 @@ function createWindow() {
   ipcMain.on('clear-progress', (event) => {
     win.setProgressBar(-1);
   });
+
+  ipcMain.on('clear-cache', (event) => {
+    win.webContents.session.clearStorageData({
+      storages: [
+        'appcache',
+        'filesystem',
+        'indexdb',
+        'localstorage',
+        'shadercache',
+        'websql',
+        'serviceworkers',
+        'cachestorage'
+      ],
+      quotas: [
+        'temporary',
+        'persistent',
+        'syncable'
+      ]
+    }).catch((error) => {
+      dialog.showErrorBox('清除缓存出错', error)
+    })
+  })
   // win.setWindowButtonVisibility(true)
 }
 

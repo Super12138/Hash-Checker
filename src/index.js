@@ -1,4 +1,4 @@
-import { shell } from "electron";
+import { shell, ipcRenderer } from "electron";
 import { calc } from "./utils/calc";
 import { getfileinfo, getfile, sendfile } from "./file/file";
 import { getValue, setValue, deleteValue } from "./store/store";
@@ -21,12 +21,13 @@ const deleteAllDataBtn = document.querySelector('#deleteAllData');
 const aboutBtn = document.querySelector('#aboutBtn');
 const aboutCloseBtn = document.querySelector('#aboutCloseBtn');
 const sendTestNotification = document.querySelector('#sendTestNotification');
+const isStartupUpdate = document.querySelector('#isStartupUpdate');
 
 const settingsDialog = new mdui.Dialog('#settings');
 const aboutDialog = new mdui.Dialog('#about');
 
 const links = document.querySelectorAll('a[href]');
-let dropzone = document.querySelector('#drop');
+const dropzone = document.querySelector('#drop');
 
 links.forEach((link) => {
     link.addEventListener('click', (e) => {
@@ -49,18 +50,22 @@ dropzone.addEventListener('drop', (e) => {
 });
 
 window.addEventListener("load", async () => {
-    if (navigator.onLine) {
-        console.log('在线状态');
-        update();
-    } else {
-        console.log('离线状态');
+    const checkUpdateValue = await getValue("checkUpdate");
+    if (checkUpdateValue == true) {
+        if (navigator.onLine) {
+            console.log('在线状态');
+            update();
+        } else {
+            console.log('离线状态');
+        }
     }
     const firstUse = await getValue("fistUse");
     const mbunitValuenew = await getValue("mbUnit");
     const cacheSizeValuenew = await getValue("cacheSize");
     let isSystemNotificationValuenew = await getValue("SystemNotification");
+    let isStartupUpdateValuenew = await getValue("checkUpdate");
     console.log(`初次使用：${firstUse}`)
-    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew);
+    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, checkUpdateValue);
 
     if (firstUse == "1") {
         if (mbunitValuenew == undefined) {
@@ -69,7 +74,9 @@ window.addEventListener("load", async () => {
             setValue("cacheSize", "128");
         } else if (isSystemNotificationValuenew == undefined) {
             setValue("SystemNotification", false);
-            isSystemNotificationValuenew = false;
+            // isSystemNotificationValuenew = false;
+        } else if (isStartupUpdate == undefined) {
+            setValue("checkUpdate", true)
         } else {
             if (isSystemNotificationValuenew === true) {
                 isSystemNotificationValuenew = true;
@@ -91,7 +98,8 @@ window.addEventListener("load", async () => {
         setValue("mbUnit", "1024");
         setValue("cacheSize", "128");
         setValue("SystemNotification", false);
-        isSystemNotificationValuenew = false;
+        setValue("checkUpdate", true)
+        // isSystemNotificationValuenew = false;
         for (let i = 0; i < mbUnit.options.length; i++) {
             if (mbUnit.options[i].value == "1024") {
                 mbUnit.options[i].selected = true;
@@ -103,6 +111,7 @@ window.addEventListener("load", async () => {
     mbUnit.value = mbunitValuenew;
     cacheSize.value = cacheSizeValuenew;
     sysNotification.checked = isSystemNotificationValuenew;
+    isStartupUpdate.checked = isStartupUpdateValuenew;
 });
 
 
@@ -231,11 +240,13 @@ saveBtn.addEventListener('click', () => {
     const mbunitValue = mbUnit.value;
     const cacheSizeValue = cacheSize.value;
     const SystemNotification = document.querySelector('#isSystemNotification').checked;
+    const checkUpdate = document.querySelector('#isStartupUpdate').checked;
     if (cacheSizeValue == "0") {
         settingsDialog.close();
         mdui.dialog({
             title: '错误',
             content: '分片单次缓存大小不能为“0”，请重新输入',
+            modal: true,
             buttons: [
                 {
                     text: '确定',
@@ -253,6 +264,7 @@ saveBtn.addEventListener('click', () => {
         mdui.dialog({
             title: '错误',
             content: '分片单次缓存大小不能为空，请重新输入',
+            modal: true,
             buttons: [
                 {
                     text: '确定',
@@ -270,6 +282,7 @@ saveBtn.addEventListener('click', () => {
         mdui.dialog({
             title: '错误',
             content: '分片单次缓存大小不能超过5位，请重新输入',
+            modal: true,
             buttons: [
                 {
                     text: '确定',
@@ -284,6 +297,7 @@ saveBtn.addEventListener('click', () => {
     setValue("mbUnit", mbunitValue)
     setValue("cacheSize", cacheSizeValue)
     setValue("SystemNotification", SystemNotification)
+    setValue("checkUpdate", checkUpdate)
 })
 
 openSettingsBtn.addEventListener('click', () => {
@@ -329,11 +343,7 @@ deleteCacheBtn.addEventListener('click', () => {
                         ]
                     });
                     setTimeout(() => {
-                        localStorage.clear();
-                        sessionStorage.clear();
-                        caches.keys().then(keys => Promise.all(
-                            keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-                        ));
+                        ipcRenderer.send('clear-cache');
                         window.location.reload(true);
                     }, 500);
                 }
@@ -370,6 +380,7 @@ deleteCookiesBtn.addEventListener('click', () => {
                         deleteValue("mbUnit");
                         deleteValue("cacheSize");
                         deleteValue("SystemNotification");
+                        deleteValue("checkUpdate");
                         setValue("fistUse", "0");
                         window.location.reload(true);
                     }, 500);
@@ -407,12 +418,9 @@ deleteAllDataBtn.addEventListener('click', () => {
                         deleteValue("mbUnit");
                         deleteValue("cacheSize");
                         deleteValue("SystemNotification");
+                        deleteValue("checkUpdate");
                         setValue("fistUse", "0");
-                        localStorage.clear();
-                        sessionStorage.clear();
-                        caches.keys().then(keys => Promise.all(
-                            keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-                        ));
+                        ipcRenderer.send('clear-cache');
                         window.location.reload(true);
                     }, 500);
                 }
