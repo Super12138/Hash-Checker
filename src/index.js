@@ -22,7 +22,6 @@ const aboutBtn = document.querySelector('#aboutBtn');
 const aboutCloseBtn = document.querySelector('#aboutCloseBtn');
 const sendTestNotification = document.querySelector('#sendTestNotification');
 const isStartupUpdate = document.querySelector('#isStartupUpdate');
-const isCustomTitleBar = document.querySelector('#isCustomTitleBar');
 
 const settingsDialog = new mdui.Dialog('#settings');
 const aboutDialog = new mdui.Dialog('#about');
@@ -63,11 +62,10 @@ window.addEventListener("load", async () => {
     const firstUse = await getValue("fistUse");
     const mbunitValuenew = await getValue("mbUnit");
     const cacheSizeValuenew = await getValue("cacheSize");
-    const isCustomTitleBarValue = await getValue("customTitleBar");
     let isSystemNotificationValuenew = await getValue("systemNotification");
     let isStartupUpdateValuenew = await getValue("checkUpdate");
     console.log(`初次使用：${firstUse}`)
-    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, checkUpdateValue, isCustomTitleBarValue);
+    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, checkUpdateValue);
 
     if (firstUse == "1") {
         if (mbunitValuenew == undefined) {
@@ -78,8 +76,6 @@ window.addEventListener("load", async () => {
             setValue("systemNotification", false);
         } else if (isStartupUpdate == undefined) {
             setValue("checkUpdate", true)
-        } else if (isCustomTitleBarValue == undefined) {
-            setValue("customTitleBar", false)
         } else {
             if (isSystemNotificationValuenew === true) {
                 isSystemNotificationValuenew = true;
@@ -102,7 +98,6 @@ window.addEventListener("load", async () => {
         setValue("cacheSize", "128");
         setValue("systemNotification", false);
         setValue("checkUpdate", true);
-        setValue("customTitleBar", false);
         for (let i = 0; i < mbUnit.options.length; i++) {
             if (mbUnit.options[i].value == "1024") {
                 mbUnit.options[i].selected = true;
@@ -115,7 +110,6 @@ window.addEventListener("load", async () => {
     cacheSize.value = cacheSizeValuenew;
     sysNotification.checked = isSystemNotificationValuenew;
     isStartupUpdate.checked = isStartupUpdateValuenew;
-    isCustomTitleBar.checked = isCustomTitleBarValue;
 });
 
 
@@ -240,12 +234,12 @@ calcbtn.addEventListener('click', () => {
     }
 })
 
-saveBtn.addEventListener('click', () => {
+saveBtn.addEventListener('click', async () => {
     const mbunitValue = mbUnit.value;
     const cacheSizeValue = cacheSize.value;
     const systemNotification = document.querySelector('#isSystemNotification').checked;
     const checkUpdate = document.querySelector('#isStartupUpdate').checked;
-    const customTitleBar = document.querySelector('#isCustomTitleBar').checked;
+
     if (cacheSizeValue == "0") {
         settingsDialog.close();
         mdui.dialog({
@@ -303,7 +297,6 @@ saveBtn.addEventListener('click', () => {
     setValue("cacheSize", cacheSizeValue)
     setValue("systemNotification", systemNotification)
     setValue("checkUpdate", checkUpdate)
-    setValue("customTitleBar", customTitleBar)
 })
 
 openSettingsBtn.addEventListener('click', () => {

@@ -34,7 +34,6 @@ const config = {
         new CopyPlugin({
             patterns: [
                 { from: 'index.js', to: './' },
-                { from: 'preload.js', to: './' },
                 { from: 'build/', to: './build' },
                 { from: 'icons/', to: './icons' },
                 { from: 'build/package.json', to: './' },
