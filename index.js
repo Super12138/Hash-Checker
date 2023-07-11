@@ -172,4 +172,4 @@ ipcMain.on('deleteAllValue', (event) => {
 ipcMain.on('restart-app', (event) => {
   app.relaunch();
   app.exit(0);
-})
+});
