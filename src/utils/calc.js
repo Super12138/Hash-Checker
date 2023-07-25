@@ -138,7 +138,7 @@ export async function calc(pattern, method, file, hash) {
             currentChunk++;
             totalLoaded += subReader.result.byteLength;
             const percentage = Math.floor(totalLoaded / file.size * 100);
-            const percentageorig = totalLoaded / file.size
+            const percentageorig = totalLoaded / file.size;
             progressBar.classList.remove('mdui-progress-indeterminate');
             progressBar.classList.add('mdui-progress-determinate');
             progressBar.style.width = "0%";
@@ -148,14 +148,14 @@ export async function calc(pattern, method, file, hash) {
             ipcRenderer.send('set-progress', percentageorig);
             hashBuffers.push(new Uint8Array(subReader.result));
 
-            const only = "true"
-            if (percentage == "0") {
+            const only = "true";
+            if (percentage === 0) {
                 const startTimeorig = Date.now();
                 const startTime = new Date(startTimeorig);
                 sendText(startTime);
-                console.log(`开始计时 ${startTime}`)
+                console.log(`开始计时 ${startTime}`);
             }
-            if (percentage == "1") {
+            if (percentage === 1) {
                 const endTimeorig = Date.now();
                 const endTime = new Date(endTimeorig);
                 const startTime = getText();
@@ -169,14 +169,13 @@ export async function calc(pattern, method, file, hash) {
                 progressBar.style.width = `${percentage}%`;
                 sendText(totalTime, only);
             }
-
-            const totalTime = getText(only)
+            const totalTime = getText(only);
             timeTip.innerHTML = `预计缓存完毕需要：${totalTime}秒<br><small>注：预计时间可能不准确，仅供参考</small><br>当前已完成：${percentage}%`;
-            if (percentage > "95") {
+            if (percentage > 95) {
                 tips.innerHTML = "正在计算，应用可能无响应，请耐心等待……";
             }
             processChunk();
-        }
+        };
     }
 
     processChunk();
