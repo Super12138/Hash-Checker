@@ -14,7 +14,14 @@
     "win": {
       "icon": "build/AppIcon.ico",
       "target": [
-        "nsis"
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32",
+            "arm64"
+          ]
+        }
       ]
     },
     "nsis": {
