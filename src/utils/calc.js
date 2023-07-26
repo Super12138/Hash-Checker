@@ -8,7 +8,7 @@ export async function calc(pattern, method, file, hash) {
     console.log("从index.js接收的参数：" + pattern + method + file)
     const ttitle = document.querySelector('#ttitle');
     const tips = document.querySelector('#tips');
-    const isClipboard = document.querySelector('#isclipboard').checked;
+    const isClipboard = document.querySelector('#isClipboard').checked;
     const progress = document.querySelector('#progress');
     const progressBar = document.querySelector('#progressbar');
     const timeTip = document.querySelector('#timetip');

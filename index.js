@@ -35,6 +35,7 @@ function createWindow() {
   ipcMain.on('set-progress', (event, progress) => {
     win.setProgressBar(progress);
   });
+  
   ipcMain.on('clear-progress', (event) => {
     win.setProgressBar(-1);
   });
@@ -173,3 +174,9 @@ ipcMain.on('restart-app', (event) => {
   app.relaunch();
   app.exit(0);
 });
+
+/* ipcMain.on('choose-file', (event) => {
+  dialog.showOpenDialogSync({
+    properties: ['openFile']
+  })
+}) */
