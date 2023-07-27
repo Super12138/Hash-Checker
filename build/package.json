@@ -15,12 +15,7 @@
       "icon": "build/AppIcon.ico",
       "target": [
         {
-          "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32",
-            "arm64"
-          ]
+          "target": "nsis"
         }
       ]
     },
