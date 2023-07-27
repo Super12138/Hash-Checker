@@ -1,7 +1,7 @@
 const { shell } = require('electron');
 
 export function update() {
-    const localver = '1.0.8';
+    const localver = '1.0.8.1';
     const localvernum = 1084;
     Promise.all([
         fetch('https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker/build/ver.txt'),
