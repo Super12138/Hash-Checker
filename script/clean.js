@@ -28,6 +28,13 @@ function deleteFolder(){
     } else {
         console.log('out 目录不存在');
     }
+
+    if (fs.existsSync('./package-lock.json')) {
+        execCommand(`${deleteCmd} ${path.join('.', 'package-lock.json')}`);
+        console.log('package-lock.json 已删除');
+    } else {
+        console.log('package-lock.json 不存在');
+    }
 }
 
 deleteFolder();
