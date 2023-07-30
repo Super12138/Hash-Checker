@@ -2,10 +2,10 @@ const { app, BrowserWindow, Menu, shell, ipcMain } = require('electron');
 const Store = require('electron-store');
 
 const date = new Date();
+const store = new Store();
 const year = date.getFullYear();
 const isPackaged = app.isPackaged;
 const isMac = process.platform === 'darwin';
-const store = new Store();
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -17,25 +17,25 @@ function createWindow() {
     titleBarStyle: 'default',
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
     },
   })
 
   if (isPackaged) {
-    win.loadFile('index.html')
+    win.loadFile('index.html');
   } else {
-    win.loadURL('http://localhost:8080/')
+    win.loadURL('http://localhost:8080/');
     win.webContents.openDevTools();
   }
 
   win.once('ready-to-show', () => {
-    win.show()
+    win.show();
   });
 
   ipcMain.on('set-progress', (event, progress) => {
     win.setProgressBar(progress);
   });
-  
+
   ipcMain.on('clear-progress', (event) => {
     win.setProgressBar(-1);
   });
@@ -58,9 +58,21 @@ function createWindow() {
         'syncable'
       ]
     }).catch((error) => {
-      dialog.showErrorBox('清除缓存出错', error)
+      dialog.showErrorBox('清除缓存出错', error);
     })
   })
+  /*ipcMain.handle('dark-mode:toggle', () => {
+    if (nativeTheme.shouldUseDarkColors) {
+      nativeTheme.themeSource = 'light'
+    } else {
+      nativeTheme.themeSource = 'dark'
+    }
+    return nativeTheme.shouldUseDarkColors
+  })
+
+  ipcMain.handle('dark-mode:system', () => {
+    nativeTheme.themeSource = 'system'
+  })*/
   // win.setWindowButtonVisibility(true)
 }
 
@@ -135,11 +147,11 @@ const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 app.whenReady().then(() => {
-  createWindow()
+  createWindow();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
+      createWindow();
     }
   })
 })
@@ -153,7 +165,7 @@ app.setAboutPanelOptions({
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 })
 

@@ -9,6 +9,7 @@ const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
 const calcbtn = document.querySelector('#calcbtn');
 const dragtip = document.querySelector('#dragtip');
+// const toggleDarkMode = document.querySelector('#toggleDarkMode');
 
 const openSettingsBtn = document.querySelector('#settingsBtn');
 const mbUnit = document.querySelector('#mbunit');
@@ -430,3 +431,20 @@ aboutBtn.addEventListener('click', () => {
 aboutCloseBtn.addEventListener('click', () => {
     settingsDialog.open();
 })
+
+/* toggleDarkMode.addEventListener('click', async () => {
+    const isDarkMode = await window.darkMode.toggle();
+    // document.getElementById('theme-source').innerHTML = isDarkMode ? 'Dark' : 'Light';
+    if (isDarkMode) {
+        toggleDarkMode.innerHTML = '<i class="mdui-icon material-icons">&#xe3a8;</i>';
+    } else {
+        toggleDarkMode.innerHTML = '<i class="mdui-icon material-icons">&#xe430;</i>';
+    }
+})
+
+toggleDarkMode.addEventListener('mousedown', () => {
+    setTimeout(async () => {
+        await window.darkMode.system();
+        toggleDarkMode.innerHTML = '<i class="mdui-icon material-icons">&#xe167;</i>';
+    }, 3000);
+}) */
