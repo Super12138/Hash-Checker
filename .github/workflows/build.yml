@@ -3,10 +3,20 @@ name: Build
 on:
   workflow_dispatch:
     inputs:
-      platform:
-        description: '选择打包平台'
+    platform:
+        description: "选择打包平台"
+        required: true
+        default: "windows-latest"
+        type: choice
+        options:
+          - "windows-latest"
+          - "macos-latest"
+          - "ubuntu-20.04"
+    arch:
+        description: '选择打包架构'
         required: true
         default: 'Windows x64'
+        type: choice
         options:
           - 'Windows x64'
           - 'Windows x86'
@@ -15,20 +25,14 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.platform }}
-
-    strategy:
-      matrix:
-        platform:
-          - 'windows-latest'
-          - 'macos-latest'
+    runs-on: ${{ inputs.platform }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
@@ -46,18 +50,18 @@ jobs:
 
       - name: Build Electron app
         run: |
-          if [ "${{ github.event.inputs.platform }}" = 'Windows x64' ]; then
+          if [[ "${{ github.event.inputs.arch }}" == 'Windows x64' ]]; then
             npx electron-build -w --x64
-          elif [ "${{ github.event.inputs.platform }}" = 'Windows x86' ]; then
+          elif [[ "${{ github.event.inputs.arch }}" == 'Windows x86' ]]; then
             npx electron-build -w --ia32
-          elif [ "${{ github.event.inputs.platform }}" = 'Windows arm64' ]; then
+          elif [[ "${{ github.event.inputs.arch }}" == 'Windows arm64' ]]; then
             npx electron-build -w --arm64
           else
             npx electron-builder -m --universal
           fi
 
       - name: Archive dist
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.event.inputs.platform }}
+          name: ${{ github.event.inputs.arch }}
           path: dist
