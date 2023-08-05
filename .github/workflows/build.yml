@@ -11,7 +11,6 @@ on:
         options:
           - "windows-latest"
           - "macos-latest"
-          - "ubuntu-20.04"
       arch:
         description: '选择打包架构'
         required: true
@@ -50,17 +49,17 @@ jobs:
 
       - name: Build Electron app
         run: |
-          if [[ "${{ github.event.inputs.arch }}" == 'Windows x64' ]]; then
+          if ( "${{ github.event.inputs.arch }}" == 'Windows x64' ); then
             npx electron-build -w --x64
-          elif [[ "${{ github.event.inputs.arch }}" == 'Windows x86' ]]; then
+          elif ( "${{ github.event.inputs.arch }}" == 'Windows x86' ); then
             npx electron-build -w --ia32
-          elif [[ "${{ github.event.inputs.arch }}" == 'Windows arm64' ]]; then
+          elif ( "${{ github.event.inputs.arch }}" == 'Windows arm64' ); then
             npx electron-build -w --arm64
           else
             npx electron-builder -m --universal
           fi
 
-      - name: Archive dist
+      - name: Upload dist
         uses: actions/upload-artifact@v3
         with:
           name: ${{ github.event.inputs.arch }}
