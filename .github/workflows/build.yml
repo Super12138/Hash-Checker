@@ -15,7 +15,13 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ github.event.inputs.platform == 'macOS' ? 'macos-latest' : 'windows-latest' }}
+    runs-on: ${{ matrix.platform }}
+
+    strategy:
+      matrix:
+        platform:
+          - 'windows-latest'
+          - 'macos-latest'
 
     steps:
       - name: Checkout code
@@ -40,11 +46,11 @@ jobs:
 
       - name: Build Electron app
         run: |
-          if [[ "${{ github.event.inputs.platform }}" == 'Windows x64' ]]; then
+          if [ "${{ github.event.inputs.platform }}" = 'Windows x64' ]; then
             npx electron-build -w --x64
-          elif [[ "${{ github.event.inputs.platform }}" == 'Windows x86' ]]; then
+          elif [ "${{ github.event.inputs.platform }}" = 'Windows x86' ]; then
             npx electron-build -w --ia32
-          elif [[ "${{ github.event.inputs.platform }}" == 'Windows arm64' ]]; then
+          elif [ "${{ github.event.inputs.platform }}" = 'Windows arm64' ]; then
             npx electron-build -w --arm64
           else
             npx electron-builder -m --universal
@@ -55,4 +61,3 @@ jobs:
         with:
           name: ${{ github.event.inputs.platform }}
           path: dist
-
