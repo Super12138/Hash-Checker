@@ -1,0 +1,58 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: '选择打包平台'
+        required: true
+        default: 'Windows x64'
+        options:
+          - 'Windows x64'
+          - 'Windows x86'
+          - 'Windows arm64'
+          - 'macOS'
+
+jobs:
+  build:
+    runs-on: ${{ github.event.inputs.platform == 'macOS' ? 'macos-latest' : 'windows-latest' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies (webpack)
+        run: npm install
+
+      - name: Build webpack
+        run: npm run build
+
+      - name: Goto dist
+        run: cd dist
+
+      - name: Install dependencies (electron)
+        run: npm install
+
+      - name: Build Electron app
+        run: |
+          if [[ "${{ github.event.inputs.platform }}" == 'Windows x64' ]]; then
+            npx electron-build -w --x64
+          elif [[ "${{ github.event.inputs.platform }}" == 'Windows x86' ]]; then
+            npx electron-build -w --ia32
+          elif [[ "${{ github.event.inputs.platform }}" == 'Windows arm64' ]]; then
+            npx electron-build -w --arm64
+          else
+            npx electron-builder -m --universal
+          fi
+
+      - name: Archive dist
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.event.inputs.platform }}
+          path: dist
+
