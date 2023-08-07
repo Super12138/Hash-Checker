@@ -25,7 +25,6 @@ on:
 jobs:
   build:
     runs-on: ${{ inputs.platform }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -49,20 +48,15 @@ jobs:
 
       - name: Build Electron app
         run: |
-          case "${{ inputs.arch }}" in
-            "Windows x64")
-              npx electron-build -w --x64
-              ;;
-            "Windows x86")
-              npx electron-build -w --ia32
-              ;;
-            "Windows arm64")
-              npx electron-build -w --arm64
-              ;;
-            *)
-              npx electron-builder -m --universal
-              ;;
-          esac
+          if [ "${{ inputs.arch }}" = "Windows x64" ]; then
+            npx electron-build -w --x64
+          elif [ "${{ inputs.arch }}" = "Windows x86" ]; then
+            npx electron-build -w --ia32
+          elif [ "${{ inputs.arch }}" = "Windows arm64" ]; then
+            npx electron-build -w --arm64
+          else
+            npx electron-builder -m --universal
+          fi
 
       - name: Upload dist
         uses: actions/upload-artifact@v3
