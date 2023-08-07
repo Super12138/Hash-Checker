@@ -49,7 +49,7 @@ jobs:
 
       - name: Build Electron app
         run: |
-          case ${{ inputs.arch }} in
+          case "${{ inputs.arch }}" in
             "Windows x64")
               npx electron-build -w --x64
               ;;
