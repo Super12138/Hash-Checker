@@ -49,18 +49,23 @@ jobs:
 
       - name: Build Electron app
         run: |
-          if [ "${{ github.event.inputs.arch }}" = 'Windows x64' ]; then
-            npx electron-build -w --x64
-          elif [ "${{ github.event.inputs.arch }}" = 'Windows x86' ]; then
-            npx electron-build -w --ia32
-          elif [ "${{ github.event.inputs.arch }}" = 'Windows arm64' ]; then
-            npx electron-build -w --arm64
-          else
-            npx electron-builder -m --universal
-          fi
+          case ${{ inputs.arch }} in
+            "Windows x64")
+              npx electron-build -w --x64
+              ;;
+            "Windows x86")
+              npx electron-build -w --ia32
+              ;;
+            "Windows arm64")
+              npx electron-build -w --arm64
+              ;;
+            *)
+              npx electron-builder -m --universal
+              ;;
+          esac
 
       - name: Upload dist
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.event.inputs.arch }}
+          name: ${{ inputs.arch }}
           path: dist
