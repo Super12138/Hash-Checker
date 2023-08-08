@@ -4,51 +4,51 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Super12138/Hash-Checker?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/Super12138/Hash-Checker?style=flat-square)
 
-一个免费的，开源的，简单易用的文件校验器。
+A free, open source, easy-to-use Hash Checker.
 
-本自述文件支持如下语言：
-<br>
-<strong>中文（简体）</strong>| [English](README_EN.md)
+This README supports the following languages:<br>
+[中文（简体）](README.md)| <strong>English</strong>
 
-## ✨ 功能
-- 支持 Windows 和 macOS 系统
-- 支持深色模式
-- 校验文件 md5 或任何 sha 值
-- 生成文件的 md5 或任何 sha 值，以便后续使用
-- 自动检查更新
+## ✨ Features
+- Support for Windows and macOS systems
+- Support Dark mode
+- Check the file md5 or any sha value
+- Generate the md5 or any sha value of the file for later use
+- Automatically check for updates
 
-## 📒 使用
-1. 上传文件
-2. 选择模式
-3. 选择方法
-4. 点击“计算”按钮
-5. 完成
+## 📒 Usage
+1. Choose file
+2. Select pattern
+3. Select method
+4. Click 'Calculate' button
+5. Complete
 
-## ⬇️ 下载
-- 离线版 V1.0.8[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
-- 在线版 V1.0.8[Github Page](https://super12138.github.io/Hash-Checker/)
-## 📸 截图
+## ⬇️ Download
+- Offline version V1.0.8[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- Onffline version V1.0.8[Github Page](https://super12138.github.io/Hash-Checker/)
 
-|             主界面（浅色）          |
+## 📸 Screenshots
+
+|             Main Interface (Light Mode)          |
 | :----------------------------------------------------------: |
 |   ![Hash Checker-01.png](https://s2.loli.net/2023/06/30/qoWMl7spyhOGuCt.png) |
-|             主界面（深色）          |
+|             Main Interface (Dark Mode)          |
 |   ![Hash Checker-02.png](https://s2.loli.net/2023/06/30/nXaENxWC6q8riAS.png) |
-|             生成哈希值              |
+|             Generate hash value             |
 |   ![Hash Checker-03.png](https://s2.loli.net/2023/06/30/FskYWonwH4eEQ1q.png) |
-|             校验哈希值（成功）       |
+|             Verify hash value (successful)       |
 |   ![Hash Checker-04.png](https://s2.loli.net/2023/06/30/a7iQfP93bLn1EuI.png) |
-|             校验哈希值（失败）       |
+|             Verify hash value (failed)       |
 |   ![Hash Checker-05.png](https://s2.loli.net/2023/06/30/aSPDYW6dyocktl8.png) |
-|             设置                    |
+|             Settings                    |
 |   ![Hash Checker-06.png](https://s2.loli.net/2023/06/30/IuAUpx5Zl12nfc6.png) |
-|             关于                    |
+|             About                    |
 |   ![Hash Checker-07.png](https://s2.loli.net/2023/06/30/KhWM5aHDVBt6T4r.png) |
 
-## 💻 开发者
+## 💻 Developer
 - Super12138
 
-## 🚀 特别感谢
+## 🚀 Special thanks
  - [Electron](https://www.electronjs.org/)
  - [Electron-builder](https://www.electron.build/)
  - [MDUI](https://github.com/zdhxiong/mdui)
