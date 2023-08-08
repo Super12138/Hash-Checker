@@ -202,6 +202,7 @@ saveBtn.addEventListener('click', () => {
         mdui.dialog({
             title: '错误',
             content: '分片单次缓存大小不能为“0”，请重新输入',
+            modal: true,
             buttons: [
                 {
                     text: '确定',
@@ -219,6 +220,7 @@ saveBtn.addEventListener('click', () => {
         mdui.dialog({
             title: '错误',
             content: '分片单次缓存大小不能为空，请重新输入',
+            modal: true,
             buttons: [
                 {
                     text: '确定',
@@ -236,6 +238,7 @@ saveBtn.addEventListener('click', () => {
         mdui.dialog({
             title: '错误',
             content: '分片单次缓存大小不能超过5位，请重新输入',
+            modal: true,
             buttons: [
                 {
                     text: '确定',
@@ -276,6 +279,7 @@ sysNotification.addEventListener('change', () => {
                     mdui.dialog({
                         title: '错误',
                         content: '您没有同意开启通知权限，本应用无法发送通知，请重新尝试',
+                        modal: true,
                         buttons: [
                             {
                                 text: '确定',
@@ -329,6 +333,7 @@ deleteCacheBtn.addEventListener('click', () => {
     mdui.dialog({
         title: '你真的要清除缓存吗',
         content: '这只适用于网站无法正常更新的情况',
+        modal: true,
         buttons: [
             {
                 text: '取消',
@@ -367,6 +372,7 @@ deleteCookiesBtn.addEventListener('click', () => {
     mdui.dialog({
         title: '你真的要清除 Cookies 吗',
         content: '这也将清除您的所有个人设置',
+        modal: true,
         buttons: [
             {
                 text: '取消',
@@ -401,6 +407,7 @@ deleteAllDataBtn.addEventListener('click', () => {
     mdui.dialog({
         title: '你真的要清除全部数据吗',
         content: '这将清除网站缓存和您的所有个人设置',
+        modal: true,
         buttons: [
             {
                 text: '取消',
