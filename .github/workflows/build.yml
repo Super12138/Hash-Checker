@@ -48,16 +48,17 @@ jobs:
 
       - name: Build Electron app
         run: |
-          if [ ${{ inputs.arch }} == 'Windows x64' ]; then
+          if ( ${{ inputs.arch }} == 'Windows x64' ); 
+          then
             npx electron-build -w --x64
           else
-            if [ ${{ inputs.arch }} == 'Windows x86' ]; then
+            if ( ${{ inputs.arch }} == 'Windows x86' ); then
               npx electron-build -w --ia32
             else
-              if [ ${{ inputs.arch }} == 'Windows arm64' ]; then
+              if ( ${{ inputs.arch }} == 'Windows arm64' ); then
                 npx electron-build -w --arm64
               else
-                if [ ${{ inputs.arch }} == 'macOS' ]; then
+                if ( ${{ inputs.arch }} == 'macOS' ); then
                   npx electron-build -m --universal
                 fi
               fi
