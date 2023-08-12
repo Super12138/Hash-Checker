@@ -4,8 +4,8 @@
   "description": "一个开源的、无广告的、遵循 Material Design 的哈希校验&生成器",
   "scripts": {
     "start": "concurrently \"webpack serve\" \"electron .\"",
-    "build": "webpack --mode=production --node-env=production",
-    "build:dev": "webpack --mode=development",
+    "build": "webpack --progress --mode=production --node-env=production",
+    "build:dev": "webpack --progress --mode=development",
     "watch": "webpack --watch",
     "package": "node script/package",
     "clean": "node script/clean"

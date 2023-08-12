@@ -187,8 +187,19 @@ ipcMain.on('restart-app', (event) => {
   app.exit(0);
 });
 
-/* ipcMain.on('choose-file', (event) => {
-  dialog.showOpenDialogSync({
-    properties: ['openFile']
-  })
-}) */
+/*
+ipcMain.on('choose-file', (event) => {
+  const dialogConfig = {
+    title: '选择文件',
+    properties: ['openFile'],
+    filters: [
+      {
+        name: '所有文件',
+        extensions: ['*']
+      }
+    ]
+  }
+  const filePath = dialog.showOpenDialogSync(dialogConfig)
+  event.sender.send('filePath', filePath)
+})
+*/
