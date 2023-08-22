@@ -5,7 +5,12 @@ export function sendNotification(title, content) {
         icon: "icons/icon-512.png",
     };
 
-    if ('Notification' in window && 'serviceWorker' in navigator) {
+    const notification = new Notification(title, options);
+    notification.addEventListener('click', () => {
+        window.focus();
+        notification.close();
+    })
+    /*if ('Notification' in window && 'serviceWorker' in navigator) {
         if (Notification.permission === 'granted') {
             navigator.serviceWorker.ready.then((registration) => {
                 registration.showNotification(title, options);
@@ -21,5 +26,5 @@ export function sendNotification(title, content) {
         }
     } else {
         console.log('浏览器不支持通知');
-    }
+    }*/
 }
