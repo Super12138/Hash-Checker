@@ -25,7 +25,7 @@ This README supports the following languages:<br>
 
 ## ⬇️ Download
 - Offline version V1.0.8[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
-- Onffline version V1.0.8[Github Page](https://super12138.github.io/Hash-Checker/)
+- Online version V1.0.8[Github Page](https://super12138.github.io/Hash-Checker/)
 
 ## 📸 Screenshots
 
