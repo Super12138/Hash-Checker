@@ -3,9 +3,10 @@ import { sendText, getText } from "../utils/transfer";
 import { getValue } from "../store/store";
 import { sendNotification } from "./notification";
 import { ipcRenderer, clipboard } from "electron";
+import { getremotefile } from "../file/file";
 
-export async function calc(pattern, method, file, hash) {
-    console.log("从index.js接收的参数：" + pattern + method + file)
+export async function calc(pattern, method, file, hash, isURL) {
+    console.log("从index.js接收的参数：" + pattern + method + file + isURL)
     const ttitle = document.querySelector('#ttitle');
     const tips = document.querySelector('#tips');
     const isClipboard = document.querySelector('#isClipboard').checked;
@@ -19,6 +20,9 @@ export async function calc(pattern, method, file, hash) {
     // 分片处理文件代码来自 GPT 3.5-Turbo + Super12138优化
     const cacheSizeValuecalc = await getValue("cacheSize");
     const CHUNK_SIZE = cacheSizeValuecalc * 1024;
+    if (isURL) {
+        file = getremotefile(file);
+    }
     const chunkCount = Math.ceil(file.size / CHUNK_SIZE);
     let currentChunk = 0, totalLoaded = 0;
     let hashBuffers = []; // 哈希计算缓冲
@@ -94,7 +98,7 @@ export async function calc(pattern, method, file, hash) {
                     if (isSystemNotification) {
                         sendNotification("计算完成", `${method}值已写入您的剪贴板！\n${method}值：${calchash}`)
                     }
-                    else{
+                    else {
                         mdui.dialog({
                             title: '计算完成',
                             content: `${method}值已写入您的剪贴板！\n${method}值：${calchash}`,
@@ -111,7 +115,7 @@ export async function calc(pattern, method, file, hash) {
                     if (isSystemNotification) {
                         sendNotification("计算完成", `${method}值：${calchash}`)
                     }
-                    else{
+                    else {
                         mdui.dialog({
                             title: '计算完成',
                             content: `${method}值：${calchash}`,
