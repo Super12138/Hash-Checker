@@ -51,16 +51,3 @@ export async function convertbyte(size) {
     const result = calcsize.toFixed(2) + " " + units[counter];
     return result;
 }
-
-export function getremotefile(url) {
-    fetch(url)
-        .then(response => response.blob())
-        .then(blob => {
-            const fileUrl = URL.createObjectURL(blob);
-            console.log("文件已下载完毕:", fileUrl);
-            return fileUrl;
-        })
-        .catch(error => {
-            console.error('文件下载失败:', error);
-        });
-}

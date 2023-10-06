@@ -4,10 +4,9 @@ import { getfileinfo, getfile, sendfile } from "./file/file";
 import { getValue, setValue, deleteAllValue } from "./store/store";
 import { sendNotification } from "./utils/notification";
 import { update } from "./utils/update";
-import mdui from "mdui";
 
 const openfilebtn = document.querySelector("#openfile");
-const fileInput = document.querySelector('#getfile');
+const fileinput = document.querySelector('#getfile');
 const calcbtn = document.querySelector('#calcbtn');
 const dragtip = document.querySelector('#dragtip');
 // const toggleDarkMode = document.querySelector('#toggleDarkMode');
@@ -24,8 +23,6 @@ const aboutBtn = document.querySelector('#aboutBtn');
 const aboutCloseBtn = document.querySelector('#aboutCloseBtn');
 const sendTestNotification = document.querySelector('#sendTestNotification');
 const isStartupUpdate = document.querySelector('#isStartupUpdate');
-const isFileUrl = document.querySelector('#isFileUrl');
-const urlInput = document.querySelector('#url');
 
 const settingsDialog = new mdui.Dialog('#settings');
 const aboutDialog = new mdui.Dialog('#about');
@@ -121,45 +118,29 @@ openfilebtn.addEventListener('click', () => {
     document.querySelector('#getfile').click();
 })
 
-fileInput.addEventListener('change', () => {
+fileinput.addEventListener('change', () => {
     const file = document.querySelector('#getfile').files[0];
     getfileinfo(file);
     sendfile(file);
 })
 
 calcbtn.addEventListener('click', () => {
-    let file = getfile();
+    const file = getfile();
     const cacheSizecheck = getValue("cacheSize");
     const method = document.querySelector('#method').value;
     const patternValue = document.querySelector('#mod').value;
     const checkSumInputValue = document.querySelector('#a').value;
-    if (isFileUrl.checked) {
-        file = urlInput.value;
-        if (urlInput.value == '') {
-            mdui.dialog({
-                title: '错误',
-                content: '请输入要获取文件的 URL',
-                buttons: [
-                    {
-                        text: '知道了'
-                    }
-                ]
-            });
-            return;
-        }
-    } else {
-        if (!file || file.length == 0) {
-            mdui.dialog({
-                title: '错误',
-                content: '请选择文件',
-                buttons: [
-                    {
-                        text: '知道了'
-                    }
-                ]
-            });
-            return;
-        }
+    if (!file || file.length == 0) {
+        mdui.dialog({
+            title: '错误',
+            content: '请选择文件',
+            buttons: [
+                {
+                    text: '知道了'
+                }
+            ]
+        });
+        return;
     }
     if (cacheSizecheck == "") {
         mdui.dialog({
@@ -235,7 +216,7 @@ calcbtn.addEventListener('click', () => {
             return;
         }
         console.log(patternValue + method + file)
-        calc(patternValue, method, file, isFileUrl.checked);
+        calc(patternValue, method, file);
     } else {
         if (!checkSumInputValue) {
             mdui.dialog({
@@ -249,8 +230,8 @@ calcbtn.addEventListener('click', () => {
             });
             return;
         }
-        console.log(patternValue + method + file + checkSumInputValue, isFileUrl.checked)
-        calc(patternValue, method, file, checkSumInputValue, isFileUrl.checked)
+        console.log(patternValue + method + file + checkSumInputValue)
+        calc(patternValue, method, file, checkSumInputValue)
     }
 })
 
@@ -449,16 +430,6 @@ aboutBtn.addEventListener('click', () => {
 
 aboutCloseBtn.addEventListener('click', () => {
     settingsDialog.open();
-})
-
-isFileUrl.addEventListener('change', () => {
-    if (isFileUrl.checked) {
-        urlInput.disabled = false;
-        mdui.updateTextFields();
-    } else {
-        urlInput.disabled = true;
-        mdui.updateTextFields();
-    }
 })
 
 /* toggleDarkMode.addEventListener('click', async () => {

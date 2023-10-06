@@ -109,27 +109,11 @@
                 </div>
             </div>
             <br>
-
             <div>
                 <input id="getfile" type="file" style="display: none;">
                 <h1 class="mdui-text-center" id="dragtip" style="display: none;">松开鼠标以读取文件</h1>
                 <button class="mdui-btn mdui-btn-block mdui-ripple" id="openfile">点击选择文件</button>
-                <p class="mdui-text-center">也可拖拽文件到本页</p>
-
-                <div>
-
-                    <div class="mdui-textfield mdui-textfield-floating-label">
-                        <label class="mdui-checkbox">
-                            <input type="checkbox" id="isFileUrl">
-                            <i class="mdui-checkbox-icon"></i>
-                            从外部 URL 获取文件
-                        </label>
-                        <label class="mdui-textfield-label">文件 URL</label>
-                        <input class="mdui-textfield-input" id="url" type="text" disabled>
-                        <div class="mdui-textfield-helper">在此处输入需要获取的文件的 URL</div>
-                    </div>
-                </div>
-                <br>
+                <p class="mdui-text-center">或者拖拽文件到本页</p>
                 <p>
                     文件：<code id="fm">未选择文件</code>&nbsp;&nbsp;
                     大小：<code id="fsize">未选择文件</code>&nbsp;&nbsp;
@@ -190,6 +174,7 @@
             <br>
         </div>
     </div>
+    <script src="js/mdui.min.js"></script>
 </body>
 
 </html>
