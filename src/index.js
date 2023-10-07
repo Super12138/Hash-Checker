@@ -1,9 +1,12 @@
 import { shell, ipcRenderer } from "electron";
+import mdui from "mdui";
 import { calc } from "./utils/calc";
 import { getfileinfo, getfile, sendfile } from "./file/file";
 import { getValue, setValue, deleteAllValue } from "./store/store";
 import { sendNotification } from "./utils/notification";
 import { update } from "./utils/update";
+
+let isOnlyAbout = false;
 
 const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
@@ -23,6 +26,7 @@ const aboutBtn = document.querySelector('#aboutBtn');
 const aboutCloseBtn = document.querySelector('#aboutCloseBtn');
 const sendTestNotification = document.querySelector('#sendTestNotification');
 const isStartupUpdate = document.querySelector('#isStartupUpdate');
+const electronVer = document.querySelector('#electronVer');
 
 const settingsDialog = new mdui.Dialog('#settings');
 const aboutDialog = new mdui.Dialog('#about');
@@ -111,6 +115,8 @@ window.addEventListener("load", async () => {
     cacheSize.value = cacheSizeValuenew;
     sysNotification.checked = isSystemNotificationValuenew;
     isStartupUpdate.checked = isStartupUpdateValuenew;
+
+    electronVer.innerHTML = `Electron 版本：${process.versions.electron}`;
 });
 
 
@@ -301,6 +307,7 @@ saveBtn.addEventListener('click', async () => {
 })
 
 openSettingsBtn.addEventListener('click', () => {
+    isOnlyAbout = false;
     settingsDialog.open();
 })
 
@@ -429,7 +436,9 @@ aboutBtn.addEventListener('click', () => {
 })
 
 aboutCloseBtn.addEventListener('click', () => {
-    settingsDialog.open();
+    if (!isOnlyAbout) {
+        settingsDialog.open();
+    }
 })
 
 /* toggleDarkMode.addEventListener('click', async () => {
@@ -448,3 +457,8 @@ toggleDarkMode.addEventListener('mousedown', () => {
         toggleDarkMode.innerHTML = '<i class="mdui-icon material-icons">&#xe167;</i>';
     }, 3000);
 }) */
+
+ipcRenderer.on('openAboutDialog', (event) => {
+    isOnlyAbout = true;
+    aboutDialog.open();
+})

@@ -1,14 +1,13 @@
 const { app, BrowserWindow, Menu, shell, ipcMain } = require('electron');
 const Store = require('electron-store');
 
-const date = new Date();
 const store = new Store();
-const year = date.getFullYear();
 const isPackaged = app.isPackaged;
 const isMac = process.platform === 'darwin';
+let mainWindow
 
 function createWindow() {
-  const win = new BrowserWindow({
+   mainWindow = new BrowserWindow({
     width: 1100,
     height: 800,
     center: true,
@@ -22,26 +21,26 @@ function createWindow() {
   })
 
   if (isPackaged) {
-    win.loadFile('index.html');
+    mainWindow.loadFile('index.html');
   } else {
-    win.loadURL('http://localhost:8080/');
-    win.webContents.openDevTools();
+    mainWindow.loadURL('http://localhost:8080/');
+    mainWindow.webContents.openDevTools();
   }
 
-  win.once('ready-to-show', () => {
-    win.show();
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
   });
 
   ipcMain.on('set-progress', (event, progress) => {
-    win.setProgressBar(progress);
+    mainWindow.setProgressBar(progress);
   });
 
   ipcMain.on('clear-progress', (event) => {
-    win.setProgressBar(-1);
+    mainWindow.setProgressBar(-1);
   });
 
   ipcMain.on('clear-cache', (event) => {
-    win.webContents.session.clearStorageData({
+    mainWindow.webContents.session.clearStorageData({
       storages: [
         'appcache',
         'filesystem',
@@ -73,7 +72,7 @@ function createWindow() {
   ipcMain.handle('dark-mode:system', () => {
     nativeTheme.themeSource = 'system'
   })*/
-  // win.setWindowButtonVisibility(true)
+  // mainWindow.setWindowButtonVisibility(true)
 }
 
 const template = [
@@ -82,7 +81,9 @@ const template = [
     submenu: [
       {
         label: '关于',
-        role: 'about',
+        click: async (event) => {
+          mainWindow.webContents.send('openAboutDialog');
+        },
       },
       {
         label: '退出',
@@ -154,13 +155,6 @@ app.whenReady().then(() => {
       createWindow();
     }
   })
-})
-
-app.setAboutPanelOptions({
-  applicationName: 'Hash Checker',
-  applicationVersion: '1.0.9',
-  copyright: 'Copyright © 2019-' + year + ' Super12138',
-  version: '1083'
 })
 
 app.on('window-all-closed', () => {
