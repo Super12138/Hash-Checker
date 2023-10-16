@@ -44,6 +44,6 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "electron-store": "^8.1.0",
-    "mdui": "^1.0.2"
+    "mdui": "^2.0.0"
   }
 }
