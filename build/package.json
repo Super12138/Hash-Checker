@@ -1,7 +1,7 @@
 {
   "name": "HashChecker",
-  "version": "1.0.9",
-  "description": "一个开源的、无广告的、遵循 Material Design 的哈希校验&生成器",
+  "version": "2.0.0",
+  "description": "一个开源的、无广告的、遵循 Material Design 3 的哈希校验&生成器",
   "main": "index.js",
   "scripts": {
     "build": "electron-builder -w",
@@ -26,7 +26,7 @@
     },
     "mac": {
       "icon": "build/AppIcon.icns",
-      "category": "com.Super12138.HashChecker",
+      "category": "cn.Super12138.HashChecker",
       "darkModeSupport": true,
       "target": [
         {
