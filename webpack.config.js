@@ -42,6 +42,7 @@ const config = {
                 { from: 'fonts/', to: './fonts' },
                 /*{ from: 'node_modules/mdui/dist/icons', to: './icons' },*/
                 { from: 'src/index.css', to: './css' },
+                { from: 'LICENSE', to: './' },
             ],
         }),
     ],
