@@ -65,8 +65,8 @@
   },
   "homepage": "https://github.com/Super12138/Hash-Checker#readme",
   "devDependencies": {
-    "electron": "^27.0.0",
-    "electron-builder": "^24.6.3"
+    "electron": "^27.0.2",
+    "electron-builder": "^24.6.4"
   },
   "dependencies": {
     "electron-store": "^8.1.0"
