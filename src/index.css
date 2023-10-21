@@ -121,8 +121,8 @@ html {
 
 .mdui-typo code {
     padding: 2px 6px;
-    color: #c7254e;
-    background-color: #f7f7f9;
+    color: rgb(var(--mdui-color-on-surface-light));
+    background-color: rgb(var(--mdui-color-secondary-container-light));
     border-radius: 2px;
     font-family: Consolas, Courier, 'Courier New', monospace;
 }
@@ -252,5 +252,13 @@ body.ready {
 @media (prefers-color-scheme: dark) {
     html {
         background-color: rgb(var(--mdui-color-background-dark)) !important;
+    }
+
+    .mdui-typo code {
+        padding: 2px 6px;
+        color: rgb(var(--mdui-color-on-surface-dark));
+        background-color: rgb(var(--mdui-color-secondary-container-dark));
+        border-radius: 2px;
+        font-family: Consolas, Courier, 'Courier New', monospace;
     }
 }

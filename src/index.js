@@ -51,12 +51,17 @@ const settingsSaveBtn = document.querySelector('#settingsSaveBtn');
 const openSettingsBtn = document.querySelector('#settingsBtn');
 const settingsCancelBtn = document.querySelector('#settingsCancelBtn');
 
+const chooseColorBtn = document.querySelector('#chooseColorBtn');
+const colorCloseBtn = document.querySelector('#colorCloseBtn');
+const setColorBtn = document.querySelector('#setColorBtn');
+
 const sendTestNotification = document.querySelector('#sendTestNotification');
 const isStartupUpdate = document.querySelector('#isStartupUpdate');
 const electronVer = document.querySelector('#electronVer');
 
 const settingsDialog = document.querySelector('#settings');
 const aboutDialog = document.querySelector('#about');
+const colorDialog = document.querySelector('#colors');
 
 const links = document.querySelectorAll('a[href]');
 const dropzone = document.querySelector('#drop');
@@ -82,17 +87,21 @@ dropzone.addEventListener('drop', (e) => {
 });
 
 window.addEventListener("load", async () => {
-    /*ipcRenderer.send('get-wallpaper');
-
-    ipcRenderer.on('send-wallpaper', (event, data) => {
-        let img = new Image();
-        img.src = URL.createObjectURL(new Blob([data]));
-        getColorFromImage(img).then((color) => {
-            setColorScheme(color);
-            console.log(color);
-        });
-    });*/
+    const colorTheme = await getValue('dynamicColor');
     const checkUpdateValue = await getValue("checkUpdate");
+    const firstUse = await getValue("fistUse");
+    const mbunitValuenew = await getValue("mbUnit");
+    const cacheSizeValuenew = await getValue("cacheSize");
+    let isSystemNotificationValuenew = await getValue("systemNotification");
+    let isStartupUpdateValuenew = await getValue("checkUpdate");
+
+    console.log(`初次使用：${firstUse}`)
+    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, checkUpdateValue,colorTheme);
+
+    if (colorTheme) {
+        setColorScheme(colorTheme);
+    }
+
     if (checkUpdateValue == true) {
         if (navigator.onLine) {
             console.log('在线状态');
@@ -101,13 +110,6 @@ window.addEventListener("load", async () => {
             console.log('离线状态');
         }
     }
-    const firstUse = await getValue("fistUse");
-    const mbunitValuenew = await getValue("mbUnit");
-    const cacheSizeValuenew = await getValue("cacheSize");
-    let isSystemNotificationValuenew = await getValue("systemNotification");
-    let isStartupUpdateValuenew = await getValue("checkUpdate");
-    console.log(`初次使用：${firstUse}`)
-    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, checkUpdateValue);
 
     if (firstUse == "1") {
         if (mbunitValuenew == undefined) {
@@ -127,7 +129,7 @@ window.addEventListener("load", async () => {
                 sendTestNotification.style.display = "none";
             }
         }
-        mbUnit.defaultValue = mbunitValuenew;
+        mbUnit.value = mbunitValuenew;
     }
     else {
         setValue("fistUse", "1");
@@ -135,13 +137,9 @@ window.addEventListener("load", async () => {
         setValue("cacheSize", "128");
         setValue("systemNotification", false);
         setValue("checkUpdate", true);
-        for (let i = 0; i < mbUnit.options.length; i++) {
-            if (mbUnit.options[i].value == "1024") {
-                mbUnit.options[i].selected = true;
-                break;
-            }
-        }
+        mbUnit.value = 1024;
         window.location.reload(true);
+        return;
     }
     mbUnit.value = mbunitValuenew;
     cacheSize.value = cacheSizeValuenew;
@@ -409,4 +407,19 @@ ipcRenderer.on('openAboutDialog', (event) => {
 
 settingsCancelBtn.addEventListener('click', () => {
     settingsDialog.open = false;
+})
+
+chooseColorBtn.addEventListener('click', () => {
+    colorDialog.open = true;
+})
+
+colorCancelBtn.addEventListener('click', () => {
+    colorDialog.open = false;
+})
+
+setColorBtn.addEventListener('click', () => {
+    let dynamicColor = document.querySelector('#dynamicColor');
+    setColorScheme(dynamicColor.value);
+    colorDialog.open = false;
+    setValue("dynamicColor", dynamicColor.value);
 })
