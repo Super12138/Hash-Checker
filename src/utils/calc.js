@@ -3,13 +3,13 @@ import { sendText, getText } from "../utils/transfer";
 import { getValue } from "../store/store";
 import { sendNotification } from "./notification";
 import { ipcRenderer, clipboard } from "electron";
+import { simpleDialog } from "./dialog";
 
 export async function calc(pattern, method, file, hash) {
     console.log("从index.js接收的参数：" + pattern + method + file)
     const ttitle = document.querySelector('#ttitle');
     const tips = document.querySelector('#tips');
     const isClipboard = document.querySelector('#isClipboard').checked;
-    const progress = document.querySelector('#progress');
     const progressBar = document.querySelector('#progressbar');
     const timeTip = document.querySelector('#timetip');
     const calcBtn = document.querySelector('#calcbtn');
@@ -26,7 +26,7 @@ export async function calc(pattern, method, file, hash) {
 
     ttitle.innerHTML = "状态：";
     tips.innerHTML = "正在将文件缓存...";
-    progress.style.display = "block";
+    //progressBar.style.display = "block";
     timeTip.style.display = "block";
     calcBtn.disabled = true;
     chooseFileBtn.disabled = true;
@@ -45,7 +45,7 @@ export async function calc(pattern, method, file, hash) {
 
             calcBtn.disabled = false;
             chooseFileBtn.disabled = false;
-            progress.style.display = "none";
+            // progressBar.style.display = "none";
             timeTip.style.display = "none";
             ipcRenderer.send('clear-progress');
 
@@ -58,15 +58,7 @@ export async function calc(pattern, method, file, hash) {
                         sendNotification("校验成功", "请放心使用")
                     }
                     else {
-                        mdui.dialog({
-                            title: '校验成功',
-                            content: '请放心使用',
-                            buttons: [
-                                {
-                                    text: '完成'
-                                }
-                            ]
-                        });
+                        simpleDialog("校验成功", "请放心使用", "确定");
                     }
                 }
                 else {
@@ -75,15 +67,7 @@ export async function calc(pattern, method, file, hash) {
                         sendNotification("校验失败", "请检查获取的校验值是否有误（如多余的空格，复制时少复制了字符），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决")
                     }
                     else {
-                        mdui.dialog({
-                            title: '校验失败',
-                            content: '请检查获取的校验值是否有误（如多余的空格，复制时少复制了字符），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决',
-                            buttons: [
-                                {
-                                    text: '确认'
-                                }
-                            ]
-                        });
+                        simpleDialog("校验失败", "请检查获取的校验值是否有误（如多余的空格，复制时少复制了字符），或是校验值和校验方法不一致（如校验值是MD5，但校验方法是SHA256)；如果没有上述任一情况请自行解决", "确定");
                     }
                 }
             }
@@ -94,16 +78,8 @@ export async function calc(pattern, method, file, hash) {
                     if (isSystemNotification) {
                         sendNotification("计算完成", `${method}值已写入您的剪贴板！\n${method}值：${calchash}`)
                     }
-                    else{
-                        mdui.dialog({
-                            title: '计算完成',
-                            content: `${method}值已写入您的剪贴板！\n${method}值：${calchash}`,
-                            buttons: [
-                                {
-                                    text: '确定'
-                                }
-                            ]
-                        });
+                    else {
+                        simpleDialog("计算完成", `${method}值已写入您的剪贴板!\n${method}值：${calchash}`, "确定");
                     }
                 }
                 else {
@@ -111,16 +87,8 @@ export async function calc(pattern, method, file, hash) {
                     if (isSystemNotification) {
                         sendNotification("计算完成", `${method}值：${calchash}`)
                     }
-                    else{
-                        mdui.dialog({
-                            title: '计算完成',
-                            content: `${method}值：${calchash}`,
-                            buttons: [
-                                {
-                                    text: '确定'
-                                }
-                            ]
-                        });
+                    else {
+                        simpleDialog("计算完成", `${method}值：${calchash}`, "确定");
                     }
                 }
             }
@@ -139,12 +107,10 @@ export async function calc(pattern, method, file, hash) {
             totalLoaded += subReader.result.byteLength;
             const percentage = Math.floor(totalLoaded / file.size * 100);
             const percentageorig = totalLoaded / file.size;
-            progressBar.classList.remove('mdui-progress-indeterminate');
-            progressBar.classList.add('mdui-progress-determinate');
-            progressBar.style.width = "0%";
+            // progressBar.value = 0;
             tips.innerHTML = "正在将文件缓存...";
             console.log(`${percentage}%`);
-            progressBar.style.width = `${percentage}%`;
+            // progressBar.value = percentageorig;
             ipcRenderer.send('set-progress', percentageorig);
             hashBuffers.push(new Uint8Array(subReader.result));
 
@@ -166,7 +132,7 @@ export async function calc(pattern, method, file, hash) {
                 // 开始计算剩余时间
                 const totalTimeorig = onetime * 100;
                 const totalTime = totalTimeorig.toFixed(3);
-                progressBar.style.width = `${percentage}%`;
+                // progressBar.value = percentageorig;
                 sendText(totalTime, only);
             }
             const totalTime = getText(only);

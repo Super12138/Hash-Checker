@@ -7,7 +7,7 @@ const isMac = process.platform === 'darwin';
 let mainWindow
 
 function createWindow() {
-   mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1100,
     height: 800,
     center: true,
@@ -60,18 +60,6 @@ function createWindow() {
       dialog.showErrorBox('清除缓存出错', error);
     })
   })
-  /*ipcMain.handle('dark-mode:toggle', () => {
-    if (nativeTheme.shouldUseDarkColors) {
-      nativeTheme.themeSource = 'light'
-    } else {
-      nativeTheme.themeSource = 'dark'
-    }
-    return nativeTheme.shouldUseDarkColors
-  })
-
-  ipcMain.handle('dark-mode:system', () => {
-    nativeTheme.themeSource = 'system'
-  })*/
   // mainWindow.setWindowButtonVisibility(true)
 }
 
@@ -181,8 +169,7 @@ ipcMain.on('restart-app', (event) => {
   app.exit(0);
 });
 
-/*
-ipcMain.on('choose-file', (event) => {
+/*ipcMain.on('choose-file', (event) => {
   const dialogConfig = {
     title: '选择文件',
     properties: ['openFile'],

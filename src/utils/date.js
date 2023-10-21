@@ -1,3 +1,6 @@
+/**
+ * 将日期格式化为 `YYYY年MM月DD日 HH:mm:ss` 的格式
+ */
 export function formatDate(date) {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;

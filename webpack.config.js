@@ -38,9 +38,10 @@ const config = {
                 { from: 'build/', to: './build' },
                 { from: 'icons/', to: './icons' },
                 { from: 'build/package.json', to: './' },
-                { from: 'node_modules/mdui/dist/css', to: './css' },
-                { from: 'node_modules/mdui/dist/fonts', to: './fonts' },
-                { from: 'node_modules/mdui/dist/icons', to: './icons' },
+                { from: 'node_modules/mdui/mdui.css', to: './css' },
+                { from: 'fonts/', to: './fonts' },
+                /*{ from: 'node_modules/mdui/dist/icons', to: './icons' },*/
+                { from: 'src/index.css', to: './css' },
             ],
         }),
     ],

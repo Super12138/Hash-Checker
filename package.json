@@ -1,6 +1,6 @@
 {
   "name": "HashChecker",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "一个开源的、无广告的、遵循 Material Design 的哈希校验&生成器",
   "scripts": {
     "start": "concurrently \"webpack serve\" \"electron .\"",
@@ -44,6 +44,6 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "electron-store": "^8.1.0",
-    "mdui": "^1.0.2"
+    "mdui": "^2.0.1"
   }
 }
