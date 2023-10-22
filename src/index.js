@@ -24,7 +24,6 @@ import 'mdui/components/layout-item.js';
 import 'mdui/components/layout-main.js';
 
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
-import { getColorFromImage } from 'mdui/functions/getColorFromImage.js';
 
 import 'mdui/components/linear-progress.js';
 
@@ -52,7 +51,7 @@ const openSettingsBtn = document.querySelector('#settingsBtn');
 const settingsCancelBtn = document.querySelector('#settingsCancelBtn');
 
 const chooseColorBtn = document.querySelector('#chooseColorBtn');
-const colorCloseBtn = document.querySelector('#colorCloseBtn');
+const colorCancelBtn = document.querySelector('#colorCancelBtn');
 const setColorBtn = document.querySelector('#setColorBtn');
 
 const sendTestNotification = document.querySelector('#sendTestNotification');
@@ -96,7 +95,7 @@ window.addEventListener("load", async () => {
     let isStartupUpdateValuenew = await getValue("checkUpdate");
 
     console.log(`初次使用：${firstUse}`)
-    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, checkUpdateValue,colorTheme);
+    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, checkUpdateValue, colorTheme);
 
     if (colorTheme) {
         setColorScheme(colorTheme);
@@ -379,6 +378,8 @@ aboutBtn.addEventListener('click', () => {
 aboutCloseBtn.addEventListener('click', () => {
     if (!isOnlyAbout) {
         settingsDialog.open = true;
+        aboutDialog.open = false;
+    } else {
         aboutDialog.open = false;
     }
 })

@@ -1,8 +1,9 @@
 const { shell } = require('electron');
+import { dialog } from 'mdui/functions/dialog.js';
 
 export function update() {
-    const localver = '1.0.9';
-    const localvernum = 1084;
+    const localver = '2.0.0';
+    const localvernum = 2023102201;
     Promise.all([
         fetch('https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker/build/ver.txt'),
         fetch('https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker/build/vernum.txt')
@@ -12,10 +13,10 @@ export function update() {
                 const ver = content;
                 responses[1].text().then((vernum) => {
                     if (vernum > localvernum) {
-                        mdui.dialog({
-                            title: '检测到新版本',
-                            content: `检测到 Hash Checker 的新版本 ${ver}（${vernum}），当前版本${localver}（${localvernum}），你要前往 GitHub Releases 进行更新吗？`,
-                            buttons: [
+                        dialog({
+                            headline: '检测到新版本',
+                            description: `检测到 Hash Checker 的新版本 ${ver}（${vernum}），当前版本${localver}（${localvernum}），你要前往 GitHub Releases 进行更新吗？`,
+                            actions: [
                                 {
                                     text: '取消'
                                 },
