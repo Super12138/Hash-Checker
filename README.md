@@ -25,7 +25,7 @@
 5. 完成
 
 ## ⬇️ 下载
-- 离线版 V1.0.9[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- 离线版 V2.0.0[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
 - 在线版 v1.0.8-04-patch2[Github Page](https://super12138.github.io/Hash-Checker/)
 ## 📸 截图
 
