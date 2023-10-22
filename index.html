@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta name="renderer" content="webkit">
-    <meta name="force-rendering" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="icons/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -14,24 +13,6 @@
     <link rel="stylesheet" href="css/index.css">
     <link rel="manifest" href="manifest.json">
     <title>Hash Checker</title>
-    <style>
-        body::-webkit-scrollbar {
-            width: 6px;
-            height: 4px
-        }
-
-        body::-webkit-scrollbar-thumb {
-            border-radius: 15px;
-            -webkit-box-shadow: inset 0 0 5px #7d7d7d;
-            background: #7d7d7d
-        }
-
-        body::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0);
-            border-radius: 0;
-            background: rgba(0, 0, 0, 0)
-        }
-    </style>
 </head>
 
 <body class="mdui-theme-auto" id="drop">
@@ -74,7 +55,7 @@
                     &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;
                 </label>
                 <mdui-button id="sendTestNotification" style="display: none;">点击发送一条测试通知</mdui-button>
-                
+
                 <br>
                 <mdui-button full-width id="deleteCache">清除缓存</mdui-button>
                 <br>
