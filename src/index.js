@@ -3,6 +3,25 @@ import { getfileinfo, getfile, sendfile } from "./file/file";
 import { getCookie, setCookie, deleteCookie } from "./cookie/cookie";
 import { sendNotification } from "./utils/notification";
 
+// mdui
+import 'mdui/components/button.js';
+
+import 'mdui/components/dialog.js';
+import { dialog } from 'mdui/functions/dialog.js';
+
+import 'mdui/components/select.js';
+import 'mdui/components/menu-item.js';
+
+import 'mdui/components/switch.js';
+
+import 'mdui/components/checkbox.js';
+
+import 'mdui/components/layout.js';
+import 'mdui/components/layout-item.js';
+import 'mdui/components/layout-main.js';
+
+import { setColorScheme } from 'mdui/functions/setColorScheme.js';
+
 const openfilebtn = document.querySelector("#openfile");
 const fileinput = document.querySelector('#getfile');
 const calcbtn = document.querySelector('#calcbtn');
@@ -12,16 +31,25 @@ const openSettingsBtn = document.querySelector('#settingsBtn');
 const mbUnit = document.querySelector('#mbunit');
 const cacheSize = document.querySelector('#cachesize');
 const sysNotification = document.querySelector('#isSystemNotification');
-const saveBtn = document.querySelector('#saveBtn');
+
+const settingsSaveBtn = document.querySelector('#settingsSaveBtn');
+const settingsCancelBtn = document.querySelector('#settingsCancelBtn');
+
 const deleteCacheBtn = document.querySelector('#deleteCache');
 const deleteCookiesBtn = document.querySelector('#deleteCookies');
 const deleteAllDataBtn = document.querySelector('#deleteAllData');
+
 const aboutBtn = document.querySelector('#aboutBtn');
 const aboutCloseBtn = document.querySelector('#aboutCloseBtn');
 const sendTestNotification = document.querySelector('#sendTestNotification');
 
-const settingsDialog = new mdui.Dialog('#settings');
-const aboutDialog = new mdui.Dialog('#about');
+const chooseColorBtn = document.querySelector('#chooseColorBtn');
+const colorCancelBtn = document.querySelector('#colorCancelBtn');
+const setColorBtn = document.querySelector('#setColorBtn');
+
+const settingsDialog = document.querySelector('#settings');
+const aboutDialog = document.querySelector('#about');
+const colorDialog = document.querySelector('#colors');
 
 const exptime = 365.25 * 24 * 60 * 60 * 1000;
 const expires = new Date(Date.now() + exptime).toUTCString();
@@ -40,35 +68,48 @@ dropzone.addEventListener('drop', (e) => {
 });
 
 window.addEventListener("load", () => {
+    // firstUse，1为使用，0为第一次使用
+    const firstUse = getCookie("firstUse");
     const mbunitValuenew = getCookie("mbUnit");
     const cacheSizeValuenew = getCookie("cacheSize");
+    const dynamicColorValue = getCookie("dynamicColor");
     let isSystemNotificationValuenew = getCookie("SystemNotification");
-    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew);
-    if (mbunitValuenew == "") {
-        setCookie("mbUnit", "1024", expires);
-    } else if (cacheSizeValuenew == "") {
-        setCookie("cacheSize", "128", expires);
-    } else if (isSystemNotificationValuenew == "") {
-        setCookie("SystemNotification", "false", expires);
-        isSystemNotificationValuenew = false;
-    } else {
-        if (isSystemNotificationValuenew === "true") {
-            isSystemNotificationValuenew = true;
-            sendTestNotification.style.display = "block";
-        } else {
+    console.log(mbunitValuenew, cacheSizeValuenew, isSystemNotificationValuenew, dynamicColorValue, firstUse);
+
+    if (dynamicColorValue) {
+        setColorScheme(dynamicColorValue);
+    }
+
+    if (firstUse == 1) {
+        if (mbunitValuenew == "") {
+            setCookie("mbUnit", "1024", expires);
+        } else if (cacheSizeValuenew == "") {
+            setCookie("cacheSize", "128", expires);
+        } else if (isSystemNotificationValuenew == "") {
+            setCookie("SystemNotification", "false", expires);
             isSystemNotificationValuenew = false;
-            sendTestNotification.style.display = "none";
+        } else {
+            if (isSystemNotificationValuenew === "true") {
+                isSystemNotificationValuenew = true;
+                sendTestNotification.style.display = "block";
+            } else {
+                isSystemNotificationValuenew = false;
+                sendTestNotification.style.display = "none";
+            }
         }
+    } else {
+        setCookie("firstUse", 1, expires);
+        setCookie("mbUnit", "1024", expires);
+        setCookie("cacheSize", "128", expires);
+        setCookie("SystemNotification", "false", expires);
+        window.location.reload();
+        return;
     }
-    for (let i = 0; i < mbUnit.options.length; i++) {
-        if (mbUnit.options[i].value == mbunitValuenew) {
-            mbUnit.options[i].selected = true;
-            break;
-        }
-    }
+
     mbUnit.value = mbunitValuenew;
     cacheSize.value = cacheSizeValuenew;
     sysNotification.checked = isSystemNotificationValuenew;
+    document.body.classList.add('ready');
 });
 
 openfilebtn.addEventListener('click', () => {
@@ -87,10 +128,10 @@ calcbtn.addEventListener('click', () => {
     const pattern = document.querySelector('#mod').value;
     const cacheSizecheck = getCookie("cacheSize");
     if (!file || file.length == 0) {
-        mdui.dialog({
-            title: '错误',
-            content: '请选择文件',
-            buttons: [
+        dialog({
+            headline: '错误',
+            description: '请选择文件',
+            actions: [
                 {
                     text: '知道了'
                 }
@@ -99,10 +140,10 @@ calcbtn.addEventListener('click', () => {
         return;
     }
     if (cacheSizecheck == "") {
-        mdui.dialog({
-            title: '错误',
-            content: '分片单次缓存大小不能为空，请前往设置进行设置',
-            buttons: [
+        dialog({
+            headline: '错误',
+            description: '分片单次缓存大小不能为空，请前往设置进行设置',
+            actions: [
                 {
                     text: '知道了'
                 }
@@ -111,10 +152,10 @@ calcbtn.addEventListener('click', () => {
         return;
     }
     if (cacheSizecheck == "0") {
-        mdui.dialog({
-            title: '错误',
-            content: '分片单次缓存大小不能为“0”，请前往设置进行设置',
-            buttons: [
+        dialog({
+            headline: '错误',
+            description: '分片单次缓存大小不能为“0”，请前往设置进行设置',
+            actions: [
                 {
                     text: '知道了'
                 }
@@ -123,10 +164,10 @@ calcbtn.addEventListener('click', () => {
         return;
     }
     if (method == "nullselect" && pattern == "nullselect") {
-        mdui.dialog({
-            title: '错误',
-            content: '请选择方法及模式',
-            buttons: [
+        dialog({
+            headline: '错误',
+            description: '请选择方法及模式',
+            actions: [
                 {
                     text: '知道了'
                 }
@@ -135,10 +176,10 @@ calcbtn.addEventListener('click', () => {
         return;
     }
     if (pattern == "nullselect") {
-        mdui.dialog({
-            title: '错误',
-            content: '请选择模式',
-            buttons: [
+        dialog({
+            headline: '错误',
+            description: '请选择模式',
+            actions: [
                 {
                     text: '知道了'
                 }
@@ -147,10 +188,10 @@ calcbtn.addEventListener('click', () => {
         return;
     }
     if (method == "nullselect") {
-        mdui.dialog({
-            title: '错误',
-            content: '请选择方法',
-            buttons: [
+        dialog({
+            headline: '错误',
+            description: '请选择方法',
+            actions: [
                 {
                     text: '知道了'
                 }
@@ -160,10 +201,10 @@ calcbtn.addEventListener('click', () => {
     }
     if (pattern == "gen") {
         if (method == "nullselect") {
-            mdui.dialog({
-                title: '错误',
-                content: '请选择方法',
-                buttons: [
+            dialog({
+                headline: '错误',
+                description: '请选择方法',
+                actions: [
                     {
                         text: '知道了'
                     }
@@ -176,10 +217,10 @@ calcbtn.addEventListener('click', () => {
     } else {
         const inpc = document.getElementById('a').value;
         if (!inpc) {
-            mdui.dialog({
-                title: '错误',
-                content: '请输入校验值',
-                buttons: [
+            dialog({
+                headline: '错误',
+                description: '请输入校验值',
+                actions: [
                     {
                         text: '知道了'
                     }
@@ -193,21 +234,21 @@ calcbtn.addEventListener('click', () => {
 })
 
 
-saveBtn.addEventListener('click', () => {
+settingsSaveBtn.addEventListener('click', () => {
     const mbunitValue = mbUnit.value;
     const cacheSizeValue = cacheSize.value;
     const SystemNotification = document.querySelector('#isSystemNotification').checked;
     if (cacheSizeValue == "0") {
-        settingsDialog.close();
-        mdui.dialog({
-            title: '错误',
-            content: '分片单次缓存大小不能为“0”，请重新输入',
+        settingsDialog.open = false;
+        dialog({
+            headline: '错误',
+            description: '分片单次缓存大小不能为“0”，请重新输入',
             modal: true,
-            buttons: [
+            actions: [
                 {
                     text: '确定',
                     onClick: () => {
-                        settingsDialog.open();
+                        settingsDialog.open = true;
                     }
                 }
             ]
@@ -216,16 +257,16 @@ saveBtn.addEventListener('click', () => {
     }
 
     if (cacheSizeValue == "") {
-        settingsDialog.close();
-        mdui.dialog({
-            title: '错误',
-            content: '分片单次缓存大小不能为空，请重新输入',
+        settingsDialog.open = false;
+        dialog({
+            headline: '错误',
+            description: '分片单次缓存大小不能为空，请重新输入',
             modal: true,
-            buttons: [
+            actions: [
                 {
                     text: '确定',
                     onClick: () => {
-                        settingsDialog.open();
+                        settingsDialog.open = true;
                     }
                 }
             ]
@@ -234,29 +275,30 @@ saveBtn.addEventListener('click', () => {
     }
 
     if (cacheSizeValue.length > 10) {
-        settingsDialog.close();
-        mdui.dialog({
-            title: '错误',
-            content: '分片单次缓存大小不能超过5位，请重新输入',
+        settingsDialog.open = false;
+        dialog({
+            headline: '错误',
+            description: '分片单次缓存大小不能超过5位，请重新输入',
             modal: true,
-            buttons: [
+            actions: [
                 {
                     text: '确定',
                     onClick: () => {
-                        settingsDialog.open();
+                        settingsDialog.open = true;
                     }
                 }
             ]
         });
         return;
     }
-    setCookie("mbUnit", mbunitValue, expires)
-    setCookie("cacheSize", cacheSizeValue, expires)
-    setCookie("SystemNotification", SystemNotification, expires)
+    setCookie("mbUnit", mbunitValue, expires);
+    setCookie("cacheSize", cacheSizeValue, expires);
+    setCookie("SystemNotification", SystemNotification, expires);
+    settingsDialog.open = false;
 })
 
 openSettingsBtn.addEventListener('click', () => {
-    settingsDialog.open();
+    settingsDialog.open = true;
 })
 
 sysNotification.addEventListener('change', () => {
@@ -275,16 +317,16 @@ sysNotification.addEventListener('change', () => {
                 else {
                     console.log("没有获取到通知权限");
                     sendTestNotification.style.display = "none";
-                    settingsDialog.close();
-                    mdui.dialog({
-                        title: '错误',
-                        content: '您没有同意开启通知权限，本应用无法发送通知，请重新尝试',
+                    settingsDialog.open = false;
+                    dialog({
+                        headline: '错误',
+                        description: '您没有同意开启通知权限，本应用无法发送通知，请重新尝试',
                         modal: true,
-                        buttons: [
+                        actions: [
                             {
                                 text: '确定',
                                 onClick: () => {
-                                    settingsDialog.open();
+                                    settingsDialog.open = true;
                                 }
                             }
                         ]
@@ -310,15 +352,15 @@ sendTestNotification.addEventListener('click', () => {
             }
             else {
                 console.log("没有获取到通知权限");
-                settingsDialog.close();
-                mdui.dialog({
-                    title: '错误',
-                    content: '请先开启通知权限，再点击本按钮',
-                    buttons: [
+                settingsDialog.open = false;
+                dialog({
+                    headline: '错误',
+                    description: '请先开启通知权限，再点击本按钮',
+                    actions: [
                         {
                             text: '确定',
                             onClick: () => {
-                                settingsDialog.open();
+                                settingsDialog.open = true;
                             }
                         }
                     ]
@@ -329,25 +371,25 @@ sendTestNotification.addEventListener('click', () => {
 })
 
 deleteCacheBtn.addEventListener('click', () => {
-    settingsDialog.close();
-    mdui.dialog({
-        title: '你真的要清除缓存吗',
-        content: '这只适用于网站无法正常更新的情况',
+    settingsDialog.open = false;
+    dialog({
+        headline: '你真的要清除缓存吗',
+        description: '这只适用于网站无法正常更新的情况',
         modal: true,
-        buttons: [
+        actions: [
             {
                 text: '取消',
                 onClick: () => {
-                    settingsDialog.open();
+                    settingsDialog.open = true;
                 }
             },
             {
                 text: '清除缓存',
                 onClick: () => {
-                    mdui.dialog({
-                        title: '提示',
-                        content: '清除缓存成功，页面即将重载',
-                        buttons: [
+                    dialog({
+                        headline: '提示',
+                        description: '清除缓存成功，页面即将重载',
+                        actions: [
                             {
                                 text: '确定'
                             }
@@ -368,25 +410,25 @@ deleteCacheBtn.addEventListener('click', () => {
 })
 
 deleteCookiesBtn.addEventListener('click', () => {
-    settingsDialog.close();
-    mdui.dialog({
-        title: '你真的要清除 Cookies 吗',
-        content: '这也将清除您的所有个人设置',
+    settingsDialog.open = false;
+    dialog({
+        headline: '你真的要清除 Cookies 吗',
+        description: '这也将清除您的所有个人设置',
         modal: true,
-        buttons: [
+        actions: [
             {
                 text: '取消',
                 onClick: () => {
-                    settingsDialog.open();
+                    settingsDialog.open = true;
                 }
             },
             {
                 text: '清除 Cookies',
                 onClick: () => {
-                    mdui.dialog({
-                        title: '提示',
-                        content: '清除 Cookies 成功，页面即将重载',
-                        buttons: [
+                    dialog({
+                        headline: '提示',
+                        description: '清除 Cookies 成功，页面即将重载',
+                        actions: [
                             {
                                 text: '确定'
                             }
@@ -394,6 +436,7 @@ deleteCookiesBtn.addEventListener('click', () => {
                     });
                     setTimeout(() => {
                         deleteCookie();
+                        setCookie('firstUse', 0, expires);
                         window.location.reload(true);
                     }, 500);
                 }
@@ -403,25 +446,25 @@ deleteCookiesBtn.addEventListener('click', () => {
 })
 
 deleteAllDataBtn.addEventListener('click', () => {
-    settingsDialog.close();
-    mdui.dialog({
-        title: '你真的要清除全部数据吗',
-        content: '这将清除网站缓存和您的所有个人设置',
+    settingsDialog.open = false;
+    dialog({
+        headline: '你真的要清除全部数据吗',
+        description: '这将清除网站缓存和您的所有个人设置',
         modal: true,
-        buttons: [
+        actions: [
             {
                 text: '取消',
                 onClick: () => {
-                    settingsDialog.open();
+                    settingsDialog.open = true;
                 }
             },
             {
                 text: '清除所有数据',
                 onClick: () => {
-                    mdui.dialog({
-                        title: '提示',
-                        content: '清除所有数据成功，页面即将重载',
-                        buttons: [
+                    dialog({
+                        headline: '提示',
+                        description: '清除所有数据成功，页面即将重载',
+                        actions: [
                             {
                                 text: '确定'
                             }
@@ -434,6 +477,7 @@ deleteAllDataBtn.addEventListener('click', () => {
                         caches.keys().then(keys => Promise.all(
                             keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
                         ));
+                        setCookie('firstUse', 0, expires);
                         window.location.reload(true);
                     }, 500);
                 }
@@ -443,10 +487,31 @@ deleteAllDataBtn.addEventListener('click', () => {
 })
 
 aboutBtn.addEventListener('click', () => {
-    settingsDialog.close();
-    aboutDialog.open();
+    settingsDialog.open = false;
+    aboutDialog.open = true;
 })
 
 aboutCloseBtn.addEventListener('click', () => {
-    settingsDialog.open();
+    settingsDialog.open = true;
+    aboutDialog.open = false;
+})
+
+settingsCancelBtn.addEventListener('click', () => {
+    settingsDialog.open = false;
+})
+
+// MD3 主题色
+chooseColorBtn.addEventListener('click', () => {
+    colorDialog.open = true;
+})
+
+colorCancelBtn.addEventListener('click', () => {
+    colorDialog.open = false;
+})
+
+setColorBtn.addEventListener('click', () => {
+    let dynamicColor = document.querySelector('#dynamicColor');
+    setColorScheme(dynamicColor.value);
+    colorDialog.open = false;
+    setCookie("dynamicColor", dynamicColor.value, expires);
 })
