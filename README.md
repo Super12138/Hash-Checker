@@ -11,6 +11,7 @@
 <strong>中文（简体）</strong>| [English](README_EN.md)
 
 ## ✨ 功能
+- 支持 Material Design 3 以及自定义主题色
 - 支持 Windows 和 macOS 系统
 - 支持深色模式
 - 校验文件 md5 或任何 sha 值
