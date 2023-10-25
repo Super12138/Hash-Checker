@@ -10,6 +10,7 @@ This README supports the following languages:<br>
 [中文（简体）](README.md)| <strong>English</strong>
 
 ## ✨ Features
+- Support Material Design 3 and custom theme colors
 - Support for Windows and macOS systems
 - Support Dark mode
 - Check the file md5 or any sha value
@@ -24,8 +25,8 @@ This README supports the following languages:<br>
 5. Complete
 
 ## ⬇️ Download
-- Offline version V1.0.0[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
-- Online version V1.0.8[Github Page](https://super12138.github.io/Hash-Checker/)
+- Offline version V2.0.0[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- Online version V2.0.0[Github Page](https://super12138.github.io/Hash-Checker/)
 
 ## 📸 Screenshots
 
