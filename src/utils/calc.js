@@ -4,13 +4,14 @@ import { getValue } from "../store/store";
 import { sendNotification } from "./notification";
 import { ipcRenderer, clipboard } from "electron";
 import { simpleDialog } from "./dialog";
+import 'mdui/components/linear-progress.js';
 
 export async function calc(pattern, method, file, hash) {
     console.log("从index.js接收的参数：" + pattern + method + file)
     const ttitle = document.querySelector('#ttitle');
     const tips = document.querySelector('#tips');
     const isClipboard = document.querySelector('#isClipboard').checked;
-    const progressBar = document.querySelector('#progressbar');
+    // const progressBar = document.querySelector('#progressBar');
     const timeTip = document.querySelector('#timetip');
     const calcBtn = document.querySelector('#calcbtn');
     const chooseFileBtn = document.querySelector('#openfile');
@@ -26,7 +27,7 @@ export async function calc(pattern, method, file, hash) {
 
     ttitle.innerHTML = "状态：";
     tips.innerHTML = "正在将文件缓存...";
-    //progressBar.style.display = "block";
+
     timeTip.style.display = "block";
     calcBtn.disabled = true;
     chooseFileBtn.disabled = true;
@@ -45,7 +46,6 @@ export async function calc(pattern, method, file, hash) {
 
             calcBtn.disabled = false;
             chooseFileBtn.disabled = false;
-            // progressBar.style.display = "none";
             timeTip.style.display = "none";
             ipcRenderer.send('clear-progress');
 
@@ -105,8 +105,10 @@ export async function calc(pattern, method, file, hash) {
         subReader.onload = () => {
             currentChunk++;
             totalLoaded += subReader.result.byteLength;
-            const percentage = Math.floor(totalLoaded / file.size * 100);
+
             const percentageorig = totalLoaded / file.size;
+            const percentage = Math.floor(totalLoaded / file.size * 100);
+
             // progressBar.value = 0;
             tips.innerHTML = "正在将文件缓存...";
             console.log(`${percentage}%`);
@@ -124,17 +126,22 @@ export async function calc(pattern, method, file, hash) {
             if (percentage === 1) {
                 const endTimeorig = Date.now();
                 const endTime = new Date(endTimeorig);
+
                 const startTime = getText();
                 console.log(`停止计时${endTime}，${startTime}`);
                 const orignaltime = endTime - startTime;
                 console.log(`经过时间：${orignaltime}`);
                 const onetime = orignaltime / 1000; // 将毫秒转换成秒
+                
                 // 开始计算剩余时间
                 const totalTimeorig = onetime * 100;
                 const totalTime = totalTimeorig.toFixed(3);
+
                 // progressBar.value = percentageorig;
+
                 sendText(totalTime, only);
             }
+
             const totalTime = getText(only);
             timeTip.innerHTML = `预计缓存完毕需要：${totalTime}秒<br><small>注：预计时间可能不准确，仅供参考</small><br>当前已完成：${percentage}%`;
             if (percentage > 95) {

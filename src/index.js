@@ -19,13 +19,8 @@ import 'mdui/components/switch.js';
 
 import 'mdui/components/checkbox.js';
 
-import 'mdui/components/layout.js';
-import 'mdui/components/layout-item.js';
-import 'mdui/components/layout-main.js';
-
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 
-import 'mdui/components/linear-progress.js';
 
 let isOnlyAbout = false;
 

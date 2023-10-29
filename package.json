@@ -28,10 +28,10 @@
   },
   "homepage": "https://github.com/Super12138/Hash-Checker#readme",
   "devDependencies": {
-    "@babel/core": "^7.22.10",
-    "@babel/preset-env": "^7.22.10",
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
     "babel-loader": "^9.1.3",
-    "concurrently": "^8.2.0",
+    "concurrently": "^8.2.2",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "electron": "^27.0.2",
