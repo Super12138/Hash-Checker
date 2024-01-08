@@ -1,6 +1,6 @@
 # Hash Checker | 文件校验器 | 哈希检查器
-![GitHub](https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square)
-![GitHub all releases](https://img.shields.io/github/downloads/Super12138/Hash-Checker/total?style=flat-square)
+![License](https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square)
+![GitHub all releases download](https://img.shields.io/github/downloads/Super12138/Hash-Checker/total?style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Super12138/Hash-Checker?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/Super12138/Hash-Checker?style=flat-square)
 
