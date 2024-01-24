@@ -100,11 +100,6 @@ body {
     font-size: 14px;
     font-family: Roboto, Noto, Helvetica, Arial, sans-serif;
 }
-
-html {
-    background-color: rgb(var(--mdui-color-background-light)) !important;
-}
-
 .mdui-typo h1,
 .mdui-typo h2,
 .mdui-typo h3,
@@ -249,10 +244,6 @@ body.ready {
 }
 
 @media (prefers-color-scheme: dark) {
-    html {
-        background-color: rgb(var(--mdui-color-background-dark)) !important;
-    }
-
     .mdui-typo code {
         padding: 2px 6px;
         color: rgb(var(--mdui-color-on-surface-dark));
