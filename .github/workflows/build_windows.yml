@@ -11,7 +11,7 @@ jobs:
         npm install
         npm run build
     - name: Upload file
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: HashChecker-Release  # 上传后的名字
         path: dist
