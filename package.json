@@ -36,6 +36,6 @@
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
-    "mdui": "^2.0.2"
+    "mdui": "^2.0.6"
   }
 }
