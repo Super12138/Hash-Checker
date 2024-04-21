@@ -2,5 +2,15 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies"],
+      "updateTypes": ["minor", "patch"]
+    },
+    {
+      "depTypeList": ["dependencies"],
+      "updateTypes": ["minor", "patch"]
+    }
   ]
 }
