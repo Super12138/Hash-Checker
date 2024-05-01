@@ -1,6 +1,6 @@
 {
   "name": "HashChecker",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "一个开源的、无广告的、遵循 Material Design 3 的哈希校验&生成器",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "build": {
     "appId": "Hash Checker",
     "productName": "Hash Checker",
-    "copyright": "Copyright © 2019-2023 Super12138",
+    "copyright": "Copyright © 2019-2024 Super12138",
     "win": {
       "icon": "build/AppIcon.ico",
       "target": [
@@ -26,7 +26,7 @@
     },
     "mac": {
       "icon": "build/AppIcon.icns",
-      "category": "cn.Super12138.HashChecker",
+      "category": "public.app-category.developer-tools",
       "darkModeSupport": true,
       "target": [
         {
@@ -65,10 +65,10 @@
   },
   "homepage": "https://github.com/Super12138/Hash-Checker#readme",
   "devDependencies": {
-    "electron": "^30.0.0",
-    "electron-builder": "^24.6.4"
+    "electron": "^30.0.1",
+    "electron-builder": "^24.13.3"
   },
   "dependencies": {
-    "electron-store": "^8.1.0"
+    "electron-store": "^8.2.0"
   }
 }

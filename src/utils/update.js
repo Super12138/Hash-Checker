@@ -2,8 +2,8 @@ const { shell } = require('electron');
 import { dialog } from 'mdui/functions/dialog.js';
 
 export function update() {
-    const localver = '2.0.0';
-    const localvernum = 2023102201;
+    const localver = '2.0.1';
+    const localvernum = 2024050101;
     Promise.all([
         fetch('https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker/build/ver.txt'),
         fetch('https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker/build/vernum.txt')
