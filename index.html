@@ -18,22 +18,11 @@
         <div class="mdui-row">
             <h1>Hash Checker
                 <mdui-button-icon id="settingsBtn" class="mdui-float-right">
-                    <mdui-icon>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                            <path
-                                d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm112-260q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Z" />
-                        </svg>
-                    </mdui-icon>
+                    <mdui-icon-settings></mdui-icon-settings>
                 </mdui-button-icon>
                 <mdui-button-icon id="chooseColorBtn" class="mdui-float-right">
-                    <mdui-icon>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                            <path
-                                d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 32.5-156t88-127Q256-817 330-848.5T488-880q80 0 151 27.5t124.5 76q53.5 48.5 85 115T880-518q0 115-70 176.5T640-280h-74q-9 0-12.5 5t-3.5 11q0 12 15 34.5t15 51.5q0 50-27.5 74T480-80Zm0-400Zm-220 40q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120-160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm200 0q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120 160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17ZM480-160q9 0 14.5-5t5.5-13q0-14-15-33t-15-57q0-42 29-67t71-25h70q66 0 113-38.5T800-518q0-121-92.5-201.5T488-800q-136 0-232 93t-96 227q0 133 93.5 226.5T480-160Z" />
-                        </svg>
-                    </mdui-icon>
+                    <mdui-icon-color-lens></mdui-icon-color-lens>
                 </mdui-button-icon>
-                <!--<button type="button" class="mdui-btn mdui-ripple mdui-float-right" id="toggleDarkMode"><i class="mdui-icon material-icons">&#xe167;</i></button>-->
             </h1>
 
             <mdui-dialog close-on-overlay-click headline="设置" description="你可以在此个性化设置这个应用" id="settings">
@@ -51,17 +40,13 @@
                 <label class="mdui-valign">
                     <mdui-switch id="isSystemNotification"></mdui-switch>
                     &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;
-                    
+
                 </label>
                 <mdui-button id="sendTestNotification" style="display: none;">点击发送一条测试通知</mdui-button>
                 <br>
                 <label class="mdui-valign">
                     <mdui-switch id="isStartupUpdate"></mdui-switch>&nbsp;在启动时检查更新
                 </label>
-                <br>
-                <mdui-button full-width id="deleteCache">清除缓存</mdui-button>
-                <br>
-                <mdui-button full-width id="deleteCookies">清除本地数据</mdui-button>
                 <br>
                 <mdui-button full-width id="deleteAllData">清除所有数据</mdui-button>
                 <br>
@@ -71,7 +56,7 @@
             </mdui-dialog>
 
             <mdui-dialog headline="关于" id="about">
-                <p>应用版本：v2.0.0（2023102201）</p>
+                <p>应用版本：v2.0.1（2024050101）</p>
                 <p id="electronVer"></p>
                 <p>本应用在 <a target="_blank" href="https://github.com/Super12138/Hash-Checker/">GitHub</a> 上开源<br>由 <a
                         target="_blank" href="https://github.com/Super12138/">Super12138</a> 开发</p>
@@ -145,7 +130,7 @@
             <br>
             <h1 id="ttitle"></h1>
             <p id="tips"></p>
-            <p id="timetip" style="display: none;"><!--<mdui-linear-progress id="progressBar"></mdui-linear-progress>--></p>
+            <p id="timetip" style="display: none;"></p>
             <br>
             <br>
         </div>

@@ -12,12 +12,17 @@ import 'mdui/components/button.js';
 import 'mdui/components/dialog.js';
 import { dialog } from 'mdui/functions/dialog.js';
 
+import 'mdui/components/linear-progress.js';
+
 import 'mdui/components/select.js';
 import 'mdui/components/menu-item.js';
 
 import 'mdui/components/switch.js';
 
 import 'mdui/components/checkbox.js';
+
+import '@mdui/icons/settings.js';
+import '@mdui/icons/color-lens.js';
 
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 
@@ -34,8 +39,6 @@ const mbUnit = document.querySelector('#mbunit');
 const cacheSize = document.querySelector('#cachesize');
 const sysNotification = document.querySelector('#isSystemNotification');
 
-const deleteCacheBtn = document.querySelector('#deleteCache');
-const deleteCookiesBtn = document.querySelector('#deleteCookies');
 const deleteAllDataBtn = document.querySelector('#deleteAllData');
 
 const aboutBtn = document.querySelector('#aboutBtn');
@@ -284,59 +287,6 @@ sendTestNotification.addEventListener('click', () => {
     sendNotification("测试通知", "这是一个测试通知")
 })
 
-deleteCacheBtn.addEventListener('click', () => {
-    settingsDialog.open = false;
-    dialog({
-        headline: '你真的要清除缓存吗',
-        description: '这只适用于应用出现问题的情况',
-        actions: [
-            {
-                text: '取消',
-                onClick: () => {
-                    settingsDialog.open = true;
-                }
-            },
-            {
-                text: '清除缓存',
-                onClick: () => {
-                    simpleDialog('提示', '清除缓存成功，应用即将重载', '确定');
-                    setTimeout(() => {
-                        ipcRenderer.send('clear-cache');
-                        window.location.reload(true);
-                    }, 500);
-                }
-            }
-        ]
-    });
-})
-
-deleteCookiesBtn.addEventListener('click', () => {
-    settingsDialog.open = false;
-    dialog({
-        headline: '你真的要清除本地数据吗',
-        description: '这将会清除您的所有个人设置',
-        actions: [
-            {
-                text: '取消',
-                onClick: () => {
-                    settingsDialog.open = true;
-                }
-            },
-            {
-                text: '清除本地数据',
-                onClick: () => {
-                    simpleDialog('提示', '清除本地数据成功，应用即将重载', '确定');
-                    setTimeout(() => {
-                        deleteAllValue();
-                        setValue("fistUse", "0");
-                        window.location.reload(true);
-                    }, 500);
-                }
-            }
-        ]
-    });
-})
-
 deleteAllDataBtn.addEventListener('click', () => {
     settingsDialog.open = false;
     dialog({
@@ -378,23 +328,6 @@ aboutCloseBtn.addEventListener('click', () => {
         aboutDialog.open = false;
     }
 })
-
-/* toggleDarkMode.addEventListener('click', async () => {
-    const isDarkMode = await window.darkMode.toggle();
-    // document.getElementById('theme-source').innerHTML = isDarkMode ? 'Dark' : 'Light';
-    if (isDarkMode) {
-        toggleDarkMode.innerHTML = '<i class="mdui-icon material-icons">&#xe3a8;</i>';
-    } else {
-        toggleDarkMode.innerHTML = '<i class="mdui-icon material-icons">&#xe430;</i>';
-    }
-})
-
-toggleDarkMode.addEventListener('mousedown', () => {
-    setTimeout(async () => {
-        await window.darkMode.system();
-        toggleDarkMode.innerHTML = '<i class="mdui-icon material-icons">&#xe167;</i>';
-    }, 3000);
-}) */
 
 ipcRenderer.on('openAboutDialog', (event) => {
     isOnlyAbout = true;

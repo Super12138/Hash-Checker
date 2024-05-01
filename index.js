@@ -38,29 +38,6 @@ function createWindow() {
   ipcMain.on('clear-progress', (event) => {
     mainWindow.setProgressBar(-1);
   });
-
-  ipcMain.on('clear-cache', (event) => {
-    mainWindow.webContents.session.clearStorageData({
-      storages: [
-        'appcache',
-        'filesystem',
-        'indexdb',
-        'localstorage',
-        'shadercache',
-        'websql',
-        'serviceworkers',
-        'cachestorage'
-      ],
-      quotas: [
-        'temporary',
-        'persistent',
-        'syncable'
-      ]
-    }).catch((error) => {
-      dialog.showErrorBox('清除缓存出错', error);
-    })
-  })
-  // mainWindow.setWindowButtonVisibility(true)
 }
 
 const template = [
@@ -162,6 +139,25 @@ ipcMain.on('getValue', (event, name) => {
 
 ipcMain.on('deleteAllValue', (event) => {
   store.clear();
+  mainWindow.webContents.session.clearStorageData({
+    storages: [
+      'appcache',
+      'filesystem',
+      'indexdb',
+      'localstorage',
+      'shadercache',
+      'websql',
+      'serviceworkers',
+      'cachestorage'
+    ],
+    quotas: [
+      'temporary',
+      'persistent',
+      'syncable'
+    ]
+  }).catch((error) => {
+    dialog.showErrorBox('清除缓存出错', error);
+  })
 });
 
 ipcMain.on('restart-app', (event) => {
