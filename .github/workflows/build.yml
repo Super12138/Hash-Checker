@@ -56,11 +56,10 @@ jobs:
         run: npm install
 
       - name: Build app
-        run: npx electron-builder --publish=never
+        run: npx electron-builder --publish=never --dir=false
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4.3.3
         with:
           name: Hash-Checker-${{ matrix.os }}
-          path: |
-            !${{ github.workspace }}/dist/**/
+          path:  ${{ github.workspace }}/dist/
