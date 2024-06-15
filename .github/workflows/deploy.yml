@@ -10,22 +10,29 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.7
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+
+      - uses: actions/setup-node@v4.0.2
         with:
-          node-version: 18
+          node-version: 20
+
       - run: npm install
+
       - name: Build
         run: npm run build
+
       - name: Fix service-worker.js path error
         run: sed -i 's?"./workbox-2b403519"?"/Hash-Checker/workbox-2b403519"?g' dist/service-worker.js
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+
+      - uses: actions/configure-pages@v5.0.0
+      - uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: dist
+
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4.0.5

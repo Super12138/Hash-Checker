@@ -1,71 +1,59 @@
 name: Build
 
 on:
-  workflow_dispatch:
-    inputs:
-      platform:
-        description: "选择打包平台"
-        required: true
-        default: "windows-latest"
-        type: choice
-        options:
-          - "windows-latest"
-          - "macos-latest"
-      arch:
-        description: '选择打包架构'
-        required: true
-        default: 'Windows x64'
-        type: choice
-        options:
-          - 'Windows x64'
-          - 'Windows x86'
-          - 'Windows arm64'
-          - 'macOS'
+  workflow_dispatch: {}
 
 jobs:
-  build:
-    runs-on: ${{ inputs.platform }}
+  build_webpack:
+    runs-on: windows-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/checkout@v4.1.7
         with:
-          node-version: 18
+          fetch-depth: 0
 
-      - name: Install dependencies (webpack)
+      - uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 20
+
+      - name: Install dependencies
         run: npm install
 
       - name: Build webpack
         run: npm run build
 
-      - name: Goto dist
-        run: cd dist
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: Webpack-dist
+          path: ${{ github.workspace }}/dist
 
-      - name: Install dependencies (electron)
+  build_app:
+    needs: build_webpack
+
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+      - uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 20
+
+      - name: Get webpack artifact
+        uses: actions/download-artifact@v4.1.7
+        with:
+          name: Webpack-dist
+
+      - name: Install dependencies
         run: npm install
 
-      - name: Build Electron app
-        run: |
-          if [ ${{ inputs.arch }} == 'Windows x64' ]; then
-            npx electron-build -w --x64
-          else
-            if [ ${{ inputs.arch }} == 'Windows x86' ]; then
-              npx electron-build -w --ia32
-            else
-              if [ ${{ inputs.arch }} == 'Windows arm64' ]; then
-                npx electron-build -w --arm64
-              else
-                if [ ${{ inputs.arch }} == 'macOS' ]; then
-                  npx electron-build -m --universal
-                fi
-              fi
-            fi
-          fi
+      - name: Build app
+        run: npx electron-builder
 
-      - name: Upload dist
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4.3.3
         with:
-          name: ${{ inputs.arch }}
-          path: dist
+          name: Hash-Checker-${{ matrix.os }}
+          path: ${{ github.workspace }}/dist/.*\.(exe|dmg)$
