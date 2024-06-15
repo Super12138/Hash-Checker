@@ -69,6 +69,6 @@
     "electron-builder": "^24.13.3"
   },
   "dependencies": {
-    "electron-store": "^9.0.0"
+    "electron-store": "^10.0.0"
   }
 }
