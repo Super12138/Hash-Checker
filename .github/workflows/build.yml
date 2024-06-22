@@ -56,10 +56,33 @@ jobs:
         run: npm install
 
       - name: Build app
-        run: npx electron-builder --publish=never --dir=false
+        run: npx electron-builder --publish=never
 
-      - name: Upload artifact
+      - name: Upload Windows artifact
         uses: actions/upload-artifact@v4.3.3
         with:
-          name: Hash-Checker-${{ matrix.os }}
-          path:  ${{ github.workspace }}/dist/
+          name: HashChecker-${{ matrix.os }}
+          path: ${{ github.workspace }}/dist/*Setup*.exe
+
+      - name: Upload macOS artifact (universal)
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: HashChecker-${{ matrix.os }}-Universal
+          path: ${{ github.workspace }}/dist/*-universal.dmg
+          if-no-files-found: ignore
+        
+      - name: Upload macOS artifact (arm64)
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: HashChecker-${{ matrix.os }}-arm64
+          path: ${{ github.workspace }}/dist/*-arm64.dmg
+          if-no-files-found: ignore
+
+      - name: Upload macOS artifact (x64)
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: HashChecker-${{ matrix.os }}-x64
+          path: |
+            !${{ github.workspace }}/dist/*-arm64.dmg
+            !${{ github.workspace }}/dist/*-universal.dmg
+          if-no-files-found: ignore
