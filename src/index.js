@@ -16,6 +16,10 @@ import 'mdui/components/switch.js';
 
 import 'mdui/components/checkbox.js';
 
+// Icons
+import '@mdui/icons/settings.js';
+import '@mdui/icons/color-lens.js';
+
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 
 const openfilebtn = document.querySelector("#openfile");
