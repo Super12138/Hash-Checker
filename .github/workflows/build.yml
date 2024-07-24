@@ -30,6 +30,14 @@ jobs:
             platform:  'darwin/universal'
             os: 'macos-latest'
 
+          - name: 'macOS-x64'
+            platform:  'darwin/amd64'
+            os: 'macos-latest'
+
+          - name: 'macOS-arm64'
+            platform:  'darwin/arm64'
+            os: 'macos-latest'
+
     runs-on: ${{ matrix.build.os }}
     steps:
       - name: Checkout
