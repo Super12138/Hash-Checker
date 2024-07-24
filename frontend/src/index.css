@@ -101,10 +101,6 @@ body {
     font-family: Roboto, Noto, Helvetica, Arial, sans-serif;
 }
 
-html {
-    background-color: rgb(var(--mdui-color-background-light)) !important;
-}
-
 .mdui-typo h1,
 .mdui-typo h2,
 .mdui-typo h3,
@@ -202,12 +198,16 @@ html {
 }
 
 /* 颜色 */
-.mdui-text-color-red-700 {
+.mdui-color-red {
     color: #D32F2F !important;
 }
 
+.mdui-color-green {
+    color: #00C853 !important;
+}
+
 /* 滚动条 */
-body::-webkit-scrollbar {
+/* body::-webkit-scrollbar {
     width: 6px;
     height: 4px
 }
@@ -222,7 +222,7 @@ body::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0);
     border-radius: 0;
     background: rgba(0, 0, 0, 0)
-}
+} */
 
 #mode,
 #method {
@@ -239,9 +239,6 @@ body.ready {
 }
 
 @media (prefers-color-scheme: dark) {
-    html {
-        background-color: rgb(var(--mdui-color-background-dark)) !important;
-    }
 
     .mdui-typo code {
         padding: 2px 6px;
@@ -254,47 +251,4 @@ body.ready {
 
 .fit-top{
     margin-top: 3%;
-}
-
-#pwa-toast {
-    visibility: hidden;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    margin: 16px;
-    padding: 12px;
-    border: 1px solid #8885;
-    border-radius: 4px;
-    z-index: 1;
-    text-align: left;
-    box-shadow: 3px 4px 5px 0 #8885;
-    display: grid;
-}
-
-#pwa-toast .message {
-    margin-bottom: 8px;
-}
-
-#pwa-toast .buttons {
-    display: flex;
-}
-
-#pwa-toast button {
-    border: 1px solid #8885;
-    outline: none;
-    margin-right: 5px;
-    border-radius: 2px;
-    padding: 3px 10px;
-}
-
-#pwa-toast.show {
-    visibility: visible;
-}
-
-button#pwa-refresh {
-    display: none;
-}
-
-#pwa-toast.show.refresh button#pwa-refresh {
-    display: block;
 }

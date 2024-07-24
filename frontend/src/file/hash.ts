@@ -68,9 +68,9 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
                     const userHash = hash!.toLowerCase();
                     const genHash = calcHash.toLowerCase();
                     if (userHash === genHash) {
-                        outputTips.innerHTML += "，校验通过"
+                        outputTips.innerHTML += `，<strong class="mdui-color-green">校验通过</strong>`
                     } else {
-                        outputTips.innerHTML += `，<strong class="mdui-text-color-red-700">校验失败</strong>`
+                        outputTips.innerHTML += `，<strong class="mdui-color-red">校验失败</strong>`
                         const compareResult = compareHash(userHash, genHash);
                         outputTips.innerHTML += `<br>哈希对比结果（相比于您提供的哈希值）：`;
                         outputTips.appendChild(compareResult);
