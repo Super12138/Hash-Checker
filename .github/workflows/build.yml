@@ -14,15 +14,19 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          - name: 'App'
-            platform:  'linux/amd64'
-            os: 'ubuntu-latest'
-
-          - name: 'App'
+          - name: 'Windows-x64'
             platform:  'windows/amd64'
             os: 'windows-latest'
 
-          - name: 'App'
+          - name: 'Windows-ia32'
+            platform:  'windows/386'
+            os: 'windows-latest'
+
+          - name: 'Windows-arm64'
+            platform:  'windows/arm64'
+            os: 'windows-latest'
+
+          - name: 'macOS-universal'
             platform:  'darwin/universal'
             os: 'macos-latest'
 
