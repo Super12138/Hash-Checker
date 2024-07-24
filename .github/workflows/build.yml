@@ -1,88 +1,51 @@
-name: Build
+name: Wails build
 
 on:
-  workflow_dispatch:
-    branches: 
-      - main
-  
   push:
-    branches: 
-      - main
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  NODE_OPTIONS: "--max-old-space-size=4096"
 
 jobs:
-  build_webpack:
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        build:
+          - name: 'App'
+            platform:  'linux/amd64'
+            os: 'ubuntu-latest'
+
+          - name: 'App'
+            platform:  'windows/amd64'
+            os: 'windows-latest'
+
+          - name: 'App'
+            platform:  'darwin/universal'
+            os: 'macos-latest'
+
+    runs-on: ${{ matrix.build.os }}
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4.1.7
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4.0.3
+      - name: Setup Node
+        uses: actions/setup-node@v4.0.3
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install wails
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
-      - name: Build webpack
-        run: npm run build
-
+      - name: Build app
+        run: wails build
+      
       - name: Upload artifact
         uses: actions/upload-artifact@v4.3.4
         with:
-          name: Webpack-dist
-          path: ${{ github.workspace }}/dist
-
-  build_app:
-    needs: build_webpack
-
-    strategy:
-      matrix:
-        os: [windows-latest, macos-13]
-    runs-on: ${{ matrix.os }}
-    
-    steps:
-      - uses: actions/setup-node@v4.0.3
-        with:
-          node-version: 20
-
-      - name: Get webpack artifact
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: Webpack-dist
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build app
-        run: npx electron-builder --publish=never
-
-      - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4.3.4
-        with:
-          name: HashChecker-${{ matrix.os }}
-          path: ${{ github.workspace }}/dist/*Setup*.exe
-
-      - name: Upload macOS artifact (universal)
-        uses: actions/upload-artifact@v4.3.4
-        with:
-          name: HashChecker-${{ matrix.os }}-Universal
-          path: ${{ github.workspace }}/dist/*-universal.dmg
-          if-no-files-found: ignore
-        
-      - name: Upload macOS artifact (arm64)
-        uses: actions/upload-artifact@v4.3.4
-        with:
-          name: HashChecker-${{ matrix.os }}-arm64
-          path: ${{ github.workspace }}/dist/*-arm64.dmg
-          if-no-files-found: ignore
-
-      - name: Upload macOS artifact (x64)
-        uses: actions/upload-artifact@v4.3.4
-        with:
-          name: HashChecker-${{ matrix.os }}-x64
-          path: |
-            !${{ github.workspace }}/dist/*-arm64.dmg
-            !${{ github.workspace }}/dist/*-universal.dmg
-          if-no-files-found: ignore
+          name: ${{ matrix.build.name }}
+          path: build/bin
