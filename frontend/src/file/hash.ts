@@ -1,7 +1,7 @@
 import { getStorageItem } from "../store/localstorage";
 import { formatTime } from '../utils/date';
 import { writeClipboard } from '../utils/clipboard';
-import { compareHash } from '../utils/text';
+import { compareHash, string2Boolean } from '../utils/text';
 
 import type { Checkbox } from 'mdui/components/checkbox.js';
 import type { LinearProgress } from 'mdui/components/linear-progress.js';
@@ -27,7 +27,7 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
 
     const chunkSize: number = Number(getStorageItem("cacheSize"));
     const isClipboard: boolean = (document.querySelector('#isClipboard') as Checkbox).checked;
-    const systemNotification: boolean = Boolean(getStorageItem("systemNotification"));
+    const systemNotification: boolean = string2Boolean(getStorageItem("systemNotification") as string);
 
     outputTitle.innerHTML = "状态：";
     outputTips.innerHTML = "准备缓存文件";
