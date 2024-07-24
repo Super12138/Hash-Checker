@@ -59,7 +59,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
             server: {
                 open: true,
                 hmr: {
-                    protocol: "wss",
+                    protocol: "ws",
                 }
             },
         }

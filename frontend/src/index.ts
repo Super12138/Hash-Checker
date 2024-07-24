@@ -1,7 +1,7 @@
 import { calc } from "./file/hash";
 import { getfileinfo } from "./file/file";
 import { sendFile, getFile } from './utils/transfer';
-import { setStorageItem, getStorageItem, removeStorageItem, clearStorage } from './store/localstorage';
+import { setStorageItem, getStorageItem, removeStorageItem, resetStorage } from './store/localstorage';
 import { sendNotification } from "./utils/notification";
 import { clearCacheAndReload } from "./utils/service-worker";
 import { string2Boolean } from './utils/text';
@@ -82,27 +82,18 @@ dropZone.addEventListener('drop', (e: DragEvent) => {
 window.addEventListener("load", () => {
     initPWA();
 
-    const firstUse: boolean = string2Boolean(getStorageItem("firstUse") as string);
     const mbUnitValue: string = getStorageItem("mbUnit") as string;
     const cacheSizeValue: string = getStorageItem("cacheSize") as string;
     let isSystemNotification: boolean = string2Boolean(getStorageItem("systemNotification") as string);
-    console.log(mbUnitValue, cacheSizeValue, isSystemNotification, firstUse);
+    console.log(mbUnitValue, cacheSizeValue, isSystemNotification);
 
 
-    if (!firstUse) {
-        if (mbUnitValue == "") {
-            setStorageItem("mbUnit", "1024");
-        } else if (cacheSizeValue == "") {
-            setStorageItem("cacheSize", "2048");
-        }
-    } else {
-        setStorageItem("firstUse", "false");
+    if (mbUnitValue == "") {
         setStorageItem("mbUnit", "1024");
+    } else if (cacheSizeValue == "") {
         setStorageItem("cacheSize", "2048");
-        setStorageItem("systemNotification", "false");
-
-        window.location.reload();
     }
+
     if (isSystemNotification) {
         sendTestNotification.style.display = "block";
     } else {
@@ -384,8 +375,7 @@ deleteAllDataBtn.addEventListener('click', () => {
                         ]
                     });
                     setTimeout(() => {
-                        clearStorage();
-                        setStorageItem("firstUse", "true");
+                        resetStorage();
                         window.location.reload();
                     }, 500);
                 }
