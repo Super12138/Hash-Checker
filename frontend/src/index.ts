@@ -1,7 +1,7 @@
 import { calc } from "./file/hash";
 import { getfileinfo } from "./file/file";
 import { sendFile, getFile } from './utils/transfer';
-import { setStorageItem, getStorageItem, removeStorageItem, resetStorage } from './store/localstorage';
+import { setStorageItem, getStorageItem, removeStorageItem, setUpStorage, clearStorage } from './store/localstorage';
 import { sendNotification } from "./utils/notification";
 import { clearCacheAndReload } from "./utils/service-worker";
 import { string2Boolean } from './utils/text';
@@ -82,11 +82,18 @@ dropZone.addEventListener('drop', (e: DragEvent) => {
 window.addEventListener("load", () => {
     initPWA();
 
+    const isFirstUse: boolean = string2Boolean(getStorageItem("firstUse"));
+    console.log(getStorageItem("firstUse"));
     const mbUnitValue: string = getStorageItem("mbUnit") as string;
     const cacheSizeValue: string = getStorageItem("cacheSize") as string;
     let isSystemNotification: boolean = string2Boolean(getStorageItem("systemNotification") as string);
-    console.log(mbUnitValue, cacheSizeValue, isSystemNotification);
+    console.log(`firstUse: ${isFirstUse} mbUnit: ${mbUnitValue} cacheSize: ${cacheSizeValue} notification: ${isSystemNotification}`);
 
+
+    if(isFirstUse){
+        setUpStorage();
+        window.location.reload();
+    }
 
     if (mbUnitValue == "") {
         setStorageItem("mbUnit", "1024");
@@ -375,7 +382,8 @@ deleteAllDataBtn.addEventListener('click', () => {
                         ]
                     });
                     setTimeout(() => {
-                        resetStorage();
+                        clearStorage();
+                        setUpStorage();
                         window.location.reload();
                     }, 500);
                 }

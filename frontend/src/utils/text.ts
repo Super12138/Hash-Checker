@@ -18,6 +18,17 @@ export function compareHash(userHash: string, genHash: string): HTMLSpanElement 
     return virtualDOM;
 }
 
-export function string2Boolean(str: string): boolean {
-    return str.toLowerCase() === 'true';
+export function string2Boolean(str: string | null): boolean {
+    if (str === null) {
+        return true;
+    } else {
+        switch (str.toLowerCase()) {
+            case 'true':
+                return true;
+            case 'false':
+                return false;
+            default:
+                return true;
+        }
+    }
 }
