@@ -63,6 +63,7 @@ const aboutDialog: Dialog = document.querySelector('#about')!;
 const colorDialog: Dialog = document.querySelector('#colors')!;
 
 const dropZone: HTMLBodyElement = document.querySelector('#drop')!;
+const versionElement: HTMLParagraphElement = document.querySelector('#version')!;
 
 // 拖拽文件
 dropZone.addEventListener('dragover', (e: DragEvent) => {
@@ -110,6 +111,9 @@ window.addEventListener("load", () => {
     mbUnit.value = mbUnitValue;
     cacheSize.value = cacheSizeValue;
     sysNotification.checked = isSystemNotification;
+
+    // APP_VERSION：全局环境变量
+    versionElement.innerHTML = `版本：${APP_VERSION}`
 });
 
 window.addEventListener('DOMContentLoaded', () => {
