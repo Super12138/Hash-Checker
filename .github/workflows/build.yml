@@ -59,8 +59,8 @@ jobs:
       - name: Install wails
         run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
-      - name: Build app
-        run: wails build
+      - name: Build app (with installer)
+        run: wails build -nsis
       
       - name: Upload artifact
         uses: actions/upload-artifact@v4.3.4
