@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="build/appicon.svg" width="30%">
+</p>
+
 # Hash Checker | 文件校验器 | 哈希检查器
 ![License](https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square)
 ![GitHub all releases download](https://img.shields.io/github/downloads/Super12138/Hash-Checker/total?style=flat-square)
@@ -26,7 +30,7 @@
 5. 完成
 
 ## ⬇️ 下载
-- 离线版 V2.2.0[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- 离线版 V2.0.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
 - 在线版 v2.2.1[Github Page](https://super12138.github.io/Hash-Checker/)
 ## 📸 截图
 

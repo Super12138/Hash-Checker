@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="build/appicon.svg" width="30%">
+</p>
+
 # Hash Checker | 文件校验器 | 哈希检查器
 ![GitHub](https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square)
 ![GitHub all releases](https://img.shields.io/github/downloads/Super12138/Hash-Checker/total?style=flat-square)
@@ -25,7 +29,7 @@ This README supports the following languages:<br>
 5. Complete
 
 ## ⬇️ Download
-- Offline version V2.2.0[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- Offline version V2.0.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
 - Online version V2.2.1[Github Page](https://super12138.github.io/Hash-Checker/)
 
 ## 📸 Screenshots
