@@ -63,7 +63,7 @@ jobs:
         run: wails build #后续加上判断系统打包安装器的命令
       
       - name: Upload artifact
-        uses: actions/upload-artifact@v4.3.4
+        uses: actions/upload-artifact@v4.3.5
         with:
           name: ${{ matrix.build.name }}
           path: build/bin
