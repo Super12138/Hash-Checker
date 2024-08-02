@@ -2,7 +2,9 @@ name: Wails build
 
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 env:
@@ -63,6 +65,7 @@ jobs:
         run: wails build #后续加上判断系统打包安装器的命令
       
       - name: Upload artifact
+        if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
         uses: actions/upload-artifact@v4.3.5
         with:
           name: ${{ matrix.build.name }}
