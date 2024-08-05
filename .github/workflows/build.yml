@@ -1,4 +1,4 @@
-name: Wails build
+name: Build desktop app
 
 on:
   push:
@@ -61,12 +61,13 @@ jobs:
       - name: Install wails
         run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
-      - name: Get Windows
-        if: ${{ runner.os }} == 'Windows'
-        run: echo ${{ runner.os }} 
+      - name: Build app (Windows)
+        if: runner.os == 'Windows'
+        run: wails build -nsis
       
-      - name: Get macOS
-        run: echo ${{ runner.os }} 
+      - name: Build app (macOS)
+        if: runner.os == 'macOS'
+        run: wails build
       
       - name: Upload artifact
         if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
