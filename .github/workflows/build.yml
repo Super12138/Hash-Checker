@@ -61,9 +61,9 @@ jobs:
       - name: Install wails
         run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
-      - name: Build app (Windows)
+      - name: Get Windows
         if: ${{ runner.os }} == 'Windows'
-        run: wails build -nsis
+        run: echo ${{ runner.os }} 
       
       - name: Get macOS
         run: echo ${{ runner.os }} 
