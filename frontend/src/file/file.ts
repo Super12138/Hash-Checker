@@ -1,5 +1,5 @@
-import { formatDate } from "../utils/date";
 import { getStorageItem } from "../store/localstorage";
+import { formatDate } from "../utils/date";
 
 export function getfileinfo(file: File) {
     const fileName: HTMLElement = document.querySelector('#fileName')!;

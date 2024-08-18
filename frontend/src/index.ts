@@ -1,20 +1,20 @@
-import { calc } from "./file/hash";
 import { getfileinfo } from "./file/file";
-import { sendFile, getFile } from './utils/transfer';
-import { setStorageItem, getStorageItem, removeStorageItem, setUpStorage, clearStorage } from './store/localstorage';
+import { calc } from "./file/hash";
+import { clearStorage, getStorageItem, removeStorageItem, setStorageItem, setUpStorage } from './store/localstorage';
 import { sendNotification } from "./utils/notification";
 import { clearCacheAndReload } from "./utils/service-worker";
 import { string2Boolean } from './utils/text';
+import { getFile, sendFile } from './utils/transfer';
 
 // mdui
 import { dialog } from 'mdui/functions/dialog.js';
-import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 import { removeColorScheme } from 'mdui/functions/removeColorScheme.js';
+import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 
-import type { Button } from 'mdui/components/button.js';
 import type { ButtonIcon } from 'mdui/components/button-icon.js';
-import type { Select } from 'mdui/components/select.js';
+import type { Button } from 'mdui/components/button.js';
 import type { Dialog } from 'mdui/components/dialog.js';
+import type { Select } from 'mdui/components/select.js';
 import type { Switch } from 'mdui/components/switch.js';
 import type { TextField } from 'mdui/components/text-field.js';
 
@@ -23,11 +23,11 @@ import 'mdui/components/checkbox.js';
 import 'mdui/components/menu-item.js';
 import 'mdui/components/select.js';
 import 'mdui/components/switch.js';
-import 'mdui/mdui.css'
+import 'mdui/mdui.css';
 
 // Icons
-import '@mdui/icons/settings.js';
 import '@mdui/icons/color-lens.js';
+import '@mdui/icons/settings.js';
 import { initPWA } from "./pwa";
 
 const openFileBtn: Button = document.querySelector("#openFile")!;

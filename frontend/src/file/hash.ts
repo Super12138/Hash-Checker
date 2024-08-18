@@ -1,12 +1,12 @@
 import { getStorageItem } from "../store/localstorage";
-import { formatTime } from '../utils/date';
 import { writeClipboard } from '../utils/clipboard';
+import { formatTime } from '../utils/date';
 import { compareHash, string2Boolean } from '../utils/text';
 
-import type { Checkbox } from 'mdui/components/checkbox.js';
-import type { LinearProgress } from 'mdui/components/linear-progress.js';
 import type { Button } from 'mdui/components/button.js';
+import type { Checkbox } from 'mdui/components/checkbox.js';
 import 'mdui/components/linear-progress.js';
+import type { LinearProgress } from 'mdui/components/linear-progress.js';
 import { sendNotification } from "../utils/notification";
 
 /**

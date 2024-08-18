@@ -1,5 +1,5 @@
-import { registerSW } from 'virtual:pwa-register';
 import { snackbar } from "mdui/functions/snackbar.js";
+import { registerSW } from 'virtual:pwa-register';
 
 export function initPWA() {
     let refreshSW: (reloadPage?: boolean) => Promise<void> | undefined
