@@ -41,7 +41,7 @@
     "mdui": "^2.1.2"
   },
   "overrides": {
-    "sharp": "0.33.4",
+    "sharp": "0.33.5",
     "sharp-ico": "0.1.5"
   }
 }

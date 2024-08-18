@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="build/appicon.svg" width="30%">
+    <img src="https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker@fd35e8a/build/appicon.svg" width="30%">
 </p>
 
 # Hash Checker | 文件校验器 | 哈希检查器
