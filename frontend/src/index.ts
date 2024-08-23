@@ -26,6 +26,7 @@ import 'mdui/components/layout.js';
 import 'mdui/components/menu-item.js';
 import 'mdui/components/select.js';
 import 'mdui/components/switch.js';
+import 'mdui/components/tooltip.js';
 import 'mdui/components/top-app-bar-title.js';
 import 'mdui/components/top-app-bar.js';
 import 'mdui/mdui.css';
