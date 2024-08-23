@@ -30,8 +30,8 @@ import 'mdui/components/top-app-bar-title.js';
 import 'mdui/components/top-app-bar.js';
 import 'mdui/mdui.css';
 
-import '@mdui/icons/color-lens.js';
-import '@mdui/icons/settings.js';
+import '@mdui/icons/color-lens--outlined.js';
+import '@mdui/icons/settings--outlined.js';
 
 // PWA
 import { initPWA } from "./pwa";
