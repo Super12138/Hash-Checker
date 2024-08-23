@@ -20,14 +20,20 @@ import type { TextField } from 'mdui/components/text-field.js';
 
 import 'mdui/components/button.js';
 import 'mdui/components/checkbox.js';
+import 'mdui/components/layout-item.js';
+import 'mdui/components/layout-main.js';
+import 'mdui/components/layout.js';
 import 'mdui/components/menu-item.js';
 import 'mdui/components/select.js';
 import 'mdui/components/switch.js';
+import 'mdui/components/top-app-bar-title.js';
+import 'mdui/components/top-app-bar.js';
 import 'mdui/mdui.css';
 
-// Icons
 import '@mdui/icons/color-lens.js';
 import '@mdui/icons/settings.js';
+
+// PWA
 import { initPWA } from "./pwa";
 
 const openFileBtn: Button = document.querySelector("#openFile")!;

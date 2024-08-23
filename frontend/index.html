@@ -12,127 +12,134 @@
 </head>
 
 <body id="drop">
-    <div class="mdui-container mdui-typo">
-        <h1>Hash Checker
-            <mdui-button-icon id="settingsBtn" class="mdui-float-right">
-                <mdui-icon-settings></mdui-icon-settings>
-            </mdui-button-icon>
-            <mdui-button-icon id="chooseColorBtn" class="mdui-float-right">
-                <mdui-icon-color-lens></mdui-icon-color-lens>
-            </mdui-button-icon>
-        </h1>
+    <mdui-layout class="mdui-typo">
+        <mdui-top-app-bar>
+            <mdui-top-app-bar-title>Hash Checker</mdui-top-app-bar-title>
+            <div style="flex-grow: 1"></div>
+            <mdui-tooltip content="选择主题色">
+                <mdui-button-icon id="chooseColorBtn">
+                    <mdui-icon-color-lens></mdui-icon-color-lens>
+                </mdui-button-icon>
+            </mdui-tooltip>
+            <mdui-tooltip content="设置">
+                <mdui-button-icon id="settingsBtn">
+                    <mdui-icon-settings></mdui-icon-settings>
+                </mdui-button-icon>
+            </mdui-tooltip>
+        </mdui-top-app-bar>
 
-        <mdui-dialog headline="设置" description="你可以在此个性化设置这个应用" id="settings">
-            1MB 单位：
-            <mdui-select id="mbUnit" value="nullSelect" style="margin-bottom: 3%;">
-                <mdui-menu-item value="nullSelect" disabled>在此选择你想使用的 1MB 的单位</mdui-menu-item>
-                <mdui-menu-item value="1024">1024KB</mdui-menu-item>
-                <mdui-menu-item value="1000">1000KB</mdui-menu-item>
-            </mdui-select>
+        <mdui-layout-main class="mdui-container">
+            <div>
+                <input id="fileInput" type="file" style="display: none;">
+                <h1 class="mdui-text-center" id="dragTip" style="display: none;">松开鼠标以读取文件</h1>
+                <mdui-button full-width variant="text" id="openFile">点击选择文件</mdui-button>
+                <p class="mdui-text-center">或者拖拽文件到本页</p>
 
-            单次缓存大小：
-            <mdui-text-field label="单次缓存大小" helper="在此输入分片缓存文件时单次缓存文件的大小（单位：KB）" type="number" id="cachesize" min="1"
-                maxlength="5"></mdui-text-field>
-            <br>
-            
-            <label class="mdui-valign fit-top" style="margin-bottom: 3%;">
-                <mdui-switch id="isSystemNotification"></mdui-switch>
-                &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;
-            </label>
-            <mdui-button id="sendTestNotification" variant="tonal" style="display: none; margin-bottom: 3%;">点击发送一条测试通知</mdui-button>
+                <p>
+                    文件：<code id="fileName" style="margin-right: 5px;">未选择文件</code>
+                    大小：<code id="fileSize" style="margin-right: 5px;">未选择文件</code>
+                    上次修改时间：<code id="fileDate" style="margin-right: 5px;">未选择文件</code>
+                </p>
 
-            <mdui-divider></mdui-divider>
-            <mdui-button full-width id="deleteCache" class="fit-top">清除缓存</mdui-button>
-            <mdui-button full-width id="deleteAllData" class="fit-top">清除所有数据</mdui-button>
-            <mdui-button full-width id="aboutBtn" class="fit-top">关于</mdui-button>
-            <mdui-button slot="action" id="settingsCancelBtn" variant="text">取消</mdui-button>
-            <mdui-button slot="action" id="settingsSaveBtn" variant="tonal">保存</mdui-button>
-        </mdui-dialog>
-
-        <mdui-dialog headline="关于" id="about">
-            <p id="version"></p>
-            <p>
-                本应用在 <a target="_blank" href="https://github.com/Super12138/Hash-Checker/">GitHub</a> 上开源
+                <strong class="mdui-color-red">本应用的所有操作均在您的设备上运行，不会收集任何信息，请放心使用！</strong>
                 <br>
-                由 <a target="_blank" href="https://github.com/Super12138/">Super12138</a> 开发
-            </p>
-            <img width="50%" src="./src/assets/gpl.svg" style="user-select: none;">
-            <p>遵循 GPL-3.0 协议</p>
-            <p>开源库<br>
-                <a target="_blank" href="https://github.com/brix/crypto-js/">CryptoJS</a>
                 <br>
-                <a target="_blank" href="https://github.com/zdhxiong/mdui/">MDUI</a>
-                <br>
-                <a target="_blank" href="https://github.com/kpdecker/jsdiff">jsdiff</a>
-            </p>
-            <p>感谢<br>
-                <a target="_blank" href="https://icon.kitchen/">IconKitchen</a>
-            </p>
-            <mdui-button slot="action" id="aboutCloseBtn" variant="tonal">确定</mdui-button>
-        </mdui-dialog>
+                <mdui-checkbox id="isClipboard">
+                    计算完成后将校验值写入剪贴板（仅在 <strong>生成</strong> 模式下生效）
+                </mdui-checkbox>
+            </div>
 
-        <mdui-dialog headline="选择颜色" description="选择一个颜色作为应用主题色" id="colors">
-            <input type="color" id="dynamicColor">
             <br>
-            <mdui-button id="resetColorBtn" variant="filled" full-width class="fit-top">重置到默认颜色</mdui-button>
-
-            <mdui-button slot="action" id="colorCancelBtn" variant="text">取消</mdui-button>
-            <mdui-button slot="action" id="setColorBtn" variant="tonal">确定</mdui-button>
-        </mdui-dialog>
-
-        <br>
-
-        <div>
-            <input id="fileInput" type="file" style="display: none;">
-            <h1 class="mdui-text-center" id="dragTip" style="display: none;">松开鼠标以读取文件</h1>
-            <mdui-button full-width variant="text" id="openFile">点击选择文件</mdui-button>
-            <p class="mdui-text-center">或者拖拽文件到本页</p>
-
-            <p>
-                文件：<code id="fileName" style="margin-right: 5px;">未选择文件</code>
-                大小：<code id="fileSize" style="margin-right: 5px;">未选择文件</code>
-                上次修改时间：<code id="fileDate" style="margin-right: 5px;">未选择文件</code>
-            </p>
-
-            <strong class="mdui-color-red">本应用的所有操作均在您的设备上运行，不会收集任何信息，请放心使用！</strong>
+            <div>
+                方法：
+                <mdui-select id="method" value="nullSelect" style="margin-right: 15px;">
+                    <mdui-menu-item value="nullSelect" disabled>请选择方法...</mdui-menu-item>
+                    <mdui-menu-item value="MD5">MD5</mdui-menu-item>
+                    <mdui-menu-item value="SHA1">SHA1</mdui-menu-item>
+                    <mdui-menu-item value="SHA3">SHA3</mdui-menu-item>
+                    <mdui-menu-item value="SHA256">SHA256</mdui-menu-item>
+                    <mdui-menu-item value="SHA384">SHA384</mdui-menu-item>
+                    <mdui-menu-item value="SHA512">SHA512</mdui-menu-item>
+                </mdui-select>
+                模式：
+                <mdui-select id="mode" value="nullSelect">
+                    <mdui-menu-item value="nullSelect" disabled>请选择模式...</mdui-menu-item>
+                    <mdui-menu-item value="check">校验</mdui-menu-item>
+                    <mdui-menu-item value="generate">生成</mdui-menu-item>
+                </mdui-select>
+            </div>
             <br>
+            <mdui-text-field label="校验值" helper="在此处粘贴您获取到的校验值" id="checkSumInput" disabled clearable></mdui-text-field>
+            <mdui-button full-width id="checkFile" style="margin-top: 3%;">检查</mdui-button>
+            <mdui-button full-width id="terminateCalc" style="margin-top: 2%; display: none;">终止计算</mdui-button>
+
+            <!--输出-->
+            <div style="margin-bottom: 10%; margin-top: 3%;">
+                <h1 id="outputTitle"></h1>
+                <p id="outputTips"></p>
+                <mdui-linear-progress id="progressBar" value="0" max="100"
+                    style="display: none;"></mdui-linear-progress>
+            </div>
+        </mdui-layout-main>
+    </mdui-layout>
+    <mdui-dialog headline="设置" description="你可以在此个性化设置这个应用" id="settings">
+        1MB 单位：
+        <mdui-select id="mbUnit" value="nullSelect" style="margin-bottom: 3%;">
+            <mdui-menu-item value="nullSelect" disabled>在此选择你想使用的 1MB 的单位</mdui-menu-item>
+            <mdui-menu-item value="1024">1024KB</mdui-menu-item>
+            <mdui-menu-item value="1000">1000KB</mdui-menu-item>
+        </mdui-select>
+    
+        单次缓存大小：
+        <mdui-text-field label="单次缓存大小" helper="在此输入分片缓存文件时单次缓存文件的大小（单位：KB）" type="number" id="cachesize" min="1"
+            maxlength="5"></mdui-text-field>
+        <br>
+    
+        <label class="mdui-valign fit-top" style="margin-bottom: 3%;">
+            <mdui-switch id="isSystemNotification"></mdui-switch>
+            &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;
+        </label>
+        <mdui-button id="sendTestNotification" variant="tonal"
+            style="display: none; margin-bottom: 3%;">点击发送一条测试通知</mdui-button>
+    
+        <mdui-divider></mdui-divider>
+        <mdui-button full-width id="deleteCache" class="fit-top">清除缓存</mdui-button>
+        <mdui-button full-width id="deleteAllData" class="fit-top">清除所有数据</mdui-button>
+        <mdui-button full-width id="aboutBtn" class="fit-top">关于</mdui-button>
+        <mdui-button slot="action" id="settingsCancelBtn" variant="text">取消</mdui-button>
+        <mdui-button slot="action" id="settingsSaveBtn" variant="tonal">保存</mdui-button>
+    </mdui-dialog>
+    
+    <mdui-dialog headline="关于" id="about">
+        <p id="version"></p>
+        <p>
+            本应用在 <a target="_blank" href="https://github.com/Super12138/Hash-Checker/">GitHub</a> 上开源
             <br>
-            <mdui-checkbox id="isClipboard">
-                计算完成后将校验值写入剪贴板（仅在 <strong>生成</strong> 模式下生效）
-            </mdui-checkbox>
-        </div>
-
+            由 <a target="_blank" href="https://github.com/Super12138/">Super12138</a> 开发
+        </p>
+        <img width="50%" src="./src/assets/gpl.svg" style="user-select: none;">
+        <p>遵循 GPL-3.0 协议</p>
+        <p>开源库<br>
+            <a target="_blank" href="https://github.com/brix/crypto-js/">CryptoJS</a>
+            <br>
+            <a target="_blank" href="https://github.com/zdhxiong/mdui/">MDUI</a>
+            <br>
+            <a target="_blank" href="https://github.com/kpdecker/jsdiff">jsdiff</a>
+        </p>
+        <p>感谢<br>
+            <a target="_blank" href="https://icon.kitchen/">IconKitchen</a>
+        </p>
+        <mdui-button slot="action" id="aboutCloseBtn" variant="tonal">确定</mdui-button>
+    </mdui-dialog>
+    
+    <mdui-dialog headline="选择颜色" description="选择一个颜色作为应用主题色" id="colors">
+        <input type="color" id="dynamicColor">
         <br>
-        <div>
-            方法：
-            <mdui-select id="method" value="nullSelect" style="margin-right: 15px;">
-                <mdui-menu-item value="nullSelect" disabled>请选择方法...</mdui-menu-item>
-                <mdui-menu-item value="MD5">MD5</mdui-menu-item>
-                <mdui-menu-item value="SHA1">SHA1</mdui-menu-item>
-                <mdui-menu-item value="SHA3">SHA3</mdui-menu-item>
-                <mdui-menu-item value="SHA256">SHA256</mdui-menu-item>
-                <mdui-menu-item value="SHA384">SHA384</mdui-menu-item>
-                <mdui-menu-item value="SHA512">SHA512</mdui-menu-item>
-            </mdui-select>
-            模式：
-            <mdui-select id="mode" value="nullSelect">
-                <mdui-menu-item value="nullSelect" disabled>请选择模式...</mdui-menu-item>
-                <mdui-menu-item value="check">校验</mdui-menu-item>
-                <mdui-menu-item value="generate">生成</mdui-menu-item>
-            </mdui-select>
-        </div>
-        <br>
-        <mdui-text-field label="校验值" helper="在此处粘贴您获取到的校验值" id="checkSumInput" disabled clearable></mdui-text-field>
-        <mdui-button full-width id="checkFile" style="margin-top: 3%;">检查</mdui-button>
-        <mdui-button full-width id="terminateCalc" style="margin-top: 2%; display: none;">终止计算</mdui-button>
-
-        <!--输出-->
-        <div style="margin-bottom: 10%; margin-top: 3%;">
-            <h1 id="outputTitle"></h1>
-            <p id="outputTips"></p>
-            <mdui-linear-progress id="progressBar" value="0" max="100" style="display: none;"></mdui-linear-progress>
-        </div>
-    </div>
+        <mdui-button id="resetColorBtn" variant="filled" full-width class="fit-top">重置到默认颜色</mdui-button>
+    
+        <mdui-button slot="action" id="colorCancelBtn" variant="text">取消</mdui-button>
+        <mdui-button slot="action" id="setColorBtn" variant="tonal">确定</mdui-button>
+    </mdui-dialog>
     <script type="module" src="./src/index.ts"></script>
 </body>
 
