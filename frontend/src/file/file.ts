@@ -1,5 +1,9 @@
 import { getStorageItem } from "../store/localstorage";
 import { formatDate } from "../utils/date";
+import { LogHelper } from "../utils/LogHelper";
+
+
+const logHelper: LogHelper = LogHelper.getInstance();
 
 export function getfileinfo(file: File) {
     const fileName: HTMLElement = document.querySelector('#fileName')!;
@@ -8,7 +12,7 @@ export function getfileinfo(file: File) {
     fileName.innerHTML = file.name;
     fileSize.innerHTML = convertbyte(file.size);
     fileDate.innerHTML = formatDate(file.lastModified);
-    console.log(file);
+    logHelper.log(file);
 }
 
 /**

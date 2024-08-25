@@ -36,6 +36,7 @@ import '@mdui/icons/settings--outlined.js';
 
 // PWA
 import { initPWA } from "./pwa";
+import { LogHelper } from "./utils/LogHelper";
 
 const openFileBtn: Button = document.querySelector("#openFile")!;
 const fileInput: HTMLInputElement = document.querySelector('#fileInput')!;
@@ -72,6 +73,8 @@ const colorDialog: Dialog = document.querySelector('#colors')!;
 const dropZone: HTMLBodyElement = document.querySelector('#drop')!;
 const versionElement: HTMLParagraphElement = document.querySelector('#version')!;
 
+const logHelper: LogHelper = LogHelper.getInstance();
+
 // 拖拽文件
 dropZone.addEventListener('dragover', (e: DragEvent) => {
     e.preventDefault();
@@ -91,11 +94,11 @@ window.addEventListener("load", () => {
     initPWA();
 
     const isFirstUse: boolean = string2Boolean(getStorageItem("firstUse"));
-    console.log(getStorageItem("firstUse"));
+    logHelper.log(getStorageItem("firstUse"));
     const mbUnitValue: string = getStorageItem("mbUnit") as string;
     const cacheSizeValue: string = getStorageItem("cacheSize") as string;
     let isSystemNotification: boolean = string2Boolean(getStorageItem("systemNotification") as string);
-    console.log(`firstUse: ${isFirstUse} mbUnit: ${mbUnitValue} cacheSize: ${cacheSizeValue} notification: ${isSystemNotification}`);
+    logHelper.log(`firstUse: ${isFirstUse} mbUnit: ${mbUnitValue} cacheSize: ${cacheSizeValue} notification: ${isSystemNotification}`);
 
 
     if(isFirstUse){
@@ -227,7 +230,7 @@ checkFileBtn.addEventListener('click', () => {
 
     switch (mode) {
         case "generate":
-            console.log(mode + method + file);
+            logHelper.log(mode + method + file);
             calc(mode, method.toString(), file);
             break;
         case "check":
@@ -245,7 +248,7 @@ checkFileBtn.addEventListener('click', () => {
                 });
                 return;
             }
-            console.log(mode.toString() + method.toString() + file + checkSum);
+            logHelper.log(mode.toString() + method.toString() + file + checkSum);
             calc(mode.toString(), method.toString(), file, checkSum);
             break;
     }

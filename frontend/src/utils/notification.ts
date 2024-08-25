@@ -1,7 +1,10 @@
-import { dialog } from 'mdui/functions/dialog.js';
 import type { Dialog } from 'mdui/components/dialog.js';
+import { dialog } from 'mdui/functions/dialog.js';
+import { LogHelper } from './LogHelper';
 
 const settingsDialog: Dialog = document.querySelector('#settings')!;
+
+const logHelper: LogHelper = LogHelper.getInstance();
 
 /**
  * 发送一个通知
@@ -66,7 +69,7 @@ function sendNotificationBrowser(title: string, content: string) {
 }
 
 function showPermissionDeniedDialog() {
-    console.log("没有获取到通知权限");
+    logHelper.log("没有获取到通知权限");
     settingsDialog.open = false;
     dialog({
         headline: '错误',

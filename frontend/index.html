@@ -52,7 +52,7 @@
             <br>
             <div>
                 方法：
-                <mdui-select id="method" value="nullSelect" style="margin-right: 15px;">
+                <mdui-select id="method" value="nullSelect" style="margin-right: 15px;" required>
                     <mdui-menu-item value="nullSelect" disabled>请选择方法...</mdui-menu-item>
                     <mdui-menu-item value="MD5">MD5</mdui-menu-item>
                     <mdui-menu-item value="SHA1">SHA1</mdui-menu-item>
@@ -62,7 +62,7 @@
                     <mdui-menu-item value="SHA512">SHA512</mdui-menu-item>
                 </mdui-select>
                 模式：
-                <mdui-select id="mode" value="nullSelect">
+                <mdui-select id="mode" value="nullSelect" required>
                     <mdui-menu-item value="nullSelect" disabled>请选择模式...</mdui-menu-item>
                     <mdui-menu-item value="check">校验</mdui-menu-item>
                     <mdui-menu-item value="generate">生成</mdui-menu-item>

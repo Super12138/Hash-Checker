@@ -7,7 +7,11 @@ import type { Button } from 'mdui/components/button.js';
 import type { Checkbox } from 'mdui/components/checkbox.js';
 import 'mdui/components/linear-progress.js';
 import type { LinearProgress } from 'mdui/components/linear-progress.js';
+import { LogHelper } from "../utils/LogHelper";
 import { sendNotification } from "../utils/notification";
+
+
+const logHelper: LogHelper = LogHelper.getInstance();
 
 /**
  * 计算哈希值
@@ -82,7 +86,7 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
                     }
                     break;
                 default:
-                    console.log(calcHash);
+                    logHelper.log(calcHash);
             }
 
             worker.terminate();

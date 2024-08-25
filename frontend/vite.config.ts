@@ -1,8 +1,8 @@
-import { VitePWA } from 'vite-plugin-pwa';
-import { defineConfig } from 'vite'
-import packageJson from './package.json';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
+import packageJson from './package.json';
 
 const execPromise = promisify(exec);
 
@@ -83,7 +83,8 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 }
             },
             define: {
-                APP_VERSION: JSON.stringify(`${packageJson.version}-dev-${commitHash} (${versionCode})`)
+                APP_VERSION: JSON.stringify(`${packageJson.version}-dev-${commitHash} (${versionCode})`),
+                ENV: JSON.stringify("dev"),
             },
         }
     } else {
@@ -92,7 +93,8 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 ...baseConfig,
                 base: '/Hash-Checker/',
                 define: {
-                    APP_VERSION: JSON.stringify(`${packageJson.version}-web-${commitHash} (${versionCode})`)
+                    APP_VERSION: JSON.stringify(`${packageJson.version}-web-${commitHash} (${versionCode})`),
+                    ENV: JSON.stringify("prod"),
                 },
             }
         } else {
@@ -100,7 +102,8 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 ...baseConfig,
                 base: '/',
                 define: {
-                    APP_VERSION: JSON.stringify(`${packageJson.version}-desktop-${commitHash} (${versionCode})`)
+                    APP_VERSION: JSON.stringify(`${packageJson.version}-desktop-${commitHash} (${versionCode})`),
+                    ENV: JSON.stringify("prod"),
                 },
             }
         }
