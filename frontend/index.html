@@ -12,8 +12,8 @@
 </head>
 
 <body id="drop">
-    <mdui-layout class="mdui-typo">
-        <mdui-top-app-bar>
+    <mdui-layout>
+        <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".container">
             <mdui-top-app-bar-title>Hash Checker</mdui-top-app-bar-title>
             <div style="flex-grow: 1"></div>
             <mdui-tooltip content="选择主题色">
@@ -28,7 +28,7 @@
             </mdui-tooltip>
         </mdui-top-app-bar>
 
-        <mdui-layout-main class="mdui-container">
+        <mdui-layout-main class="container">
             <div>
                 <input id="fileInput" type="file" style="display: none;">
                 <h1 class="mdui-text-center" id="dragTip" style="display: none;">松开鼠标以读取文件</h1>
@@ -44,14 +44,12 @@
                 <strong class="mdui-color-red">本应用的所有操作均在您的设备上运行，不会收集任何信息，请放心使用！</strong>
                 <br>
                 <br>
-                <mdui-checkbox id="isClipboard">
-                    计算完成后将校验值写入剪贴板（仅在 <strong>生成</strong> 模式下生效）
-                </mdui-checkbox>
+                <p class="mdui-valign"><mdui-checkbox id="isClipboard"></mdui-checkbox>计算完成后将校验值写入剪贴板（仅在生成模式下生效）</p>
             </div>
 
             <br>
             <div>
-                方法：
+                <span>方法：</span>
                 <mdui-select id="method" value="nullSelect" style="margin-right: 15px;" required>
                     <mdui-menu-item value="nullSelect" disabled>请选择方法...</mdui-menu-item>
                     <mdui-menu-item value="MD5">MD5</mdui-menu-item>
@@ -61,7 +59,7 @@
                     <mdui-menu-item value="SHA384">SHA384</mdui-menu-item>
                     <mdui-menu-item value="SHA512">SHA512</mdui-menu-item>
                 </mdui-select>
-                模式：
+                <span>模式：</span>
                 <mdui-select id="mode" value="nullSelect" required>
                     <mdui-menu-item value="nullSelect" disabled>请选择模式...</mdui-menu-item>
                     <mdui-menu-item value="check">校验</mdui-menu-item>
@@ -89,19 +87,19 @@
             <mdui-menu-item value="1024">1024KB</mdui-menu-item>
             <mdui-menu-item value="1000">1000KB</mdui-menu-item>
         </mdui-select>
-    
+
         单次缓存大小：
         <mdui-text-field label="单次缓存大小" helper="在此输入分片缓存文件时单次缓存文件的大小（单位：KB）" type="number" id="cachesize" min="1"
             maxlength="5"></mdui-text-field>
         <br>
-    
+
         <label class="mdui-valign fit-top" style="margin-bottom: 3%;">
             <mdui-switch id="isSystemNotification"></mdui-switch>
             &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;
         </label>
         <mdui-button id="sendTestNotification" variant="tonal"
             style="display: none; margin-bottom: 3%;">点击发送一条测试通知</mdui-button>
-    
+
         <mdui-divider></mdui-divider>
         <mdui-button full-width id="deleteCache" class="fit-top">清除缓存</mdui-button>
         <mdui-button full-width id="deleteAllData" class="fit-top">清除所有数据</mdui-button>
@@ -109,7 +107,7 @@
         <mdui-button slot="action" id="settingsCancelBtn" variant="text">取消</mdui-button>
         <mdui-button slot="action" id="settingsSaveBtn" variant="tonal">保存</mdui-button>
     </mdui-dialog>
-    
+
     <mdui-dialog headline="关于" id="about">
         <p id="version"></p>
         <p>
@@ -131,12 +129,12 @@
         </p>
         <mdui-button slot="action" id="aboutCloseBtn" variant="tonal">确定</mdui-button>
     </mdui-dialog>
-    
+
     <mdui-dialog headline="选择颜色" description="选择一个颜色作为应用主题色" id="colors">
         <input type="color" id="dynamicColor">
         <br>
         <mdui-button id="resetColorBtn" variant="filled" full-width class="fit-top">重置到默认颜色</mdui-button>
-    
+
         <mdui-button slot="action" id="colorCancelBtn" variant="text">取消</mdui-button>
         <mdui-button slot="action" id="setColorBtn" variant="tonal">确定</mdui-button>
     </mdui-dialog>
