@@ -23,12 +23,12 @@
   "devDependencies": {
     "@mdui/icons": "^1.0.2",
     "@types/crypto-js": "^4.2.2",
-    "@types/diff": "^5.2.1",
-    "@types/node": "^20.14.12",
-    "@vite-pwa/assets-generator": "^0.2.4",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.4",
-    "vite-plugin-pwa": "^0.20.0",
+    "@types/diff": "^5.2.2",
+    "@types/node": "^22.7.4",
+    "@vite-pwa/assets-generator": "^0.2.6",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8",
+    "vite-plugin-pwa": "^0.20.5",
     "workbox-core": "^7.1.0",
     "workbox-precaching": "^7.1.0",
     "workbox-routing": "^7.1.0",
@@ -38,6 +38,7 @@
   "dependencies": {
     "crypto-js": "^4.2.0",
     "diff": "^7.0.0",
+    "marked": "^14.1.2",
     "mdui": "^2.1.2"
   },
   "overrides": {

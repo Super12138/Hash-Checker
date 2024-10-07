@@ -194,6 +194,10 @@ body::-webkit-scrollbar-track {
     width: 30%;
 }
 
+#outputArea{
+    word-break: 'break-word';
+}
+
 @media (prefers-color-scheme: dark) {
     .code {
         padding: 2px 6px;
@@ -209,6 +213,13 @@ body::-webkit-scrollbar-track {
 }
 
 h1 {
+    line-height: var(--mdui-typescale-headline-medium-line-height);
+    font-size: var(--mdui-typescale-headline-medium-size);
+    letter-spacing: var(--mdui-typescale-headline-medium-tracking);
+    font-weight: var(--mdui-typescale-headline-medium-weight);
+}
+
+h2 {
     line-height: var(--mdui-typescale-headline-small-line-height);
     font-size: var(--mdui-typescale-headline-small-size);
     letter-spacing: var(--mdui-typescale-headline-small-tracking);

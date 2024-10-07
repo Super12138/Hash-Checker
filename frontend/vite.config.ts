@@ -83,8 +83,10 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 }
             },
             define: {
-                APP_VERSION: JSON.stringify(`${packageJson.version}-dev-${commitHash} (${versionCode})`),
-                ENV: JSON.stringify("dev"),
+                VERSION_NAME: JSON.stringify(packageJson.version),
+                VARIANT: JSON.stringify("dev"),
+                COMMIT_HASH: JSON.stringify(commitHash),
+                VERSION_CODE: JSON.stringify(versionCode),
             },
         }
     } else {
@@ -93,8 +95,10 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 ...baseConfig,
                 base: '/Hash-Checker/',
                 define: {
-                    APP_VERSION: JSON.stringify(`${packageJson.version}-web-${commitHash} (${versionCode})`),
-                    ENV: JSON.stringify("prod"),
+                    VERSION_NAME: JSON.stringify(packageJson.version),
+                    VARIANT: JSON.stringify(mode),
+                    COMMIT_HASH: JSON.stringify(commitHash),
+                    VERSION_CODE: JSON.stringify(versionCode),
                 },
             }
         } else {
@@ -102,8 +106,10 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 ...baseConfig,
                 base: '/',
                 define: {
-                    APP_VERSION: JSON.stringify(`${packageJson.version}-desktop-${commitHash} (${versionCode})`),
-                    ENV: JSON.stringify("prod"),
+                    VERSION_NAME: JSON.stringify(packageJson.version),
+                    VARIANT: JSON.stringify(mode),
+                    COMMIT_HASH: JSON.stringify(commitHash),
+                    VERSION_CODE: JSON.stringify(versionCode),
                 },
             }
         }

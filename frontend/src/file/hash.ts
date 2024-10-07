@@ -22,7 +22,7 @@ const logHelper: LogHelper = LogHelper.getInstance();
  */
 export function calc(mode: string, method: string, file: File, hash?: string) {
     const outputTitle: HTMLHeadingElement = document.querySelector('#outputTitle')!;
-    const outputTips: HTMLParagraphElement = document.querySelector('#outputTips')!;
+    const outputArea: HTMLParagraphElement = document.querySelector('#outputArea')!;
     const progressBar: LinearProgress = document.querySelector('#progressBar')!;
 
     const terminateCalcBtn: Button = document.querySelector('#terminateCalc')!;
@@ -34,7 +34,7 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
     const systemNotification: boolean = string2Boolean(getStorageItem("systemNotification") as string);
 
     outputTitle.innerHTML = "状态：";
-    outputTips.innerHTML = "准备缓存文件";
+    outputArea.innerHTML = "准备缓存文件";
 
     checkFileBtn.disabled = true;
     chooseFileBtn.disabled = true;
@@ -52,7 +52,7 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
             progressBar.value = progress;
 
             const formattedTime = formatTime(estimatedRemainingTime);
-            outputTips.innerHTML = `正在缓存文件，已完成 <strong>${progress.toFixed(2)}%</strong>，还需 <strong>${formattedTime}</strong>`;
+            outputArea.innerHTML = `正在缓存文件，已完成 <strong>${progress.toFixed(2)}%</strong>，还需 <strong>${formattedTime}</strong>`;
         } else if (type === 'result') {
             const calcHash = data;
             checkFileBtn.disabled = false;
@@ -61,23 +61,23 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
             progressBar.style.display = "none";
             progressBar.value = 0;
 
-            outputTips.innerHTML = `计算完成，${method} 值为 <code>${calcHash} </code>`;
+            outputArea.innerHTML = `计算完成，${method} 值为 <code>${calcHash} </code>`;
             if (systemNotification) {
                 sendNotification(`${method} 计算完成`, `${method} 值为 ${calcHash} ，详情请在应用内查看`);
             }
 
             switch (mode) {
                 case "check":
-                    // index.ts 已对用户输入 hash 进行判空
+                    // index.ts 已对用户输入 Hash 进行判空
                     const userHash = hash!.toLowerCase();
                     const genHash = calcHash.toLowerCase();
                     if (userHash === genHash) {
-                        outputTips.innerHTML += `，<strong class="mdui-color-green">校验通过</strong>`
+                        outputArea.innerHTML += `，<strong class="mdui-color-green">校验通过</strong>`
                     } else {
-                        outputTips.innerHTML += `，<strong class="mdui-color-red">校验失败</strong>`
+                        outputArea.innerHTML += `，<strong class="mdui-color-red">校验失败</strong>`
                         const compareResult = compareHash(userHash, genHash);
-                        outputTips.innerHTML += `<br>哈希对比结果（相比于您提供的哈希值）：`;
-                        outputTips.appendChild(compareResult);
+                        outputArea.innerHTML += `<br>哈希对比结果（相比于您提供的哈希值）：`;
+                        outputArea.appendChild(compareResult);
                     }
                     break;
                 case "generate":
@@ -104,6 +104,6 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
         progressBar.style.display = "none";
         progressBar.value = 0;
 
-        outputTips.innerHTML = "计算已被用户终止";
+        outputArea.innerHTML = "计算已被用户终止";
     });
 }

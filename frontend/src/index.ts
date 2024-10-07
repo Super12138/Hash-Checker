@@ -37,6 +37,7 @@ import '@mdui/icons/settings--outlined.js';
 // PWA
 import { initPWA } from "./pwa";
 import { LogHelper } from "./utils/LogHelper";
+import { getUpdate } from "./utils/updater";
 
 const openFileBtn: Button = document.querySelector("#openFile")!;
 const fileInput: HTMLInputElement = document.querySelector('#fileInput')!;
@@ -100,8 +101,7 @@ window.addEventListener("load", () => {
     let isSystemNotification: boolean = string2Boolean(getStorageItem("systemNotification") as string);
     logHelper.log(`firstUse: ${isFirstUse} mbUnit: ${mbUnitValue} cacheSize: ${cacheSizeValue} notification: ${isSystemNotification}`);
 
-
-    if(isFirstUse){
+    if (isFirstUse) {
         setUpStorage();
         window.location.reload();
     }
@@ -123,7 +123,7 @@ window.addEventListener("load", () => {
     sysNotification.checked = isSystemNotification;
 
     // APP_VERSION：全局环境变量
-    versionElement.innerHTML = `版本：${APP_VERSION}`
+    versionElement.innerHTML = `版本：${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})`;
 });
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -133,6 +133,8 @@ window.addEventListener('DOMContentLoaded', () => {
         setColorScheme(dynamicColorValue);
     }
     document.body.classList.add('ready');
+
+    getUpdate();
 });
 
 // 选择文件

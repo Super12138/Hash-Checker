@@ -9,11 +9,11 @@ export class LogHelper {
     }
 
     log(message: any) {
-        if (ENV === "dev") console.log(message);
+        if (import.meta.env.DEV) console.log(message);
     }
 
     info(message: any) {
-        if (ENV === "dev") console.info(message);
+        if (import.meta.env.DEV) console.info(message);
     }
 
     warn(message: any) {

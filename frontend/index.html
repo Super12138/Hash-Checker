@@ -74,7 +74,7 @@
             <!--输出-->
             <div style="margin-bottom: 10%; margin-top: 3%;">
                 <h1 id="outputTitle"></h1>
-                <p id="outputTips"></p>
+                <p id="outputArea"></p>
                 <mdui-linear-progress id="progressBar" value="0" max="100"
                     style="display: none;"></mdui-linear-progress>
             </div>
@@ -93,10 +93,11 @@
             maxlength="5"></mdui-text-field>
         <br>
 
-        <label class="mdui-valign fit-top" style="margin-bottom: 3%;">
+        <p class="mdui-valign fit-top" style="margin-bottom: 3%;">
             <mdui-switch id="isSystemNotification"></mdui-switch>
             &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;
-        </label>
+        </p>
+
         <mdui-button id="sendTestNotification" variant="tonal"
             style="display: none; margin-bottom: 3%;">点击发送一条测试通知</mdui-button>
 
