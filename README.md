@@ -9,8 +9,6 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/Super12138/Hash-Checker?style=flat-square)
 
 一个免费的，开源的，简单易用的文件校验器。
-
-本自述文件支持如下语言：
 <br>
 <strong>中文（简体）</strong>| [English](README_EN.md)
 
