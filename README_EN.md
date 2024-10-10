@@ -9,8 +9,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/Super12138/Hash-Checker?style=flat-square)
 
 A free, open source, easy-to-use Hash Checker.
-
-This README supports the following languages:<br>
+<br>
 [中文（简体）](README.md)| <strong>English</strong>
 
 ## ✨ Features
