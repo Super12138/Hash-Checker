@@ -8,24 +8,20 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Super12138/Hash-Checker?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/Super12138/Hash-Checker?style=flat-square)
 
-A free, open source, easy-to-use Hash Checker.
+A quick, readily available cross-platform hash checker that follows Material Design 3
 <br>
 [中文（简体）](README.md)| <strong>English</strong>
 
 ## ✨ Features
-- Support Material Design 3 and custom theme colors
-- Support for Windows and macOS systems
-- Support Dark mode
-- Check the file md5 or any sha value
-- Generate the md5 or any sha value of the file for later use
-- Automatically check for updates
+- Supports Material Design 3 and custom theme colors
+- Supports Windows and macOS
+- Supports dark mode
+- Validates and generates MD5 or any SHA values
+- Automatic update checking
+- PWA (Progressive Web App)
 
 ## 📒 Usage
-1. Choose file
-2. Select pattern
-3. Select method
-4. Click 'Calculate' button
-5. Complete
+[Simple Usage Instructions](https://super12138.github.io/hschecker/use.html)
 
 ## ⬇️ Download
 - Offline version V2.0.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
@@ -52,10 +48,10 @@ A free, open source, easy-to-use Hash Checker.
 ## 💻 Developer
 - Super12138
 
-## 🚀 Special thanks
- - [Electron](https://www.electronjs.org/)
- - [Electron-builder](https://www.electron.build/)
- - [MDUI](https://github.com/zdhxiong/mdui)
- - [CryptoJS](https://github.com/brix/crypto-js)
- - [Webpack](https://webpackjs.org/)
- - [Babel](https://babel.dev/)
+## 🚀 Open Source Library
+- [Wails](https://github.com/wailsapp/wails)
+- [Vite](https://github.com/vitejs/vite)
+- [MDUI](https://github.com/zdhxiong/mdui)
+- [CryptoJS](https://github.com/brix/crypto-js)
+- [jsdiff](https://github.com/kpdecker/jsdiff)
+- [marked](https://github.com/markedjs/marked)
