@@ -49,8 +49,8 @@
 - Super12138
 
 ## 🚀 开源库
-- [Wails](https://github.com/wailsapp/wails)
 - [Vite](https://github.com/vitejs/vite)
+- [Wails](https://github.com/wailsapp/wails)
 - [MDUI](https://github.com/zdhxiong/mdui)
 - [CryptoJS](https://github.com/brix/crypto-js)
 - [jsdiff](https://github.com/kpdecker/jsdiff)

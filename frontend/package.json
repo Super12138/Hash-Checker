@@ -2,7 +2,7 @@
   "name": "HashChecker",
   "version": "2.2.1",
   "private": true,
-  "description": "一个开源的、无广告的、遵循 Material Design 的哈希校验&生成器",
+  "description": "一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器",
   "type": "module",
   "scripts": {
     "dev": "vite",

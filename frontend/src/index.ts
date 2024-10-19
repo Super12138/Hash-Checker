@@ -14,6 +14,7 @@ import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 import type { ButtonIcon } from 'mdui/components/button-icon.js';
 import type { Button } from 'mdui/components/button.js';
 import type { Dialog } from 'mdui/components/dialog.js';
+import type { ListItem } from 'mdui/components/list-item.js';
 import type { Select } from 'mdui/components/select.js';
 import type { Switch } from 'mdui/components/switch.js';
 import type { TextField } from 'mdui/components/text-field.js';
@@ -31,8 +32,14 @@ import 'mdui/components/top-app-bar-title.js';
 import 'mdui/components/top-app-bar.js';
 import 'mdui/mdui.css';
 
+import '@mdui/icons/cleaning-services--outlined.js';
 import '@mdui/icons/color-lens--outlined.js';
+import '@mdui/icons/delete-forever--outlined.js';
+import '@mdui/icons/info--outlined.js';
+import '@mdui/icons/notifications-active--outlined.js';
 import '@mdui/icons/settings--outlined.js';
+import '@mdui/icons/storage--outlined.js';
+import '@mdui/icons/update--outlined.js';
 
 // PWA
 import { initPWA } from "./pwa";
@@ -48,17 +55,16 @@ const modeSelect: Select = document.querySelector('#mode')!;
 const checkSumInput: TextField = document.querySelector("#checkSumInput")!;
 
 const openSettingsBtn: ButtonIcon = document.querySelector('#settingsBtn')!;
-const mbUnit: Select = document.querySelector('#mbUnit')!;
-const cacheSize: Select = document.querySelector('#cachesize')!;
-const sysNotification: Switch = document.querySelector('#isSystemNotification')!;
+const cacheSize: Select = document.querySelector('#cacheSize')!;
+const sysNotification: Switch = document.querySelector('#systemNotification')!;
 
 const settingsSaveBtn: Button = document.querySelector('#settingsSaveBtn')!;
 const settingsCancelBtn: Button = document.querySelector('#settingsCancelBtn')!;
-const deleteCacheBtn: Button = document.querySelector('#deleteCache')!;
-const deleteAllDataBtn: Button = document.querySelector('#deleteAllData')!;
+const deleteCache: ListItem = document.querySelector('#deleteCache')!;
+const deleteAllData: ListItem = document.querySelector('#deleteAllData')!;
 const sendTestNotification: Button = document.querySelector('#sendTestNotification')!;
+const aboutBtn: ListItem = document.querySelector('#aboutBtn')!;
 
-const aboutBtn: Button = document.querySelector('#aboutBtn')!;
 const aboutCloseBtn: Button = document.querySelector('#aboutCloseBtn')!;
 
 const chooseColorBtn: ButtonIcon = document.querySelector('#chooseColorBtn')!;
@@ -96,32 +102,44 @@ window.addEventListener("load", () => {
 
     const isFirstUse: boolean = string2Boolean(getStorageItem("firstUse"));
     logHelper.log(getStorageItem("firstUse"));
-    const mbUnitValue: string = getStorageItem("mbUnit") as string;
     const cacheSizeValue: string = getStorageItem("cacheSize") as string;
-    let isSystemNotification: boolean = string2Boolean(getStorageItem("systemNotification") as string);
-    logHelper.log(`firstUse: ${isFirstUse} mbUnit: ${mbUnitValue} cacheSize: ${cacheSizeValue} notification: ${isSystemNotification}`);
+    let systemNotification: boolean = string2Boolean(getStorageItem("systemNotification"));
+    const autoUpdate: boolean = string2Boolean(getStorageItem("autoUpdate"));
+    logHelper.log(`firstUse: ${isFirstUse}, cacheSize: ${cacheSizeValue}, notification: ${systemNotification}, autoUpdate: ${autoUpdate}`);
 
     if (isFirstUse) {
         setUpStorage();
         window.location.reload();
     }
 
-    if (mbUnitValue == "") {
-        setStorageItem("mbUnit", "1024");
-    } else if (cacheSizeValue == "") {
+    if (cacheSizeValue == "") {
         setStorageItem("cacheSize", "2048");
     }
 
-    if (isSystemNotification) {
+    if (systemNotification) {
         sendTestNotification.style.display = "block";
     } else {
         sendTestNotification.style.display = "none";
     }
 
-    mbUnit.value = mbUnitValue;
     cacheSize.value = cacheSizeValue;
-    sysNotification.checked = isSystemNotification;
+    sysNotification.checked = systemNotification;
 
+    if (VARIANT === "desktop") {
+        const autoUpdateItem: ListItem = document.createElement('mdui-list-item');
+        autoUpdateItem.headline = "自动更新";
+        autoUpdateItem.description = "应用启动时将自动检查更新";
+        const updateIcon = document.createElement('mdui-icon-update--outlined');
+        updateIcon.slot = "icon";
+        autoUpdateItem.appendChild(updateIcon);
+        const updateSwitch: Switch = document.createElement('mdui-switch');
+        updateSwitch.slot = "end-icon";
+        updateSwitch.id = "autoUpdateSwitch";
+        updateSwitch.checked = autoUpdate;
+        autoUpdateItem.appendChild(updateSwitch);
+
+        sendTestNotification.parentNode?.insertBefore(autoUpdateItem, sendTestNotification.nextSibling);
+    }
     // APP_VERSION：全局环境变量
     versionElement.innerHTML = `版本：${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})`;
 });
@@ -262,9 +280,9 @@ openSettingsBtn.addEventListener('click', () => {
 });
 
 settingsSaveBtn.addEventListener('click', () => {
-    const mbunitValue: string | string[] = mbUnit.value;
     const cacheSizeValue: string | string[] = cacheSize.value;
-    const SystemNotification: boolean = sysNotification.checked;
+    const autoUpdateSwitch: Switch | null = document.querySelector('#autoUpdateSwitch');
+    const autoUpdate = autoUpdateSwitch?.checked;
     if (cacheSizeValue == "0") {
         settingsDialog.open = false;
         dialog({
@@ -315,9 +333,13 @@ settingsSaveBtn.addEventListener('click', () => {
         });
         return;
     }
-    setStorageItem("mbUnit", mbunitValue.toString());
     setStorageItem("cacheSize", cacheSizeValue.toString());
-    setStorageItem("systemNotification", SystemNotification.toString());
+    setStorageItem("systemNotification", sysNotification.checked.toString());
+    if (autoUpdate === undefined) {
+        setStorageItem("autoUpdate", "false");
+    } else {
+        setStorageItem("autoUpdate", autoUpdate.toString());
+    }
     settingsDialog.open = false;
 });
 
@@ -334,13 +356,13 @@ sysNotification.addEventListener('change', () => {
     else {
         sendTestNotification.style.display = "none";
     }
-})
+});
 
 sendTestNotification.addEventListener('click', () => {
     sendNotification("测试通知", "这是一个测试通知")
 });
 
-deleteCacheBtn.addEventListener('click', () => {
+deleteCache.addEventListener('click', () => {
     settingsDialog.open = false;
     dialog({
         headline: '你真的要清除缓存吗',
@@ -373,7 +395,7 @@ deleteCacheBtn.addEventListener('click', () => {
     });
 });
 
-deleteAllDataBtn.addEventListener('click', () => {
+deleteAllData.addEventListener('click', () => {
     settingsDialog.open = false;
     dialog({
         headline: '是否清除全部应用数据',

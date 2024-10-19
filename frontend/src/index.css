@@ -80,20 +80,16 @@ mdui-layout {
     height: 100vh;
 }
 
-.code {
+mdui-top-app-bar {
+    padding: 1rem 0.9rem;
+}
+
+code {
     padding: 2px 6px;
     color: rgb(var(--mdui-color-on-surface-light));
     background-color: rgb(var(--mdui-color-secondary-container-light));
     border-radius: 2px;
     font-family: Consolas, Courier, 'Courier New', monospace;
-}
-
-.mdui-float-left {
-    float: left !important
-}
-
-.mdui-float-right {
-    float: right !important
 }
 
 /* 使子元素垂直居中 */
@@ -102,26 +98,9 @@ mdui-layout {
     align-items: center;
 }
 
-/* 使元素水平居中 */
-.mdui-center {
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-/* 文本左对齐 */
-.mdui-text-left {
-    text-align: left !important;
-}
-
 /* 文本居中对齐 */
-.mdui-text-center {
+.align-center {
     text-align: center !important;
-}
-
-/* 文本向右对齐 */
-.mdui-text-right {
-    text-align: right !important;
 }
 
 /* 网格布局 */
@@ -163,11 +142,11 @@ mdui-layout {
 }
 
 /* 颜色 */
-.mdui-color-red {
+.color-red {
     color: #D32F2F !important;
 }
 
-.mdui-color-green {
+.color-green {
     color: #00C853 !important;
 }
 
@@ -194,22 +173,16 @@ body::-webkit-scrollbar-track {
     width: 30%;
 }
 
-#outputArea{
+#outputArea {
     word-break: 'break-word';
-}
-
-@media (prefers-color-scheme: dark) {
-    .code {
-        padding: 2px 6px;
-        color: rgb(var(--mdui-color-on-surface-dark));
-        background-color: rgb(var(--mdui-color-secondary-container-dark));
-        border-radius: 2px;
-        font-family: Consolas, Courier, 'Courier New', monospace;
-    }
 }
 
 .fit-top {
     margin-top: 3%;
+}
+
+.hidden {
+    display: none;
 }
 
 h1 {
@@ -240,6 +213,19 @@ strong {
     letter-spacing: var(--mdui-typescale-label-large-tracking);
 }
 
-mdui-top-app-bar {
-    padding: 1rem 0.9rem;
+img {
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-select: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    code {
+        padding: 2px 6px;
+        color: rgb(var(--mdui-color-on-surface-dark));
+        background-color: rgb(var(--mdui-color-secondary-container-dark));
+        border-radius: 2px;
+        font-family: Consolas, Courier, 'Courier New', monospace;
+    }
 }

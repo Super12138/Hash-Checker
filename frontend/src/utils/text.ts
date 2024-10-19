@@ -7,7 +7,7 @@ export function compareHash(userHash: string, genHash: string): HTMLSpanElement 
     differences.forEach((part: Change) => {
         const span: HTMLSpanElement = document.createElement('span');
         if (part.added) {
-            span.style.color = 'red';
+            span.style.color = 'color-red';
         }
         if (part.removed) {
             span.style.textDecoration = 'line-through';
@@ -20,7 +20,7 @@ export function compareHash(userHash: string, genHash: string): HTMLSpanElement 
 
 export function string2Boolean(str: string | null): boolean {
     if (str === null) {
-        return true;
+        return false;
     } else {
         switch (str.toLowerCase()) {
             case 'true':
@@ -28,7 +28,7 @@ export function string2Boolean(str: string | null): boolean {
             case 'false':
                 return false;
             default:
-                return true;
+                return false;
         }
     }
 }

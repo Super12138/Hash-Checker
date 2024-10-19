@@ -18,7 +18,6 @@ export function clearStorage() {
 
 export function setUpStorage() {
     setStorageItem("firstUse", "false");
-    setStorageItem("mbUnit", "1024");
     setStorageItem("cacheSize", "2048");
     setStorageItem("systemNotification", "false");
 }

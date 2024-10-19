@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="免费好用且开源的文件校验工具">
+    <meta name="description" content="一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器">
     <link rel="stylesheet" href="./src/index.css">
     <title>Hash Checker</title>
 </head>
@@ -30,10 +30,10 @@
 
         <mdui-layout-main class="container">
             <div>
-                <input id="fileInput" type="file" style="display: none;">
-                <h1 class="mdui-text-center" id="dragTip" style="display: none;">松开鼠标以读取文件</h1>
+                <input class="hidden" id="fileInput" type="file">
+                <h1 class="align-center hidden" id="dragTip">松开鼠标以读取文件</h1>
                 <mdui-button full-width variant="text" id="openFile">点击选择文件</mdui-button>
-                <p class="mdui-text-center">或者拖拽文件到本页</p>
+                <p class="align-center">或者拖拽文件到本页</p>
 
                 <p>
                     文件：<code id="fileName" style="margin-right: 5px;">未选择文件</code>
@@ -41,7 +41,7 @@
                     上次修改时间：<code id="fileDate" style="margin-right: 5px;">未选择文件</code>
                 </p>
 
-                <strong class="mdui-color-red">本应用的所有操作均在您的设备上运行，不会收集任何信息，请放心使用！</strong>
+                <strong class="color-red">本应用的所有操作均在您的设备上运行，不会收集任何信息，请放心使用！</strong>
                 <br>
                 <br>
                 <p class="mdui-valign"><mdui-checkbox id="isClipboard"></mdui-checkbox>计算完成后将校验值写入剪贴板（仅在生成模式下生效）</p>
@@ -68,43 +68,40 @@
             </div>
             <br>
             <mdui-text-field label="校验值" helper="在此处粘贴您获取到的校验值" id="checkSumInput" disabled clearable></mdui-text-field>
-            <mdui-button full-width id="checkFile" style="margin-top: 3%;">检查</mdui-button>
-            <mdui-button full-width id="terminateCalc" style="margin-top: 2%; display: none;">终止计算</mdui-button>
+            <mdui-button full-width id="checkFile" class="fit-top">检查</mdui-button>
+            <mdui-button full-width id="terminateCalc" class="fit-top hidden">终止计算</mdui-button>
 
             <!--输出-->
             <div style="margin-bottom: 10%; margin-top: 3%;">
                 <h1 id="outputTitle"></h1>
                 <p id="outputArea"></p>
-                <mdui-linear-progress id="progressBar" value="0" max="100"
-                    style="display: none;"></mdui-linear-progress>
+                <mdui-linear-progress class="hidden" id="progressBar" value="0" max="100"></mdui-linear-progress>
             </div>
         </mdui-layout-main>
     </mdui-layout>
+
     <mdui-dialog headline="设置" description="你可以在此个性化设置这个应用" id="settings">
-        1MB 单位：
-        <mdui-select id="mbUnit" value="nullSelect" style="margin-bottom: 3%;">
-            <mdui-menu-item value="nullSelect" disabled>在此选择你想使用的 1MB 的单位</mdui-menu-item>
-            <mdui-menu-item value="1024">1024KB</mdui-menu-item>
-            <mdui-menu-item value="1000">1000KB</mdui-menu-item>
-        </mdui-select>
-
-        单次缓存大小：
-        <mdui-text-field label="单次缓存大小" helper="在此输入分片缓存文件时单次缓存文件的大小（单位：KB）" type="number" id="cachesize" min="1"
-            maxlength="5"></mdui-text-field>
-        <br>
-
-        <p class="mdui-valign fit-top" style="margin-bottom: 3%;">
-            <mdui-switch id="isSystemNotification"></mdui-switch>
-            &nbsp;使用系统通知代替生成（校验）后弹出的提示框&nbsp;
-        </p>
-
-        <mdui-button id="sendTestNotification" variant="tonal"
-            style="display: none; margin-bottom: 3%;">点击发送一条测试通知</mdui-button>
-
-        <mdui-divider></mdui-divider>
-        <mdui-button full-width id="deleteCache" class="fit-top">清除缓存</mdui-button>
-        <mdui-button full-width id="deleteAllData" class="fit-top">清除所有数据</mdui-button>
-        <mdui-button full-width id="aboutBtn" class="fit-top">关于</mdui-button>
+        <mdui-list>
+            <mdui-list-item headline="单次缓存大小" description="分片缓存文件时单次缓存文件的大小">
+                <mdui-icon-storage--outlined slot="icon"></mdui-icon-storage--outlined>
+                <mdui-text-field type="number" id="cacheSize" min="1" maxlength="5" suffix="KB" slot="end-icon" style="width: 120px;"></mdui-text-field>
+            </mdui-list-item>
+            <mdui-list-item headline="系统通知" description="使用系统通知代替生成（校验）后弹出的提示框">
+                <mdui-icon-notifications-active--outlined slot="icon"></mdui-icon-notifications-active--outlined>
+                <mdui-switch id="systemNotification" slot="end-icon"></mdui-switch>
+            </mdui-list-item>
+            <mdui-button id="sendTestNotification" class="hidden" variant="tonal" style="margin: 3% 0 3% 0;">点击发送一条测试通知</mdui-button>
+            <mdui-divider></mdui-divider>
+            <mdui-list-item id="deleteCache" headline="清除缓存">
+                <mdui-icon-cleaning-services--outlined slot="icon"></mdui-icon-cleaning-services--outlined>
+            </mdui-list-item>
+            <mdui-list-item id="deleteAllData" headline="清除所有数据">
+                <mdui-icon-delete-forever--outlined slot="icon"></mdui-icon-delete-forever--outlined>
+            </mdui-list-item>
+            <mdui-list-item id="aboutBtn" headline="关于">
+                <mdui-icon-info--outlined slot="icon"></mdui-icon-info--outlined>
+            </mdui-list-item>
+        </mdui-list>
         <mdui-button slot="action" id="settingsCancelBtn" variant="text">取消</mdui-button>
         <mdui-button slot="action" id="settingsSaveBtn" variant="tonal">保存</mdui-button>
     </mdui-dialog>
@@ -116,14 +113,20 @@
             <br>
             由 <a target="_blank" href="https://github.com/Super12138/">Super12138</a> 开发
         </p>
-        <img width="50%" src="./src/assets/gpl.svg" style="user-select: none;">
+        <img width="50%" src="./src/assets/gpl.svg">
         <p>遵循 GPL-3.0 协议</p>
         <p>开源库<br>
+            <a target="_blank" href="https://github.com/vitejs/vite">Vite</a>
+            <br>
+            <a target="_blank" href="https://github.com/wailsapp/wails">Wails</a>
+            <br>
             <a target="_blank" href="https://github.com/brix/crypto-js/">CryptoJS</a>
             <br>
             <a target="_blank" href="https://github.com/zdhxiong/mdui/">MDUI</a>
             <br>
             <a target="_blank" href="https://github.com/kpdecker/jsdiff">jsdiff</a>
+            <br>
+            <a target="_blank" href="https://github.com/markedjs/marked">marked</a>
         </p>
         <p>感谢<br>
             <a target="_blank" href="https://icon.kitchen/">IconKitchen</a>

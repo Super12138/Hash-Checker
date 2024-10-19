@@ -22,7 +22,7 @@ export function getfileinfo(file: File) {
  */
 export function convertbyte(size: number): string {
     const units: string[] = ["Bytes", "KB", "MB", "GB", "TB"];
-    const kb: number = Number(getStorageItem("mbUnit"));
+    const kb: number = 1024;
     let counter: number = 0;
     let calcSize: number = size / 1
     while (calcSize >= kb) {
