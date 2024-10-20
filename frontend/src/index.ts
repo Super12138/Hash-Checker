@@ -99,7 +99,7 @@ dropZone.addEventListener('drop', (e: DragEvent) => {
 
 // 初始化
 window.addEventListener("load", () => {
-    initPWA();
+    if (VARIANT !== "desktop") initPWA();
 
     const isFirstUse: boolean = string2Boolean(getStorageItem("firstUse", false));
     const cacheSizeValue: string = getStorageItem("cacheSize", 2048);

@@ -150,6 +150,10 @@ code {
     color: #00C853 !important;
 }
 
+.no-margin {
+    margin: 0;
+}
+
 /* 滚动条 */
 /* body::-webkit-scrollbar {
     width: 6px;
@@ -192,7 +196,8 @@ h1 {
     font-weight: var(--mdui-typescale-headline-medium-weight);
 }
 
-h2 {
+h2,
+.headline-small {
     line-height: var(--mdui-typescale-headline-small-line-height);
     font-size: var(--mdui-typescale-headline-small-size);
     letter-spacing: var(--mdui-typescale-headline-small-tracking);

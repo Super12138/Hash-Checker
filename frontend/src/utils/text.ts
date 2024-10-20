@@ -7,7 +7,7 @@ export function compareHash(userHash: string, genHash: string): HTMLSpanElement 
     differences.forEach((part: Change) => {
         const span: HTMLSpanElement = document.createElement('span');
         if (part.added) {
-            span.style.color = 'color-red';
+            span.classList.add('color-red')
         }
         if (part.removed) {
             span.style.textDecoration = 'line-through';

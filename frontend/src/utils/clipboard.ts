@@ -10,7 +10,7 @@ export async function writeClipboard(text: string) {
     } catch (e) {
         dialog({
             headline: '错误',
-            description: '无法写入剪贴板',
+            description: `无法写入剪贴板（${e}）`,
             actions: [
                 {
                     text: '确定'
