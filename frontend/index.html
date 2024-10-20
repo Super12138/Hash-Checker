@@ -84,13 +84,19 @@
         <mdui-list>
             <mdui-list-item headline="单次缓存大小" description="分片缓存文件时单次缓存文件大小">
                 <mdui-icon-storage--outlined slot="icon"></mdui-icon-storage--outlined>
-                <mdui-text-field type="number" id="cacheSize" min="1" maxlength="5" suffix="KB" slot="end-icon" style="width: 120px;"></mdui-text-field>
+                <mdui-text-field type="number" id="cacheSize" min="1" maxlength="5" suffix="KB" slot="end-icon"
+                    value="2048" style="width: 120px;"></mdui-text-field>
+            </mdui-list-item>
+            <mdui-list-item headline="自动匹配校验方法" description="根据输入的校验值自动匹配校验方法">
+                <mdui-icon-tips-and-updates--outlined slot="icon"></mdui-icon-tips-and-updates--outlined>
+                <mdui-switch id="lengthSuggest" slot="end-icon"></mdui-switch>
             </mdui-list-item>
             <mdui-list-item headline="系统通知" description="使用系统通知代替操作后弹出的提示框">
                 <mdui-icon-notifications-active--outlined slot="icon"></mdui-icon-notifications-active--outlined>
                 <mdui-switch id="systemNotification" slot="end-icon"></mdui-switch>
             </mdui-list-item>
-            <mdui-button id="sendTestNotification" class="hidden" variant="tonal" style="margin: 3% 0 3% 0;">点击发送一条测试通知</mdui-button>
+            <mdui-button id="sendTestNotification" class="hidden" variant="tonal"
+                style="margin: 3% 0 3% 0;">点击发送一条测试通知</mdui-button>
             <mdui-divider></mdui-divider>
             <mdui-list-item id="deleteCache" headline="清除缓存">
                 <mdui-icon-cleaning-services--outlined slot="icon"></mdui-icon-cleaning-services--outlined>

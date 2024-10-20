@@ -29,9 +29,9 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
     const checkFileBtn: Button = document.querySelector('#checkFile')!;
     const chooseFileBtn: Button = document.querySelector('#openFile')!;
 
-    const chunkSize: number = Number(getStorageItem("cacheSize"));
+    const chunkSize: number = Number(getStorageItem("cacheSize", 2048));
     const isClipboard: boolean = (document.querySelector('#isClipboard') as Checkbox).checked;
-    const systemNotification: boolean = string2Boolean(getStorageItem("systemNotification") as string);
+    const systemNotification: boolean = string2Boolean(getStorageItem("systemNotification", false));
 
     outputTitle.innerHTML = "状态：";
     outputArea.innerHTML = "准备缓存文件";
@@ -61,7 +61,7 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
             progressBar.style.display = "none";
             progressBar.value = 0;
 
-            outputArea.innerHTML = `计算完成，${method} 值为 <code>${calcHash} </code>`;
+            outputArea.innerHTML = `计算完成，${method} 值为 <code>${calcHash}</code>`;
             if (systemNotification) {
                 sendNotification(`${method} 计算完成`, `${method} 值为 ${calcHash} ，详情请在应用内查看`);
             }

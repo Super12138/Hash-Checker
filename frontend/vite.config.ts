@@ -27,9 +27,9 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
         plugins: [
             VitePWA({
                 strategies: 'injectManifest',
-                srcDir: 'src/service-worker',
+                srcDir: 'src/pwa',
                 filename: 'sw.ts',
-                registerType: 'autoUpdate',
+                registerType: 'prompt',
                 injectRegister: false,
 
                 pwaAssets: {

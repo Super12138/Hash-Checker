@@ -13,13 +13,16 @@ export function initPWA() {
         onOfflineReady() {
             snackbar({
                 message: "Hash Checker 已准备好在离线环境下运行"
-            })
+            });
         },
         onNeedRefresh() {
             snackbar({
                 message: "Hash Checker 有新版本",
                 action: "立即更新",
-                onActionClick: () => refreshSW?.(true)
+                onActionClick: () => {
+                    refreshSW?.(true)
+                    true
+                }
             });
         },
         onRegisteredSW(swUrl, r) {
@@ -38,11 +41,15 @@ export function initPWA() {
                 })
             }
         },
-    })
+    });
 }
 
 /**
- * 每小时进行一次定期同步检查，可根据需要修改时间间隔
+ * 定时进行同步检查，可根据需要修改时间间隔
+ * @param period 检查时间间隔
+ * @param swUrl Service Worker URL
+ * @param r ServiceWorkerRegistration
+ * @returns 
  */
 function registerPeriodicSync(period: number, swUrl: string, r: ServiceWorkerRegistration) {
     if (period <= 0) return

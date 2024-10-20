@@ -39,46 +39,47 @@ import '@mdui/icons/info--outlined.js';
 import '@mdui/icons/notifications-active--outlined.js';
 import '@mdui/icons/settings--outlined.js';
 import '@mdui/icons/storage--outlined.js';
+import '@mdui/icons/tips-and-updates--outlined.js';
 import '@mdui/icons/update--outlined.js';
 
 // PWA
-import { initPWA } from "./pwa";
+import { initPWA } from "./pwa/pwa";
 import { LogHelper } from "./utils/LogHelper";
 import { getUpdate } from "./utils/updater";
 
+// 页面内容
+const dropZone: HTMLBodyElement = document.querySelector('#drop')!;
+const dragTip: HTMLHeadingElement = document.querySelector('#dragTip')!;
 const openFileBtn: Button = document.querySelector("#openFile")!;
 const fileInput: HTMLInputElement = document.querySelector('#fileInput')!;
-const checkFileBtn: Button = document.querySelector('#checkFile')!;
-const dragTip: HTMLHeadingElement = document.querySelector('#dragTip')!;
 const methodSelect: Select = document.querySelector('#method')!;
 const modeSelect: Select = document.querySelector('#mode')!;
 const checkSumInput: TextField = document.querySelector("#checkSumInput")!;
+const checkFileBtn: Button = document.querySelector('#checkFile')!;
 
+// 设置部分
+const settingsDialog: Dialog = document.querySelector('#settings')!;
 const openSettingsBtn: ButtonIcon = document.querySelector('#settingsBtn')!;
-const cacheSize: Select = document.querySelector('#cacheSize')!;
-const sysNotification: Switch = document.querySelector('#systemNotification')!;
-
 const settingsSaveBtn: Button = document.querySelector('#settingsSaveBtn')!;
 const settingsCancelBtn: Button = document.querySelector('#settingsCancelBtn')!;
+const cacheSize: Select = document.querySelector('#cacheSize')!;
+const lengthSuggest: Switch = document.querySelector('#lengthSuggest')!;
+const sysNotification: Switch = document.querySelector('#systemNotification')!;
+const sendTestNotification: Button = document.querySelector('#sendTestNotification')!;
 const deleteCache: ListItem = document.querySelector('#deleteCache')!;
 const deleteAllData: ListItem = document.querySelector('#deleteAllData')!;
-const sendTestNotification: Button = document.querySelector('#sendTestNotification')!;
+// 关于部分
+const aboutDialog: Dialog = document.querySelector('#about')!;
 const aboutBtn: ListItem = document.querySelector('#aboutBtn')!;
-
 const aboutCloseBtn: Button = document.querySelector('#aboutCloseBtn')!;
-
+const versionElement: HTMLParagraphElement = document.querySelector('#version')!;
+// 动态配色
+const colorDialog: Dialog = document.querySelector('#colors')!;
 const chooseColorBtn: ButtonIcon = document.querySelector('#chooseColorBtn')!;
 const colorCancelBtn: Button = document.querySelector('#colorCancelBtn')!;
 const setColorBtn: Button = document.querySelector('#setColorBtn')!;
 const resetColorBtn: Button = document.querySelector('#resetColorBtn')!;
 const dynamicColor: HTMLInputElement = document.querySelector('#dynamicColor')!;
-
-const settingsDialog: Dialog = document.querySelector('#settings')!;
-const aboutDialog: Dialog = document.querySelector('#about')!;
-const colorDialog: Dialog = document.querySelector('#colors')!;
-
-const dropZone: HTMLBodyElement = document.querySelector('#drop')!;
-const versionElement: HTMLParagraphElement = document.querySelector('#version')!;
 
 const logHelper: LogHelper = LogHelper.getInstance();
 
@@ -100,20 +101,19 @@ dropZone.addEventListener('drop', (e: DragEvent) => {
 window.addEventListener("load", () => {
     initPWA();
 
-    const isFirstUse: boolean = string2Boolean(getStorageItem("firstUse"));
-    logHelper.log(getStorageItem("firstUse"));
-    const cacheSizeValue: string = getStorageItem("cacheSize") as string;
-    let systemNotification: boolean = string2Boolean(getStorageItem("systemNotification"));
-    const autoUpdate: boolean = string2Boolean(getStorageItem("autoUpdate"));
-    logHelper.log(`firstUse: ${isFirstUse}, cacheSize: ${cacheSizeValue}, notification: ${systemNotification}, autoUpdate: ${autoUpdate}`);
+    const isFirstUse: boolean = string2Boolean(getStorageItem("firstUse", false));
+    const cacheSizeValue: string = getStorageItem("cacheSize", 2048);
+    const systemNotification: boolean = string2Boolean(getStorageItem("systemNotification", false));
+    const lengthSuggestValue: boolean = string2Boolean(getStorageItem("lengthSuggest", true));
+    const autoUpdate: boolean = string2Boolean(getStorageItem("autoUpdate", true));
+    logHelper.log(`firstUse: ${isFirstUse}, cacheSize: ${cacheSizeValue}, notification: ${systemNotification}, suggest: ${lengthSuggest}`);
 
     if (isFirstUse) {
         setUpStorage();
-        window.location.reload();
     }
 
-    if (cacheSizeValue == "") {
-        setStorageItem("cacheSize", "2048");
+    if (cacheSizeValue === '') {
+        setStorageItem("cacheSize", 2048);
     }
 
     if (systemNotification) {
@@ -123,9 +123,12 @@ window.addEventListener("load", () => {
     }
 
     cacheSize.value = cacheSizeValue;
+    lengthSuggest.checked = lengthSuggestValue;
     sysNotification.checked = systemNotification;
 
+    // 仅桌面端显示开关
     if (VARIANT === "desktop") {
+        logHelper.log(`autoUpdate: ${autoUpdate}`);
         const autoUpdateItem: ListItem = document.createElement('mdui-list-item');
         autoUpdateItem.headline = "自动更新";
         autoUpdateItem.description = "应用启动时将自动检查更新";
@@ -145,7 +148,7 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-    const dynamicColorValue: string = getStorageItem("dynamicColor") as string;
+    const dynamicColorValue: string = getStorageItem("dynamicColor", '') as string;
     dynamicColor.value = dynamicColorValue;
     if (dynamicColorValue) {
         setColorScheme(dynamicColorValue);
@@ -174,35 +177,10 @@ checkFileBtn.addEventListener('click', () => {
     const file: File = getFile();
     const method: string | string[] = methodSelect.value;
     const mode: string | string[] = modeSelect.value;
-    const cacheSize: string = getStorageItem("cacheSize") as string;
     if (!file || file.size == 0) {
         dialog({
             headline: '错误',
             description: '请选择文件',
-            actions: [
-                {
-                    text: '知道了'
-                }
-            ]
-        });
-        return;
-    }
-    if (cacheSize == "") {
-        dialog({
-            headline: '错误',
-            description: '分片单次缓存大小不能为空，请前往设置进行设置',
-            actions: [
-                {
-                    text: '知道了'
-                }
-            ]
-        });
-        return;
-    }
-    if (cacheSize == "0") {
-        dialog({
-            headline: '错误',
-            description: '分片单次缓存大小不能为“0”，请前往设置进行设置',
             actions: [
                 {
                     text: '知道了'
@@ -340,6 +318,8 @@ settingsSaveBtn.addEventListener('click', () => {
     } else {
         setStorageItem("autoUpdate", autoUpdate.toString());
     }
+    setStorageItem("lengthSuggest", lengthSuggest.checked);
+
     settingsDialog.open = false;
 });
 
@@ -359,7 +339,7 @@ sysNotification.addEventListener('change', () => {
 });
 
 sendTestNotification.addEventListener('click', () => {
-    sendNotification("测试通知", "这是一个测试通知")
+    sendNotification("测试通知", "这是一个测试通知");
 });
 
 deleteCache.addEventListener('click', () => {
@@ -436,12 +416,14 @@ aboutBtn.addEventListener('click', () => {
     aboutDialog.open = true;
 });
 
+// 关闭对话框
 aboutCloseBtn.addEventListener('click', () => {
     settingsDialog.open = true;
     aboutDialog.open = false;
 });
 
 
+// 依据校验方法开启/禁用校验值输入框
 modeSelect.addEventListener('change', () => {
     switch (modeSelect.value) {
         case "check":
@@ -456,23 +438,26 @@ modeSelect.addEventListener('change', () => {
     }
 });
 
+// 依据输入的长度自动设置校验方法
 checkSumInput.addEventListener('input', () => {
-    switch (checkSumInput.value.length) {
-        case 32:
-            methodSelect.value = "MD5";
-            break;
-        case 40:
-            methodSelect.value = "SHA1";
-            break;
-        case 64:
-            methodSelect.value = "SHA256";
-            break;
-        case 96:
-            methodSelect.value = "SHA384";
-            break;
-        default:
-            methodSelect.value = "nullSelect";
-            break;
+    if (string2Boolean(getStorageItem("lengthSuggest", true))) {
+        switch (checkSumInput.value.length) {
+            case 32:
+                methodSelect.value = "MD5";
+                break;
+            case 40:
+                methodSelect.value = "SHA1";
+                break;
+            case 64:
+                methodSelect.value = "SHA256";
+                break;
+            case 96:
+                methodSelect.value = "SHA384";
+                break;
+            default:
+                methodSelect.value = "nullSelect";
+                break;
+        }
     }
 });
 
@@ -481,23 +466,27 @@ chooseColorBtn.addEventListener('click', () => {
     colorDialog.open = true;
 });
 
+// 取消，清除用户临时选择的主题色
 colorCancelBtn.addEventListener('click', () => {
     colorDialog.open = false;
     removeColorScheme();
 });
 
+// 重置到默认颜色
 resetColorBtn.addEventListener('click', () => {
     colorDialog.open = false;
     removeStorageItem("dynamicColor");
     removeColorScheme();
 });
 
+// 设置主题色
 setColorBtn.addEventListener('click', () => {
     setColorScheme(dynamicColor.value);
     colorDialog.open = false;
     setStorageItem("dynamicColor", dynamicColor.value);
 });
 
+// 拖动取色器时自动更改当前主题色
 dynamicColor.addEventListener('input', () => {
     setColorScheme(dynamicColor.value);
 });
