@@ -61,7 +61,7 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
             progressBar.style.display = "none";
             progressBar.value = 0;
 
-            outputArea.innerHTML = `计算完成，${method} 值为 <code>${calcHash}</code>`;
+            outputArea.innerHTML = `计算完成，${method} 值为 <code style="word-break: break-all">${calcHash}</code>`;
             if (systemNotification) {
                 sendNotification(`${method} 计算完成`, `${method} 值为 ${calcHash} ，详情请在应用内查看`);
             }
@@ -76,6 +76,7 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
                     } else {
                         outputArea.innerHTML += `，<strong class="color-red">校验失败</strong>`
                         const compareResult = compareHash(userHash, genHash);
+                        compareResult.style.wordBreak = "break-all";
                         outputArea.innerHTML += `<br>哈希对比结果（相比于您提供的哈希值）：`;
                         outputArea.appendChild(compareResult);
                     }
