@@ -225,6 +225,26 @@ img {
     user-select: none;
 }
 
+a:link {
+    color: rgb(var(--mdui-color-primary));
+    text-decoration: none;
+}
+
+a:visited {
+    color: rgb(var(--mdui-color-tertiary));
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(var(--mdui-color-on-primary-container));
+    text-decoration: none;
+}
+
+a:active {
+    color: rgb(var(--mdui-color-tertiary));
+    text-decoration: none;
+}
+
 @media (prefers-color-scheme: dark) {
     code {
         padding: 2px 6px;

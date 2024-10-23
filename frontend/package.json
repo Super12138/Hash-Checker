@@ -1,6 +1,6 @@
 {
   "name": "HashChecker",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "private": true,
   "description": "一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器",
   "type": "module",
