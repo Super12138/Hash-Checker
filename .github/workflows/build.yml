@@ -39,7 +39,7 @@ jobs:
     runs-on: ${{ matrix.build.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.1
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
 
