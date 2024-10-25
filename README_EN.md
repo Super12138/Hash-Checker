@@ -24,26 +24,25 @@ A quick, readily available cross-platform hash checker that follows Material Des
 [Simple Usage Instructions](https://super12138.github.io/hschecker/use.html)
 
 ## ⬇️ Download
-- Offline version V2.0.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
-- Online version V2.2.1[Github Page](https://super12138.github.io/Hash-Checker/)
+- Offline version V2.2.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- Online version V2.2.2[Github Page](https://super12138.github.io/Hash-Checker/)
 
 ## 📸 Screenshots
-
-|             Main Interface (Light Mode)          |
-| :----------------------------------------------------------: |
-|   ![Hash Checker-01.png](https://s2.loli.net/2023/06/30/qoWMl7spyhOGuCt.png) |
-|             Main Interface (Dark Mode)          |
-|   ![Hash Checker-02.png](https://s2.loli.net/2023/06/30/nXaENxWC6q8riAS.png) |
-|             Generate hash value             |
-|   ![Hash Checker-03.png](https://s2.loli.net/2023/06/30/FskYWonwH4eEQ1q.png) |
-|             Verify hash value (successful)       |
-|   ![Hash Checker-04.png](https://s2.loli.net/2023/06/30/a7iQfP93bLn1EuI.png) |
-|             Verify hash value (failed)       |
-|   ![Hash Checker-05.png](https://s2.loli.net/2023/06/30/aSPDYW6dyocktl8.png) |
-|             Settings                    |
-|   ![Hash Checker-06.png](https://s2.loli.net/2023/06/30/IuAUpx5Zl12nfc6.png) |
-|             About                    |
-|   ![Hash Checker-07.png](https://s2.loli.net/2023/06/30/KhWM5aHDVBt6T4r.png) |
+|Main Interface (Light Mode)|
+|:----------------------------------------------------------:|
+|![Main Interface (Light Mode)](https://s2.loli.net/2024/10/25/rF6tqainNAcDvIk.png)|
+|Main Interface (Dark Mode)|
+|![Main Interface (Dark Mode)](https://s2.loli.net/2024/10/25/uNl58FGETgfKUXm.png)|
+|Generate Hash Value|
+|![Generate Hash Value](https://s2.loli.net/2024/10/25/PGMvEINligBXVU7.png)|
+|Verify Hash Value (Success)|
+|![Verify Hash Value (Success)](https://s2.loli.net/2024/10/25/JuqDTbxnCzNdojp.png)|
+|Verify Hash Value (failed)|
+|![Verify Hash Value (Failed)](https://s2.loli.net/2024/10/25/wdT24e6V8XHBIvc.png)|
+|Settings|
+|![Settings](https://s2.loli.net/2024/10/25/vsPNTWAnEIakq1z.png)|
+|About|
+|![About](https://s2.loli.net/2024/10/25/aXfqTlFtBnevDrQ.png)|
 
 ## 💻 Developer
 - Super12138

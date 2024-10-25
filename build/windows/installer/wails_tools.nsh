@@ -14,7 +14,7 @@
     !define INFO_PRODUCTNAME "Hash Checker"
 !endif
 !ifndef INFO_PRODUCTVERSION
-    !define INFO_PRODUCTVERSION "2.2.1"
+    !define INFO_PRODUCTVERSION "2.2.2"
 !endif
 !ifndef INFO_COPYRIGHT
     !define INFO_COPYRIGHT "Copyright © 2019-2024 Super12138"

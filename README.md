@@ -24,26 +24,25 @@
 [简单使用方法](https://super12138.github.io/hschecker/use.html)
 
 ## ⬇️ 下载
-- 离线版 V2.0.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
-- 在线版 v2.2.1[Github Page](https://super12138.github.io/Hash-Checker/)
+- 离线版 V2.2.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- 在线版 v2.2.2[Github Page](https://super12138.github.io/Hash-Checker/)
 
 ## 📸 截图
-
-|             主界面（浅色）          |
-| :----------------------------------------------------------: |
-|   ![Hash Checker-01.png](https://s2.loli.net/2023/06/30/qoWMl7spyhOGuCt.png) |
-|             主界面（深色）          |
-|   ![Hash Checker-02.png](https://s2.loli.net/2023/06/30/nXaENxWC6q8riAS.png) |
-|             生成哈希值              |
-|   ![Hash Checker-03.png](https://s2.loli.net/2023/06/30/FskYWonwH4eEQ1q.png) |
-|             校验哈希值（成功）       |
-|   ![Hash Checker-04.png](https://s2.loli.net/2023/06/30/a7iQfP93bLn1EuI.png) |
-|             校验哈希值（失败）       |
-|   ![Hash Checker-05.png](https://s2.loli.net/2023/06/30/aSPDYW6dyocktl8.png) |
-|             设置                    |
-|   ![Hash Checker-06.png](https://s2.loli.net/2023/06/30/IuAUpx5Zl12nfc6.png) |
-|             关于                    |
-|   ![Hash Checker-07.png](https://s2.loli.net/2023/06/30/KhWM5aHDVBt6T4r.png) |
+|主界面（浅色）|
+|:----------------------------------------------------------:|
+|![主界面（浅色）](https://s2.loli.net/2024/10/25/rF6tqainNAcDvIk.png)|
+|主界面（深色）|
+|![主界面（深色）](https://s2.loli.net/2024/10/25/uNl58FGETgfKUXm.png)|
+|生成哈希值|
+|![生成哈希值](https://s2.loli.net/2024/10/25/PGMvEINligBXVU7.png)|
+|校验哈希值（成功）|
+|![校验哈希值（成功）](https://s2.loli.net/2024/10/25/JuqDTbxnCzNdojp.png)|
+|校验哈希值（失败）|
+|![校验哈希值（失败）](https://s2.loli.net/2024/10/25/wdT24e6V8XHBIvc.png)|
+|设置|
+|![设置](https://s2.loli.net/2024/10/25/vsPNTWAnEIakq1z.png)|
+|关于|
+|![关于](https://s2.loli.net/2024/10/25/aXfqTlFtBnevDrQ.png)|
 
 ## 💻 开发者
 - Super12138
