@@ -20,10 +20,6 @@ jobs:
             platform:  'windows/amd64'
             os: 'windows-latest'
 
-          - name: 'Windows-arm64'
-            platform:  'windows/arm64'
-            os: 'windows-latest'
-
           - name: 'macOS-universal'
             platform:  'darwin/universal'
             os: 'macos-latest'
@@ -64,6 +60,13 @@ jobs:
       - name: Build app (macOS)
         if: runner.os == 'macOS'
         run: wails build
+
+      - name: Pack DMG (macOS)
+        if: runner.os == 'macOS'
+        uses: L-Super/create-dmg-actions@v1.0.3
+        with:
+          dmg_name: 'Hash Checker-installer'
+          src_dir: ${{ github.workspace }}/build/bin/Hash\ Checker.app
       
       - name: Upload artifact
         if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
