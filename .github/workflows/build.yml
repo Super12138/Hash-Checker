@@ -65,7 +65,7 @@ jobs:
         if: runner.os == 'macOS'
         uses: L-Super/create-dmg-actions@v1.0.3
         with:
-          dmg_name: 'Hash Checker-installer'
+          dmg_name: 'Hash-Checker-installer'
           src_dir: ${{ github.workspace }}/build/bin/Hash\ Checker.app
       
       - name: Upload artifact
