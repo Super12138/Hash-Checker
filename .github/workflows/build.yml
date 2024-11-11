@@ -66,7 +66,7 @@ jobs:
         uses: L-Super/create-dmg-actions@v1.0.3
         with:
           dmg_name: 'Hash-Checker-installer'
-          src_dir: ${{ github.workspace }}/build/bin/Hash\ Checker.app
+          src_dir: ${{ github.workspace }}/build/bin/Hash Checker.app
       
       - name: Upload artifact
         if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
