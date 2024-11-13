@@ -38,7 +38,7 @@
   "dependencies": {
     "crypto-js": "^4.2.0",
     "diff": "^7.0.0",
-    "marked": "^14.1.2",
+    "marked": "^15.0.0",
     "mdui": "^2.1.2"
   },
   "overrides": {
