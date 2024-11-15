@@ -1,21 +1,5 @@
 /* 来自 mdui-v1 */
 @font-face {
-    font-weight: 300;
-    font-family: Roboto;
-    font-style: normal;
-    font-display: swap;
-    src: local('Roboto Light'), local('Roboto-Light'), url(./assets/fonts/roboto/Roboto-Light.woff2) format('woff2'), url(./assets/fonts/roboto/Roboto-Light.woff) format('woff')
-}
-
-@font-face {
-    font-weight: 300;
-    font-family: Roboto;
-    font-style: italic;
-    font-display: swap;
-    src: local('Roboto LightItalic'), local('Roboto-LightItalic'), url(./assets/fonts/roboto/Roboto-LightItalic.woff2) format('woff2'), url(./assets/fonts/roboto/Roboto-LightItalic.woff) format('woff')
-}
-
-@font-face {
     font-weight: 400;
     font-family: Roboto;
     font-style: normal;
@@ -86,8 +70,8 @@ mdui-top-app-bar {
 
 code {
     padding: 2px 6px;
-    color: rgb(var(--mdui-color-on-surface-light));
-    background-color: rgb(var(--mdui-color-secondary-container-light));
+    color: rgb(var(--mdui-color-on-surface));
+    background-color: rgb(var(--mdui-color-secondary-container));
     border-radius: 2px;
     font-family: Consolas, Courier, 'Courier New', monospace;
 }
@@ -141,7 +125,7 @@ code {
     }
 }
 
-/* 颜色 */
+/* 部分文字颜色 */
 .color-red {
     color: #D32F2F !important;
 }
@@ -225,6 +209,7 @@ img {
     user-select: none;
 }
 
+/* 链接颜色 */
 a:link {
     color: rgb(var(--mdui-color-primary));
     text-decoration: none;
@@ -245,7 +230,20 @@ a:active {
     text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+/* 选中文本高亮颜色 */
+::selection {
+    background: rgb(var(--mdui-color-secondary-container)) !important;
+}
+
+::-moz-selection {
+    background: rgb(var(--mdui-color-secondary-container)) !important;
+}
+
+::-webkit-selection {
+    background: rgb(var(--mdui-color-secondary-container)) !important;
+}
+
+/* @media (prefers-color-scheme: dark) {
     code {
         padding: 2px 6px;
         color: rgb(var(--mdui-color-on-surface-dark));
@@ -253,4 +251,4 @@ a:active {
         border-radius: 2px;
         font-family: Consolas, Courier, 'Courier New', monospace;
     }
-}
+} */
