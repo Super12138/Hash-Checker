@@ -1,46 +1,51 @@
 import { snackbar } from "mdui/functions/snackbar.js";
 import { registerSW } from 'virtual:pwa-register';
 
+/**
+ * 初始化 PWA
+ */
 export function initPWA() {
-    let refreshSW: (reloadPage?: boolean) => Promise<void> | undefined
+    let refreshSW: (reloadPage?: boolean) => Promise<void> | undefined;
 
-    let swActivated = false
+    let swActivated = false;
     // 每小时检查一次更新
-    const period = 60 * 60 * 1000
+    const period = 60 * 60 * 1000;
 
-    refreshSW = registerSW({
-        immediate: true,
-        onOfflineReady() {
-            snackbar({
-                message: "Hash Checker 已准备好在离线环境下运行"
-            });
-        },
-        onNeedRefresh() {
-            snackbar({
-                message: "Hash Checker 有新版本",
-                action: "立即更新",
-                onActionClick: () => {
-                    refreshSW?.(true)
-                    true
+    window.addEventListener('load', () => {
+        refreshSW = registerSW({
+            immediate: true,
+            onOfflineReady() {
+                snackbar({
+                    message: "Hash Checker 已准备好在离线环境下运行"
+                });
+            },
+            onNeedRefresh() {
+                snackbar({
+                    message: "Hash Checker 有新版本",
+                    action: "立即更新",
+                    onActionClick: () => {
+                        refreshSW?.(true)
+                        true
+                    }
+                });
+            },
+            onRegisteredSW(swUrl, r) {
+                if (period <= 0) return;
+
+                if (r?.active?.state === 'activated') {
+                    swActivated = true
+                    registerPeriodicSync(period, swUrl, r)
                 }
-            });
-        },
-        onRegisteredSW(swUrl, r) {
-            if (period <= 0) return
-
-            if (r?.active?.state === 'activated') {
-                swActivated = true
-                registerPeriodicSync(period, swUrl, r)
-            }
-            else if (r?.installing) {
-                r.installing.addEventListener('statechange', (e) => {
-                    const sw = e.target as ServiceWorker
-                    swActivated = sw.state === 'activated'
-                    if (swActivated)
-                        registerPeriodicSync(period, swUrl, r)
-                })
-            }
-        },
+                else if (r?.installing) {
+                    r.installing.addEventListener('statechange', (e) => {
+                        const sw = e.target as ServiceWorker
+                        swActivated = sw.state === 'activated'
+                        if (swActivated)
+                            registerPeriodicSync(period, swUrl, r)
+                    })
+                }
+            },
+        });
     });
 }
 
@@ -49,7 +54,6 @@ export function initPWA() {
  * @param period 检查时间间隔
  * @param swUrl Service Worker URL
  * @param r ServiceWorkerRegistration
- * @returns 
  */
 function registerPeriodicSync(period: number, swUrl: string, r: ServiceWorkerRegistration) {
     if (period <= 0) return
@@ -68,5 +72,5 @@ function registerPeriodicSync(period: number, swUrl: string, r: ServiceWorkerReg
 
         if (resp?.status === 200)
             await r.update()
-    }, period)
+    }, period);
 }
