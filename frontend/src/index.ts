@@ -44,8 +44,13 @@ import '@mdui/icons/update--outlined.js';
 
 // PWA
 import { initPWA } from "./pwa/pwa";
-import { LogHelper } from "./utils/LogHelper";
 import { getUpdate } from "./utils/updater";
+
+import { LogHelper } from "./utils/LogHelper";
+
+// driver.js
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 
 // 页面内容
 const dropZone: HTMLBodyElement = document.querySelector('#drop')!;
@@ -145,6 +150,77 @@ window.addEventListener("load", () => {
     }
     // APP_VERSION：全局环境变量
     versionElement.innerHTML = `版本：${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})`;
+
+    const driverObj = driver({
+        allowClose: false,
+        showProgress: true,
+        steps: [
+            {
+                element: '#drop',
+                popover: {
+                    title: '欢迎使用 Hash Checker',
+                    description: '现在，让我们一起学习一下 Hash Checker 的使用方法'
+                }
+            },
+            {
+                element: '#openFile',
+                popover: {
+                    title: '选择文件',
+                    description: '点击这个按钮就可以选择你要生成（校验）Hash 值的文件；或者你也可以拖动文件到本页'
+                }
+            },
+            {
+                element: '#method',
+                popover: {
+                    title: '选择方法',
+                    description: 'Hash Checker 支持多种方法，你可以根据需要进行选择'
+                }
+            },
+            {
+                element: '#mode',
+                popover: {
+                    title: '选择模式',
+                    description: '在这里选择生成还是校验一个文件的 Hash 值'
+                }
+            },
+            {
+                element: '#checkSumInput',
+                popover: {
+                    title: '输入校验值',
+                    description: '如果你要校验一个文件，请在这里粘贴你获取到的校验值（需要选择校验模式）'
+                }
+            },
+            {
+                element: '#checkFile',
+                popover: {
+                    title: '计算文件 Hash 值',
+                    description: '在上述步骤完成后，你只需点击这个按钮就可以计算文件的 Hash 值'
+                }
+            },
+            {
+                element: '#settingsBtn',
+                popover: {
+                    title: '还差一点',
+                    description: '这是打开设置面板的按钮，点击它你可以对 Hash Checker 进行更多设置'
+                }
+            },
+            {
+                element: '#chooseColorBtn',
+                popover: {
+                    title: '最后一步',
+                    description: '点击它就可以对应用主题色进行设置'
+                }
+            },
+            {
+                element: '#drop',
+                popover: {
+                    title: '大功告成',
+                    description: '现在你已经学会 Hash Checker 的使用方法了，立即开始使用吧！'
+                }
+            }
+        ]
+    });
+    driverObj.drive();
 });
 
 window.addEventListener('DOMContentLoaded', () => {
