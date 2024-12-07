@@ -151,7 +151,7 @@ window.addEventListener("load", () => {
     // APP_VERSION：全局环境变量
     versionElement.innerHTML = `版本：${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})`;
 
-    const driverObj = driver({
+    /*const driverObj = driver({
         allowClose: false,
         showProgress: true,
         steps: [
@@ -219,8 +219,9 @@ window.addEventListener("load", () => {
                 }
             }
         ]
-    });
-    driverObj.drive();
+    });*/
+    
+    // driverObj.drive();
 });
 
 window.addEventListener('DOMContentLoaded', () => {
