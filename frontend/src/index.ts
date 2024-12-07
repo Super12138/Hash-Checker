@@ -32,6 +32,7 @@ import 'mdui/components/top-app-bar-title.js';
 import 'mdui/components/top-app-bar.js';
 import 'mdui/mdui.css';
 
+// Icons
 import '@mdui/icons/cleaning-services--outlined.js';
 import '@mdui/icons/color-lens--outlined.js';
 import '@mdui/icons/delete-forever--outlined.js';
@@ -49,8 +50,7 @@ import { getUpdate } from "./utils/updater";
 import { LogHelper } from "./utils/LogHelper";
 
 // driver.js
-import { driver } from "driver.js";
-import "driver.js/dist/driver.css";
+// import "driver.js/dist/driver.css";
 
 // 页面内容
 const dropZone: HTMLBodyElement = document.querySelector('#drop')!;

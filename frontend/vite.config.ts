@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import { defineConfig } from 'vite';
+import { createHtmlPlugin } from 'vite-plugin-html';
 import { VitePWA } from 'vite-plugin-pwa';
 import packageJson from './package.json';
 
@@ -15,7 +16,7 @@ async function getVersionInfo() {
             commitHash: commitHash.trim(),
         };
     } catch (error) {
-        console.error(`Error executing command: ${error}`);
+        console.error(`执行命令时发生错误: ${error}`);
         throw error;
     }
 }
@@ -25,6 +26,9 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
     const { versionCode, commitHash } = await getVersionInfo();
     const baseConfig = {
         plugins: [
+            createHtmlPlugin({
+                minify: true,
+            }),
             VitePWA({
                 strategies: 'injectManifest',
                 srcDir: 'src/pwa',
