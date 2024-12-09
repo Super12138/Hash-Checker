@@ -32,15 +32,15 @@ jobs:
         uses: actions/configure-pages@v5.0.0
 
       - name: Install dependencies
-        run: cd frontend && npm install
+        run: npm install
 
       - name: Build
-        run: cd frontend && npm run build:web
+        run: npm run build:web
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
-          path: frontend/dist
+          path: dist
 
   deploy:
     environment:
