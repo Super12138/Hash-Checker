@@ -38,7 +38,7 @@
       "nsis":{
         "displayLanguageSelector": true,
         "installMode": "both",
-        "sidebarImage": "./installer/nsis/leftimage.bmp"
+        "sidebarImage": "assets/installer/nsis/leftimage.bmp"
       },
       "webviewInstallMode": {
         "silent": true,
