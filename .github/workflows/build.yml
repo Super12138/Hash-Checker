@@ -15,62 +15,61 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build:
-          - name: 'Windows-x64'
-            platform:  'windows/amd64'
-            os: 'windows-latest'
+        platform:
+          - name: Windows-x64
+            platform: windows/amd64
+            os: windows-latest
+          
+          - name: Windows-x32
+            platform: windows/386
+            os: windows-latest
 
-          - name: 'macOS-universal'
-            platform:  'darwin/universal'
-            os: 'macos-latest'
+          - name: Windows-arm64
+            platform: windows/arm64
+            os: windows-latest
 
-          - name: 'macOS-x64'
-            platform:  'darwin/amd64'
-            os: 'macos-latest'
+          - name: macOS-universal
+            platform: darwin/universal
+            os: macos-latest
 
-          - name: 'macOS-arm64'
-            platform:  'darwin/arm64'
-            os: 'macos-latest'
+          - name: macOS-x64
+            platform: darwin/amd64
+            os: macos-latest
 
-    runs-on: ${{ matrix.build.os }}
+          - name: macOS-arm64
+            platform: darwin/arm64
+            os: macos-latest
+
+    runs-on: ${{ matrix.platform.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
 
-      - name: Setup Go environment
-        uses: actions/setup-go@v5.1.0
-        with: 
-          check-latest: true
-          go-version-file: 'go.mod'
-
       - name: Setup Node
         uses: actions/setup-node@v4.1.0
         with:
           node-version: 20
 
-      - name: Install wails
-        run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
-
-      - name: Build app (Windows)
-        if: runner.os == 'Windows'
-        run: wails build -nsis
-      
-      - name: Build app (macOS)
-        if: runner.os == 'macOS'
-        run: wails build
-
-      - name: Pack DMG (macOS)
-        if: runner.os == 'macOS'
-        uses: L-Super/create-dmg-actions@v1.0.3
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
         with:
-          dmg_name: 'Hash-Checker-installer'
-          src_dir: ${{ github.workspace }}/build/bin/Hash Checker.app
-      
+          # 这些目标仅在 macOS 上使用，因此将其放在 `if` 语句中，以稍微加快 Windows 和 Linux 的构建速度
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app
+        uses: tauri-apps/tauri-action@v0.5.16
+
       - name: Upload artifact
         if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
         uses: actions/upload-artifact@v4.4.3
         with:
-          name: ${{ matrix.build.name }}
-          path: build/bin
+          name: ${{ matrix.platform.name }}
+          path: |
+            src-tauri/target/**/release/bundle/**/*
+            src-tauri/target/**/release/Hash Checker.exe
+            src-tauri/target/**/release/Hash Checker
