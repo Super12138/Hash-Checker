@@ -18,25 +18,30 @@ jobs:
         include:
           # Windows x64
           - platform: windows-latest
+            name: 'Windows x64'
             args: ''
 
           # Windows arm64
           - platform: windows-latest
+            name: 'Windows arm64'
             args: '--target aarch64-pc-windows-msvc'
 
           # 通用版
           - platform: macos-latest
+            name: 'macOS Universal'
             args: '--target universal-apple-darwin'
 
           # Apple 芯片版（Arm 架构）
           - platform: macos-latest
+            name: 'macOS arm64'
             args: '--target aarch64-apple-darwin'
 
           # Intel 芯片版
           - platform: macos-latest
+            name: 'macOS x64'
             args: '--target x86_64-apple-darwin'
 
-    runs-on: ${{ matrix.platform.os }}
+    runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -71,7 +76,7 @@ jobs:
         if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
         uses: actions/upload-artifact@v4.4.3
         with:
-          name: ${{ matrix.platform.name }}
+          name: ${{ matrix.name }}
           path: |
             src-tauri/target/**/release/bundle/**/*
             src-tauri/target/**/release/Hash Checker.exe
