@@ -21,10 +21,15 @@ jobs:
             name: 'Windows x64'
             args: ''
 
-          # Windows arm64
+          # Windows x32
           - platform: windows-latest
-            name: 'Windows arm64'
-            args: '--target aarch64-pc-windows-msvc'
+            name: 'Windows x32'
+            args: '--target i686-pc-windows-msvc'
+
+          # Windows arm64
+          # - platform: windows-latest
+            # name: 'Windows arm64'
+            # args: '--target aarch64-pc-windows-msvc'
 
           # 通用版
           - platform: macos-latest
