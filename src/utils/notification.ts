@@ -101,7 +101,6 @@ function sendNotificationBrowser(title: string, content: string) {
 async function sendNotificationDesktop(title: string, content: string) {
     let permissionGranted = await isPermissionGranted();
     if (!permissionGranted) {
-        showPermissionDeniedDialog();
         const permission = await requestPermission();
         permissionGranted = permission === 'granted';
     }
@@ -109,7 +108,7 @@ async function sendNotificationDesktop(title: string, content: string) {
         sendNotification({
             title: title,
             body: content,
-            icon: "./icon-512.png",
+            icon: "./icon-512.png"
         })
     }
 }
