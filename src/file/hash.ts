@@ -8,7 +8,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 import 'mdui/components/linear-progress.js';
 import type { LinearProgress } from 'mdui/components/linear-progress.js';
 import { LogHelper } from "../utils/LogHelper";
-import { sendNotification } from "../utils/notification";
+import { sendAppNotification } from "../utils/notification";
 
 
 const logHelper: LogHelper = LogHelper.getInstance();
@@ -63,7 +63,7 @@ export function calc(mode: string, method: string, file: File, hash?: string) {
 
             outputArea.innerHTML = `计算完成，${method} 值为 <code style="word-break: break-all">${calcHash}</code>`;
             if (systemNotification) {
-                sendNotification(`${method} 计算完成`, `${method} 值为 ${calcHash} ，详情请在应用内查看`);
+                sendAppNotification(`${method} 计算完成`, `${method} 值为 ${calcHash} ，详情请在应用内查看`);
             }
 
             switch (mode) {

@@ -1,7 +1,7 @@
 import { getfileinfo } from "./file/file";
 import { calc } from "./file/hash";
 import { clearStorage, getStorageItem, removeStorageItem, setStorageItem, setUpStorage } from './store/localstorage';
-import { sendNotification } from "./utils/notification";
+import { sendAppNotification } from "./utils/notification";
 import { clearCacheAndReload } from "./utils/service-worker";
 import { string2Boolean } from './utils/text';
 import { getFile, sendFile } from './utils/transfer';
@@ -407,7 +407,7 @@ settingsCancelBtn.addEventListener('click', () => {
 sysNotification.addEventListener('change', () => {
     if (!settingsDialog.open) return;
     if (sysNotification.checked) {
-        sendNotification("测试通知", "这是一个测试通知");
+        sendAppNotification("测试通知", "这是一个测试通知");
         sendTestNotification.style.display = "block";
     }
     else {
@@ -416,7 +416,7 @@ sysNotification.addEventListener('change', () => {
 });
 
 sendTestNotification.addEventListener('click', () => {
-    sendNotification("测试通知", "这是一个测试通知");
+    sendAppNotification("测试通知", "这是一个测试通知");
 });
 
 deleteCache.addEventListener('click', () => {
