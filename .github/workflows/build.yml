@@ -15,30 +15,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - name: Windows-x64
-            platform: windows/amd64
-            os: windows-latest
-          
-          - name: Windows-x32
-            platform: windows/386
-            os: windows-latest
+        include:
+          # Windows x64
+          - platform: windows-latest
+            args: ''
 
-          - name: Windows-arm64
-            platform: windows/arm64
-            os: windows-latest
+          # Windows arm64
+          - platform: windows-latest
+            args: '--target aarch64-pc-windows-msvc'
 
-          - name: macOS-universal
-            platform: darwin/universal
-            os: macos-latest
+          # 通用版
+          - platform: macos-latest
+            args: '--target universal-apple-darwin'
 
-          - name: macOS-x64
-            platform: darwin/amd64
-            os: macos-latest
+          # Apple 芯片版（Arm 架构）
+          - platform: macos-latest
+            args: '--target aarch64-apple-darwin'
 
-          - name: macOS-arm64
-            platform: darwin/arm64
-            os: macos-latest
+          # Intel 芯片版
+          - platform: macos-latest
+            args: '--target x86_64-apple-darwin'
 
     runs-on: ${{ matrix.platform.os }}
     steps:
@@ -55,14 +51,21 @@ jobs:
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          # 这些目标仅在 macOS 上使用，因此将其放在 `if` 语句中，以稍微加快 Windows 和 Linux 的构建速度
+          # 这个 target 仅在 macOS 上使用，因此将其放在 `if` 语句中，以稍微加快 Windows 和 Linux 的构建速度
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2.7.5
+        with:
+          workspaces: ./src-tauri -> target
 
       - name: Install dependencies
         run: npm install
 
       - name: Build app
         uses: tauri-apps/tauri-action@v0.5.16
+        with:
+          args: ${{ matrix.args }}
 
       - name: Upload artifact
         if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
