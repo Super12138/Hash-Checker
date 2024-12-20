@@ -36,9 +36,9 @@
                 <p class="align-center">或者拖拽文件到本页</p>
 
                 <p>
-                    文件：<code id="fileName" style="margin-right: 5px;">未选择文件</code>
-                    大小：<code id="fileSize" style="margin-right: 5px;">未选择文件</code>
-                    上次修改时间：<code id="fileDate" style="margin-right: 5px;">未选择文件</code>
+                    文件：<code class="mr-5" id="fileName">未选择文件</code>
+                    大小：<code class="mr-5" id="fileSize">未选择文件</code>
+                    上次修改时间：<code class="mr-5" id="fileDate">未选择文件</code>
                 </p>
 
                 <strong class="color-red">所有计算操作均在您的设备上运行，不会收集任何信息，请放心使用！</strong>
@@ -68,11 +68,11 @@
             </div>
             <br>
             <mdui-text-field label="校验值" helper="在此处粘贴您获取到的校验值" id="checkSumInput" disabled clearable></mdui-text-field>
-            <mdui-button full-width id="checkFile" class="fit-top">检查</mdui-button>
-            <mdui-button full-width id="terminateCalc" class="fit-top hidden">终止计算</mdui-button>
+            <mdui-button full-width id="checkFile" class="mt-3p">检查</mdui-button>
+            <mdui-button full-width id="terminateCalc" class="mt-3p hidden">终止计算</mdui-button>
 
             <!--输出-->
-            <div style="margin-bottom: 10%; margin-top: 3%;">
+            <div class="mt-3p" style="margin-bottom: 10%;">
                 <h1 id="outputTitle"></h1>
                 <p id="outputArea"></p>
                 <mdui-linear-progress class="hidden" id="progressBar" value="0" max="100"></mdui-linear-progress>
@@ -146,7 +146,7 @@
     <mdui-dialog headline="选择颜色" description="选择一个颜色作为应用主题色" id="colors">
         <input type="color" id="dynamicColor">
         <br>
-        <mdui-button id="resetColorBtn" variant="filled" full-width class="fit-top">重置到默认颜色</mdui-button>
+        <mdui-button class="mt-3p" id="resetColorBtn" variant="filled" full-width>重置到默认颜色</mdui-button>
 
         <mdui-button slot="action" id="colorCancelBtn" variant="text">取消</mdui-button>
         <mdui-button slot="action" id="setColorBtn" variant="tonal">确定</mdui-button>

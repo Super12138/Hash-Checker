@@ -7,7 +7,7 @@ export function compareHash(userHash: string, genHash: string): HTMLSpanElement 
     differences.forEach((part: Change) => {
         const span: HTMLSpanElement = document.createElement('span');
         if (part.added) {
-            span.classList.add('color-red')
+            span.classList.add('color-red');
         }
         if (part.removed) {
             span.style.textDecoration = 'line-through';
@@ -18,6 +18,15 @@ export function compareHash(userHash: string, genHash: string): HTMLSpanElement 
     return virtualDOM;
 }
 
+/**
+ * 将一个文本（比如文本类型的`true`）转换成布尔值
+ * 
+ * * 文本类型的 `true` 或 `false` 会转换成布尔值
+ * * 若为普通文本，默认返回 `false`
+ * 
+ * @param {string} str 要转换成布尔值的文本
+ * @returns 转换好的布尔值
+ */
 export function string2Boolean(str: string | null): boolean {
     if (str === null) {
         return false;
@@ -31,4 +40,22 @@ export function string2Boolean(str: string | null): boolean {
                 return false;
         }
     }
+}
+
+/**
+ * 格式化文件大小
+ * 
+ * @param size 文件大小（字节）
+ * @returns 格式化后的文件大小字符串（最大支持TB），如 `1 GB`
+ */
+export function formatFileSize(size: number): string {
+    const units: string[] = ["Bytes", "KB", "MB", "GB", "TB"];
+    const kb: number = 1024;
+    let counter: number = 0;
+    let calcSize: number = size / 1
+    while (calcSize >= kb) {
+        counter++;
+        calcSize = calcSize / kb;
+    }
+    return `${calcSize.toFixed(2)} ${units[counter]}`;
 }

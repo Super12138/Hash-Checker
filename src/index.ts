@@ -1,9 +1,8 @@
-import { getfileinfo } from "./file/file";
 import { calc } from "./file/hash";
 import { clearStorage, getStorageItem, removeStorageItem, setStorageItem, setUpStorage } from './store/localstorage';
 import { sendAppNotification } from "./utils/notification";
 import { clearCacheAndReload } from "./utils/service-worker";
-import { string2Boolean } from './utils/text';
+import { formatFileSize, string2Boolean } from './utils/text';
 import { getFile, sendFile } from './utils/transfer';
 
 // mdui
@@ -48,6 +47,7 @@ import { initPWA } from "./pwa/pwa";
 import { getUpdate } from "./utils/updater";
 
 import { LogHelper } from "./utils/LogHelper";
+import { formatDate } from "./utils/date";
 
 // driver.js
 // import "driver.js/dist/driver.css";
@@ -56,6 +56,9 @@ import { LogHelper } from "./utils/LogHelper";
 const dropZone: HTMLBodyElement = document.querySelector('#drop')!;
 const dragTip: HTMLHeadingElement = document.querySelector('#dragTip')!;
 const openFileBtn: Button = document.querySelector("#openFile")!;
+const fileName: HTMLElement = document.querySelector('#fileName')!;
+const fileSize: HTMLElement = document.querySelector('#fileSize')!;
+const fileDate: HTMLElement = document.querySelector('#fileDate')!;
 const fileInput: HTMLInputElement = document.querySelector('#fileInput')!;
 const methodSelect: Select = document.querySelector('#method')!;
 const modeSelect: Select = document.querySelector('#mode')!;
@@ -88,20 +91,6 @@ const dynamicColor: HTMLInputElement = document.querySelector('#dynamicColor')!;
 
 const logHelper: LogHelper = LogHelper.getInstance();
 
-// 拖拽文件
-dropZone.addEventListener('dragover', (e: DragEvent) => {
-    e.preventDefault();
-    dragTip.style.display = "block";
-});
-
-dropZone.addEventListener('drop', (e: DragEvent) => {
-    e.preventDefault();
-    dragTip.style.display = "none";
-    let file: File = e.dataTransfer!.files[0];
-    getfileinfo(file);
-    sendFile(file);
-});
-
 // 初始化
 window.addEventListener("load", () => {
     if (VARIANT !== "desktop") initPWA();
@@ -111,7 +100,7 @@ window.addEventListener("load", () => {
     const systemNotification: boolean = string2Boolean(getStorageItem("systemNotification", false));
     const lengthSuggestValue: boolean = string2Boolean(getStorageItem("lengthSuggest", true));
     const autoUpdate: boolean = string2Boolean(getStorageItem("autoUpdate", true));
-    logHelper.log(`firstUse: ${isFirstUse}, cacheSize: ${cacheSizeValue}, notification: ${systemNotification}, suggest: ${lengthSuggest}`);
+    logHelper.log(`firstUse: ${isFirstUse}, cacheSize: ${cacheSizeValue}, notification: ${systemNotification}, suggest: ${lengthSuggestValue}`);
 
     if (isFirstUse) {
         setUpStorage();
@@ -220,7 +209,7 @@ window.addEventListener("load", () => {
             }
         ]
     });*/
-    
+
     // driverObj.drive();
 });
 
@@ -235,6 +224,23 @@ window.addEventListener('DOMContentLoaded', () => {
     getUpdate();
 });
 
+// 拖拽文件
+dropZone.addEventListener('dragover', (e: DragEvent) => {
+    e.preventDefault();
+    dragTip.style.display = "block";
+});
+
+dropZone.addEventListener('drop', (e: DragEvent) => {
+    e.preventDefault();
+    dragTip.style.display = "none";
+    const file: File = e.dataTransfer!.files[0];
+    fileName.innerHTML = file.name;
+    fileSize.innerHTML = formatFileSize(file.size);
+    fileDate.innerHTML = formatDate(file.lastModified);
+    logHelper.log(file);
+    sendFile(file);
+});
+
 // 选择文件
 openFileBtn.addEventListener('click', () => {
     fileInput.click();
@@ -244,7 +250,10 @@ openFileBtn.addEventListener('click', () => {
 fileInput.addEventListener('change', () => {
     if (fileInput.files && fileInput.files.length > 0) {
         const file: File = fileInput.files[0];
-        getfileinfo(file);
+        fileName.innerHTML = file.name;
+        fileSize.innerHTML = formatFileSize(file.size);
+        fileDate.innerHTML = formatDate(file.lastModified);
+        logHelper.log(file);
         sendFile(file);
     }
 });
