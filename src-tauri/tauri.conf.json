@@ -6,7 +6,7 @@
   "identifier": "cn.super12138.hash",
   "build": {
     "beforeDevCommand": "npm run dev",
-    "devUrl": "http://localhost:1420",
+    "devUrl": "http://localhost:5173",
     "beforeBuildCommand": "npm run build:desktop",
     "frontendDist": "../dist"
   },
@@ -24,6 +24,9 @@
     }
   },
   "bundle": {
+    "category": "Utility",
+    "shortDescription": "生成和校验哈希值",
+    "longDescription": "一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器",
     "active": true,
     "targets": "all",
     "icon": [
@@ -36,9 +39,14 @@
     "windows": {
       "allowDowngrades": true,
       "nsis":{
+        "languages": [
+          "SimpChinese",
+          "English"
+        ],
         "displayLanguageSelector": true,
         "installMode": "both",
-        "sidebarImage": "assets/installer/nsis/leftimage.bmp"
+        "sidebarImage": "assets/installer/nsis/leftimage.bmp",
+        "installerIcon": "src-tauri/assets/icons/icon.ico"
       },
       "webviewInstallMode": {
         "silent": true,
