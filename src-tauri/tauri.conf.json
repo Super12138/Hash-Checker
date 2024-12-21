@@ -46,7 +46,7 @@
         "displayLanguageSelector": true,
         "installMode": "both",
         "sidebarImage": "assets/installer/nsis/leftimage.bmp",
-        "installerIcon": "src-tauri/assets/icons/icon.ico"
+        "installerIcon": "assets/icons/icon.ico"
       },
       "webviewInstallMode": {
         "silent": true,
