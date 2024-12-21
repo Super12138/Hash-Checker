@@ -26,14 +26,14 @@ export function formatDate(date: number): string {
 /**
  * 格式化时间
  * @param seconds 传入的时间（单位：秒）
- * @returns 格式化的时间字符串；输出：`ss秒`，mm分钟`，`hh 小时 mm 分钟 ss 秒`
+ * @returns 格式化的时间字符串，`ss秒`，mm分钟`，`hh小时mm分钟`
  */
 export function formatTime(seconds: number): string {
     if (seconds < 60) {
-        return `${Math.round(seconds)} 秒`;
+        return `${Math.round(seconds)}秒`;
     } else if (seconds < 3600) {
-        return `${Math.round(seconds / 60)} 分钟`;
+        return `${Math.round(seconds / 60)}分钟`;
     } else {
-        return `${Math.round(seconds / 3600)} 小时 ${Math.round((seconds % 3600) / 60)} 分钟 ${Math.round(seconds % 60)} 秒`;
+        return `${Math.round(seconds / 3600)}小时${Math.round((seconds % 3600) / 60)}分钟`;
     }
 }

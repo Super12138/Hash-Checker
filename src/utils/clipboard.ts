@@ -6,7 +6,7 @@ export async function writeClipboard(text: string) {
         await navigator.clipboard.writeText(text);
         snackbar({
             message: "成功写入剪贴板"
-        });
+        })
     } catch (e) {
         dialog({
             headline: '错误',

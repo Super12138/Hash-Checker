@@ -74,23 +74,3 @@ function registerPeriodicSync(period: number, swUrl: string, r: ServiceWorkerReg
             await r.update()
     }, period);
 }
-
-/**
- * 清除缓存并重新加载页面
- */
-export function clearCacheAndReload() {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then((registrations) => {
-            for (let registration of registrations) {
-                registration.unregister();
-            }
-        });
-    }
-    if ('caches' in window) {
-        caches.keys().then((names) => {
-            for (let name of names)
-                caches.delete(name);
-        });
-    }
-    window.location.reload();
-}
