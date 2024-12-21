@@ -1,13 +1,11 @@
 import { calc } from "./file/hash";
 import { clearStorage, getStorageItem, removeStorageItem, setStorageItem, setUpStorage } from './store/localstorage';
 import { sendAppNotification } from "./utils/notification";
-import { clearCacheAndReload } from "./utils/service-worker";
-import { formatFileSize, string2Boolean } from './utils/text';
+import { formatFileSize, isBlankOrEmpty, string2Boolean } from './utils/text';
 import { getFile, sendFile } from './utils/transfer';
 
 // mdui
 import { dialog } from 'mdui/functions/dialog.js';
-import { removeColorScheme } from 'mdui/functions/removeColorScheme.js';
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 
 import type { ButtonIcon } from 'mdui/components/button-icon.js';
@@ -43,11 +41,12 @@ import '@mdui/icons/tips-and-updates--outlined.js';
 import '@mdui/icons/update--outlined.js';
 
 // PWA
-import { initPWA } from "./pwa/pwa";
+import { clearCacheAndReload, initPWA } from "./pwa/pwa";
 import { getUpdate } from "./utils/updater";
 
 import { LogHelper } from "./utils/LogHelper";
 import { formatDate } from "./utils/date";
+import { removeColorScheme } from "mdui";
 
 // driver.js
 // import "driver.js/dist/driver.css";
@@ -83,7 +82,7 @@ const aboutCloseBtn: Button = document.querySelector('#aboutCloseBtn')!;
 const versionElement: HTMLParagraphElement = document.querySelector('#version')!;
 // 动态配色
 const colorDialog: Dialog = document.querySelector('#colors')!;
-const chooseColorBtn: ButtonIcon = document.querySelector('#chooseColorBtn')!;
+const chooseColorBtn: ListItem = document.querySelector('#chooseColor')!;
 const colorCancelBtn: Button = document.querySelector('#colorCancelBtn')!;
 const setColorBtn: Button = document.querySelector('#setColorBtn')!;
 const resetColorBtn: Button = document.querySelector('#resetColorBtn')!;
@@ -100,13 +99,13 @@ window.addEventListener("load", () => {
     const systemNotification: boolean = string2Boolean(getStorageItem("systemNotification", false));
     const lengthSuggestValue: boolean = string2Boolean(getStorageItem("lengthSuggest", true));
     const autoUpdate: boolean = string2Boolean(getStorageItem("autoUpdate", true));
-    logHelper.log(`firstUse: ${isFirstUse}, cacheSize: ${cacheSizeValue}, notification: ${systemNotification}, suggest: ${lengthSuggestValue}`);
+    logHelper.log({ isFirstUse, cacheSizeValue, systemNotification, lengthSuggestValue });
 
     if (isFirstUse) {
         setUpStorage();
     }
 
-    if (cacheSizeValue === '') {
+    if (isBlankOrEmpty(cacheSizeValue)) {
         setStorageItem("cacheSize", 2048);
     }
 
@@ -122,7 +121,7 @@ window.addEventListener("load", () => {
 
     // 仅桌面端显示开关
     if (VARIANT === "desktop") {
-        logHelper.log(`autoUpdate: ${autoUpdate}`);
+        logHelper.log({ autoUpdate });
         const autoUpdateItem: ListItem = document.createElement('mdui-list-item');
         autoUpdateItem.headline = "自动更新";
         autoUpdateItem.description = "应用启动时将自动检查更新";
@@ -287,7 +286,7 @@ checkFileBtn.addEventListener('click', () => {
         });
         return;
     }
-    if (mode == "nullSelect" || mode == "") {
+    if (mode == "nullSelect" || isBlankOrEmpty(mode.toString())) {
         dialog({
             headline: '错误',
             description: '请选择模式',
@@ -299,7 +298,7 @@ checkFileBtn.addEventListener('click', () => {
         });
         return;
     }
-    if (method == "nullSelect" || method == "") {
+    if (method == "nullSelect" || isBlankOrEmpty(method.toString())) {
         dialog({
             headline: '错误',
             description: '请选择方法',
@@ -332,7 +331,7 @@ checkFileBtn.addEventListener('click', () => {
                 });
                 return;
             }
-            logHelper.log(mode.toString() + method.toString() + file + checkSum);
+            logHelper.log({ mode, method, file, checkSum });
             calc(mode.toString(), method.toString(), file, checkSum);
             break;
     }
@@ -348,7 +347,6 @@ settingsSaveBtn.addEventListener('click', () => {
     const autoUpdateSwitch: Switch | null = document.querySelector('#autoUpdateSwitch');
     const autoUpdate = autoUpdateSwitch?.checked;
     if (cacheSizeValue == "0") {
-        settingsDialog.open = false;
         dialog({
             headline: '错误',
             description: '分片单次缓存大小不能为“0”，请重新输入',
@@ -356,7 +354,7 @@ settingsSaveBtn.addEventListener('click', () => {
                 {
                     text: '确定',
                     onClick: () => {
-                        settingsDialog.open = true;
+                        true;
                     }
                 }
             ]
@@ -364,8 +362,7 @@ settingsSaveBtn.addEventListener('click', () => {
         return
     }
 
-    if (cacheSizeValue == "") {
-        settingsDialog.open = false;
+    if (isBlankOrEmpty(cacheSizeValue.toString())) {
         dialog({
             headline: '错误',
             description: '分片单次缓存大小不能为空，请重新输入',
@@ -373,7 +370,7 @@ settingsSaveBtn.addEventListener('click', () => {
                 {
                     text: '确定',
                     onClick: () => {
-                        settingsDialog.open = true;
+                        true;
                     }
                 }
             ]
@@ -382,7 +379,6 @@ settingsSaveBtn.addEventListener('click', () => {
     }
 
     if (cacheSizeValue.length > 10) {
-        settingsDialog.open = false;
         dialog({
             headline: '错误',
             description: '分片单次缓存大小不能超过5位，请重新输入',
@@ -390,7 +386,7 @@ settingsSaveBtn.addEventListener('click', () => {
                 {
                     text: '确定',
                     onClick: () => {
-                        settingsDialog.open = true;
+                        true;
                     }
                 }
             ]
@@ -429,7 +425,6 @@ sendTestNotification.addEventListener('click', () => {
 });
 
 deleteCache.addEventListener('click', () => {
-    settingsDialog.open = false;
     dialog({
         headline: '你真的要清除缓存吗',
         description: '这不会删除任何您的个人设置',
@@ -437,7 +432,7 @@ deleteCache.addEventListener('click', () => {
             {
                 text: '取消',
                 onClick: () => {
-                    settingsDialog.open = true;
+                    true;
                 }
             },
             {
@@ -462,7 +457,6 @@ deleteCache.addEventListener('click', () => {
 });
 
 deleteAllData.addEventListener('click', () => {
-    settingsDialog.open = false;
     dialog({
         headline: '是否清除全部应用数据',
         description: '这将清除应用缓存和您所有的个人设置',
@@ -470,7 +464,7 @@ deleteAllData.addEventListener('click', () => {
             {
                 text: '取消',
                 onClick: () => {
-                    settingsDialog.open = true;
+                    true;
                 }
             },
             {
@@ -498,13 +492,11 @@ deleteAllData.addEventListener('click', () => {
 
 // “关于” 对话框
 aboutBtn.addEventListener('click', () => {
-    settingsDialog.open = false;
     aboutDialog.open = true;
 });
 
 // 关闭对话框
 aboutCloseBtn.addEventListener('click', () => {
-    settingsDialog.open = true;
     aboutDialog.open = false;
 });
 
