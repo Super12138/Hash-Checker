@@ -1,14 +1,15 @@
 import { getStorageItem } from "../store/localstorage";
 import { writeClipboard } from '../utils/clipboard';
 import { formatTime } from '../utils/date';
+import { LogHelper } from "../utils/LogHelper";
+import { sendAppNotification } from "../utils/notification";
 import { compareHash, string2Boolean } from '../utils/text';
+
+import 'mdui/components/linear-progress.js';
 
 import type { Button } from 'mdui/components/button.js';
 import type { Checkbox } from 'mdui/components/checkbox.js';
-import 'mdui/components/linear-progress.js';
 import type { LinearProgress } from 'mdui/components/linear-progress.js';
-import { LogHelper } from "../utils/LogHelper";
-import { sendAppNotification } from "../utils/notification";
 
 
 const logHelper: LogHelper = LogHelper.getInstance();

@@ -1,11 +1,12 @@
 import { GitHubApiReleaseResponse } from "../interfaces";
+import { getStorageItem } from "../store/localstorage";
 import { LogHelper } from "./LogHelper";
+import { string2Boolean } from "./text";
 
 import { open } from "@tauri-apps/plugin-shell";
 import { marked } from "marked";
+import { snackbar } from "mdui";
 import { dialog } from 'mdui/functions/dialog.js';
-import { getStorageItem } from "../store/localstorage";
-import { string2Boolean } from "./text";
 
 const logHelper: LogHelper = LogHelper.getInstance();
 const UPDATE_URL = "https://api.github.com/repos/Super12138/Hash-Checker/releases/latest";
@@ -46,6 +47,9 @@ export function getUpdate() {
                 });
             })
             .catch((error: any) => {
+                snackbar({
+                    message: `检查更新时出现错误：${error}`
+                });
                 logHelper.error(error);
             });
     }

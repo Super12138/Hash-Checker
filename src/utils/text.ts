@@ -59,3 +59,13 @@ export function formatFileSize(size: number): string {
     }
     return `${calcSize.toFixed(2)} ${units[counter]}`;
 }
+
+/**
+ * 判断一个字符串是否为空或者只包含空白字符
+ * 
+ * @param str 要判断的字符串
+ * @returns 是否为空或者只包含空白字符
+ */
+export function isEmptyOrBlank(str: string): boolean {
+    return str === null || str.trim() === '';
+}

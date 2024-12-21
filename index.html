@@ -16,11 +16,6 @@
         <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".container">
             <mdui-top-app-bar-title>Hash Checker</mdui-top-app-bar-title>
             <div style="flex-grow: 1"></div>
-            <mdui-tooltip content="选择主题色">
-                <mdui-button-icon id="chooseColorBtn">
-                    <mdui-icon-color-lens--outlined></mdui-icon-color-lens--outlined>
-                </mdui-button-icon>
-            </mdui-tooltip>
             <mdui-tooltip content="设置">
                 <mdui-button-icon id="settingsBtn">
                     <mdui-icon-settings--outlined></mdui-icon-settings--outlined>
@@ -44,7 +39,9 @@
                 <strong class="color-red">所有计算操作均在您的设备上运行，不会收集任何信息，请放心使用！</strong>
                 <br>
                 <br>
-                <p class="mdui-valign"><mdui-checkbox id="isClipboard"></mdui-checkbox>计算完成后将校验值写入剪贴板（仅在<strong>生成</strong>模式下生效）</p>
+                <p class="mdui-valign">
+                    <mdui-checkbox id="isClipboard"></mdui-checkbox>计算完成后将校验值写入剪贴板（仅在<strong>生成</strong>模式下生效）
+                </p>
             </div>
 
             <br>
@@ -97,6 +94,9 @@
             </mdui-list-item>
             <mdui-button id="sendTestNotification" class="hidden" variant="tonal"
                 style="margin: 3% 0 3% 0;">点击发送一条测试通知</mdui-button>
+            <mdui-list-item id="chooseColor" headline="主题色" description="为应用配置你心仪的主题色">
+                <mdui-icon-color-lens--outlined slot="icon"></mdui-icon-color-lens--outlined>
+            </mdui-list-item>
             <mdui-divider></mdui-divider>
             <mdui-list-item id="deleteCache" headline="清除缓存">
                 <mdui-icon-cleaning-services--outlined slot="icon"></mdui-icon-cleaning-services--outlined>
