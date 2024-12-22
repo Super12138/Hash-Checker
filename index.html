@@ -67,11 +67,10 @@
             <br>
             <mdui-text-field label="校验值" helper="在此处粘贴您获取到的校验值" id="checkSumInput" disabled clearable></mdui-text-field>
             <mdui-button full-width id="checkFile" class="mt-3p">检查</mdui-button>
-            <mdui-button full-width id="terminateCalc" class="mt-3p hidden">终止计算</mdui-button>
         </mdui-layout-main>
     </mdui-layout>
 
-    <mdui-navigation-drawer modal close-on-esc close-on-overlay-click contained id="outputDrawer">
+    <mdui-navigation-drawer close-on-esc close-on-overlay-click id="outputDrawer">
         <mdui-linear-progress class="hidden" id="progressBar" value="0" max="100"></mdui-linear-progress>
         <div class="output-title">
             <span>文件列表</span>
@@ -79,7 +78,6 @@
                 <mdui-icon-close--outlined></mdui-icon-close--outlined>
             </mdui-button-icon>
         </div>
-        <p id="outputArea"></p>
         <mdui-list id="outputList"></mdui-list>
     </mdui-navigation-drawer>
 
