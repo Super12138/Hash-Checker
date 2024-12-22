@@ -1,10 +1,6 @@
-import type { Dialog } from 'mdui/components/dialog.js';
-
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/plugin-notification';
 import { dialog } from 'mdui/functions/dialog.js';
 import { LogHelper } from './LogHelper';
-
-const settingsDialog: Dialog = document.querySelector('#settings')!;
 
 const logHelper: LogHelper = LogHelper.getInstance();
 
@@ -41,11 +37,11 @@ function sendNotificationPWA(title: string, content: string) {
         icon: "./icon-512.png",
         lang: "zh-Hans-CN"
     }
-    navigator.serviceWorker.ready.then((registration) => {
+    navigator.serviceWorker.ready.then((registration: ServiceWorkerRegistration) => {
         if (Notification.permission === 'granted') {
             registration.showNotification(title, options);
         } else if (Notification.permission !== 'denied') {
-            Notification.requestPermission().then((permission) => {
+            Notification.requestPermission().then((permission: NotificationPermission) => {
                 if (permission === 'granted') {
                     registration.showNotification(title, {
                         body: content,
@@ -81,7 +77,7 @@ function sendNotificationBrowser(title: string, content: string) {
             notification.close();
         });
     } else if (Notification.permission !== 'denied') {
-        Notification.requestPermission().then((permission) => {
+        Notification.requestPermission().then((permission: NotificationPermission) => {
             if (permission === 'granted') {
                 sendNotificationBrowser(title, content);
             } else {
@@ -118,7 +114,6 @@ async function sendNotificationDesktop(title: string, content: string) {
  */
 function showPermissionDeniedDialog() {
     logHelper.log("没有获取到通知权限");
-    settingsDialog.open = false;
     dialog({
         headline: '错误',
         description: '请先授予通知权限',
@@ -126,7 +121,7 @@ function showPermissionDeniedDialog() {
             {
                 text: '确定',
                 onClick: () => {
-                    settingsDialog.open = true;
+                    return true;
                 }
             }
         ]
