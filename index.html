@@ -14,13 +14,14 @@
 <body id="drop">
     <mdui-layout>
         <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".container">
+            <mdui-button-icon id="openOutput">
+                <mdui-icon-menu--outlined></mdui-icon-menu--outlined>
+            </mdui-button-icon>
             <mdui-top-app-bar-title>Hash Checker</mdui-top-app-bar-title>
             <div style="flex-grow: 1"></div>
-            <mdui-tooltip content="设置">
-                <mdui-button-icon id="settingsBtn">
-                    <mdui-icon-settings--outlined></mdui-icon-settings--outlined>
-                </mdui-button-icon>
-            </mdui-tooltip>
+            <mdui-button-icon id="settingsBtn">
+                <mdui-icon-settings--outlined></mdui-icon-settings--outlined>
+            </mdui-button-icon>
         </mdui-top-app-bar>
 
         <mdui-layout-main class="container">
@@ -67,15 +68,20 @@
             <mdui-text-field label="校验值" helper="在此处粘贴您获取到的校验值" id="checkSumInput" disabled clearable></mdui-text-field>
             <mdui-button full-width id="checkFile" class="mt-3p">检查</mdui-button>
             <mdui-button full-width id="terminateCalc" class="mt-3p hidden">终止计算</mdui-button>
-
-            <!--输出-->
-            <div class="mt-3p" style="margin-bottom: 10%;">
-                <h1 id="outputTitle"></h1>
-                <p id="outputArea"></p>
-                <mdui-linear-progress class="hidden" id="progressBar" value="0" max="100"></mdui-linear-progress>
-            </div>
         </mdui-layout-main>
     </mdui-layout>
+
+    <mdui-navigation-drawer modal close-on-esc close-on-overlay-click contained id="outputDrawer">
+        <mdui-linear-progress class="hidden" id="progressBar" value="0" max="100"></mdui-linear-progress>
+        <div class="output-title">
+            <span>文件列表</span>
+            <mdui-button-icon id="closeOutput">
+                <mdui-icon-close--outlined></mdui-icon-close--outlined>
+            </mdui-button-icon>
+        </div>
+        <p id="outputArea"></p>
+        <mdui-list id="outputList"></mdui-list>
+    </mdui-navigation-drawer>
 
     <mdui-dialog headline="设置" description="你可以在此个性化设置这个应用" id="settings">
         <mdui-list>

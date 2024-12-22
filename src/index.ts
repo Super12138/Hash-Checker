@@ -1,8 +1,6 @@
-import { calc } from "./file/hash";
 import { clearStorage, getStorageItem, removeStorageItem, setStorageItem, setUpStorage } from './store/localstorage';
 import { sendAppNotification } from "./utils/notification";
 import { formatFileSize, isBlankOrEmpty, string2Boolean } from './utils/text';
-import { getFile, sendFile } from './utils/transfer';
 
 // mdui
 import { dialog } from 'mdui/functions/dialog.js';
@@ -12,6 +10,8 @@ import type { ButtonIcon } from 'mdui/components/button-icon.js';
 import type { Button } from 'mdui/components/button.js';
 import type { Dialog } from 'mdui/components/dialog.js';
 import type { ListItem } from 'mdui/components/list-item.js';
+import type { List } from 'mdui/components/list.js';
+import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 import type { Select } from 'mdui/components/select.js';
 import type { Switch } from 'mdui/components/switch.js';
 import type { TextField } from 'mdui/components/text-field.js';
@@ -22,18 +22,20 @@ import 'mdui/components/layout-item.js';
 import 'mdui/components/layout-main.js';
 import 'mdui/components/layout.js';
 import 'mdui/components/menu-item.js';
+import 'mdui/components/navigation-drawer.js';
 import 'mdui/components/select.js';
 import 'mdui/components/switch.js';
-import 'mdui/components/tooltip.js';
 import 'mdui/components/top-app-bar-title.js';
 import 'mdui/components/top-app-bar.js';
 import 'mdui/mdui.css';
 
 // Icons
 import '@mdui/icons/cleaning-services--outlined.js';
+import '@mdui/icons/close--outlined.js';
 import '@mdui/icons/color-lens--outlined.js';
 import '@mdui/icons/delete-forever--outlined.js';
 import '@mdui/icons/info--outlined.js';
+import '@mdui/icons/menu--outlined.js';
 import '@mdui/icons/notifications-active--outlined.js';
 import '@mdui/icons/settings--outlined.js';
 import '@mdui/icons/storage--outlined.js';
@@ -44,14 +46,17 @@ import '@mdui/icons/update--outlined.js';
 import { clearCacheAndReload, initPWA } from "./pwa/pwa";
 import { getUpdate } from "./utils/updater";
 
+import { removeColorScheme } from "mdui";
+import { FileItem, FileStatus } from "./file/FileItem";
 import { LogHelper } from "./utils/LogHelper";
 import { formatDate } from "./utils/date";
-import { removeColorScheme } from "mdui";
 
 // driver.js
 // import "driver.js/dist/driver.css";
 
 // 页面内容
+const openOutput: ButtonIcon = document.querySelector('#openOutput')!;
+const closeOutput: ButtonIcon = document.querySelector('#closeOutput')!;
 const dropZone: HTMLBodyElement = document.querySelector('#drop')!;
 const dragTip: HTMLHeadingElement = document.querySelector('#dragTip')!;
 const openFileBtn: Button = document.querySelector("#openFile")!;
@@ -63,6 +68,8 @@ const methodSelect: Select = document.querySelector('#method')!;
 const modeSelect: Select = document.querySelector('#mode')!;
 const checkSumInput: TextField = document.querySelector("#checkSumInput")!;
 const checkFileBtn: Button = document.querySelector('#checkFile')!;
+const outputDrawer: NavigationDrawer = document.querySelector('#outputDrawer')!;
+const outputList: List = document.querySelector('#outputList')!;
 
 // 设置部分
 const settingsDialog: Dialog = document.querySelector('#settings')!;
@@ -89,6 +96,8 @@ const resetColorBtn: Button = document.querySelector('#resetColorBtn')!;
 const dynamicColor: HTMLInputElement = document.querySelector('#dynamicColor')!;
 
 const logHelper: LogHelper = LogHelper.getInstance();
+
+let fileList: FileItem[] = [];
 
 // 初始化
 window.addEventListener("load", () => {
@@ -138,78 +147,6 @@ window.addEventListener("load", () => {
     }
     // APP_VERSION：全局环境变量
     versionElement.innerHTML = `版本：${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})`;
-
-    /*const driverObj = driver({
-        allowClose: false,
-        showProgress: true,
-        steps: [
-            {
-                element: '#drop',
-                popover: {
-                    title: '欢迎使用 Hash Checker',
-                    description: '现在，让我们一起学习一下 Hash Checker 的使用方法'
-                }
-            },
-            {
-                element: '#openFile',
-                popover: {
-                    title: '选择文件',
-                    description: '点击这个按钮就可以选择你要生成（校验）Hash 值的文件；或者你也可以拖动文件到本页'
-                }
-            },
-            {
-                element: '#method',
-                popover: {
-                    title: '选择方法',
-                    description: 'Hash Checker 支持多种方法，你可以根据需要进行选择'
-                }
-            },
-            {
-                element: '#mode',
-                popover: {
-                    title: '选择模式',
-                    description: '在这里选择生成还是校验一个文件的 Hash 值'
-                }
-            },
-            {
-                element: '#checkSumInput',
-                popover: {
-                    title: '输入校验值',
-                    description: '如果你要校验一个文件，请在这里粘贴你获取到的校验值（需要选择校验模式）'
-                }
-            },
-            {
-                element: '#checkFile',
-                popover: {
-                    title: '计算文件 Hash 值',
-                    description: '在上述步骤完成后，你只需点击这个按钮就可以计算文件的 Hash 值'
-                }
-            },
-            {
-                element: '#settingsBtn',
-                popover: {
-                    title: '还差一点',
-                    description: '这是打开设置面板的按钮，点击它你可以对 Hash Checker 进行更多设置'
-                }
-            },
-            {
-                element: '#chooseColorBtn',
-                popover: {
-                    title: '最后一步',
-                    description: '点击它就可以对应用主题色进行设置'
-                }
-            },
-            {
-                element: '#drop',
-                popover: {
-                    title: '大功告成',
-                    description: '现在你已经学会 Hash Checker 的使用方法了，立即开始使用吧！'
-                }
-            }
-        ]
-    });*/
-
-    // driverObj.drive();
 });
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -237,7 +174,15 @@ dropZone.addEventListener('drop', (e: DragEvent) => {
     fileSize.innerHTML = formatFileSize(file.size);
     fileDate.innerHTML = formatDate(file.lastModified);
     logHelper.log(file);
-    sendFile(file);
+    addFile(file);
+});
+
+openOutput.addEventListener('click', () => {
+    outputDrawer.open = !outputDrawer.open; 
+});
+
+closeOutput.addEventListener('click', () => {
+    outputDrawer.open = !outputDrawer.open;
 });
 
 // 选择文件
@@ -253,16 +198,15 @@ fileInput.addEventListener('change', () => {
         fileSize.innerHTML = formatFileSize(file.size);
         fileDate.innerHTML = formatDate(file.lastModified);
         logHelper.log(file);
-        sendFile(file);
+        addFile(file);
     }
 });
 
 // 计算文件 Hash 值
 checkFileBtn.addEventListener('click', () => {
-    const file: File = getFile();
     const method: string | string[] = methodSelect.value;
     const mode: string | string[] = modeSelect.value;
-    if (!file || file.size == 0) {
+    if (fileList.length === 0) {
         dialog({
             headline: '错误',
             description: '请选择文件',
@@ -310,11 +254,12 @@ checkFileBtn.addEventListener('click', () => {
         });
         return;
     }
-
+    
     switch (mode) {
         case "generate":
-            logHelper.log(mode + method + file);
-            calc(mode, method.toString(), file);
+            logHelper.log({ mode, method });
+            fileList[fileList.length - 1].getHash(mode, method.toString());
+            outputDrawer.open = true;
             break;
         case "check":
             const checkSum: string = checkSumInput.value;
@@ -331,8 +276,9 @@ checkFileBtn.addEventListener('click', () => {
                 });
                 return;
             }
-            logHelper.log({ mode, method, file, checkSum });
-            calc(mode.toString(), method.toString(), file, checkSum);
+            logHelper.log({ mode, method, checkSum });
+            fileList[fileList.length - 1].getHash(mode.toString(), method.toString(), checkSum);
+            outputDrawer.open = true;
             break;
     }
 });
@@ -568,3 +514,16 @@ setColorBtn.addEventListener('click', () => {
 dynamicColor.addEventListener('input', () => {
     setColorScheme(dynamicColor.value);
 });
+
+function addFile(file: File){
+    const fileItem = new FileItem(file);
+    // 有重复文件则不添加
+    if (fileList.find(item => item.file.name === file.name)) return;
+    // 如果上一个文件状态为Waiting，就删除上一个，添加新的
+    if (fileList.length > 0 && fileList[fileList.length - 1].status === FileStatus.WAITING) {
+        fileList.pop();
+        outputList.removeChild(outputList.lastChild!);
+    }
+    fileList.push(fileItem);
+    outputList.appendChild(fileItem.html);
+}
