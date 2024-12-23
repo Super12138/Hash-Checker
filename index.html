@@ -28,14 +28,14 @@
             <div>
                 <input class="hidden" id="fileInput" type="file">
                 <h1 class="align-center hidden" id="dragTip">松开鼠标以读取文件</h1>
-                <mdui-button full-width variant="text" id="openFile">点击选择文件</mdui-button>
-                <p class="align-center">或者拖拽文件到本页</p>
-
-                <p>
-                    文件：<code class="mr-5" id="fileName">未选择文件</code>
-                    大小：<code class="mr-5" id="fileSize">未选择文件</code>
-                    上次修改时间：<code class="mr-5" id="fileDate">未选择文件</code>
-                </p>
+                <div class="center-align">
+                    <mdui-card class="file-card" id="fileCard" variant="outlined" clickable>
+                        <mdui-icon-upload-file--outlined class="upload-icon"></mdui-icon-upload-file--outlined>
+                        <p>点击选择文件</p>
+                        <strong>或拖拽文件到本页</strong>
+                        <p id="fileInfo"></p>
+                    </mdui-card>
+                </div>
 
                 <strong class="color-red">所有计算操作均在您的设备上运行，不会收集任何信息，请放心使用！</strong>
                 <br>

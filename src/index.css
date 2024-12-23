@@ -161,6 +161,52 @@ code {
     margin-top: 3%;
 }
 
+.file-card {
+    width: auto;
+    max-width: 400px;
+    height: auto;
+    max-height: 200px;
+    user-select: none;
+    padding: 1rem 2.5rem 1rem 2.5rem;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.file-card p {
+    margin: 0;
+}
+
+.file-card strong {
+    color: rgb(var(--mdui-color-on-surface-variant));
+    line-height: var(--mdui-typescale-label-medium-line-height);
+    font-size: var(--mdui-typescale-label-medium-size);
+    letter-spacing: var(--mdui-typescale-label-medium-tracking);
+    font-weight: var(--mdui-typescale-label-medium-weight);
+}
+
+.center-align {
+    display: flex;
+    justify-content: center;
+}
+
+.upload-icon {
+    font-size: var(--mdui-typescale-headline-large-size);
+    display: block;
+    margin-bottom: 0.8rem;
+}
+
+#fileInfo {
+    color: rgb(var(--mdui-color-on-surface-variant));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
 /* 滚动条 */
 /* body::-webkit-scrollbar {
     width: 6px;

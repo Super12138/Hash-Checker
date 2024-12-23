@@ -8,6 +8,7 @@ import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 
 import type { ButtonIcon } from 'mdui/components/button-icon.js';
 import type { Button } from 'mdui/components/button.js';
+import type { Card } from 'mdui/components/card.js';
 import type { Dialog } from 'mdui/components/dialog.js';
 import type { ListItem } from 'mdui/components/list-item.js';
 import type { List } from 'mdui/components/list.js';
@@ -17,6 +18,7 @@ import type { Switch } from 'mdui/components/switch.js';
 import type { TextField } from 'mdui/components/text-field.js';
 
 import 'mdui/components/button.js';
+import 'mdui/components/card.js';
 import 'mdui/components/checkbox.js';
 import 'mdui/components/layout-item.js';
 import 'mdui/components/layout-main.js';
@@ -41,6 +43,7 @@ import '@mdui/icons/settings--outlined.js';
 import '@mdui/icons/storage--outlined.js';
 import '@mdui/icons/tips-and-updates--outlined.js';
 import '@mdui/icons/update--outlined.js';
+import '@mdui/icons/upload-file--outlined.js';
 
 // PWA
 import { clearCacheAndReload, initPWA } from "./pwa/pwa";
@@ -49,7 +52,6 @@ import { getUpdate } from "./utils/updater";
 import { removeColorScheme } from "mdui";
 import { FileItem, FileStatus } from "./file/FileItem";
 import { LogHelper } from "./utils/LogHelper";
-import { formatDate } from "./utils/date";
 
 // driver.js
 // import "driver.js/dist/driver.css";
@@ -59,10 +61,8 @@ const openOutput: ButtonIcon = document.querySelector('#openOutput')!;
 const closeOutput: ButtonIcon = document.querySelector('#closeOutput')!;
 const dropZone: HTMLBodyElement = document.querySelector('#drop')!;
 const dragTip: HTMLHeadingElement = document.querySelector('#dragTip')!;
-const openFileBtn: Button = document.querySelector("#openFile")!;
-const fileName: HTMLElement = document.querySelector('#fileName')!;
-const fileSize: HTMLElement = document.querySelector('#fileSize')!;
-const fileDate: HTMLElement = document.querySelector('#fileDate')!;
+const fileCard: Card = document.querySelector('#fileCard')!;
+const fileInfo: HTMLElement = document.querySelector('#fileInfo')!;
 const fileInput: HTMLInputElement = document.querySelector('#fileInput')!;
 const methodSelect: Select = document.querySelector('#method')!;
 const modeSelect: Select = document.querySelector('#mode')!;
@@ -160,6 +160,19 @@ window.addEventListener('DOMContentLoaded', () => {
     getUpdate();
 });
 
+openOutput.addEventListener('click', () => {
+    outputDrawer.open = !outputDrawer.open; 
+});
+
+closeOutput.addEventListener('click', () => {
+    outputDrawer.open = !outputDrawer.open;
+});
+
+// 选择文件
+fileCard.addEventListener('click', () => {
+    fileInput.click();
+});
+
 // 拖拽文件
 dropZone.addEventListener('dragover', (e: DragEvent) => {
     e.preventDefault();
@@ -170,33 +183,16 @@ dropZone.addEventListener('drop', (e: DragEvent) => {
     e.preventDefault();
     dragTip.style.display = "none";
     const file: File = e.dataTransfer!.files[0];
-    fileName.innerHTML = file.name;
-    fileSize.innerHTML = formatFileSize(file.size);
-    fileDate.innerHTML = formatDate(file.lastModified);
+    fileInfo.textContent = `${file.name} (${formatFileSize(file.size)})`;
     logHelper.log(file);
     addFile(file);
-});
-
-openOutput.addEventListener('click', () => {
-    outputDrawer.open = !outputDrawer.open; 
-});
-
-closeOutput.addEventListener('click', () => {
-    outputDrawer.open = !outputDrawer.open;
-});
-
-// 选择文件
-openFileBtn.addEventListener('click', () => {
-    fileInput.click();
 });
 
 // 获取文件
 fileInput.addEventListener('change', () => {
     if (fileInput.files && fileInput.files.length > 0) {
         const file: File = fileInput.files[0];
-        fileName.innerHTML = file.name;
-        fileSize.innerHTML = formatFileSize(file.size);
-        fileDate.innerHTML = formatDate(file.lastModified);
+        fileInfo.textContent = `${file.name} (${formatFileSize(file.size)})`;
         logHelper.log(file);
         addFile(file);
     }
