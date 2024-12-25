@@ -22,7 +22,7 @@
             </mdui-button-icon>
             <mdui-top-app-bar-title>Hash Checker</mdui-top-app-bar-title>
             <div style="flex-grow: 1"></div>
-            <mdui-button-icon id="settingsBtn">
+            <mdui-button-icon id="openSettings">
                 <mdui-icon-settings--outlined></mdui-icon-settings--outlined>
             </mdui-button-icon>
         </mdui-top-app-bar>
@@ -72,9 +72,9 @@
         </mdui-layout-main>
     </mdui-layout>
 
-    <mdui-navigation-drawer close-on-esc close-on-overlay-click id="outputDrawer">
+    <mdui-navigation-drawer id="outputDrawer" placement="left" close-on-esc close-on-overlay-click>
         <mdui-linear-progress class="hidden" id="progressBar" value="0" max="100"></mdui-linear-progress>
-        <div class="output-title">
+        <div class="drawer-title">
             <span>文件列表</span>
             <mdui-button-icon id="closeOutput">
                 <mdui-icon-close--outlined></mdui-icon-close--outlined>
@@ -83,7 +83,13 @@
         <mdui-list id="outputList"></mdui-list>
     </mdui-navigation-drawer>
 
-    <mdui-dialog headline="设置" description="你可以在此个性化设置这个应用" id="settings">
+    <mdui-navigation-drawer id="settingsDrawer" placement="right">
+        <div class="drawer-title">
+            <span>设置</span>
+            <mdui-button-icon id="closeSettings">
+                <mdui-icon-close--outlined></mdui-icon-close--outlined>
+            </mdui-button-icon>
+        </div>
         <mdui-list>
             <mdui-list-item headline="单次缓存大小" description="分片缓存文件时单次缓存文件大小">
                 <mdui-icon-storage--outlined slot="icon"></mdui-icon-storage--outlined>
@@ -110,15 +116,14 @@
             <mdui-list-item id="deleteAllData" headline="清除所有数据">
                 <mdui-icon-delete-forever--outlined slot="icon"></mdui-icon-delete-forever--outlined>
             </mdui-list-item>
-            <mdui-list-item id="aboutBtn" headline="关于">
+            <mdui-list-item id="openAbout" headline="关于">
                 <mdui-icon-info--outlined slot="icon"></mdui-icon-info--outlined>
             </mdui-list-item>
         </mdui-list>
-        <mdui-button slot="action" id="settingsCancelBtn" variant="text">取消</mdui-button>
-        <mdui-button slot="action" id="settingsSaveBtn" variant="tonal">保存</mdui-button>
+        <mdui-button id="saveSettings" variant="tonal">保存</mdui-button>
     </mdui-dialog>
 
-    <mdui-dialog headline="关于" id="about" class="align-center">
+    <mdui-dialog headline="关于" id="aboutDialog" class="align-center">
         <img width="120px" src="icon-512.png" />
         <p class="headline-small no-margin" style="margin-top: 10px;">Hash Checker</p>
         <p id="version" class="no-margin" style="margin-top: 5px;"></p>
@@ -146,7 +151,7 @@
         <p>感谢<br>
             <a target="_blank" href="https://icon.kitchen/">IconKitchen</a>
         </p>
-        <mdui-button slot="action" id="aboutCloseBtn" variant="tonal">确定</mdui-button>
+        <mdui-button slot="action" id="closeAbout" variant="tonal">确定</mdui-button>
     </mdui-dialog>
 
     <mdui-dialog headline="选择颜色" description="选择一个颜色作为应用主题色" id="colors">

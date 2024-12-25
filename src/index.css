@@ -105,19 +105,23 @@ code {
     font-family: Consolas, Courier, 'Courier New', monospace;
 }
 
-.output-title {
-    padding: 1.5rem 0.9rem 0rem 0.9rem;
+.drawer-title {
+    padding: 1.5rem 0.9rem 0rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: rgb(var(--mdui-color-on-surface));
 }
 
-.output-title span {
+.drawer-title span {
     font-size: var(--mdui-typescale-title-large-size);
     font-weight: var(--mdui-typescale-title-large-weight);
     letter-spacing: var(--mdui-typescale-title-large-tracking);
     line-height: var(--mdui-typescale-title-large-line-height);
+}
+
+#saveSettings {
+    margin-left: 1rem;
 }
 
 /* 使子元素垂直居中 */

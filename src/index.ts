@@ -53,10 +53,8 @@ import { removeColorScheme } from "mdui";
 import { FileItem, FileStatus } from "./file/FileItem";
 import { LogHelper } from "./utils/LogHelper";
 
-// driver.js
-// import "driver.js/dist/driver.css";
-
 // 页面内容
+const outputDrawer: NavigationDrawer = document.querySelector('#outputDrawer')!;
 const openOutput: ButtonIcon = document.querySelector('#openOutput')!;
 const closeOutput: ButtonIcon = document.querySelector('#closeOutput')!;
 const dropZone: HTMLElement = document.body;
@@ -67,25 +65,26 @@ const methodSelect: Select = document.querySelector('#method')!;
 const modeSelect: Select = document.querySelector('#mode')!;
 const checkSumInput: TextField = document.querySelector("#checkSumInput")!;
 const checkFileBtn: Button = document.querySelector('#checkFile')!;
-const outputDrawer: NavigationDrawer = document.querySelector('#outputDrawer')!;
 const outputList: List = document.querySelector('#outputList')!;
 
 // 设置部分
-const settingsDialog: Dialog = document.querySelector('#settings')!;
-const openSettingsBtn: ButtonIcon = document.querySelector('#settingsBtn')!;
-const settingsSaveBtn: Button = document.querySelector('#settingsSaveBtn')!;
-const settingsCancelBtn: Button = document.querySelector('#settingsCancelBtn')!;
+const settingsDrawer: NavigationDrawer = document.querySelector('#settingsDrawer')!;
+const openSettingsBtn: ButtonIcon = document.querySelector('#openSettings')!;
+const closeSettingsBtn: ButtonIcon = document.querySelector('#closeSettings')!;
+const saveSettings: Button = document.querySelector('#saveSettings')!;
 const cacheSize: Select = document.querySelector('#cacheSize')!;
 const lengthSuggest: Switch = document.querySelector('#lengthSuggest')!;
 const sysNotification: Switch = document.querySelector('#systemNotification')!;
 const sendTestNotification: Button = document.querySelector('#sendTestNotification')!;
 const deleteCache: ListItem = document.querySelector('#deleteCache')!;
 const deleteAllData: ListItem = document.querySelector('#deleteAllData')!;
+
 // 关于部分
-const aboutDialog: Dialog = document.querySelector('#about')!;
-const aboutBtn: ListItem = document.querySelector('#aboutBtn')!;
-const aboutCloseBtn: Button = document.querySelector('#aboutCloseBtn')!;
+const aboutDialog: Dialog = document.querySelector('#aboutDialog')!;
+const aboutBtn: ListItem = document.querySelector('#openAbout')!;
+const aboutCloseBtn: Button = document.querySelector('#closeAbout')!;
 const versionElement: HTMLParagraphElement = document.querySelector('#version')!;
+
 // 动态配色
 const colorDialog: Dialog = document.querySelector('#colors')!;
 const chooseColorBtn: ListItem = document.querySelector('#chooseColor')!;
@@ -160,7 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 openOutput.addEventListener('click', () => {
-    outputDrawer.open = !outputDrawer.open;
+    toggleDrawer(outputDrawer, settingsDrawer);
 });
 
 closeOutput.addEventListener('click', () => {
@@ -287,10 +286,10 @@ checkFileBtn.addEventListener('click', () => {
 
 // “设置”对话框
 openSettingsBtn.addEventListener('click', () => {
-    settingsDialog.open = true;
+    toggleDrawer(settingsDrawer, outputDrawer);
 });
 
-settingsSaveBtn.addEventListener('click', () => {
+saveSettings.addEventListener('click', () => {
     const cacheSizeValue: string | string[] = cacheSize.value;
     const autoUpdateSwitch: Switch | null = document.querySelector('#autoUpdateSwitch');
     const autoUpdate = autoUpdateSwitch?.checked;
@@ -350,15 +349,15 @@ settingsSaveBtn.addEventListener('click', () => {
     }
     setStorageItem("lengthSuggest", lengthSuggest.checked);
 
-    settingsDialog.open = false;
+    settingsDrawer.open = false;
 });
 
-settingsCancelBtn.addEventListener('click', () => {
-    settingsDialog.open = false;
+closeSettingsBtn.addEventListener('click', () => {
+    settingsDrawer.open = !settingsDrawer.open;
 });
 
 sysNotification.addEventListener('change', () => {
-    if (!settingsDialog.open) return;
+    if (!settingsDrawer.open) return;
     if (sysNotification.checked) {
         sendAppNotification("测试通知", "这是一个测试通知");
         sendTestNotification.style.display = "block";
@@ -528,4 +527,18 @@ function addFile(file: File) {
     }
     fileList.push(fileItem);
     outputList.appendChild(fileItem.html);
+}
+
+/**
+ * 切换抽屉栏的打开与关闭
+ * * 确保页面上只有一个抽屉栏的打开，避免页面显示错误
+ *
+ * @param openDrawer - 需要切换打开状态的抽屉栏
+ * @param closeDrawer - 可能需要在打开时关闭的抽屉栏
+ */
+function toggleDrawer(openDrawer: NavigationDrawer, closeDrawer: NavigationDrawer) {
+    openDrawer.open = !openDrawer.open;
+    if (closeDrawer.open) {
+        closeDrawer.open = !closeDrawer.open;
+    }
 }
