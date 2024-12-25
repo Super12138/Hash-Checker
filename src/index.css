@@ -111,6 +111,7 @@ code {
     justify-content: space-between;
     align-items: center;
     color: rgb(var(--mdui-color-on-surface));
+    user-select: none;
 }
 
 .drawer-title span {
@@ -194,6 +195,14 @@ code {
     margin-top: 3%;
 }
 
+.mt-1r {
+    margin-top: 1rem;
+}
+
+.mt-2r {
+    margin-top: 2rem;
+}
+
 .file-card {
     width: auto;
     max-width: 400px;
@@ -238,6 +247,11 @@ code {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
+}
+
+.select-none {
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 /* 滚动条 */
