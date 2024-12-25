@@ -59,8 +59,7 @@ import { LogHelper } from "./utils/LogHelper";
 // 页面内容
 const openOutput: ButtonIcon = document.querySelector('#openOutput')!;
 const closeOutput: ButtonIcon = document.querySelector('#closeOutput')!;
-const dropZone: HTMLBodyElement = document.querySelector('#drop')!;
-const dragTip: HTMLHeadingElement = document.querySelector('#dragTip')!;
+const dropZone: HTMLElement = document.body;
 const fileCard: Card = document.querySelector('#fileCard')!;
 const fileInfo: HTMLElement = document.querySelector('#fileInfo')!;
 const fileInput: HTMLInputElement = document.querySelector('#fileInput')!;
@@ -161,7 +160,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 openOutput.addEventListener('click', () => {
-    outputDrawer.open = !outputDrawer.open; 
+    outputDrawer.open = !outputDrawer.open;
 });
 
 closeOutput.addEventListener('click', () => {
@@ -173,20 +172,27 @@ fileCard.addEventListener('click', () => {
     fileInput.click();
 });
 
-// 拖拽文件
-dropZone.addEventListener('dragover', (e: DragEvent) => {
-    e.preventDefault();
-    dragTip.style.display = "block";
-});
+function handleFileDrop(event: DragEvent) {
+    event.preventDefault();
+    if (event.type === 'drop') {
+        dropZone.classList.remove('dragover');
+        if (event.dataTransfer && event.dataTransfer.files.length > 0) {
+            const file: File = event.dataTransfer.files[0];
+            fileInfo.textContent = `${file.name} (${formatFileSize(file.size)})`;
+            logHelper.log(file);
+            addFile(file);
+        }
+    } else if (event.type === 'dragleave') {
+        dropZone.classList.remove('dragover');
+    } else {
+        dropZone.classList.add('dragover');
+    }
+}
 
-dropZone.addEventListener('drop', (e: DragEvent) => {
-    e.preventDefault();
-    dragTip.style.display = "none";
-    const file: File = e.dataTransfer!.files[0];
-    fileInfo.textContent = `${file.name} (${formatFileSize(file.size)})`;
-    logHelper.log(file);
-    addFile(file);
-});
+dropZone.addEventListener("dragenter", handleFileDrop);
+dropZone.addEventListener("dragover", handleFileDrop);
+dropZone.addEventListener("drop", handleFileDrop);
+dropZone.addEventListener("dragleave", handleFileDrop);
 
 // 获取文件
 fileInput.addEventListener('change', () => {
@@ -250,7 +256,7 @@ checkFileBtn.addEventListener('click', () => {
         });
         return;
     }
-    
+
     switch (mode) {
         case "generate":
             logHelper.log({ mode, method });
@@ -511,7 +517,7 @@ dynamicColor.addEventListener('input', () => {
     setColorScheme(dynamicColor.value);
 });
 
-function addFile(file: File){
+function addFile(file: File) {
     const fileItem = new FileItem(file);
     // 有重复文件则不添加
     if (fileList.find(item => item.file.name === file.name)) return;

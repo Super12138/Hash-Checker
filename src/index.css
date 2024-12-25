@@ -60,6 +60,35 @@ body.ready {
     transition: 0.25s opacity;
 }
 
+body .drag-tip {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(var(--mdui-color-scrim), .8);
+    z-index: 2100;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    /* backdrop-filter: blur(3px); */
+}
+
+body.dragover .drag-tip {
+    display: block;
+}
+
+body.dragover .drag-tip h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    line-height: var(--mdui-typescale-display-small-line-height);
+    font-size: var(--mdui-typescale-display-small-size);
+    letter-spacing: var(--mdui-typescale-display-small-tracking);
+    font-weight: var(--mdui-typescale-display-small-weight);
+}
+
 mdui-layout {
     height: 100vh;
 }

@@ -11,7 +11,10 @@
     <title>Hash Checker</title>
 </head>
 
-<body id="drop">
+<body>
+    <div class="drag-tip">
+        <h1>松开鼠标以读取文件</h1>
+    </div>
     <mdui-layout>
         <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".container">
             <mdui-button-icon id="openOutput">
@@ -27,7 +30,6 @@
         <mdui-layout-main class="container">
             <div>
                 <input class="hidden" id="fileInput" type="file">
-                <h1 class="align-center hidden" id="dragTip">松开鼠标以读取文件</h1>
                 <div class="center-align">
                     <mdui-card class="file-card" id="fileCard" variant="outlined" clickable>
                         <mdui-icon-upload-file--outlined class="upload-icon"></mdui-icon-upload-file--outlined>
