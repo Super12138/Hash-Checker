@@ -121,8 +121,17 @@ code {
     line-height: var(--mdui-typescale-title-large-line-height);
 }
 
+.fit-drawer-content {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
 #saveSettings {
     margin-left: 1rem;
+}
+
+#sendTestNotification {
+    margin: .5rem 1rem .5rem 1rem;
 }
 
 /* 使子元素垂直居中 */
@@ -275,10 +284,6 @@ body::-webkit-scrollbar-track {
 #mode,
 #method {
     width: 30%;
-}
-
-#outputArea {
-    word-break: break-word;
 }
 
 .hidden {

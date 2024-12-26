@@ -99,12 +99,11 @@
                 <mdui-icon-notifications-active--outlined slot="icon"></mdui-icon-notifications-active--outlined>
                 <mdui-switch id="systemNotification" slot="end-icon"></mdui-switch>
             </mdui-list-item>
-            <mdui-button id="sendTestNotification" class="hidden" variant="tonal"
-                style="margin: 3% 0 3% 0;">点击发送一条测试通知</mdui-button>
+            <mdui-button id="sendTestNotification" class="hidden" variant="tonal">点击发送一条测试通知</mdui-button>
             <mdui-list-item id="chooseColor" headline="主题色" description="为应用配置你心仪的主题色">
                 <mdui-icon-color-lens--outlined slot="icon"></mdui-icon-color-lens--outlined>
             </mdui-list-item>
-            <mdui-divider></mdui-divider>
+            <mdui-divider class="fit-drawer-content"></mdui-divider>
             <mdui-list-item id="deleteCache" headline="清除缓存">
                 <mdui-icon-cleaning-services--outlined slot="icon"></mdui-icon-cleaning-services--outlined>
             </mdui-list-item>
@@ -115,7 +114,7 @@
                 <mdui-icon-info--outlined slot="icon"></mdui-icon-info--outlined>
             </mdui-list-item>
         </mdui-list>
-        <mdui-button id="saveSettings" variant="tonal">保存</mdui-button>
+        <mdui-button class="fit-drawer-content" id="saveSettings" variant="tonal" full-width>保存</mdui-button>
     </mdui-dialog>
 
     <mdui-dialog headline="关于" id="aboutDialog" class="align-center">
