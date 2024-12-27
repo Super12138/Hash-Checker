@@ -16,7 +16,9 @@
       {
         "title": "Hash Checker",
         "width": 1024,
-        "height": 768
+        "height": 768,
+        "dragDropEnabled": false,
+        "center": true
       }
     ],
     "security": {
