@@ -516,6 +516,11 @@ dynamicColor.addEventListener('input', () => {
     setColorScheme(dynamicColor.value);
 });
 
+// 桌面端不显示右键菜单
+window.addEventListener('contextmenu', (event) => {
+    if (VARIANT === "desktop") event.preventDefault();
+});
+
 function addFile(file: File) {
     const fileItem = new FileItem(file);
     // 有重复文件则不添加
