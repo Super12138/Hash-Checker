@@ -286,6 +286,10 @@ body::-webkit-scrollbar-track {
     width: 30%;
 }
 
+#checkFile{
+    margin: 1.5rem 0 2em 0;
+}
+
 .hidden {
     display: none;
 }
