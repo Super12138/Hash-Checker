@@ -48,7 +48,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                     name: 'Hash Checker',
                     short_name: 'Hash Checker',
                     start_url: '/Hash-Checker/',
-                    description: '检查文件是否被修改',
+                    description: '一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器',
                     lang: "zh",
                     theme_color: '#ffffff',
                     orientation: "any",
