@@ -49,10 +49,13 @@
 
 
 body {
-    font-family: Roboto, Noto, Helvetica, Arial, sans-serif;
     height: 100%;
     margin: 0;
     opacity: 0;
+    font-family: Roboto, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body.ready {
@@ -286,7 +289,7 @@ body::-webkit-scrollbar-track {
     width: 30%;
 }
 
-#checkFile{
+#checkFile {
     margin: 1.5rem 0 2em 0;
 }
 
