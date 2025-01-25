@@ -73,7 +73,7 @@ jobs:
         run: npm install
 
       - name: Build app
-        uses: tauri-apps/tauri-action@v0.5.18
+        uses: tauri-apps/tauri-action@v0.5.19
         with:
           args: ${{ matrix.args }}
 
