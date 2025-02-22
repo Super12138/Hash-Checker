@@ -1,0 +1,101 @@
+body {
+    height: 100vh;
+    margin: 0;
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        'Fira Sans',
+        'Droid Sans',
+        'Helvetica Neue',
+        sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 清除所有标题的边距 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+span {
+    margin: 0;
+    padding: 0;
+}
+
+/* 页面文字样式 */
+h1 {
+    line-height: var(--mdui-typescale-headline-large-line-height);
+    font-size: var(--mdui-typescale-headline-large-size);
+    letter-spacing: var(--mdui-typescale-headline-large-tracking);
+    font-weight: var(--mdui-typescale-headline-large-weight);
+}
+
+h2 {
+    line-height: var(--mdui-typescale-headline-medium-line-height);
+    font-size: var(--mdui-typescale-headline-medium-size);
+    letter-spacing: var(--mdui-typescale-headline-medium-tracking);
+    font-weight: var(--mdui-typescale-headline-medium-weight);
+}
+
+p {
+    line-height: var(--mdui-typescale-body-large-line-height);
+    font-size: var(--mdui-typescale-body-large-size);
+    letter-spacing: var(--mdui-typescale-body-large-tracking);
+    font-weight: var(--mdui-typescale-body-large-weight);
+}
+
+/* 超链接样式 */
+a {
+    display: block;
+    transition: all 0.15s ease-in-out;
+}
+
+a:link {
+    color: rgb(var(--mdui-color-primary));
+    text-decoration: none;
+}
+
+a:visited {
+    color: rgb(var(--mdui-color-tertiary));
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(var(--mdui-color-on-primary-container));
+    text-decoration: none;
+}
+
+a:active {
+    color: rgb(var(--mdui-color-tertiary));
+    text-decoration: none;
+}
+
+strong {
+    line-height: var(--mdui-typescale-body-large-line-height);
+    font-size: var(--mdui-typescale-body-large-size);
+    letter-spacing: var(--mdui-typescale-body-large-tracking);
+}
+
+mdui-divider {
+    margin: 1rem 0;
+}
+
+/* 导航栏、标题栏及背景颜色 */
+mdui-top-app-bar {
+    padding: 1rem 0.9rem;
+}
+
+mdui-top-app-bar[scrolling] {
+    background-color: rgb(var(--mdui-color-surface-container)) !important;
+    box-shadow: 0 0 0;
+}

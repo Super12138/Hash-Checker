@@ -1,0 +1,9 @@
+# Ignore Folder
+node_modules
+.vscode
+.github
+
+# Ignore File
+README.md
+package-lock.json
+index.html
