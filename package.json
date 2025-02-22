@@ -16,7 +16,7 @@
     "url": "git+https://github.com/Super12138/Hash-Checker.git"
   },
   "author": "Super12138",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-only",
   "bugs": {
     "url": "https://github.com/Super12138/Hash-Checker/issues"
   },
