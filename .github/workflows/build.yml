@@ -61,13 +61,17 @@ jobs:
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          # 这个 target 仅在 macOS 上使用，因此将其放在 `if` 语句中，以稍微加快 Windows 和 Linux 的构建速度
+          # 这个 target 仅在 macOS 上使用，因此将其放在 if 语句中，以稍微加快 Windows 和 Linux 的构建速度
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2.7.7
         with:
           workspaces: ./src-tauri -> target
+
+      - name: Remove package-lock.json # macOS 删除 package-lock.json 文件，避免跨平台依赖安装冲突
+        if: runner.os == 'macos'
+        run: rm -f package-lock.json
 
       - name: Install dependencies
         run: npm install

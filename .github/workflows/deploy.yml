@@ -33,7 +33,7 @@ jobs:
         uses: actions/configure-pages@v5.0.0
 
       - name: Install dependencies
-        run: npm install
+        run: rm -f package-lock.json && npm install # 移除 package-lock.json 文件，避免跨平台依赖安装冲突
 
       - name: Build
         run: npm run build:web
