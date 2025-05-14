@@ -43,7 +43,7 @@
     "@tauri-apps/plugin-notification": "^2.2.0",
     "@tauri-apps/plugin-shell": "^2.0.1",
     "crypto-js": "^4.2.0",
-    "diff": "^7.0.0",
+    "diff": "^8.0.0",
     "marked": "^15.0.3",
     "mdui": "^2.1.3"
   },
