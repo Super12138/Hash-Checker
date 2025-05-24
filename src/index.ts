@@ -260,7 +260,7 @@ checkFileBtn.addEventListener('click', () => {
         case "generate":
             logHelper.log({ mode, method });
             fileList[fileList.length - 1].getHash(mode, method.toString());
-            outputDrawer.open = true;
+            onlyOneDrawer(outputDrawer, settingsDrawer);
             break;
         case "check":
             const checkSum: string = checkSumInput.value;
@@ -279,7 +279,7 @@ checkFileBtn.addEventListener('click', () => {
             }
             logHelper.log({ mode, method, checkSum });
             fileList[fileList.length - 1].getHash(mode.toString(), method.toString(), checkSum);
-            outputDrawer.open = true;
+            onlyOneDrawer(outputDrawer, settingsDrawer);
             break;
     }
 });
@@ -517,7 +517,7 @@ dynamicColor.addEventListener('input', () => {
 });
 
 // 桌面端不显示右键菜单
-window.addEventListener('contextmenu', (event) => {
+window.addEventListener('contextmenu', (event: MouseEvent) => {
     if (VARIANT === "desktop") event.preventDefault();
 });
 
@@ -545,5 +545,18 @@ function toggleDrawer(openDrawer: NavigationDrawer, closeDrawer: NavigationDrawe
     openDrawer.open = !openDrawer.open;
     if (closeDrawer.open) {
         closeDrawer.open = !closeDrawer.open;
+    }
+}
+
+/**
+ * 只打开一个抽屉栏，同时保证另一个抽屉栏的关闭
+ * 
+ * @param openDrawer 要打开的抽屉栏
+ * @param closeDrawer 要关闭的抽屉栏
+ */
+function onlyOneDrawer(openDrawer: NavigationDrawer, closeDrawer: NavigationDrawer) {
+    openDrawer.open = true;
+    if (closeDrawer.open) {
+        closeDrawer.open = false;
     }
 }
