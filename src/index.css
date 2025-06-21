@@ -285,7 +285,7 @@ body::-webkit-scrollbar-track {
 } */
 
 #mode,
-#method {
+#algorithm {
     width: 30%;
 }
 

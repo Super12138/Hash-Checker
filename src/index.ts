@@ -50,6 +50,7 @@ import { clearCacheAndReload, initPWA } from "./pwa/pwa";
 import { getUpdate } from "./utils/updater";
 
 import { removeColorScheme } from "mdui";
+import { BuildVariant, HashAlgorithm, OperationMode } from './constant/constants';
 import { FileItem, FileStatus } from "./file/FileItem";
 import { LogHelper } from "./utils/LogHelper";
 
@@ -61,7 +62,7 @@ const dropZone: HTMLElement = document.body;
 const fileCard: Card = document.querySelector('#fileCard')!;
 const fileInfo: HTMLElement = document.querySelector('#fileInfo')!;
 const fileInput: HTMLInputElement = document.querySelector('#fileInput')!;
-const methodSelect: Select = document.querySelector('#method')!;
+const algorithmSelect: Select = document.querySelector('#algorithm')!;
 const modeSelect: Select = document.querySelector('#mode')!;
 const checkSumInput: TextField = document.querySelector("#checkSumInput")!;
 const checkFileBtn: Button = document.querySelector('#checkFile')!;
@@ -99,7 +100,7 @@ let fileList: FileItem[] = [];
 
 // 初始化
 window.addEventListener("load", () => {
-    if (VARIANT !== "desktop") initPWA();
+    if (VARIANT !== BuildVariant.Desktop) initPWA();
 
     const isFirstUse: boolean = string2Boolean(getStorageItem("firstUse", false));
     const cacheSizeValue: string = getStorageItem("cacheSize", 2048);
@@ -127,7 +128,7 @@ window.addEventListener("load", () => {
     sysNotification.checked = systemNotification;
 
     // 仅桌面端显示开关
-    if (VARIANT === "desktop") {
+    if (VARIANT === BuildVariant.Desktop) {
         logHelper.log({ autoUpdate });
         const autoUpdateItem: ListItem = document.createElement('mdui-list-item');
         autoUpdateItem.headline = "自动更新";
@@ -171,7 +172,7 @@ fileCard.addEventListener('click', () => {
     fileInput.click();
 });
 
-function handleFileDrop(event: DragEvent) {
+const handleFileDrop = (event: DragEvent) =>{
     event.preventDefault();
     if (event.type === 'drop') {
         dropZone.classList.remove('dragover');
@@ -205,7 +206,7 @@ fileInput.addEventListener('change', () => {
 
 // 计算文件 Hash 值
 checkFileBtn.addEventListener('click', () => {
-    const method: string | string[] = methodSelect.value;
+    const algorithm: string | string[] = algorithmSelect.value;
     const mode: string | string[] = modeSelect.value;
     if (fileList.length === 0) {
         dialog({
@@ -219,7 +220,7 @@ checkFileBtn.addEventListener('click', () => {
         });
         return;
     }
-    if (method == "nullSelect" && mode == "nullSelect") {
+    if (algorithm == HashAlgorithm.Unselected && mode == OperationMode.Unselected) {
         dialog({
             headline: '错误',
             description: '请选择方法及模式',
@@ -231,7 +232,7 @@ checkFileBtn.addEventListener('click', () => {
         });
         return;
     }
-    if (mode == "nullSelect" || isBlankOrEmpty(mode.toString())) {
+    if (mode == OperationMode.Unselected || isBlankOrEmpty(mode.toString())) {
         dialog({
             headline: '错误',
             description: '请选择模式',
@@ -243,7 +244,7 @@ checkFileBtn.addEventListener('click', () => {
         });
         return;
     }
-    if (method == "nullSelect" || isBlankOrEmpty(method.toString())) {
+    if (algorithm == HashAlgorithm.Unselected || isBlankOrEmpty(algorithm.toString())) {
         dialog({
             headline: '错误',
             description: '请选择方法',
@@ -257,12 +258,12 @@ checkFileBtn.addEventListener('click', () => {
     }
 
     switch (mode) {
-        case "generate":
-            logHelper.log({ mode, method });
-            fileList[fileList.length - 1].getHash(mode, method.toString());
+        case OperationMode.Generate:
+            logHelper.log({ mode, algorithm });
+            fileList[fileList.length - 1].getHash(mode, algorithm.toString());
             onlyOneDrawer(outputDrawer, settingsDrawer);
             break;
-        case "check":
+        case OperationMode.Check:
             const checkSum: string = checkSumInput.value;
 
             if (!checkSum) {
@@ -277,8 +278,8 @@ checkFileBtn.addEventListener('click', () => {
                 });
                 return;
             }
-            logHelper.log({ mode, method, checkSum });
-            fileList[fileList.length - 1].getHash(mode.toString(), method.toString(), checkSum);
+            logHelper.log({ mode, algorithm, checkSum });
+            fileList[fileList.length - 1].getHash(mode.toString(), algorithm.toString(), checkSum);
             onlyOneDrawer(outputDrawer, settingsDrawer);
             break;
     }
@@ -447,17 +448,16 @@ aboutCloseBtn.addEventListener('click', () => {
     aboutDialog.open = false;
 });
 
-
 // 依据校验方法开启/禁用校验值输入框
 modeSelect.addEventListener('change', () => {
     switch (modeSelect.value) {
-        case "check":
+        case OperationMode.Check:
             checkSumInput.disabled = false;
             break;
-        case "generate":
+        case OperationMode.Generate:
             checkSumInput.disabled = true;
             break;
-        case "nullSelect":
+        case OperationMode.Unselected:
             checkSumInput.disabled = true;
             break;
     }
@@ -468,19 +468,19 @@ checkSumInput.addEventListener('input', () => {
     if (string2Boolean(getStorageItem("lengthSuggest", true))) {
         switch (checkSumInput.value.length) {
             case 32:
-                methodSelect.value = "MD5";
+                algorithmSelect.value = HashAlgorithm.MD5;
                 break;
             case 40:
-                methodSelect.value = "SHA1";
+                algorithmSelect.value = HashAlgorithm.SHA1;
                 break;
             case 64:
-                methodSelect.value = "SHA256";
+                algorithmSelect.value = HashAlgorithm.SHA256;
                 break;
             case 96:
-                methodSelect.value = "SHA384";
+                algorithmSelect.value = HashAlgorithm.SHA384;
                 break;
             default:
-                methodSelect.value = "nullSelect";
+                algorithmSelect.value = HashAlgorithm.Unselected;
                 break;
         }
     }
@@ -518,7 +518,7 @@ dynamicColor.addEventListener('input', () => {
 
 // 桌面端不显示右键菜单
 window.addEventListener('contextmenu', (event: MouseEvent) => {
-    if (VARIANT === "desktop") event.preventDefault();
+    if (VARIANT === BuildVariant.Desktop) event.preventDefault();
 });
 
 function addFile(file: File) {

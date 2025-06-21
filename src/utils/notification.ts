@@ -1,6 +1,7 @@
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/plugin-notification';
 import { dialog } from 'mdui/functions/dialog.js';
 import { LogHelper } from './LogHelper';
+import { BuildVariant } from '../constant/constants';
 
 const logHelper: LogHelper = LogHelper.getInstance();
 
@@ -10,7 +11,7 @@ const logHelper: LogHelper = LogHelper.getInstance();
  * @param content 通知内容
  */
 export function sendAppNotification(title: string, content: string) {
-    if (VARIANT === 'desktop') {
+    if (VARIANT === BuildVariant.Desktop) {
         // 桌面端适配 Tauri
         sendNotificationDesktop(title, content);
     } else {

@@ -1,29 +1,30 @@
 import CryptoJS from "crypto-js";
+import { HashAlgorithm, WorkerResult } from "../constant/constants";
 
 declare let self: Worker;
 
-function getHasher(method: string) {
-    switch (method) {
-        case "MD5":
+function getHasher(algorithm: string) {
+    switch (algorithm) {
+        case HashAlgorithm.MD5:
             return CryptoJS.algo.MD5.create();
-        case "SHA1":
+        case HashAlgorithm.SHA1:
             return CryptoJS.algo.SHA1.create();
-        case "SHA3":
+        case HashAlgorithm.SHA3:
             return CryptoJS.algo.SHA3.create();
-        case "SHA256":
+        case HashAlgorithm.SHA256:
             return CryptoJS.algo.SHA256.create();
-        case "SHA384":
+        case HashAlgorithm.SHA384:
             return CryptoJS.algo.SHA384.create();
-        case "SHA512":
+        case HashAlgorithm.SHA512:
             return CryptoJS.algo.SHA512.create();
         default:
-            throw new Error("Unsupported hash method");
+            throw new Error(`未知校验方法或暂不支持该方法（${algorithm}）`);
     }
 }
 
 self.onmessage = async (e: MessageEvent) => {
-    const { file, method, chunkSize }: { file: File, method: string, chunkSize: number } = e.data;
-    const hasher = getHasher(method);
+    const { file, algorithm, chunkSize }: { file: File, algorithm: string, chunkSize: number } = e.data;
+    const hasher = getHasher(algorithm);
     const startTime: number = Date.now();
 
     const CHUNK_SIZE: number = chunkSize * 1024;
@@ -45,7 +46,7 @@ self.onmessage = async (e: MessageEvent) => {
         const estimatedRemainingTime: number = remainingSize / speed; // 秒
 
         self.postMessage({
-            type: 'progress',
+            type: WorkerResult.Progress,
             data: {
                 progress: progress * 100,
                 estimatedRemainingTime
@@ -55,5 +56,5 @@ self.onmessage = async (e: MessageEvent) => {
 
     const hash: CryptoJS.lib.WordArray = hasher.finalize();
     const result: string = hash.toString(CryptoJS.enc.Hex);
-    self.postMessage({ type: 'result', data: result });
+    self.postMessage({ type: WorkerResult.Result, data: result });
 };

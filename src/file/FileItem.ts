@@ -17,7 +17,7 @@ export class FileItem {
     file: File;
     status: FileStatus = FileStatus.WAITING;
     hash: string = FileStatus.WAITING;
-    method: string = '待选择';
+    algorithm: string = '待选择';
     difference: HTMLSpanElement | undefined;
     html: ListItem;
 
@@ -47,11 +47,11 @@ export class FileItem {
         this.progressBar = progressBar;
     }
 
-    getHash(mode: string, method: string, checkSum?: string) {
-        logHelper.log({ mode, method, checkSum });
+    getHash(mode: string, algorithm: string, checkSum?: string) {
+        logHelper.log({ mode, algorithm, checkSum });
 
         this.progressBar.value = undefined;
-        this.method = method;
+        this.algorithm = algorithm;
 
         const checkFileBtn: Button = document.querySelector('#checkFile')!;
 
@@ -83,7 +83,7 @@ export class FileItem {
                     checkFileBtn.disabled = false;
 
                     if (systemNotification) {
-                        sendAppNotification(`${method} 计算完成`, `${method} 值为 ${this.hash} ，详情请在应用内查看`);
+                        sendAppNotification(`${algorithm} 计算完成`, `${algorithm} 值为 ${this.hash} ，详情请在应用内查看`);
                     }
 
                     switch (mode) {
@@ -102,7 +102,7 @@ export class FileItem {
 
                             break;
                         case 'generate':
-                            this.html.description = `${method} 值：${this.hash}`;
+                            this.html.description = `${algorithm} 值：${this.hash}`;
                             if (isClipboard) {
                                 writeClipboard(this.hash);
                             }
@@ -119,7 +119,7 @@ export class FileItem {
             }
         }
 
-        worker.postMessage({ file: this.file, method, chunkSize });
+        worker.postMessage({ file: this.file, algorithm, chunkSize });
     }
 
     private fileInfoDialog(file: File, status: FileStatus, difference?: HTMLSpanElement) {
@@ -142,7 +142,7 @@ export class FileItem {
                 名称：${file.name}
                 <br>大小：${formatFileSize(file.size)}
                 <br>状态：${status}
-                <br>哈希值（计算方法：${this.method}）：${hashLine.outerHTML}
+                <br>哈希值（计算方法：${this.algorithm}）：${hashLine.outerHTML}
                 ${differenceContent}
             </p>
         `;

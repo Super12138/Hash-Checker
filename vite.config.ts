@@ -113,28 +113,40 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
             },
         }
     } else {
-        if (mode == "web") {
-            return {
-                ...baseConfig,
-                base: '/Hash-Checker/',
-                define: {
-                    VERSION_NAME: JSON.stringify(packageJson.version),
-                    VARIANT: JSON.stringify(mode),
-                    COMMIT_HASH: JSON.stringify(commitHash),
-                    VERSION_CODE: JSON.stringify(versionCode),
-                },
-            }
-        } else {
-            return {
-                ...baseConfig,
-                base: '/',
-                define: {
-                    VERSION_NAME: JSON.stringify(packageJson.version),
-                    VARIANT: JSON.stringify(mode),
-                    COMMIT_HASH: JSON.stringify(commitHash),
-                    VERSION_CODE: JSON.stringify(versionCode),
-                },
-            }
+        switch (mode) { 
+            case 'web':
+                return {
+                    ...baseConfig,
+                    base: '/Hash-Checker/',
+                    define: {
+                        VERSION_NAME: JSON.stringify(packageJson.version),
+                        VARIANT: JSON.stringify("web"),
+                        COMMIT_HASH: JSON.stringify(commitHash),
+                        VERSION_CODE: JSON.stringify(versionCode),
+                    },
+                }
+            case 'desktop':
+                return {
+                    ...baseConfig,
+                    base: '/',
+                    define: {
+                        VERSION_NAME: JSON.stringify(packageJson.version),
+                        VARIANT: JSON.stringify("desktop"),
+                        COMMIT_HASH: JSON.stringify(commitHash),
+                        VERSION_CODE: JSON.stringify(versionCode),
+                    },
+                }
+            default:
+                return {
+                    ...baseConfig,
+                    base: '/',
+                    define: {
+                        VERSION_NAME: JSON.stringify(packageJson.version),
+                        VARIANT: JSON.stringify("unknown"),
+                        COMMIT_HASH: JSON.stringify(commitHash),
+                        VERSION_CODE: JSON.stringify(versionCode),
+                    },
+                }
         }
     }
 });

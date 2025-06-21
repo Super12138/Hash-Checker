@@ -109,3 +109,9 @@ export interface Author {
     type: string;
     site_admin: boolean;
 }
+
+
+export interface WorkerResult{
+    type: WorkerResult
+    data: any;
+}
