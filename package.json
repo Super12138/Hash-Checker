@@ -43,7 +43,7 @@
     "@tauri-apps/plugin-shell": "^2.2.1",
     "crypto-js": "^4.2.0",
     "diff": "^8.0.2",
-    "marked": "^15.0.12",
+    "marked": "^16.0.0",
     "mdui": "^2.1.4"
   },
   "overrides": {
