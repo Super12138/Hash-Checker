@@ -1,4 +1,4 @@
-import { BuildVariant } from "../constant/constants";
+import { BuildVariant } from "../constants";
 
 const myStorage: Storage = localStorage;
 

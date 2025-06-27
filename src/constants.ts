@@ -26,3 +26,11 @@ export enum WorkerResult{
     Result = "result",
     Error = "error"
 }
+
+export enum FileStatus {
+    WAITING = '等待计算',
+    COMPUTING = '计算中',
+    FINISHED = '计算完成',
+    ERROR = '计算错误',
+    CANCELED = '已取消',
+}

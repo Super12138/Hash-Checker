@@ -1,4 +1,4 @@
-import { BuildVariant } from "../constant/constants";
+import { BuildVariant } from "../constants";
 import { GitHubApiReleaseResponse } from "../interfaces";
 import { getStorageItem } from "../store/localstorage";
 import { LogHelper } from "./LogHelper";

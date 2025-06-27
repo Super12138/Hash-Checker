@@ -1,7 +1,7 @@
 import { dialog } from "mdui";
 import { snackbar } from "mdui/functions/snackbar.js";
 
-export async function writeClipboard(text: string) {
+export async function writeToClipboard(text: string) {
     try {
         await navigator.clipboard.writeText(text);
         snackbar({

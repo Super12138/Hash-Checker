@@ -50,8 +50,8 @@ import { clearCacheAndReload, initPWA } from "./pwa/pwa";
 import { getUpdate } from "./utils/updater";
 
 import { removeColorScheme } from "mdui";
-import { BuildVariant, HashAlgorithm, OperationMode } from './constant/constants';
-import { FileItem, FileStatus } from "./file/FileItem";
+import { BuildVariant, FileStatus, HashAlgorithm, OperationMode } from './constants';
+import { FileItem } from "./file/FileItem";
 import { LogHelper } from "./utils/LogHelper";
 
 // 页面内容

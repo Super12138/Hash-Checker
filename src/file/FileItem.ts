@@ -1,11 +1,14 @@
+import { FileStatus } from '../constants';
 import { getStorageItem } from '../store/localstorage';
-import { writeClipboard } from '../utils/clipboard';
+import { writeToClipboard } from '../utils/clipboard';
 import { formatTime } from '../utils/date';
 import { LogHelper } from '../utils/LogHelper';
 import { sendAppNotification } from '../utils/notification';
 import { compareHash, formatFileSize, string2Boolean } from '../utils/text';
 
-import { dialog } from 'mdui';
+import 'mdui/components/tooltip.js';
+
+import { dialog, Tooltip } from 'mdui';
 import type { Button } from 'mdui/components/button.js';
 import type { Checkbox } from 'mdui/components/checkbox.js';
 import type { CircularProgress } from 'mdui/components/circular-progress.js';
@@ -104,7 +107,7 @@ export class FileItem {
                         case 'generate':
                             this.html.description = `${algorithm} 值：${this.hash}`;
                             if (isClipboard) {
-                                writeClipboard(this.hash);
+                                writeToClipboard(this.hash);
                             }
                             break;
                         default:
@@ -131,21 +134,37 @@ export class FileItem {
         }
         const terminateCalc = status === FileStatus.COMPUTING? terminateCalcLabel.outerHTML : '';*/
 
+        const dialogContent = document.createElement('div');
+
         const hashLine: HTMLElement = document.createElement('code');
         hashLine.textContent = this.hash;
-        hashLine.style.wordBreak ='break-all';
+        hashLine.style.wordBreak = 'break-all';
+        hashLine.style.cursor = 'pointer';
+        hashLine.addEventListener('click', () => {
+            writeToClipboard(this.hash);
+        });
 
-        const differenceContent = difference ? `<br>哈希对比结果（相比于您提供的哈希值）：${difference.outerHTML}` : '';
-        const dialogContent: HTMLElement = document.createElement('div');
-        dialogContent.innerHTML = `
-            <p>
-                名称：${file.name}
-                <br>大小：${formatFileSize(file.size)}
-                <br>状态：${status}
-                <br>哈希值（计算方法：${this.algorithm}）：${hashLine.outerHTML}
-                ${differenceContent}
-            </p>
+        const tooltip: Tooltip = document.createElement('mdui-tooltip');
+        tooltip.content = '单击即可复制';
+        tooltip.appendChild(hashLine);
+
+        // 构建对话框内容
+        const infoParagraph = document.createElement('p');
+        infoParagraph.innerHTML = `
+        名称：${file.name}
+        <br>大小：${formatFileSize(file.size)}
+        <br>状态：${status}
+        <br>哈希值（计算方法：${this.algorithm}）：
         `;
+        infoParagraph.appendChild(tooltip);
+
+        if (difference) {
+            const diffParagraph = difference ? `哈希对比结果（红色是新增部分，白色是相同部分，删除线是多余部分）：${difference.outerHTML}` : '';
+            infoParagraph.innerHTML += diffParagraph;
+        }
+
+        dialogContent.appendChild(infoParagraph);
+
         dialog({
             headline: '文件信息',
             body: dialogContent,
@@ -159,12 +178,4 @@ export class FileItem {
             ]
         });
     }
-}
-
-export enum FileStatus {
-    WAITING = '等待计算',
-    COMPUTING = '计算中',
-    FINISHED = '计算完成',
-    ERROR = '计算错误',
-    CANCELED = '已取消',
 }

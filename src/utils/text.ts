@@ -3,9 +3,9 @@ import { Change, diffChars } from "diff";
 /**
  * 比较两个哈希字符串的差异，并用红色加粗显示新增的部分，用删除线显示被删除的部分。
  * 
- * @param {string} userHash 用户输入的哈希字符串
- * @param {string} genHash 生成的哈希字符串
- * @returns {HTMLSpanElement} 高亮显示差异的 HTMLSpanElement
+ * @param userHash 用户输入的哈希字符串
+ * @param genHash 生成的哈希字符串
+ * @returns 高亮显示差异的 HTMLSpanElement
  */
 export function compareHash(userHash: string, genHash: string): HTMLSpanElement {
     const differences: Change[] = diffChars(userHash, genHash);
@@ -31,7 +31,7 @@ export function compareHash(userHash: string, genHash: string): HTMLSpanElement 
  * * 文本类型的 `true` 或 `false` 会转换成布尔值
  * * 若为普通文本，默认返回 `false`
  * 
- * @param {string} str 要转换成布尔值的文本
+ * @param str 要转换成布尔值的文本
  * @returns 转换好的布尔值
  */
 export function string2Boolean(str: string | null): boolean {

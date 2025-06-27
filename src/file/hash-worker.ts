@@ -1,5 +1,5 @@
 import CryptoJS from "crypto-js";
-import { HashAlgorithm, WorkerResult } from "../constant/constants";
+import { HashAlgorithm, WorkerResult } from "../constants";
 
 declare let self: Worker;
 

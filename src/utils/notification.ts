@@ -1,7 +1,7 @@
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/plugin-notification';
 import { dialog } from 'mdui/functions/dialog.js';
 import { LogHelper } from './LogHelper';
-import { BuildVariant } from '../constant/constants';
+import { BuildVariant } from '../constants';
 
 const logHelper: LogHelper = LogHelper.getInstance();
 
