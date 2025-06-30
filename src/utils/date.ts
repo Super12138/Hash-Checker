@@ -41,8 +41,10 @@ export function formatTime(seconds: number): string {
         // 小于 60 秒，直接返回秒数
         return `${Math.round(seconds)} 秒`;
     } else if (seconds < 3600) {
-        // 小于 1 小时，返回分钟数（向下取整）
-        return `${Math.round(seconds / 60)} 分钟`;
+        // 小于 1 小时，返回分钟数（向下取整）和秒数
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes} 分钟 ${secs} 秒`;
     } else {
         // 1 小时及以上，分别计算小时、分钟、秒，均为整数
         const hours = Math.floor(seconds / 3600); // 小时
