@@ -88,5 +88,5 @@ jobs:
           name: ${{ matrix.name }}
           path: |
             src-tauri/target/**/release/bundle/**/*
-            src-tauri/target/**/release/Hash Checker.exe
-            src-tauri/target/**/release/Hash Checker
+            src-tauri/target/**/release/Super Hash.exe
+            src-tauri/target/**/release/Super Hash

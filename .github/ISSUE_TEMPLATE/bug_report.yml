@@ -1,0 +1,106 @@
+name: 问题反馈 / Bug Report
+description: 发现并反馈问题以帮助改进 Super Hash（Hash Checker）/ Create a report to help us improve Super Hash (Hash Checker)
+title: "[Bug] "
+labels: [ "bug" ]
+body:
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 检查列表 / Checklist
+      options:
+        - label: 我正在使用 Super Hash（Hash Checker）的最新版本 / I am using the latest version of Super Hash (Hash Checker)
+          required: true
+        - label: 确认没有之前相似或重复的问题（若重复会直接关闭） / Confirm that there are no similar or duplicate issues previously raised (if duplicate, the issue will be closed directly)
+          required: true
+
+  - type: dropdown
+    id: version-variant
+    attributes:
+      label: 版本类型 / Variant
+      description: 请选择当前 Super Hash 的版本类型 / Select the version of Super Hash variant you're currently using
+      options:
+        - 最新 Release 版 / Latest release
+        - 最新 Web 或 CI 版 / Latest Web or CI
+    validations:
+      required: true
+
+  - type: input
+    id: version-code
+    attributes:
+      label: 应用版本
+      description: 请输入你正在使用的 Super Hash 版本，你可以在设置中找到 / Enter the version of Super Hash you're using. You can find this in the settings
+      placeholder: 例如：2.3.0-web-da911b7 (492) / e.g. 2.3.0-web-da911b7 (492)
+    validations:
+      required: true
+
+  - type: textarea
+    id: describe-bug
+    attributes:
+      label: 描述一下这个问题 / Describe the bug
+      description: 简单明了的描述一下你发现的问题 / A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce-steps
+    attributes:
+      label: 复现步骤 / To Reproduce
+      description: 重现该问题的步骤 / Steps to reproduce the behavior
+      placeholder: |
+        1. 前往 ... / Go to '...'
+        2. 点击... / Click on '....'
+        3. 出现错误 / See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: 预期行为 / Expected behavior
+      description: 简单描述一下你认为如果没有这个问题应用应该怎么运作 / A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+
+
+  - type: input
+    id: system
+    attributes:
+      label: 系统 / System
+      description: 在这里输入你的系统 / Enter your system here
+      placeholder: 例如：Windows 11，macOS 26，Linux 6.4 / e.g. Windows 11, macOS 26, Linux 6.4
+    validations:
+      required: true
+
+  - type: input
+    id: browser-version
+    attributes:
+      label: 浏览器版本（仅限 Web 版）/ Browser version (only for Web version)
+      description: 如果你在浏览器中使用 Super Hash，请在这里输入浏览器版本 / If you're using Super Hash in a browser, enter the browser version here
+      placeholder: 例如：Chrome 138.0.7204.49（须是精确版本）/ e.g. Chrome 138.0.7204.49 (must be the exact version)
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 截图 / Screenshots
+      description: 如果可以的话，请提供问题的截图 / If applicable, add screenshots to help explain your problem.
+    validations:
+      required: false
+
+  - type: textarea
+    id: crash-log
+    attributes:
+      label: 相关崩溃日志 / Crash log
+      description: 你可以检查控制台（仅限 Web 版）是否有相关的崩溃日志 / You can check the console (only in Web version) for relevant crash logs.
+      render: shell
+    validations:
+      required: false
+      
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 附加信息 / Additional context
+      description: 任何有关你反馈的问题的附加信息都可以写在这里 / Any additional information related to your feedback can be provided here
+    validations:
+      required: false

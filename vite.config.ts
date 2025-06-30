@@ -45,8 +45,8 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 },
 
                 manifest: {
-                    name: 'Hash Checker',
-                    short_name: 'Hash Checker',
+                    name: 'Super Hash',
+                    short_name: 'Super Hash',
                     start_url: '/Hash-Checker/',
                     description: '一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器',
                     lang: "zh",
@@ -58,9 +58,9 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                     ],
                     shortcuts: [
                         {
-                            "name": "Hash Checker",
+                            "name": "Super Hash",
                             "url": "index.html",
-                            "description": "Hash Checker"
+                            "description": "Super Hash"
                         }
                     ],
                 },

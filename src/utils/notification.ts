@@ -27,7 +27,7 @@ export function sendAppNotification(title: string, content: string) {
 
 /**
  * 在 PWA 中发送一条通知
- * * 通知默认带 Hash Checker 应用图标
+ * * 通知默认带 Super Hash 应用图标
  * * 在发送前自动检查通知权限是否获取，没有获取则显示提示框
  * @param title 通知标题
  * @param content 通知内容
@@ -59,9 +59,9 @@ function sendNotificationPWA(title: string, content: string) {
 
 /**
  * 在浏览器中发送一条通知
- * * 通知默认带 Hash Checker 应用图标
+ * * 通知默认带 Super Hash 应用图标
  * * 在发送前自动检查通知权限是否获取，没有获取则显示提示框
- * * 用户点击通知支持自动返回（聚焦）Hash Checker 标签页（窗口）
+ * * 用户点击通知支持自动返回（聚焦）Super Hash 标签页（窗口）
  * @param title 通知标题
  * @param content 通知内容
  */
@@ -90,7 +90,7 @@ function sendNotificationBrowser(title: string, content: string) {
 
 /**
  * 在 Tauri 中发送一条通知
- * * 通知默认带 Hash Checker 应用图标
+ * * 通知默认带 Super Hash 应用图标
  * * 在发送前自动检查通知权限是否获取，没有获取则提示用户授予权限并显示提示框
  * @param title 通知标题
  * @param content 通知内容

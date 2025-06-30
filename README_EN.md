@@ -2,7 +2,7 @@
     <img src="https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker@fd35e8a/build/appicon.svg" width="30%">
 </p>
 
-# Hash Checker | 文件校验器 | 哈希检查器
+# Super Hash (formerly Hash Checker)
 ![GitHub](https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square)
 ![GitHub all releases](https://img.shields.io/github/downloads/Super12138/Hash-Checker/total?style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Super12138/Hash-Checker?style=flat-square)
@@ -25,7 +25,7 @@ A quick, readily available cross-platform hash checker that follows Material Des
 
 ## ⬇️ Download
 - Offline version V2.2.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
-- Online version V2.2.2[Github Page](https://super12138.github.io/Hash-Checker/)
+- Online version V2.3.0[Github Page](https://super12138.github.io/Hash-Checker/)
 
 ## 📸 Screenshots
 |Main Interface (Light Mode)|
@@ -49,7 +49,7 @@ A quick, readily available cross-platform hash checker that follows Material Des
 
 ## 🚀 Open Source Library
 - [Wails](https://github.com/wailsapp/wails)
-- [Vite](https://github.com/vitejs/vite)
+- [Tauri](https://github.com/tauri-apps/tauri)
 - [MDUI](https://github.com/zdhxiong/mdui)
 - [CryptoJS](https://github.com/brix/crypto-js)
 - [jsdiff](https://github.com/kpdecker/jsdiff)

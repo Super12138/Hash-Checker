@@ -16,12 +16,12 @@ export function initPWA() {
             immediate: true,
             onOfflineReady() {
                 snackbar({
-                    message: "Hash Checker 已准备好在离线环境下运行"
+                    message: "Super Hash 已准备好在离线环境下运行"
                 });
             },
             onNeedRefresh() {
                 snackbar({
-                    message: "Hash Checker 有新版本",
+                    message: "Super Hash 有新版本",
                     action: "立即更新",
                     onActionClick: () => {
                         refreshSW?.(true)

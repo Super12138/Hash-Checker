@@ -2,7 +2,7 @@
     <img src="https://cdn.jsdelivr.net/gh/Super12138/Hash-Checker@fd35e8a/build/appicon.svg" width="30%">
 </p>
 
-# Hash Checker | 文件校验器 | 哈希检查器
+# Super Hash（原名 Hash Checker）
 ![许可证](https://img.shields.io/github/license/Super12138/Hash-Checker?style=flat-square)
 ![GitHub Releases 总下载量](https://img.shields.io/github/downloads/Super12138/Hash-Checker/total?style=flat-square)
 ![最新 GitHub Release](https://img.shields.io/github/v/release/Super12138/Hash-Checker?style=flat-square)
@@ -18,14 +18,14 @@
 - 支持深色模式
 - 校验和生成文件 MD5 或任何 SHA 值
 - 自动检查更新
-- PWA（渐进式 Web 应用）
+- PWA（Progressive Web App，渐进式 Web 应用）
 
 ## 📒 使用
 [简单使用方法](https://super12138.github.io/hschecker/use.html)
 
 ## ⬇️ 下载
 - 离线版 V2.2.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
-- 在线版 v2.2.2[Github Page](https://super12138.github.io/Hash-Checker/)
+- 在线版 v2.3.0[Github Page](https://super12138.github.io/Hash-Checker/)
 
 ## 📸 截图
 |主界面（浅色）|
@@ -49,7 +49,7 @@
 
 ## 🚀 开源库
 - [Vite](https://github.com/vitejs/vite)
-- [Wails](https://github.com/wailsapp/wails)
+- [Tauri](https://github.com/tauri-apps/tauri)
 - [MDUI](https://github.com/zdhxiong/mdui)
 - [CryptoJS](https://github.com/brix/crypto-js)
 - [jsdiff](https://github.com/kpdecker/jsdiff)

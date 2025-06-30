@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Hash Checker",
-  "mainBinaryName": "Hash Checker",
+  "productName": "Super Hash",
+  "mainBinaryName": "Super Hash",
   "version": "2.3.0",
   "identifier": "cn.super12138.hash",
   "build": {
@@ -14,7 +14,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "Hash Checker",
+        "title": "Super Hash",
         "width": 1024,
         "height": 768,
         "dragDropEnabled": false,
