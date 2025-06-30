@@ -49,7 +49,7 @@ import '@mdui/icons/upload-file--outlined.js';
 import { clearCacheAndReload, initPWA } from "./pwa/pwa";
 import { getUpdate } from "./utils/updater";
 
-import { removeColorScheme } from "mdui";
+import { removeColorScheme, snackbar } from "mdui";
 import { BuildVariant, FileStatus, HashAlgorithm, OperationMode } from './constants';
 import { FileItem } from "./file/FileItem";
 import { LogHelper } from "./utils/LogHelper";
@@ -72,8 +72,7 @@ const outputList: List = document.querySelector('#outputList')!;
 const settingsDrawer: NavigationDrawer = document.querySelector('#settingsDrawer')!;
 const openSettingsBtn: ButtonIcon = document.querySelector('#openSettings')!;
 const closeSettingsBtn: ButtonIcon = document.querySelector('#closeSettings')!;
-const saveSettings: Button = document.querySelector('#saveSettings')!;
-const cacheSize: Select = document.querySelector('#cacheSize')!;
+const cacheSize: TextField = document.querySelector('#cacheSize')!;
 const lengthSuggest: Switch = document.querySelector('#lengthSuggest')!;
 const sysNotification: Switch = document.querySelector('#systemNotification')!;
 const sendTestNotification: Button = document.querySelector('#sendTestNotification')!;
@@ -172,7 +171,7 @@ fileCard.addEventListener('click', () => {
     fileInput.click();
 });
 
-const handleFileDrop = (event: DragEvent) =>{
+const handleFileDrop = (event: DragEvent) => {
     event.preventDefault();
     if (event.type === 'drop') {
         dropZone.classList.remove('dragover');
@@ -223,7 +222,7 @@ checkFileBtn.addEventListener('click', () => {
     if (algorithm == HashAlgorithm.Unselected && mode == OperationMode.Unselected) {
         dialog({
             headline: '错误',
-            description: '请选择方法及模式',
+            description: '请选择校验算法及模式',
             actions: [
                 {
                     text: '知道了'
@@ -247,7 +246,7 @@ checkFileBtn.addEventListener('click', () => {
     if (algorithm == HashAlgorithm.Unselected || isBlankOrEmpty(algorithm.toString())) {
         dialog({
             headline: '错误',
-            description: '请选择方法',
+            description: '请选择校验算法',
             actions: [
                 {
                     text: '知道了'
@@ -290,75 +289,13 @@ openSettingsBtn.addEventListener('click', () => {
     toggleDrawer(settingsDrawer, outputDrawer);
 });
 
-saveSettings.addEventListener('click', () => {
-    const cacheSizeValue: string | string[] = cacheSize.value;
-    const autoUpdateSwitch: Switch | null = document.querySelector('#autoUpdateSwitch');
-    const autoUpdate = autoUpdateSwitch?.checked;
-    if (cacheSizeValue == "0") {
-        dialog({
-            headline: '错误',
-            description: '分片单次缓存大小不能为“0”，请重新输入',
-            actions: [
-                {
-                    text: '确定',
-                    onClick: () => {
-                        true;
-                    }
-                }
-            ]
-        });
-        return
-    }
-
-    if (isBlankOrEmpty(cacheSizeValue.toString())) {
-        dialog({
-            headline: '错误',
-            description: '分片单次缓存大小不能为空，请重新输入',
-            actions: [
-                {
-                    text: '确定',
-                    onClick: () => {
-                        true;
-                    }
-                }
-            ]
-        });
-        return;
-    }
-
-    if (cacheSizeValue.length > 10) {
-        dialog({
-            headline: '错误',
-            description: '分片单次缓存大小不能超过5位，请重新输入',
-            actions: [
-                {
-                    text: '确定',
-                    onClick: () => {
-                        true;
-                    }
-                }
-            ]
-        });
-        return;
-    }
-    setStorageItem("cacheSize", cacheSizeValue.toString());
-    setStorageItem("systemNotification", sysNotification.checked.toString());
-    if (autoUpdate === undefined) {
-        setStorageItem("autoUpdate", "false");
-    } else {
-        setStorageItem("autoUpdate", autoUpdate.toString());
-    }
-    setStorageItem("lengthSuggest", lengthSuggest.checked);
-
-    settingsDrawer.open = false;
-});
-
 closeSettingsBtn.addEventListener('click', () => {
     settingsDrawer.open = !settingsDrawer.open;
 });
 
 sysNotification.addEventListener('change', () => {
-    if (!settingsDrawer.open) return;
+    if (!settingsDrawer.open) return; // 如果抽屉栏未打开，则不处理（为了放置初始化值的时候触发）
+    setStorageItem("systemNotification", sysNotification.checked.toString());
     if (sysNotification.checked) {
         sendAppNotification("测试通知", "这是一个测试通知");
         sendTestNotification.style.display = "block";
@@ -370,6 +307,34 @@ sysNotification.addEventListener('change', () => {
 
 sendTestNotification.addEventListener('click', () => {
     sendAppNotification("测试通知", "这是一个测试通知");
+});
+
+lengthSuggest.addEventListener('change', () => {
+    if (!settingsDrawer.open) return; // 如果抽屉栏未打开，则不处理（为了放置初始化值的时候触发）
+    setStorageItem("lengthSuggest", lengthSuggest.checked);
+});
+
+cacheSize.addEventListener('input', () => {
+    if (!settingsDrawer.open) return; // 如果抽屉栏未打开，则不处理（为了放置初始化值的时候触发）
+    let value = cacheSize.value.trim();
+    let valid = true;
+    let message = "";
+
+    if (isBlankOrEmpty(value) || value.length > 4 || parseInt(value) <= 0) {
+        value = "2048";
+        valid = false;
+        if (isBlankOrEmpty(cacheSize.value)) {
+            message = "分片单次缓存大小不能为空，已设置为默认值 2048KB";
+        } else if (cacheSize.value.length > 4) {
+            message = "分片单次缓存大小不能超过4位，已设置为默认值 2048KB";
+        } else {
+            message = "分片单次缓存大小不能为0，已设置为默认值 2048KB";
+        }
+    }
+
+    cacheSize.value = value;
+    if (!valid) { snackbar({ message }); }
+    setStorageItem("cacheSize", value);
 });
 
 deleteCache.addEventListener('click', () => {
@@ -448,7 +413,7 @@ aboutCloseBtn.addEventListener('click', () => {
     aboutDialog.open = false;
 });
 
-// 依据校验方法开启/禁用校验值输入框
+// 依据校验校验算法开启/禁用校验值输入框
 modeSelect.addEventListener('change', () => {
     switch (modeSelect.value) {
         case OperationMode.Check:
@@ -463,7 +428,7 @@ modeSelect.addEventListener('change', () => {
     }
 });
 
-// 依据输入的长度自动设置校验方法
+// 依据输入的长度自动设置校验算法
 checkSumInput.addEventListener('input', () => {
     if (string2Boolean(getStorageItem("lengthSuggest", true))) {
         switch (checkSumInput.value.length) {
@@ -494,7 +459,12 @@ chooseColorBtn.addEventListener('click', () => {
 // 取消，清除用户临时选择的主题色
 colorCancelBtn.addEventListener('click', () => {
     colorDialog.open = false;
-    removeColorScheme();
+    if (isBlankOrEmpty(getStorageItem("dynamicColor", ""))) {
+        removeColorScheme();
+    } else {
+        dynamicColor.value = getStorageItem("dynamicColor", "");
+        setColorScheme(dynamicColor.value);
+    }
 });
 
 // 重置到默认颜色
