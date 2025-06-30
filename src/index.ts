@@ -139,6 +139,9 @@ window.addEventListener("load", () => {
         updateSwitch.slot = "end-icon";
         updateSwitch.id = "autoUpdateSwitch";
         updateSwitch.checked = autoUpdate;
+        updateSwitch.addEventListener('change', (event: CustomEvent<void> & Event) => {
+            setStorageItem("autoUpdate", (event.target as Switch).checked.toString());
+        });
         autoUpdateItem.appendChild(updateSwitch);
 
         sendTestNotification.parentNode?.insertBefore(autoUpdateItem, sendTestNotification.nextSibling);
