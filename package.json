@@ -29,7 +29,7 @@
     "@types/node": "^24.0.4",
     "@vite-pwa/assets-generator": "^1.0.0",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5",
+    "vite": "^7.0.0",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-pwa": "^1.0.0",
     "workbox-core": "^7.3.0",
