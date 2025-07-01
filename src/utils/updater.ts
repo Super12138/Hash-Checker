@@ -12,7 +12,7 @@ import { dialog } from 'mdui/functions/dialog.js';
 const logHelper: LogHelper = LogHelper.getInstance();
 const UPDATE_URL = "https://api.github.com/repos/Super12138/Hash-Checker/releases/latest";
 
-export function getUpdate() {
+export const getUpdate = () => {
     if (string2Boolean(getStorageItem(STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT)) && !STORE) {
         fetch(UPDATE_URL)
             .then(response => response.text())

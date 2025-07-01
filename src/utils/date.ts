@@ -3,7 +3,7 @@
  * @param date 日期时间戳
  * @returns 格式化的日期字符串，`yyyy年mm月dd日 hh:mm:ss`
  */
-export function formatDate(date: number): string {
+/* export const formatDate = (date: number): string => {
     let dateObj: Date = new Date(date);
     let year: number = dateObj.getFullYear();
     let month: string | number = dateObj.getMonth() + 1;
@@ -28,15 +28,15 @@ export function formatDate(date: number): string {
     }
     // 返回格式化后的日期字符串
     return `${year}年${month}月${day}日 ${hour}:${minute}:${second}`;
-}
+} */
 
 /**
  * 格式化时间
+ * 
  * @param seconds 传入的时间（单位：秒）
  * @returns 格式化的时间字符串；输出：`ss秒`，`mm分钟`，`hh 小时 mm 分钟 ss 秒`
- * 说明：小时、分钟、秒均为整数，分别通过取整和取余计算得出。
  */
-export function formatTime(seconds: number): string {
+export const formatTime = (seconds: number): string => {
     if (seconds < 60) {
         // 小于 60 秒，直接返回秒数
         return `${Math.round(seconds)} 秒`;

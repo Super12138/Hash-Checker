@@ -7,7 +7,7 @@ import { Change, diffChars } from "diff";
  * @param genHash 生成的哈希字符串
  * @returns 高亮显示差异的 HTMLSpanElement
  */
-export function compareHash(userHash: string, genHash: string): HTMLSpanElement {
+export const compareHash = (userHash: string, genHash: string): HTMLSpanElement => {
     const differences: Change[] = diffChars(userHash, genHash);
     const virtualDOM: HTMLSpanElement = document.createElement("span");
 
@@ -55,7 +55,7 @@ export function string2Boolean(str: string | null): boolean {
  * @param size 文件大小（字节）
  * @returns 格式化后的文件大小字符串（最大支持TB），如 `1 GB`
  */
-export function formatFileSize(size: number): string {
+export const formatFileSize = (size: number): string => {
     if (!isFinite(size) || size < 0) {
         return '文件大小无效';
     }
