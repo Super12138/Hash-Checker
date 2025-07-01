@@ -24,8 +24,8 @@ A quick, readily available cross-platform hash checker that follows Material Des
 [Simple Usage Instructions](https://super12138.github.io/hschecker/use.html)
 
 ## ⬇️ Download
-- Offline version V2.2.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
-- Online version V2.3.0[Github Page](https://super12138.github.io/Hash-Checker/)
+- Offline version V3.0.0[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- Online version V3.0.0[Github Page](https://super12138.github.io/Hash-Checker/)
 
 ## 📸 Screenshots
 |Main Interface (Light Mode)|

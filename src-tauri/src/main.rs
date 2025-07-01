@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    hash_checker_lib::run()
+    super_hash_lib::run()
 }

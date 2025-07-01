@@ -1,6 +1,6 @@
 [package]
-name = "hash-checker"
-version = "2.3.0"
+name = "super-hash"
+version = "3.0.0"
 description = "一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器"
 authors = ["Super12138"]
 edition = "2021"
@@ -11,7 +11,7 @@ edition = "2021"
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
-name = "hash_checker_lib"
+name = "super_hash_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

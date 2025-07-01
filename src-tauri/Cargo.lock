@@ -1400,8 +1400,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "hash-checker"
-version = "2.3.0"
+name = "super_hash"
+version = "3.0.0"
 dependencies = [
  "serde",
  "serde_json",

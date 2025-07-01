@@ -1,6 +1,6 @@
 {
-  "name": "hash-checker",
-  "version": "2.3.0",
+  "name": "super-hash",
+  "version": "3.0.0",
   "private": true,
   "description": "一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器",
   "type": "module",

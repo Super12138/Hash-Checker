@@ -24,8 +24,8 @@
 [简单使用方法](https://super12138.github.io/hschecker/use.html)
 
 ## ⬇️ 下载
-- 离线版 V2.2.1[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
-- 在线版 v2.3.0[Github Page](https://super12138.github.io/Hash-Checker/)
+- 离线版 V3.0.0[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
+- 在线版 v3.0.0[Github Page](https://super12138.github.io/Hash-Checker/)
 
 ## 📸 截图
 |主界面（浅色）|
