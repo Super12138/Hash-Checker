@@ -468,7 +468,7 @@ window.addEventListener('contextmenu', (event: MouseEvent) => {
 function addFile(file: File) {
     const fileItem = new FileItem(file);
     // 有重复文件则不添加
-    if (fileList.find(item => item.file.name === file.name)) return;
+    // if (fileList.find(item => item.file.name === file.name)) return;
     // 如果上一个文件状态为Waiting，就删除上一个，添加新的
     if (fileList.length > 0 && fileList[fileList.length - 1].status === FileStatus.WAITING) {
         fileList.pop();

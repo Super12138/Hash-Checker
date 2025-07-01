@@ -181,7 +181,7 @@ export class FileItem {
         dialogContent.appendChild(infoParagraph);
 
         const actions =
-            status == FileStatus.COMPUTING || status == FileStatus.WAITING
+            status == FileStatus.COMPUTING
                 ? [
                     {
                         text: "终止计算",
