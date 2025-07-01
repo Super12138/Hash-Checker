@@ -1,0 +1,47 @@
+name: Build Store Version (Windows x64)
+
+on:
+  workflow_dispatch:
+
+env:
+  NODE_OPTIONS: "--max-old-space-size=4096"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 20
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2.8.0
+        with:
+          workspaces: ./src-tauri -> target
+
+      - name: Change Build Command
+        run: cd ./src-tauri && sed -i 's/npm run build:desktop/npm run build:store/g' tauri.conf.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app
+        uses: tauri-apps/tauri-action@v0.5.22
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: Microsoft Store
+          path: |
+            src-tauri/target/**/release/bundle/**/*
+            src-tauri/target/**/release/Super Hash.exe
+            src-tauri/target/**/release/Super Hash

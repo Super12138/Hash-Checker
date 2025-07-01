@@ -27,6 +27,7 @@
   },
   "bundle": {
     "category": "Utility",
+    "publisher": "Super12138",
     "shortDescription": "生成和校验哈希值",
     "longDescription": "一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器",
     "active": true,
