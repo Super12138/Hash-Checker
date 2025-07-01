@@ -108,12 +108,13 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
             define: {
                 VERSION_NAME: JSON.stringify(packageJson.version),
                 VARIANT: JSON.stringify("dev"),
+                STORE: JSON.stringify(false),
                 COMMIT_HASH: JSON.stringify(commitHash),
                 VERSION_CODE: JSON.stringify(versionCode),
             },
         }
     } else {
-        switch (mode) { 
+        switch (mode) {
             case 'web':
                 return {
                     ...baseConfig,
@@ -121,6 +122,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                     define: {
                         VERSION_NAME: JSON.stringify(packageJson.version),
                         VARIANT: JSON.stringify("web"),
+                        STORE: JSON.stringify(false),
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
                     },
@@ -132,6 +134,19 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                     define: {
                         VERSION_NAME: JSON.stringify(packageJson.version),
                         VARIANT: JSON.stringify("desktop"),
+                        STORE: JSON.stringify(false),
+                        COMMIT_HASH: JSON.stringify(commitHash),
+                        VERSION_CODE: JSON.stringify(versionCode),
+                    },
+                }
+            case 'store':
+                return {
+                    ...baseConfig,
+                    base: '/',
+                    define: {
+                        VERSION_NAME: JSON.stringify(packageJson.version),
+                        VARIANT: JSON.stringify("desktop"),
+                        STORE: JSON.stringify(true),
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
                     },
@@ -143,6 +158,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                     define: {
                         VERSION_NAME: JSON.stringify(packageJson.version),
                         VARIANT: JSON.stringify("unknown"),
+                        STORE: JSON.stringify(false),
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
                     },

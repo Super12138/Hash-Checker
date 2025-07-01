@@ -8,6 +8,7 @@
     "dev": "vite",
     "build:web": "tsc && vite build --mode web",
     "build:desktop": "tsc && vite build --mode desktop",
+    "build:store": "tsc && vite build --mode store",
     "preview": "vite preview",
     "tauri": "tauri"
   },

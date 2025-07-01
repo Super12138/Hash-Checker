@@ -19,7 +19,7 @@ body:
       label: 版本类型 / Variant
       description: 请选择当前 Super Hash 的版本类型 / Select the version of Super Hash variant you're currently using
       options:
-        - 最新 Release 版 / Latest release
+        - 最新桌面或商店版 / Latest Desktop or Store
         - 最新 Web 或 CI 版 / Latest Web or CI
     validations:
       required: true

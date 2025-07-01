@@ -49,7 +49,8 @@ import '@mdui/icons/upload-file--outlined.js';
 import { clearCacheAndReload, initPWA } from "./pwa/pwa";
 import { getUpdate } from "./utils/updater";
 
-import { removeColorScheme, snackbar } from "mdui";
+import { IconUpdate_Outlined } from '@mdui/icons/update--outlined.js';
+import { snackbar } from "mdui";
 import { BuildVariant, FileStatus, HashAlgorithm, OperationMode, STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT, STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT, STORAGE_DYNAMIC_COLOR, STORAGE_DYNAMIC_COLOR_DEFAULT, STORAGE_FIRST_USE, STORAGE_FIRST_USE_DEFAULT, STORAGE_LENGTH_SUGGEST, STORAGE_LENGTH_SUGGEST_DEFAULT, STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT } from './constants';
 import { FileItem } from "./file/FileItem";
 import { LogHelper } from "./utils/LogHelper";
@@ -119,23 +120,29 @@ window.addEventListener("load", () => {
 
     // 仅桌面端和开发环境显示自动更新开关
     if (VARIANT === BuildVariant.Desktop || VARIANT === BuildVariant.Dev) {
-        logHelper.log({ autoUpdate });
-        const autoUpdateItem: ListItem = document.createElement('mdui-list-item');
-        autoUpdateItem.headline = "自动更新";
-        autoUpdateItem.description = "应用启动时将自动检查更新";
-        const updateIcon = document.createElement('mdui-icon-update--outlined');
-        updateIcon.slot = "icon";
-        autoUpdateItem.appendChild(updateIcon);
-        const updateSwitch: Switch = document.createElement('mdui-switch');
-        updateSwitch.slot = "end-icon";
-        updateSwitch.id = "autoUpdateSwitch";
-        updateSwitch.checked = autoUpdate;
-        updateSwitch.addEventListener('change', (event: CustomEvent<void> & Event) => {
-            setStorageItem("autoUpdate", (event.target as Switch).checked.toString());
-        });
-        autoUpdateItem.appendChild(updateSwitch);
+        logHelper.log(`商店版：${STORE}`);
+        if (!STORE) {
+            logHelper.log({ autoUpdate });
 
-        sendTestNotification.parentNode?.insertBefore(autoUpdateItem, sendTestNotification.nextSibling);
+            const autoUpdateItem: ListItem = document.createElement('mdui-list-item');
+            autoUpdateItem.headline = "自动更新";
+            autoUpdateItem.description = "应用启动时将自动检查更新";
+
+            const updateIcon: IconUpdate_Outlined = document.createElement('mdui-icon-update--outlined');
+            updateIcon.slot = "icon";
+            autoUpdateItem.appendChild(updateIcon);
+
+            const updateSwitch: Switch = document.createElement('mdui-switch');
+            updateSwitch.slot = "end-icon";
+            updateSwitch.id = "autoUpdateSwitch";
+            updateSwitch.checked = autoUpdate;
+            updateSwitch.addEventListener('change', (event: CustomEvent<void> & Event) => {
+                setStorageItem("autoUpdate", (event.target as Switch).checked.toString());
+            });
+            autoUpdateItem.appendChild(updateSwitch);
+
+            sendTestNotification.parentNode?.insertBefore(autoUpdateItem, sendTestNotification.nextSibling);
+        }
     }
 
     // 显示版本信息

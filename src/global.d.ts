@@ -12,6 +12,11 @@ declare const VERSION_NAME: string;
 declare const VARIANT: string;
 
 /**
+ * 商店版
+ */
+declare const STORE: boolean;
+
+/**
  * 版本提交 Hash
  */
 declare const COMMIT_HASH: string;

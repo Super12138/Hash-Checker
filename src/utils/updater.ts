@@ -13,7 +13,7 @@ const logHelper: LogHelper = LogHelper.getInstance();
 const UPDATE_URL = "https://api.github.com/repos/Super12138/Hash-Checker/releases/latest";
 
 export function getUpdate() {
-    if (string2Boolean(getStorageItem(STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT))) {
+    if (string2Boolean(getStorageItem(STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT)) && !STORE) {
         fetch(UPDATE_URL)
             .then(response => response.text())
             .then((data: string) => {
