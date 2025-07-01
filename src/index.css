@@ -73,7 +73,7 @@ body .drag-tip {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    /* backdrop-filter: blur(3px); */
+    backdrop-filter: blur(3px);
 }
 
 body.dragover .drag-tip {
