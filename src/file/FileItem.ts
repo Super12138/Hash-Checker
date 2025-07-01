@@ -186,14 +186,19 @@ export class FileItem {
                     {
                         text: "终止计算",
                         onClick: () => {
-                            const checkFileBtn: Button =
-                                document.querySelector("#checkFile")!;
+                            const fileForm: HTMLFormElement = document.querySelector("#fileForm")!;
+                            const fileInfo: HTMLSpanElement = document.querySelector("#fileInfo")!;
+                            const checkFileBtn: Button = document.querySelector("#checkFile")!;
+
+                            checkFileBtn.disabled = false;
+                            fileForm.reset();
+                            fileInfo.textContent = null;
+                            
                             this.worker.terminate();
                             this.status = FileStatus.CANCELED;
                             this.html.description = FileStatus.CANCELED;
                             this.hash = FileStatus.CANCELED;
                             this.progressBar.value = 0;
-                            checkFileBtn.disabled = false;
                             return true;
                         },
                     },

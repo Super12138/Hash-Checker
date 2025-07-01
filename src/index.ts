@@ -171,7 +171,7 @@ openOutput.addEventListener('click', () => {
 });
 
 closeOutput.addEventListener('click', () => {
-    outputDrawer.open = !outputDrawer.open;
+    outputDrawer.open = false;
 });
 
 // 选择文件
@@ -279,7 +279,7 @@ openSettingsBtn.addEventListener('click', () => {
 });
 
 closeSettingsBtn.addEventListener('click', () => {
-    settingsDrawer.open = !settingsDrawer.open;
+    settingsDrawer.open = false;
 });
 
 sysNotification.addEventListener('change', () => {
@@ -479,28 +479,25 @@ function addFile(file: File) {
 }
 
 /**
- * 切换抽屉栏的打开与关闭
- * * 确保页面上只有一个抽屉栏的打开，避免页面显示错误
+ * 切换单个抽屉栏的打开与关闭
+ * * 切换一个抽屉栏的打开与关闭，同时保证另一个抽屉蓝关闭
  *
  * @param openDrawer - 需要切换打开状态的抽屉栏
  * @param closeDrawer - 可能需要在打开时关闭的抽屉栏
  */
 function toggleDrawer(openDrawer: NavigationDrawer, closeDrawer: NavigationDrawer) {
     openDrawer.open = !openDrawer.open;
-    if (closeDrawer.open) {
-        closeDrawer.open = !closeDrawer.open;
-    }
+    if (closeDrawer.open) closeDrawer.open = false;
 }
 
 /**
- * 只打开一个抽屉栏，同时保证另一个抽屉栏的关闭
+ * 只打开一个抽屉栏
+ * * 保证其打开的同时证另一个抽屉栏关闭
  * 
  * @param openDrawer 要打开的抽屉栏
  * @param closeDrawer 要关闭的抽屉栏
  */
 function onlyOneDrawer(openDrawer: NavigationDrawer, closeDrawer: NavigationDrawer) {
     openDrawer.open = true;
-    if (closeDrawer.open) {
-        closeDrawer.open = false;
-    }
+    if (closeDrawer.open) closeDrawer.open = false;
 }
