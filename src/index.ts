@@ -27,6 +27,7 @@ import 'mdui/components/menu-item.js';
 import 'mdui/components/navigation-drawer.js';
 import 'mdui/components/select.js';
 import 'mdui/components/switch.js';
+import "mdui/components/tooltip.js";
 import 'mdui/components/top-app-bar-title.js';
 import 'mdui/components/top-app-bar.js';
 import 'mdui/mdui.css';
@@ -53,6 +54,7 @@ import { IconUpdate_Outlined } from '@mdui/icons/update--outlined.js';
 import { snackbar } from "mdui";
 import { BuildVariant, FileStatus, HashAlgorithm, OperationMode, STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT, STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT, STORAGE_DYNAMIC_COLOR, STORAGE_DYNAMIC_COLOR_DEFAULT, STORAGE_FIRST_USE, STORAGE_FIRST_USE_DEFAULT, STORAGE_LENGTH_SUGGEST, STORAGE_LENGTH_SUGGEST_DEFAULT, STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT } from './constants';
 import { FileItem } from "./file/FileItem";
+import { writeToClipboard } from './utils/clipboard';
 import { LogHelper } from "./utils/LogHelper";
 
 // 页面内容
@@ -146,7 +148,7 @@ window.addEventListener("load", () => {
     }
 
     // 显示版本信息
-    versionElement.textContent = `版本：${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})`;
+    versionElement.textContent = `版本：${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})${STORE ? " [store]" : ""}`;
 });
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -158,6 +160,10 @@ window.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('ready');
 
     if (VARIANT == BuildVariant.Desktop || VARIANT == BuildVariant.Dev) getUpdate();
+});
+
+versionElement.addEventListener('click', () => {
+    writeToClipboard(`${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})`);
 });
 
 openOutput.addEventListener('click', () => {
