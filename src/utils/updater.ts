@@ -29,7 +29,7 @@ export const getUpdate = () => {
                 container.innerHTML = marked.parse(json.body).toString(); // 解析 GitHub Release 的 Markdown 更新日志
                 dialog({
                     headline: `更新至 ${json.name}`,
-                    description: '检测到 Super Hash 有新版本，下方为本次更新内容，是否更新?',
+                    description: '检测到 Super Hash 有新版本，下方为本次更新内容，是否更新？',
                     body: container,
                     actions: [
                         {

@@ -335,7 +335,7 @@ deleteCache.addEventListener('click', () => {
                 onClick: () => true
             },
             {
-                text: '清除缓存',
+                text: '确定',
                 onClick: () => {
                     dialog({
                         headline: '提示',
@@ -361,7 +361,7 @@ deleteAllData.addEventListener('click', () => {
                 onClick: () => true
             },
             {
-                text: '清除所有数据',
+                text: '确定',
                 onClick: () => {
                     dialog({
                         headline: '提示',

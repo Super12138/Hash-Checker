@@ -284,17 +284,38 @@ body::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0)
 } */
 
-#mode,
-#algorithm {
-    width: 30%;
-}
-
 #checkFile {
     margin: 1.5rem 0 2em 0;
 }
 
-#version{
+#version {
     cursor: pointer;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.algorithm-select,
+.mode-select {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.select-label {
+    white-space: nowrap;
+    align-content: center;
+    padding-right: 1rem;
+}
+
+@media (max-width: 500px) {
+    .options-container {
+        flex-direction: column;
+        /* gap: 10px; */
+    }
 }
 
 .hidden {

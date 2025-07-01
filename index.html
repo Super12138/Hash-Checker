@@ -52,23 +52,27 @@
                     <mdui-checkbox id="isClipboard"></mdui-checkbox>计算完成后将校验值写入剪贴板（仅在<strong>生成</strong>模式下生效）
                 </p>
             </div>
-            <div class="mt-1r select-none">
-                <span>校验算法：</span>
-                <mdui-select id="algorithm" value="unselected" style="margin-right: 15px;" required>
-                    <mdui-menu-item value="unselected" disabled>请选择校验算法...</mdui-menu-item>
-                    <mdui-menu-item value="MD5">MD5</mdui-menu-item>
-                    <mdui-menu-item value="SHA1">SHA1</mdui-menu-item>
-                    <mdui-menu-item value="SHA3">SHA3</mdui-menu-item>
-                    <mdui-menu-item value="SHA256">SHA256</mdui-menu-item>
-                    <mdui-menu-item value="SHA384">SHA384</mdui-menu-item>
-                    <mdui-menu-item value="SHA512">SHA512</mdui-menu-item>
-                </mdui-select>
-                <span>模式：</span>
-                <mdui-select id="mode" value="unselected" required>
-                    <mdui-menu-item value="unselected" disabled>请选择模式...</mdui-menu-item>
-                    <mdui-menu-item value="check">校验</mdui-menu-item>
-                    <mdui-menu-item value="generate">生成</mdui-menu-item>
-                </mdui-select>
+            <div class="mt-1r select-none options-container">
+                <div class="algorithm-select">
+                    <span class="select-label">算法</span>
+                    <mdui-select id="algorithm" value="unselected" required>
+                        <mdui-menu-item value="unselected" disabled>请选择算法</mdui-menu-item>
+                        <mdui-menu-item value="MD5">MD5</mdui-menu-item>
+                        <mdui-menu-item value="SHA1">SHA1</mdui-menu-item>
+                        <mdui-menu-item value="SHA3">SHA3</mdui-menu-item>
+                        <mdui-menu-item value="SHA256">SHA256</mdui-menu-item>
+                        <mdui-menu-item value="SHA384">SHA384</mdui-menu-item>
+                        <mdui-menu-item value="SHA512">SHA512</mdui-menu-item>
+                    </mdui-select>
+                </div>
+                <div class="mode-select">
+                    <span class="select-label">模式</span>
+                    <mdui-select id="mode" value="unselected" required>
+                        <mdui-menu-item value="unselected" disabled>请选择模式</mdui-menu-item>
+                        <mdui-menu-item value="check">校验</mdui-menu-item>
+                        <mdui-menu-item value="generate">生成</mdui-menu-item>
+                    </mdui-select>
+                </div>
             </div>
             <mdui-text-field class="mt-2r" label="校验值" helper="在此处粘贴您获取到的校验值" id="checkSumInput" disabled clearable></mdui-text-field>
             <mdui-button full-width id="checkFile">检查</mdui-button>
