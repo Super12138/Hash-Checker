@@ -20,11 +20,11 @@
 </head>
 
 <body>
-    <div class="drag-tip">
+    <div class="drag-tip select-none">
         <h1>松开鼠标以读取文件</h1>
     </div>
     <mdui-layout>
-        <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".container">
+        <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".container" class="select-none">
             <mdui-button-icon id="openOutput">
                 <mdui-icon-menu--outlined></mdui-icon-menu--outlined>
             </mdui-button-icon>
@@ -37,7 +37,9 @@
 
         <mdui-layout-main class="container">
             <div>
+                <form id="fileForm">
                 <input class="hidden" id="fileInput" type="file">
+            </form>
                 <div class="center-align">
                     <mdui-card class="file-card" id="fileCard" variant="outlined" clickable>
                         <mdui-icon-upload-file--outlined class="upload-icon"></mdui-icon-upload-file--outlined>
@@ -90,7 +92,7 @@
         <mdui-list id="outputList"></mdui-list>
     </mdui-navigation-drawer>
 
-    <mdui-navigation-drawer id="settingsDrawer" placement="right">
+    <mdui-navigation-drawer id="settingsDrawer" placement="right" close-on-esc close-on-overlay-click>
         <div class="drawer-title">
             <span>设置</span>
             <mdui-button-icon id="closeSettings">
@@ -128,7 +130,7 @@
         </mdui-list>
     </mdui-navigation-drawer>
 
-    <mdui-dialog headline="关于" id="aboutDialog" class="align-center">
+    <mdui-dialog headline="关于" id="aboutDialog" class="align-center select-none">
         <img width="120px" src="icon-512.png" />
         <p class="headline-small no-margin" style="margin-top: 10px;">Super Hash</p>
         <mdui-tooltip content="单击即可复制">

@@ -1,4 +1,4 @@
-import { FileStatus, STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT, STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT } from "../constants";
+import { FileStatus, OperationMode, STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT, STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT } from "../constants";
 import { getStorageItem } from "../store/localstorage";
 import { writeToClipboard } from "../utils/clipboard";
 import { formatTime } from "../utils/date";
@@ -55,13 +55,15 @@ export class FileItem {
         this.progressBar = progressBar;
     }
 
-    getHash(mode: string, algorithm: string, checkSum?: string) {
+    getHash(mode: OperationMode, algorithm: string, checkSum?: string) {
         logHelper.log({ mode, algorithm, checkSum });
 
         this.progressBar.value = undefined;
         this.algorithm = algorithm;
 
         const checkFileBtn: Button = document.querySelector("#checkFile")!;
+        const fileForm: HTMLFormElement = document.querySelector("#fileForm")!;
+        const fileInfo: HTMLSpanElement = document.querySelector("#fileInfo")!;
 
         const chunkSize: number = Number(getStorageItem(STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT));
         const isClipboard: boolean = (
@@ -94,6 +96,8 @@ export class FileItem {
                     this.status = FileStatus.FINISHED;
 
                     checkFileBtn.disabled = false;
+                    fileForm.reset();
+                    fileInfo.textContent = null;
 
                     if (systemNotification) {
                         sendAppNotification(
@@ -103,7 +107,7 @@ export class FileItem {
                     }
 
                     switch (mode) {
-                        case "check":
+                        case OperationMode.Check:
                             // index.ts 已对用户输入 Hash 进行判空
                             const userHash = checkSum!.toLowerCase();
                             const genHash = this.hash.toLowerCase();
@@ -117,7 +121,7 @@ export class FileItem {
                             }
 
                             break;
-                        case "generate":
+                        case OperationMode.Generate:
                             this.html.description = `${algorithm} 值：${this.hash}`;
                             if (isClipboard) {
                                 writeToClipboard(this.hash);
@@ -169,7 +173,7 @@ export class FileItem {
 
         if (difference) {
             const diffParagraph = difference
-                ? `哈希对比结果（红色是新增部分，白色是相同部分，删除线是多余部分）：${difference.outerHTML}`
+                ? `<br>哈希对比结果（红色是新增部分，白色是相同部分，删除线是多余部分）：${difference.outerHTML}`
                 : "";
             infoParagraph.innerHTML += diffParagraph;
         }
@@ -177,7 +181,7 @@ export class FileItem {
         dialogContent.appendChild(infoParagraph);
 
         const actions =
-            status == FileStatus.COMPUTING
+            status == FileStatus.COMPUTING || status == FileStatus.WAITING
                 ? [
                     {
                         text: "终止计算",

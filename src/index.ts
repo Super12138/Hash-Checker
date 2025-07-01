@@ -186,6 +186,7 @@ const handleFileDrop = (event: DragEvent) => {
         if (event.dataTransfer && event.dataTransfer.files.length > 0) {
             const file: File = event.dataTransfer.files[0];
             fileInfo.textContent = `${file.name} (${formatFileSize(file.size)})`;
+            fileInput.files = event.dataTransfer.files;
             logHelper.log(file);
             addFile(file);
         }
@@ -215,7 +216,7 @@ fileInput.addEventListener('change', () => {
 checkFileBtn.addEventListener('click', () => {
     const algorithm: string | string[] = algorithmSelect.value;
     const mode: string | string[] = modeSelect.value;
-    if (fileList.length === 0) {
+    if (fileInput.files == null || fileInput.files.length === 0) {
         dialog({
             headline: '错误',
             description: '请选择文件',
@@ -266,7 +267,7 @@ checkFileBtn.addEventListener('click', () => {
                 return;
             }
             logHelper.log({ mode, algorithm, checkSum });
-            fileList[fileList.length - 1].getHash(mode.toString(), algorithm.toString(), checkSum);
+            fileList[fileList.length - 1].getHash(mode, algorithm.toString(), checkSum);
             onlyOneDrawer(outputDrawer, settingsDrawer);
             break;
     }
@@ -327,8 +328,8 @@ cacheSize.addEventListener('input', () => {
 
 deleteCache.addEventListener('click', () => {
     dialog({
-        headline: '你真的要清除缓存吗',
-        description: '这不会删除任何您的个人设置',
+        headline: '提示',
+        description: '即将清除 Super Hash 的应用缓存，这不会影响个人设置。是否清除？',
         actions: [
             {
                 text: '取消',
@@ -353,8 +354,8 @@ deleteCache.addEventListener('click', () => {
 
 deleteAllData.addEventListener('click', () => {
     dialog({
-        headline: '是否清除全部应用数据',
-        description: '这将清除应用缓存和您所有的个人设置',
+        headline: '警告',
+        description: '即将清除 Super Hash 的全部数据，包括个人设置以及缓存。清除后将无法恢复，确定清除？',
         actions: [
             {
                 text: '取消',
