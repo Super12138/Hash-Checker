@@ -2,6 +2,15 @@ name: Build Store Version (Windows x64)
 
 on:
   workflow_dispatch:
+    inputs:
+      offline:
+        description: "在安装包里合入 WebView2 离线安装器"
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 env:
   NODE_OPTIONS: "--max-old-space-size=4096"
@@ -30,6 +39,10 @@ jobs:
 
       - name: Change Build Command
         run: cd ./src-tauri && sed -i 's/npm run build:desktop/npm run build:store/g' tauri.conf.json
+
+      - name: Change WebView2 Config (Only for Offline Installer)
+        if: ${{ github.event.inputs.offline == 'true' }}
+        run: cd ./src-tauri && sed -i 's/downloadBootstrapper/offlineInstaller/g' tauri.conf.json
 
       - name: Install dependencies
         run: npm install

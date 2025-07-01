@@ -193,7 +193,7 @@ export class FileItem {
                             checkFileBtn.disabled = false;
                             fileForm.reset();
                             fileInfo.textContent = null;
-                            
+
                             this.worker.terminate();
                             this.status = FileStatus.CANCELED;
                             this.html.description = FileStatus.CANCELED;
