@@ -1,4 +1,4 @@
-import { clearStorage, getStorageItem, removeStorageItem, setStorageItem, setUpStorage } from './store/localstorage';
+import { clearStorage, getStorageItem, setStorageItem, setUpStorage } from './store/localstorage';
 import { sendAppNotification } from "./utils/notification";
 import { formatFileSize, isBlankOrEmpty, string2Boolean } from './utils/text';
 
@@ -50,7 +50,7 @@ import { clearCacheAndReload, initPWA } from "./pwa/pwa";
 import { getUpdate } from "./utils/updater";
 
 import { removeColorScheme, snackbar } from "mdui";
-import { BuildVariant, FileStatus, HashAlgorithm, OperationMode } from './constants';
+import { BuildVariant, FileStatus, HashAlgorithm, OperationMode, STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT, STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT, STORAGE_DYNAMIC_COLOR, STORAGE_DYNAMIC_COLOR_DEFAULT, STORAGE_FIRST_USE, STORAGE_FIRST_USE_DEFAULT, STORAGE_LENGTH_SUGGEST, STORAGE_LENGTH_SUGGEST_DEFAULT, STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT } from './constants';
 import { FileItem } from "./file/FileItem";
 import { LogHelper } from "./utils/LogHelper";
 
@@ -101,33 +101,24 @@ let fileList: FileItem[] = [];
 window.addEventListener("load", () => {
     if (VARIANT !== BuildVariant.Desktop) initPWA();
 
-    const isFirstUse: boolean = string2Boolean(getStorageItem("firstUse", false));
-    const cacheSizeValue: string = getStorageItem("cacheSize", 2048);
-    const systemNotification: boolean = string2Boolean(getStorageItem("systemNotification", false));
-    const lengthSuggestValue: boolean = string2Boolean(getStorageItem("lengthSuggest", true));
-    const autoUpdate: boolean = string2Boolean(getStorageItem("autoUpdate", true));
+    const isFirstUse: boolean = string2Boolean(getStorageItem(STORAGE_FIRST_USE, STORAGE_FIRST_USE_DEFAULT));
+    const cacheSizeValue: string = getStorageItem(STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT);
+    const systemNotification: boolean = string2Boolean(getStorageItem(STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT));
+    const lengthSuggestValue: boolean = string2Boolean(getStorageItem(STORAGE_LENGTH_SUGGEST, STORAGE_LENGTH_SUGGEST_DEFAULT));
+    const autoUpdate: boolean = string2Boolean(getStorageItem(STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT));
     logHelper.log({ isFirstUse, cacheSizeValue, systemNotification, lengthSuggestValue });
 
-    if (isFirstUse) {
-        setUpStorage();
-    }
+    if (isFirstUse) setUpStorage();
 
-    if (isBlankOrEmpty(cacheSizeValue)) {
-        setStorageItem("cacheSize", 2048);
-    }
+    if (isBlankOrEmpty(cacheSizeValue)) setStorageItem(STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT);
 
-    if (systemNotification) {
-        sendTestNotification.style.display = "block";
-    } else {
-        sendTestNotification.style.display = "none";
-    }
-
+    sendTestNotification.style.display = systemNotification ? "block" : "none";
     cacheSize.value = cacheSizeValue;
     lengthSuggest.checked = lengthSuggestValue;
     sysNotification.checked = systemNotification;
 
-    // 仅桌面端显示开关
-    if (VARIANT === BuildVariant.Desktop) {
+    // 仅桌面端和开发环境显示自动更新开关
+    if (VARIANT === BuildVariant.Desktop || VARIANT === BuildVariant.Dev) {
         logHelper.log({ autoUpdate });
         const autoUpdateItem: ListItem = document.createElement('mdui-list-item');
         autoUpdateItem.headline = "自动更新";
@@ -146,19 +137,20 @@ window.addEventListener("load", () => {
 
         sendTestNotification.parentNode?.insertBefore(autoUpdateItem, sendTestNotification.nextSibling);
     }
-    // APP_VERSION：全局环境变量
-    versionElement.innerHTML = `版本：${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})`;
+
+    // 显示版本信息
+    versionElement.textContent = `版本：${VERSION_NAME}-${VARIANT}-${COMMIT_HASH} (${VERSION_CODE})`;
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-    const dynamicColorValue: string = getStorageItem("dynamicColor", '') as string;
+    const dynamicColorValue: string = getStorageItem(STORAGE_DYNAMIC_COLOR, STORAGE_DYNAMIC_COLOR_DEFAULT) as string;
     dynamicColor.value = dynamicColorValue;
     if (dynamicColorValue) {
         setColorScheme(dynamicColorValue);
     }
     document.body.classList.add('ready');
 
-    getUpdate();
+    if (VARIANT == BuildVariant.Desktop || VARIANT == BuildVariant.Dev) getUpdate();
 });
 
 openOutput.addEventListener('click', () => {
@@ -214,11 +206,7 @@ checkFileBtn.addEventListener('click', () => {
         dialog({
             headline: '错误',
             description: '请选择文件',
-            actions: [
-                {
-                    text: '知道了'
-                }
-            ]
+            actions: [{ text: '知道了' }]
         });
         return;
     }
@@ -226,11 +214,7 @@ checkFileBtn.addEventListener('click', () => {
         dialog({
             headline: '错误',
             description: '请选择校验算法及模式',
-            actions: [
-                {
-                    text: '知道了'
-                }
-            ]
+            actions: [{ text: '知道了' }]
         });
         return;
     }
@@ -238,11 +222,7 @@ checkFileBtn.addEventListener('click', () => {
         dialog({
             headline: '错误',
             description: '请选择模式',
-            actions: [
-                {
-                    text: '知道了'
-                }
-            ]
+            actions: [{ text: '知道了' }]
         });
         return;
     }
@@ -250,11 +230,7 @@ checkFileBtn.addEventListener('click', () => {
         dialog({
             headline: '错误',
             description: '请选择校验算法',
-            actions: [
-                {
-                    text: '知道了'
-                }
-            ]
+            actions: [{ text: '知道了' }]
         });
         return;
     }
@@ -272,11 +248,7 @@ checkFileBtn.addEventListener('click', () => {
                 dialog({
                     headline: '错误',
                     description: '请输入校验值',
-                    actions: [
-                        {
-                            text: '知道了'
-                        }
-                    ]
+                    actions: [{ text: '知道了' }]
                 });
                 return;
             }
@@ -298,7 +270,7 @@ closeSettingsBtn.addEventListener('click', () => {
 
 sysNotification.addEventListener('change', () => {
     if (!settingsDrawer.open) return; // 如果抽屉栏未打开，则不处理（为了放置初始化值的时候触发）
-    setStorageItem("systemNotification", sysNotification.checked.toString());
+    setStorageItem(STORAGE_SYSTEM_NOTIFICATION, sysNotification.checked.toString());
     if (sysNotification.checked) {
         sendAppNotification("测试通知", "这是一个测试通知");
         sendTestNotification.style.display = "block";
@@ -314,7 +286,7 @@ sendTestNotification.addEventListener('click', () => {
 
 lengthSuggest.addEventListener('change', () => {
     if (!settingsDrawer.open) return; // 如果抽屉栏未打开，则不处理（为了放置初始化值的时候触发）
-    setStorageItem("lengthSuggest", lengthSuggest.checked);
+    setStorageItem(STORAGE_LENGTH_SUGGEST, lengthSuggest.checked);
 });
 
 cacheSize.addEventListener('input', () => {
@@ -324,7 +296,7 @@ cacheSize.addEventListener('input', () => {
     let message = "";
 
     if (isBlankOrEmpty(value) || value.length > 4 || parseInt(value) <= 0) {
-        value = "2048";
+        value = STORAGE_CACHE_SIZE_DEFAULT.toString();
         valid = false;
         if (isBlankOrEmpty(cacheSize.value)) {
             message = "分片单次缓存大小不能为空，已设置为默认值 2048KB";
@@ -337,7 +309,7 @@ cacheSize.addEventListener('input', () => {
 
     cacheSize.value = value;
     if (!valid) { snackbar({ message }); }
-    setStorageItem("cacheSize", value);
+    setStorageItem(STORAGE_CACHE_SIZE, value);
 });
 
 deleteCache.addEventListener('click', () => {
@@ -347,9 +319,7 @@ deleteCache.addEventListener('click', () => {
         actions: [
             {
                 text: '取消',
-                onClick: () => {
-                    true;
-                }
+                onClick: () => true
             },
             {
                 text: '清除缓存',
@@ -357,11 +327,7 @@ deleteCache.addEventListener('click', () => {
                     dialog({
                         headline: '提示',
                         description: '清除缓存成功，应用即将重载',
-                        actions: [
-                            {
-                                text: '确定'
-                            }
-                        ]
+                        actions: [{ text: '确定' }]
                     });
                     setTimeout(() => {
                         clearCacheAndReload();
@@ -379,9 +345,7 @@ deleteAllData.addEventListener('click', () => {
         actions: [
             {
                 text: '取消',
-                onClick: () => {
-                    true;
-                }
+                onClick: () => true
             },
             {
                 text: '清除所有数据',
@@ -389,11 +353,7 @@ deleteAllData.addEventListener('click', () => {
                     dialog({
                         headline: '提示',
                         description: '清除所有数据成功，应用即将重载',
-                        actions: [
-                            {
-                                text: '确定'
-                            }
-                        ]
+                        actions: [{ text: '确定' }]
                     });
                     setTimeout(() => {
                         clearStorage();
@@ -433,7 +393,7 @@ modeSelect.addEventListener('change', () => {
 
 // 依据输入的长度自动设置校验算法
 checkSumInput.addEventListener('input', () => {
-    if (string2Boolean(getStorageItem("lengthSuggest", true))) {
+    if (string2Boolean(getStorageItem(STORAGE_LENGTH_SUGGEST, STORAGE_LENGTH_SUGGEST_DEFAULT))) {
         switch (checkSumInput.value.length) {
             case 32:
                 algorithmSelect.value = HashAlgorithm.MD5;
@@ -462,26 +422,23 @@ chooseColorBtn.addEventListener('click', () => {
 // 取消，清除用户临时选择的主题色
 colorCancelBtn.addEventListener('click', () => {
     colorDialog.open = false;
-    if (isBlankOrEmpty(getStorageItem("dynamicColor", ""))) {
-        removeColorScheme();
-    } else {
-        dynamicColor.value = getStorageItem("dynamicColor", "");
-        setColorScheme(dynamicColor.value);
-    }
+    dynamicColor.value = getStorageItem(STORAGE_DYNAMIC_COLOR, STORAGE_DYNAMIC_COLOR_DEFAULT);
+    setColorScheme(dynamicColor.value);
 });
 
 // 重置到默认颜色
 resetColorBtn.addEventListener('click', () => {
     colorDialog.open = false;
-    removeStorageItem("dynamicColor");
-    removeColorScheme();
+    dynamicColor.value = STORAGE_DYNAMIC_COLOR_DEFAULT;
+    setColorScheme(STORAGE_DYNAMIC_COLOR_DEFAULT);
+    setStorageItem(STORAGE_DYNAMIC_COLOR, STORAGE_DYNAMIC_COLOR_DEFAULT);
 });
 
 // 设置主题色
 setColorBtn.addEventListener('click', () => {
     setColorScheme(dynamicColor.value);
     colorDialog.open = false;
-    setStorageItem("dynamicColor", dynamicColor.value);
+    setStorageItem(STORAGE_DYNAMIC_COLOR, dynamicColor.value);
 });
 
 // 拖动取色器时自动更改当前主题色

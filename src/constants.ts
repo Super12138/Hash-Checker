@@ -1,3 +1,23 @@
+// 设置项
+export const STORAGE_FIRST_USE = "firstUse";
+export const STORAGE_FIRST_USE_DEFAULT = false;
+
+export const STORAGE_CACHE_SIZE = "cacheSize";
+export const STORAGE_CACHE_SIZE_DEFAULT = 2048;
+
+export const STORAGE_LENGTH_SUGGEST = "lengthSuggest";
+export const STORAGE_LENGTH_SUGGEST_DEFAULT = true;
+
+export const STORAGE_SYSTEM_NOTIFICATION = "systemNotification";
+export const STORAGE_SYSTEM_NOTIFICATION_DEFAULT = false;
+
+export const STORAGE_DYNAMIC_COLOR = "dynamicColor";
+export const STORAGE_DYNAMIC_COLOR_DEFAULT = "#0f032b";
+
+export const STORAGE_AUTO_UPDATE = "autoUpdate";
+export const STORAGE_AUTO_UPDATE_DEFAULT = true;
+
+// 常量枚举
 export enum BuildVariant {
     Web = 'web',
     Desktop = 'desktop',

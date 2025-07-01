@@ -1,4 +1,4 @@
-import { FileStatus } from "../constants";
+import { FileStatus, STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT, STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT } from "../constants";
 import { getStorageItem } from "../store/localstorage";
 import { writeToClipboard } from "../utils/clipboard";
 import { formatTime } from "../utils/date";
@@ -63,12 +63,12 @@ export class FileItem {
 
         const checkFileBtn: Button = document.querySelector("#checkFile")!;
 
-        const chunkSize: number = Number(getStorageItem("cacheSize", 2048));
+        const chunkSize: number = Number(getStorageItem(STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT));
         const isClipboard: boolean = (
             document.querySelector("#isClipboard") as Checkbox
         ).checked;
         const systemNotification: boolean = string2Boolean(
-            getStorageItem("systemNotification", false)
+            getStorageItem(STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT)
         );
 
         checkFileBtn.disabled = true;

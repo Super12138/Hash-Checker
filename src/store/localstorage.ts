@@ -1,4 +1,4 @@
-import { BuildVariant } from "../constants";
+import { BuildVariant, STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT, STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT, STORAGE_DYNAMIC_COLOR, STORAGE_DYNAMIC_COLOR_DEFAULT, STORAGE_FIRST_USE, STORAGE_FIRST_USE_DEFAULT, STORAGE_LENGTH_SUGGEST, STORAGE_LENGTH_SUGGEST_DEFAULT, STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT } from "../constants";
 
 const myStorage: Storage = localStorage;
 
@@ -43,9 +43,10 @@ export function clearStorage() {
  * 初始化本地存储
  */
 export function setUpStorage() {
-    setStorageItem("firstUse", false);
-    setStorageItem("cacheSize", 2048);
-    setStorageItem("lengthSuggest", true);
-    setStorageItem("systemNotification", false);
-    if (VARIANT === BuildVariant.Desktop) setStorageItem("autoUpdate", true);
+    setStorageItem(STORAGE_FIRST_USE, STORAGE_FIRST_USE_DEFAULT);
+    setStorageItem(STORAGE_CACHE_SIZE, STORAGE_CACHE_SIZE_DEFAULT);
+    setStorageItem(STORAGE_LENGTH_SUGGEST, STORAGE_LENGTH_SUGGEST_DEFAULT);
+    setStorageItem(STORAGE_SYSTEM_NOTIFICATION, STORAGE_SYSTEM_NOTIFICATION_DEFAULT);
+    setStorageItem(STORAGE_DYNAMIC_COLOR, STORAGE_DYNAMIC_COLOR_DEFAULT);
+    if (VARIANT === BuildVariant.Desktop) setStorageItem(STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT);
 }

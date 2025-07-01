@@ -1,4 +1,4 @@
-import { BuildVariant } from "../constants";
+import { STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT } from "../constants";
 import { GitHubApiReleaseResponse } from "../interfaces";
 import { getStorageItem } from "../store/localstorage";
 import { LogHelper } from "./LogHelper";
@@ -13,9 +13,7 @@ const logHelper: LogHelper = LogHelper.getInstance();
 const UPDATE_URL = "https://api.github.com/repos/Super12138/Hash-Checker/releases/latest";
 
 export function getUpdate() {
-    // 非桌面端不进行检查
-    if (VARIANT !== BuildVariant.Desktop) return;
-    if (string2Boolean(getStorageItem("autoUpdate", true))) {
+    if (string2Boolean(getStorageItem(STORAGE_AUTO_UPDATE, STORAGE_AUTO_UPDATE_DEFAULT))) {
         fetch(UPDATE_URL)
             .then(response => response.text())
             .then((data: string) => {
