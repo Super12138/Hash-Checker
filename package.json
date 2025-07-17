@@ -1,54 +1,31 @@
 {
-  "name": "super-hash",
-  "version": "3.0.0",
-  "private": true,
-  "description": "一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build:web": "tsc && vite build --mode web",
-    "build:desktop": "tsc && vite build --mode desktop",
-    "build:store": "tsc && vite build --mode store",
-    "preview": "vite preview",
-    "tauri": "tauri"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Super12138/Hash-Checker.git"
-  },
-  "author": "Super12138",
-  "license": "GPL-3.0-only",
-  "bugs": {
-    "url": "https://github.com/Super12138/Hash-Checker/issues"
-  },
-  "homepage": "https://github.com/Super12138/Hash-Checker#readme",
-  "devDependencies": {
-    "@mdui/icons": "^1.0.3",
-    "@tauri-apps/cli": "^2.5.0",
-    "@types/crypto-js": "^4.2.2",
-    "@types/node": "^24.0.4",
-    "@vite-pwa/assets-generator": "^1.0.0",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.0",
-    "vite-plugin-html": "^3.2.2",
-    "vite-plugin-pwa": "^1.0.0",
-    "workbox-core": "^7.3.0",
-    "workbox-precaching": "^7.3.0",
-    "workbox-routing": "^7.3.0",
-    "workbox-strategies": "^7.3.0",
-    "workbox-window": "^7.3.0"
-  },
-  "dependencies": {
-    "@tauri-apps/api": "^2.5.0",
-    "@tauri-apps/plugin-notification": "^2.2.2",
-    "@tauri-apps/plugin-shell": "^2.2.1",
-    "crypto-js": "^4.2.0",
-    "diff": "^8.0.2",
-    "marked": "^16.0.0",
-    "mdui": "^2.1.4"
-  },
-  "overrides": {
-    "sharp": "0.34.3",
-    "sharp-ico": "0.1.5"
-  }
+    "name": "super-hash",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "run-p type-check \"build-only {@}\" --",
+        "preview": "vite preview",
+        "build-only": "vite build",
+        "type-check": "vue-tsc --build",
+        "format": "prettier --write src/"
+    },
+    "dependencies": {
+        "mdui": "^2.1.4",
+        "vue": "^3.5.17"
+    },
+    "devDependencies": {
+        "@tsconfig/node24": "^24.0.1",
+        "@types/node": "^24.0.14",
+        "@vitejs/plugin-vue": "^6.0.0",
+        "@vue/tsconfig": "^0.7.0",
+        "npm-run-all2": "^8.0.4",
+        "prettier": "3.6.2",
+        "typescript": "~5.8.3",
+        "vite": "^7.0.4",
+        "vite-plugin-html": "^3.2.2",
+        "vite-plugin-vue-devtools": "^7.7.7",
+        "vue-tsc": "^3.0.1"
+    }
 }

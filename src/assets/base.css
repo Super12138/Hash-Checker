@@ -1,0 +1,96 @@
+@font-face {
+    font-weight: 400;
+    font-family: Roboto;
+    font-style: normal;
+    font-display: swap;
+    src:
+        local("Roboto Regular"),
+        local("Roboto-Regular"),
+        url(./fonts/roboto/Roboto-Regular.woff2) format("woff2"),
+        url(./fonts/roboto/Roboto-Regular.woff) format("woff");
+}
+
+@font-face {
+    font-weight: 400;
+    font-family: Roboto;
+    font-style: italic;
+    font-display: swap;
+    src:
+        local("Roboto RegularItalic"),
+        local("Roboto-RegularItalic"),
+        url(./fonts/roboto/Roboto-RegularItalic.woff2) format("woff2"),
+        url(./fonts/roboto/Roboto-RegularItalic.woff) format("woff");
+}
+
+@font-face {
+    font-weight: 500;
+    font-family: Roboto;
+    font-style: normal;
+    font-display: swap;
+    src:
+        local("Roboto Medium"),
+        local("Roboto-Medium"),
+        url(./fonts/roboto/Roboto-Medium.woff2) format("woff2"),
+        url(./fonts/roboto/Roboto-Medium.woff) format("woff");
+}
+
+@font-face {
+    font-weight: 500;
+    font-family: Roboto;
+    font-style: italic;
+    font-display: swap;
+    src:
+        local("Roboto MediumItalic"),
+        local("Roboto-MediumItalic"),
+        url(./fonts/roboto/Roboto-MediumItalic.woff2) format("woff2"),
+        url(./fonts/roboto/Roboto-MediumItalic.woff) format("woff");
+}
+
+@font-face {
+    font-weight: 700;
+    font-family: Roboto;
+    font-style: normal;
+    font-display: swap;
+    src:
+        local("Roboto Bold"),
+        local("Roboto-Bold"),
+        url(./fonts/roboto/Roboto-Bold.woff2) format("woff2"),
+        url(./fonts/roboto/Roboto-Bold.woff) format("woff");
+}
+
+@font-face {
+    font-weight: 700;
+    font-family: Roboto;
+    font-style: italic;
+    font-display: swap;
+    src:
+        local("Roboto BoldItalic"),
+        local("Roboto-BoldItalic"),
+        url(./fonts/roboto/Roboto-BoldItalic.woff2) format("woff2"),
+        url(./fonts/roboto/Roboto-BoldItalic.woff) format("woff");
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    font-family:
+        Avenir,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "PingFang SC",
+        "Hiragino Sans GB",
+        "Microsoft YaHei",
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
