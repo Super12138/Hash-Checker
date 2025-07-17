@@ -6,5 +6,11 @@
     "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, .editorconfig"
   },
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "html.customData": [
+    "./node_modules/mdui/html-data.zh-cn.json"
+  ],
+  "css.customData": [
+    "./node_modules/mdui/css-data.zh-cn.json"
+  ]
 }

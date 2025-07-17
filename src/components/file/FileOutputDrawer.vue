@@ -21,7 +21,8 @@ const fileList = ref([1, 2, 3, 4, 5]);
             </mdui-button-icon>
         </div>
         <mdui-list>
-            <FileOutputItem v-for="file in fileList" :key="file" />
+            <!--TODO: 进行具体实现-->
+            <FileOutputItem v-for="(file, index) in fileList" :key="file" :name="index.toString()" :status="`Item ${index}`" :progress="Math.random()" />
         </mdui-list>
     </mdui-navigation-drawer>
 </template>
