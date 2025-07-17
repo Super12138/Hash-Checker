@@ -9,14 +9,22 @@ import FileOutputItem from "./FileOutputItem.vue";
 
 import { ref } from "vue";
 
+defineProps<{
+    open: boolean;
+}>();
+
+defineEmits<{
+    close: () => void;
+}>();
+
 const fileList = ref([1, 2, 3, 4, 5]);
 </script>
 
 <template>
-    <mdui-navigation-drawer placement="left" close-on-esc close-on-overlay-click>
+    <mdui-navigation-drawer placement="left" close-on-esc close-on-overlay-click :open="open">
         <div class="drawer-title">
             <span>文件列表</span>
-            <mdui-button-icon>
+            <mdui-button-icon @click="$emit('close')">
                 <mdui-icon-close--outlined></mdui-icon-close--outlined>
             </mdui-button-icon>
         </div>
