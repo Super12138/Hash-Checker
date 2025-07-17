@@ -99,3 +99,41 @@ body.ready {
     opacity: 1;
     transition: 0.25s opacity;
 }
+
+h1 {
+    line-height: var(--mdui-typescale-headline-medium-line-height);
+    font-size: var(--mdui-typescale-headline-medium-size);
+    letter-spacing: var(--mdui-typescale-headline-medium-tracking);
+    font-weight: var(--mdui-typescale-headline-medium-weight);
+}
+
+h2,
+.headline-small {
+    line-height: var(--mdui-typescale-headline-small-line-height);
+    font-size: var(--mdui-typescale-headline-small-size);
+    letter-spacing: var(--mdui-typescale-headline-small-tracking);
+    font-weight: var(--mdui-typescale-headline-small-weight);
+}
+
+p,
+span {
+    line-height: var(--mdui-typescale-label-large-line-height);
+    font-size: var(--mdui-typescale-label-large-size);
+    letter-spacing: var(--mdui-typescale-label-large-tracking);
+    font-weight: var(--mdui-typescale-label-large-weight);
+}
+
+strong {
+    /* 确保加粗文本不会换行 */
+    display: contents;
+    line-height: var(--mdui-typescale-label-large-line-height);
+    font-size: var(--mdui-typescale-label-large-size);
+    letter-spacing: var(--mdui-typescale-label-large-tracking);
+}
+
+img {
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-select: none;
+}
