@@ -12,6 +12,7 @@
         "format": "prettier --write src/"
     },
     "dependencies": {
+        "@mdui/icons": "^1.0.3",
         "mdui": "^2.1.4",
         "vue": "^3.5.17"
     },

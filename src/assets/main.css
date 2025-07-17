@@ -1,1 +1,16 @@
 @import "./base.css";
+
+.drawer-title {
+    padding: 1.5rem 0.9rem 0rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(var(--mdui-color-on-surface));
+}
+
+.drawer-title span {
+    font-size: var(--mdui-typescale-title-large-size);
+    font-weight: var(--mdui-typescale-title-large-weight);
+    letter-spacing: var(--mdui-typescale-title-large-tracking);
+    line-height: var(--mdui-typescale-title-large-line-height);
+}

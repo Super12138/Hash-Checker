@@ -94,3 +94,8 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+body.ready {
+    opacity: 1;
+    transition: 0.25s opacity;
+}

@@ -1,0 +1,27 @@
+<script setup lang="ts">
+import "mdui/components/button-icon.js";
+import "mdui/components/top-app-bar-title.js";
+import "mdui/components/top-app-bar.js";
+
+import "@mdui/icons/menu--outlined.js";
+import "@mdui/icons/settings--outlined.js";
+</script>
+
+<template>
+    <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".container">
+        <mdui-button-icon>
+            <mdui-icon-menu--outlined></mdui-icon-menu--outlined>
+        </mdui-button-icon>
+        <mdui-top-app-bar-title>Super Hash</mdui-top-app-bar-title>
+        <div style="flex-grow: 1"></div>
+        <mdui-button-icon>
+            <mdui-icon-settings--outlined></mdui-icon-settings--outlined>
+        </mdui-button-icon>
+    </mdui-top-app-bar>
+</template>
+
+<style lang="css">
+mdui-top-app-bar {
+    padding: 1rem 0.9rem;
+}
+</style>
