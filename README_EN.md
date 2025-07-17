@@ -24,8 +24,17 @@ A quick, readily available cross-platform hash checker that follows Material Des
 [Simple Usage Instructions](https://super12138.github.io/hschecker/use.html)
 
 ## ⬇️ Download
+**It is strongly recommended to download/use Super Hash from the official channels below**
 - Offline version V3.0.0[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
 - Online version V3.0.0[Github Page](https://super12138.github.io/Hash-Checker/)
+
+You can also download it from the Microsoft Store:
+<a href="https://apps.microsoft.com/detail/9nqq6z539qv2?referrer=appbadge&mode=direct">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
+
+The Microsoft Store version is maintained by Microsoft for updates, and Super Hash will not check for updates at startup.
+
 
 ## 📸 Screenshots
 |Main Interface (Light Mode)|

@@ -24,8 +24,16 @@
 [简单使用方法](https://super12138.github.io/hschecker/use.html)
 
 ## ⬇️ 下载
+**强烈建议从下方官方渠道下载/访问 Super Hash**
 - 离线版 V3.0.0[GitHub Release](https://github.com/Super12138/Hash-Checker/releases) 
 - 在线版 v3.0.0[Github Page](https://super12138.github.io/Hash-Checker/)
+
+也可以在 Microsoft Store 里下载：
+<a href="https://apps.microsoft.com/detail/9nqq6z539qv2?referrer=appbadge&mode=direct">
+	<img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200"/>
+</a>
+
+Microsoft Store 版本由 Microsoft 接管更新，Super Hash 将不会在启动时检查更新。
 
 ## 📸 截图
 |主界面（浅色）|
