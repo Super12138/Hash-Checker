@@ -43,7 +43,7 @@ onMounted(() => {
         <mdui-layout-main class="container">
             <FileSelector />
             <ClipboardSelector />
-            <div>
+            <div class="options-container">
                 <AlgorithmDropdown />
                 <ModeDropdown />
             </div>
@@ -58,5 +58,48 @@ onMounted(() => {
 <style lang="css">
 mdui-layout {
     height: 100vh;
+}
+
+/* 网格布局 */
+.container {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.container::after {
+    display: table;
+    clear: both;
+    content: "";
+}
+
+.container {
+    width: 96%;
+    padding-left: 3% !important;
+    padding-right: 3% !important;
+}
+
+@media (min-width: 600px) {
+    .container {
+        width: 94%;
+        padding-left: 2% !important;
+        padding-right: 2% !important;
+    }
+}
+
+.options-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+@media (max-width: 500px) {
+    .options-container {
+        flex-direction: column;
+        /* gap: 10px; */
+    }
 }
 </style>

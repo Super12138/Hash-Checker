@@ -4,7 +4,7 @@ import "mdui/components/select.js";
 </script>
 
 <template>
-    <div class="algorithm-select">
+    <div class="select">
         <span class="select-label">算法</span>
         <mdui-select value="unselected" required>
             <mdui-menu-item value="unselected" disabled>请选择算法</mdui-menu-item>

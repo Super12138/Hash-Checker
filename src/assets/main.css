@@ -14,3 +14,15 @@
     letter-spacing: var(--mdui-typescale-title-large-tracking);
     line-height: var(--mdui-typescale-title-large-line-height);
 }
+
+.select {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.select-label {
+    white-space: nowrap;
+    align-content: center;
+    padding-right: 1rem;
+}
