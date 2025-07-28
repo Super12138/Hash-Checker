@@ -44,7 +44,10 @@ onMounted(() => {
 
 <template>
     <mdui-layout>
-        <HashTopBar @toggle-output="drawerStore.toggleFileOutputDrawer()" @toggle-settings="drawerStore.toggleSettingsDrawer()" />
+        <HashTopBar
+            @toggle-output="drawerStore.toggleFileOutputDrawer()"
+            @toggle-settings="drawerStore.toggleSettingsDrawer()"
+        />
         <mdui-layout-main class="container">
             <FileSelector />
             <ClipboardSelector />
@@ -52,12 +55,22 @@ onMounted(() => {
                 <AlgorithmDropdown />
                 <ModeDropdown />
             </div>
-            <mdui-text-field label="校验值" helper="在此处粘贴您获取到的校验值" clearable></mdui-text-field>
+            <mdui-text-field
+                label="校验值"
+                helper="在此处粘贴您获取到的校验值"
+                clearable
+            ></mdui-text-field>
             <mdui-button full-width>检查</mdui-button>
         </mdui-layout-main>
     </mdui-layout>
-    <FileOutputDrawer :open="drawerStore.openFileDrawer" @close="drawerStore.toggleFileOutputDrawer()" />
-    <SettingsDrawer :open="drawerStore.openSettingsDrawer" @close="drawerStore.toggleSettingsDrawer()" />
+    <FileOutputDrawer
+        :open="drawerStore.openFileDrawer"
+        @close="drawerStore.toggleFileOutputDrawer()"
+    />
+    <SettingsDrawer
+        :open="drawerStore.openSettingsDrawer"
+        @close="drawerStore.toggleSettingsDrawer()"
+    />
 </template>
 
 <style lang="css">

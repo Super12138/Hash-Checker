@@ -10,7 +10,13 @@ defineProps<{
 </script>
 
 <template>
-    <mdui-list-item :headline="name" :description="status">
-        <mdui-circular-progress :value="progress" slot="end-icon"></mdui-circular-progress>
+    <mdui-list-item
+        :headline="name"
+        :description="status"
+    >
+        <mdui-circular-progress
+            :value="progress"
+            slot="end-icon"
+        ></mdui-circular-progress>
     </mdui-list-item>
 </template>

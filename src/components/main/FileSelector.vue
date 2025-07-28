@@ -5,7 +5,10 @@ import "@mdui/icons/upload-file--outlined.js";
 </script>
 
 <template>
-    <mdui-card variant="outlined" clickable>
+    <mdui-card
+        variant="outlined"
+        clickable
+    >
         <mdui-icon-upload-file--outlined></mdui-icon-upload-file--outlined>
         <p>点击选择文件</p>
         <strong>或拖拽文件到本页</strong>
