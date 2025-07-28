@@ -14,11 +14,12 @@ import FileOutputDrawer from "./components/file/FileOutputDrawer.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
 // Vue 导入
-import { onMounted } from "vue";
+import { onMounted, watch, watchEffect } from "vue";
 import FileSelector from "./components/main/FileSelector.vue";
 import ClipboardSelector from "./components/main/ClipboardCheckbox.vue";
 import AlgorithmDropdown from "./components/main/AlgorithmSelect.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
+import { useDrawerStore } from "./stores/drawer";
 
 // 自定义函数导入
 // ...
@@ -29,7 +30,11 @@ import ModeDropdown from "./components/main/ModeSelect.vue";
 // ...
 
 // 自己写的代码
-// ...
+const drawerStore = useDrawerStore();
+
+/*watchEffect(() => {
+    console.log(`File: ${drawerStore.openFileDrawer}; Settings ${drawerStore.openSettingsDrawer}`);
+});*/
 
 // 生命周期代码
 onMounted(() => {
@@ -39,7 +44,7 @@ onMounted(() => {
 
 <template>
     <mdui-layout>
-        <HashTopBar @toggle-output="" @toggle-settings="" />
+        <HashTopBar @toggle-output="drawerStore.toggleFileOutputDrawer()" @toggle-settings="drawerStore.toggleSettingsDrawer()" />
         <mdui-layout-main class="container">
             <FileSelector />
             <ClipboardSelector />
@@ -51,8 +56,8 @@ onMounted(() => {
             <mdui-button full-width>检查</mdui-button>
         </mdui-layout-main>
     </mdui-layout>
-    <FileOutputDrawer :open="false" @close="" />
-    <SettingsDrawer :open="false" @close="" />
+    <FileOutputDrawer :open="drawerStore.openFileDrawer" @close="drawerStore.toggleFileOutputDrawer()" />
+    <SettingsDrawer :open="drawerStore.openSettingsDrawer" @close="drawerStore.toggleSettingsDrawer()" />
 </template>
 
 <style lang="css">
