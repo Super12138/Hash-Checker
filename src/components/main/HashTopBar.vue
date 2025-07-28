@@ -7,8 +7,8 @@ import "@mdui/icons/menu--outlined.js";
 import "@mdui/icons/settings--outlined.js";
 
 defineEmits<{
-    "toggle-output": () => void;
-    "toggle-settings": () => void;
+    (e: "toggle-output"): void;
+    (e: "toggle-settings"): void;
 }>();
 </script>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineEmits<{
-    click: () => void;
+    (e: "click"): void;
 }>();
 </script>
 

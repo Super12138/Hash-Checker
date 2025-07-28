@@ -9,22 +9,21 @@ import "mdui/components/text-field.js";
 // ...
 
 // 自定义组件
-import HashTopBar from "./components/main/HashTopBar.vue";
 import FileOutputDrawer from "./components/file/FileOutputDrawer.vue";
+import AlgorithmDropdown from "./components/main/AlgorithmSelect.vue";
+import CheckButton from "./components/main/CheckButton.vue";
+import ClipboardSelector from "./components/main/ClipboardCheckbox.vue";
+import FileSelector from "./components/main/FileSelector.vue";
+import HashInput from "./components/main/HashInput.vue";
+import HashTopBar from "./components/main/HashTopBar.vue";
+import ModeDropdown from "./components/main/ModeSelect.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
 // Vue 导入
-import { onMounted, watch, watchEffect } from "vue";
-import FileSelector from "./components/main/FileSelector.vue";
-import ClipboardSelector from "./components/main/ClipboardCheckbox.vue";
-import AlgorithmDropdown from "./components/main/AlgorithmSelect.vue";
-import ModeDropdown from "./components/main/ModeSelect.vue";
-import { useDrawerStore } from "./stores/drawer";
-import HashInput from "./components/main/HashInput.vue";
-import CheckButton from "./components/main/CheckButton.vue";
+import { onMounted } from "vue";
 
 // 自定义函数导入
-// ...
+import { useDrawerStore } from "./stores/drawer";
 
 // 程序代码
 
