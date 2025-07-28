@@ -2,19 +2,53 @@
 import "mdui/components/card.js";
 
 import "@mdui/icons/upload-file--outlined.js";
+
+import { useFileInfo } from "@/utils/file";
+import { useDropZone, useFileDialog } from "@vueuse/core";
+
+import { ref, Teleport, watchEffect } from "vue";
+
+import FadeOutInTransition from "../shared/FadeOutInTransition.vue";
+import DragTip from "./DragTip.vue";
+
+const file = ref<File | null>(null);
+const fileInfo = useFileInfo(file);
+
+const { files, open, reset, onCancel, onChange } = useFileDialog({ multiple: false });
+const { isOverDropZone } = useDropZone(() => document.body, {
+    onDrop: (files: File[] | null) => {
+        if (files !== null) {
+            file.value = files[0];
+        }
+    },
+    multiple: false,
+});
+
+watchEffect(() => {
+    if (files.value !== null) {
+        file.value = files.value[0];
+    }
+});
 </script>
 
 <template>
-    <mdui-card variant="outlined" clickable>
+    <mdui-card variant="outlined" clickable @click="open()">
         <mdui-icon-upload-file--outlined></mdui-icon-upload-file--outlined>
         <p>点击选择文件</p>
-        <strong>或拖拽文件到本页</strong>
-        <p class="file-info">xxx.exe (3 MB)</p>
+        <small>或拖拽文件到本页</small>
+        <p class="file-info">{{ fileInfo }}</p>
     </mdui-card>
+
+    <Teleport to="body">
+        <FadeOutInTransition>
+            <DragTip v-if="isOverDropZone" />
+        </FadeOutInTransition>
+    </Teleport>
 </template>
 
 <style lang="css" scoped>
 .file-info {
+    margin-top: 0.3rem;
     color: rgb(var(--mdui-color-on-surface-variant));
     overflow: hidden;
     text-overflow: ellipsis;
@@ -23,12 +57,8 @@ import "@mdui/icons/upload-file--outlined.js";
     width: 100%;
 }
 
-.strong {
+small {
     color: rgb(var(--mdui-color-on-surface-variant));
-    line-height: var(--mdui-typescale-label-medium-line-height);
-    font-size: var(--mdui-typescale-label-medium-size);
-    letter-spacing: var(--mdui-typescale-label-medium-tracking);
-    font-weight: var(--mdui-typescale-label-medium-weight);
 }
 
 p {
@@ -38,7 +68,7 @@ p {
 mdui-icon-upload-file--outlined {
     font-size: var(--mdui-typescale-headline-large-size);
     display: block;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
 }
 
 mdui-card {

@@ -42,7 +42,7 @@ onMounted(() => {
 <template>
     <mdui-layout>
         <HashTopBar @toggle-output="drawerStore.toggleFileOutputDrawer()" @toggle-settings="drawerStore.toggleSettingsDrawer()" />
-        
+
         <mdui-layout-main class="container">
             <FileSelector />
             <ClipboardSelector />

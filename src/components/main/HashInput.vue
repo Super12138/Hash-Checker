@@ -8,7 +8,7 @@ const model = defineModel<string>();
 </template>
 
 <style lang="css" scoped>
-mdui-text-field{
+mdui-text-field {
     margin-bottom: 1.5rem;
 }
 </style>

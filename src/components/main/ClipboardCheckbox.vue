@@ -7,7 +7,7 @@ import "mdui/components/checkbox.js";
 </template>
 
 <style lang="css" scoped>
-mdui-checkbox{
+mdui-checkbox {
     margin-bottom: 0.5rem;
 }
 </style>
