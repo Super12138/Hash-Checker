@@ -6,15 +6,8 @@ import "mdui/components/select.js";
 <template>
     <div class="select">
         <span class="select-label">算法</span>
-        <mdui-select
-            value="unselected"
-            required
-        >
-            <mdui-menu-item
-                value="unselected"
-                disabled
-                >请选择算法</mdui-menu-item
-            >
+        <mdui-select value="unselected" required>
+            <mdui-menu-item value="unselected" disabled>请选择算法</mdui-menu-item>
             <mdui-menu-item value="MD5">MD5</mdui-menu-item>
             <mdui-menu-item value="SHA1">SHA1</mdui-menu-item>
             <mdui-menu-item value="SHA3">SHA3</mdui-menu-item>

@@ -21,12 +21,7 @@ const fileList = ref([1, 2, 3, 4, 5]);
 </script>
 
 <template>
-    <mdui-navigation-drawer
-        placement="left"
-        close-on-esc
-        close-on-overlay-click
-        :open="open"
-    >
+    <mdui-navigation-drawer placement="left" close-on-esc close-on-overlay-click :open="open">
         <div class="drawer-title">
             <span>文件列表</span>
             <mdui-button-icon @click="$emit('close')">
@@ -35,13 +30,7 @@ const fileList = ref([1, 2, 3, 4, 5]);
         </div>
         <mdui-list>
             <!--TODO: 进行具体实现-->
-            <FileOutputItem
-                v-for="(file, index) in fileList"
-                :key="file"
-                :name="index.toString()"
-                :status="`Item ${index}`"
-                :progress="Math.random()"
-            />
+            <FileOutputItem v-for="(file, index) in fileList" :key="file" :name="index.toString()" :status="`Item ${index}`" :progress="Math.random()" />
         </mdui-list>
     </mdui-navigation-drawer>
 </template>

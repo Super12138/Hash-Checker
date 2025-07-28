@@ -15,12 +15,7 @@ defineEmits<{
 </script>
 
 <template>
-    <mdui-navigation-drawer
-        placement="right"
-        close-on-esc
-        close-on-overlay-click
-        :open="open"
-    >
+    <mdui-navigation-drawer placement="right" close-on-esc close-on-overlay-click :open="open">
         <div class="drawer-title">
             <span>设置</span>
             <mdui-button-icon @click="$emit('close')">

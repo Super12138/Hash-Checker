@@ -13,10 +13,7 @@ defineEmits<{
 </script>
 
 <template>
-    <mdui-top-app-bar
-        scroll-behavior="elevate"
-        scroll-target=".container"
-    >
+    <mdui-top-app-bar scroll-behavior="elevate" scroll-target=".container">
         <mdui-button-icon @click="$emit('toggle-output')">
             <mdui-icon-menu--outlined></mdui-icon-menu--outlined>
         </mdui-button-icon>

@@ -46,10 +46,7 @@ onMounted(() => {
 
 <template>
     <mdui-layout>
-        <HashTopBar
-            @toggle-output="drawerStore.toggleFileOutputDrawer()"
-            @toggle-settings="drawerStore.toggleSettingsDrawer()"
-        />
+        <HashTopBar @toggle-output="drawerStore.toggleFileOutputDrawer()" @toggle-settings="drawerStore.toggleSettingsDrawer()" />
         <mdui-layout-main class="container">
             <FileSelector />
             <ClipboardSelector />
@@ -61,14 +58,8 @@ onMounted(() => {
             <CheckButton @click="" />
         </mdui-layout-main>
     </mdui-layout>
-    <FileOutputDrawer
-        :open="drawerStore.openFileDrawer"
-        @close="drawerStore.toggleFileOutputDrawer()"
-    />
-    <SettingsDrawer
-        :open="drawerStore.openSettingsDrawer"
-        @close="drawerStore.toggleSettingsDrawer()"
-    />
+    <FileOutputDrawer :open="drawerStore.openFileDrawer" @close="drawerStore.toggleFileOutputDrawer()" />
+    <SettingsDrawer :open="drawerStore.openSettingsDrawer" @close="drawerStore.toggleSettingsDrawer()" />
 </template>
 
 <style lang="css">
