@@ -48,7 +48,7 @@ mdui-card {
     max-height: 200px;
     user-select: none;
     padding: 1rem 2.5rem 1rem 2.5rem;
-    margin: 1rem;
+    margin: 1rem auto 0.5rem auto;
     display: flex;
     flex-direction: column;
     align-items: center;

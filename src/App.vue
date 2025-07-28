@@ -1,14 +1,19 @@
 <script setup lang="ts">
 // MDUI 组件
+// MDUI 图标
+// 自定义组件
+// Vue 导入
+// 自定义函数导入
+// 程序代码
+// 事件绑定以及 Props
+// 自己写的代码
+// 生命周期钩子
+
 import "mdui/components/button.js";
 import "mdui/components/layout-main.js";
 import "mdui/components/layout.js";
 import "mdui/components/text-field.js";
 
-// MDUI 图标
-// ...
-
-// 自定义组件
 import FileOutputDrawer from "./components/file/FileOutputDrawer.vue";
 import AlgorithmDropdown from "./components/main/AlgorithmSelect.vue";
 import CheckButton from "./components/main/CheckButton.vue";
@@ -19,25 +24,16 @@ import HashTopBar from "./components/main/HashTopBar.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
-// Vue 导入
 import { onMounted } from "vue";
 
-// 自定义函数导入
 import { useDrawerStore } from "./stores/drawer";
 
-// 程序代码
-
-// 事件绑定以及 Props
-// ...
-
-// 自己写的代码
 const drawerStore = useDrawerStore();
 
 /*watchEffect(() => {
     console.log(`File: ${drawerStore.openFileDrawer}; Settings ${drawerStore.openSettingsDrawer}`);
 });*/
 
-// 生命周期代码
 onMounted(() => {
     document.body.classList.add("ready");
 });
@@ -46,6 +42,7 @@ onMounted(() => {
 <template>
     <mdui-layout>
         <HashTopBar @toggle-output="drawerStore.toggleFileOutputDrawer()" @toggle-settings="drawerStore.toggleSettingsDrawer()" />
+        
         <mdui-layout-main class="container">
             <FileSelector />
             <ClipboardSelector />
@@ -83,16 +80,16 @@ mdui-layout {
 }
 
 .container {
-    width: 96%;
-    padding-left: 3% !important;
-    padding-right: 3% !important;
+    width: 90%;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
 }
 
 @media (min-width: 600px) {
     .container {
         width: 94%;
-        padding-left: 2% !important;
-        padding-right: 2% !important;
+        padding-left: 3% !important;
+        padding-right: 3% !important;
     }
 }
 
@@ -100,6 +97,7 @@ mdui-layout {
     display: flex;
     flex-direction: row;
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 @media (max-width: 500px) {
