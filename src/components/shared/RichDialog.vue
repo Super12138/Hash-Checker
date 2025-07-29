@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import "mdui/components/dialog.js";
 
-defineProps<{
-    headline: string;
-    closeOnOverlayClick: boolean;
-    enableCancelButton: boolean;
-}>();
+withDefaults(
+    defineProps<{
+        headline: string;
+        closeOnOverlayClick?: boolean;
+        enableCancelButton?: boolean;
+    }>(),
+    {
+        closeOnOverlayClick: true,
+        enableCancelButton: true,
+    },
+);
 
 const emit = defineEmits<{
     (e: "confirm"): void;

@@ -5,10 +5,14 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "run-p type-check \"build-only {@}\" --",
-        "preview": "vite preview",
-        "build-only": "vite build",
+        "build:web": "run-p type-check \"build-only:web {@}\" --",
+        "build:desktop": "run-p type-check \"build-only:desktop {@}\" --",
+        "build:store": "run-p type-check \"build-only:store {@}\" --",
+        "build-only:web": "vite build --mode web",
+        "build-only:desktop": "vite build --mode desktop",
+        "build-only:store": "vite build --mode store",
         "type-check": "vue-tsc --build",
+        "preview": "vite preview",
         "format": "prettier --write src/"
     },
     "dependencies": {

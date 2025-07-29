@@ -32,6 +32,8 @@ defineProps<{
 defineEmits<{
     close: () => void;
 }>();
+
+const isStoreOrWeb = VARIANT === "web" || STORE;
 </script>
 
 <template>
@@ -68,7 +70,7 @@ defineEmits<{
                 "
             />
             <SettingsAutoUpdate
-                v-if="true"
+                v-if="!isStoreOrWeb"
                 :checked="autoUpdateStore.enable"
                 @change="
                     (value: boolean) => {
