@@ -1,6 +1,3 @@
-import "mdui/mdui.css";
-import "./assets/main.css";
-
 import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
 import { createApp } from "vue";
