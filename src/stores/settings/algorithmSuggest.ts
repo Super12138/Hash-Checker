@@ -5,7 +5,7 @@ import { ref } from "vue";
 export const useAlgorithmSuggestStore = defineStore(
     "algorithmSuggest",
     () => {
-        const enable = ref(false);
+        const enable = ref(true);
 
         function setState(newValue: boolean) {
             enable.value = newValue;

@@ -26,13 +26,15 @@ import HashTopBar from "./components/main/HashTopBar.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
-import { onMounted } from "vue";
+import { onMounted, toValue, watchEffect } from "vue";
 
 import { useDrawerStore } from "./stores/ui/drawer";
 import { useAlgorithmStore } from "./stores/ui/algorithm";
 import { useModeStore } from "./stores/ui/mode";
 import { useCheckSumStore } from "./stores/ui/checkSum";
 import { useFileStore } from "./stores/ui/file";
+import { useThemeColorStore } from "./stores/settings/themeColor";
+import { setColorScheme } from "mdui";
 
 const drawerStore = useDrawerStore();
 
@@ -41,9 +43,7 @@ const algorithmStore = useAlgorithmStore();
 const modeStore = useModeStore();
 const checkSumStore = useCheckSumStore();
 
-/*watchEffect(() => {
-    console.log(`File: ${drawerStore.openFileDrawer}; Settings ${drawerStore.openSettingsDrawer}`);
-});*/
+const themeColorStore = useThemeColorStore();
 
 const checkConfigurationIsVaild = () => {
     if (!fileStore.hasFile) {
@@ -64,6 +64,10 @@ const checkConfigurationIsVaild = () => {
     }
     alert("OKK");
 };
+
+watchEffect(() => {
+    setColorScheme(toValue(themeColorStore.color));
+});
 
 onMounted(() => {
     document.body.classList.add("ready");

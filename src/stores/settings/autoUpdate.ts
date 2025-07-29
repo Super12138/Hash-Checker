@@ -4,7 +4,7 @@ import { ref } from "vue";
 export const useAutoUpdateStore = defineStore(
     "autoUpdate",
     () => {
-        const enable = ref(false);
+        const enable = ref(true);
 
         function setState(newValue: boolean) {
             enable.value = newValue;

@@ -4,7 +4,7 @@ import { ref } from "vue";
 export const useThemeColorStore = defineStore(
     "themeColor",
     () => {
-        const color = ref("#");
+        const color = ref("#0f032b");
 
         function setColor(newColor: string) {
             color.value = newColor;
