@@ -11,24 +11,33 @@ import { ref, Teleport, watchEffect } from "vue";
 import FadeOutInTransition from "../shared/FadeOutInTransition.vue";
 import DragTip from "./DragTip.vue";
 
-const file = ref<File | null>(null);
-const fileInfo = useFileInfo(file);
+const props = defineProps<{
+    file: File | null;
+}>();
 
-const { files, open, reset, onCancel, onChange } = useFileDialog({
-    multiple: false,
-});
+const emit = defineEmits<{
+    (e: "changed", file: File): void;
+}>();
+
+const fileInfo = useFileInfo(() => props.file);
+
+// 拖拽文件
 const { isOverDropZone } = useDropZone(() => document.body, {
     onDrop: (files: File[] | null) => {
         if (files !== null) {
-            file.value = files[0];
+            emit("changed", files[0]);
         }
     },
     multiple: false,
 });
 
+// 文件选择器
+const { files, open, reset, onCancel, onChange } = useFileDialog({
+    multiple: false,
+});
 watchEffect(() => {
     if (files.value !== null) {
-        file.value = files.value[0];
+        emit("changed", files.value[0]);
     }
 });
 </script>

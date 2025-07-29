@@ -19,22 +19,51 @@ import "mdui/components/layout.js";
 import FileOutputDrawer from "./components/file/FileOutputDrawer.vue";
 import AlgorithmDropdown from "./components/main/AlgorithmSelect.vue";
 import CheckButton from "./components/main/CheckButton.vue";
+import CheckSumInput from "./components/main/CheckSumInput.vue";
 import ClipboardSelector from "./components/main/ClipboardCheckbox.vue";
 import FileSelector from "./components/main/FileSelector.vue";
-import HashInput from "./components/main/HashInput.vue";
 import HashTopBar from "./components/main/HashTopBar.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
 import { onMounted } from "vue";
 
-import { useDrawerStore } from "./stores/drawer";
+import { useDrawerStore } from "./stores/ui/drawer";
+import { useAlgorithmStore } from "./stores/ui/algorithm";
+import { useModeStore } from "./stores/ui/mode";
+import { useCheckSumStore } from "./stores/ui/checkSum";
+import { useFileStore } from "./stores/ui/file";
 
 const drawerStore = useDrawerStore();
+
+const fileStore = useFileStore();
+const algorithmStore = useAlgorithmStore();
+const modeStore = useModeStore();
+const checkSumStore = useCheckSumStore();
 
 /*watchEffect(() => {
     console.log(`File: ${drawerStore.openFileDrawer}; Settings ${drawerStore.openSettingsDrawer}`);
 });*/
+
+const checkConfigurationIsVaild = () => {
+    if (!fileStore.hasFile) {
+        alert("请选择一个文件");
+        return;
+    }
+    if (!algorithmStore.isValid) {
+        alert("请选择一个算法");
+        return;
+    }
+    if (!modeStore.isValid) {
+        alert("请选择一个模式");
+        return;
+    }
+    if (modeStore.mode === "check" && !checkSumStore.isValid) {
+        alert("请输入校验值");
+        return;
+    }
+    alert("OKK");
+};
 
 onMounted(() => {
     document.body.classList.add("ready");
@@ -49,14 +78,43 @@ onMounted(() => {
         />
 
         <mdui-layout-main class="container">
-            <FileSelector />
+            <FileSelector
+                :file="fileStore.file"
+                @changed="
+                    (file: File) => {
+                        fileStore.setFile(file);
+                    }
+                "
+            />
             <ClipboardSelector />
             <div class="options-container">
-                <AlgorithmDropdown />
-                <ModeDropdown />
+                <AlgorithmDropdown
+                    :value="algorithmStore.algorithm"
+                    @change="
+                        (value: string) => {
+                            algorithmStore.setAlgorithm(value);
+                        }
+                    "
+                />
+                <ModeDropdown
+                    :value="modeStore.mode"
+                    @change="
+                        (value: string) => {
+                            modeStore.setMode(value);
+                        }
+                    "
+                />
             </div>
-            <HashInput />
-            <CheckButton @click="" />
+            <CheckSumInput
+                :value="checkSumStore.checkSum"
+                :enabled="modeStore.mode === 'check'"
+                @input="
+                    (value: string) => {
+                        checkSumStore.setCheckSum(value);
+                    }
+                "
+            />
+            <CheckButton @click="checkConfigurationIsVaild()" />
         </mdui-layout-main>
     </mdui-layout>
     <FileOutputDrawer

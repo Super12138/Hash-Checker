@@ -35,3 +35,14 @@ export function useFileInfo(file: MaybeRefOrGetter<File | null>): Ref<string, st
 
     return fileInfo;
 }
+
+export function useFileNotBlankCheck(file: MaybeRefOrGetter<File | null>): Ref<boolean, boolean> {
+    const state = ref(false);
+
+    watchEffect(() => {
+        const fileValue = toValue(file);
+        state.value = fileValue !== null && fileValue !== undefined;
+    });
+
+    return state;
+}
