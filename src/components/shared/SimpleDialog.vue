@@ -27,7 +27,12 @@ const onCancel = () => {
 </script>
 
 <template>
-    <mdui-dialog :headline="headline" :description="desctiption" :open="open" :close-on-overlay-click="closeOnOverlayClick">
+    <mdui-dialog
+        :headline="headline"
+        :description="desctiption"
+        :open="open"
+        :close-on-overlay-click="closeOnOverlayClick"
+    >
         <mdui-button v-if="enableCancelButton" slot="action" variant="text" @click="onCancel()">取消</mdui-button>
         <mdui-button slot="action" variant="tonal" @click="onConfirm()">确定</mdui-button>
     </mdui-dialog>

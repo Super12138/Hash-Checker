@@ -43,26 +43,39 @@ defineEmits<{
             </mdui-button-icon>
         </div>
         <mdui-list>
-            <SettingsCacheSize :model-value="cacheSizeStore.size" @update:model-value="
-                (value: number) => {
-                    cacheSizeStore.setSize(value);
-                }
-            " />
-            <SettingsAlgorithmSuggest :checked="algorithmSuggestStore.enable" @change="
-                (value: boolean) => {
-                    algorithmSuggestStore.setState(value);
-                }
-            " />
-            <SettingsSystemNotification :checked="systemNotificationStore.enable" @change="
-                (value: boolean) => {
-                    systemNotificationStore.setState(value);
-                }
-            " />
-            <SettingsAutoUpdate v-if="true" :checked="autoUpdateStore.enable" @change="
-                (value: boolean) => {
-                    autoUpdateStore.setState(value);
-                }
-            " />
+            <SettingsCacheSize
+                :model-value="cacheSizeStore.size"
+                @update:model-value="
+                    (value: number) => {
+                        cacheSizeStore.setSize(value);
+                    }
+                "
+            />
+            <SettingsAlgorithmSuggest
+                :checked="algorithmSuggestStore.enable"
+                @change="
+                    (value: boolean) => {
+                        algorithmSuggestStore.setState(value);
+                    }
+                "
+            />
+            <SettingsSystemNotification
+                :checked="systemNotificationStore.enable"
+                @change="
+                    (value: boolean) => {
+                        systemNotificationStore.setState(value);
+                    }
+                "
+            />
+            <SettingsAutoUpdate
+                v-if="true"
+                :checked="autoUpdateStore.enable"
+                @change="
+                    (value: boolean) => {
+                        autoUpdateStore.setState(value);
+                    }
+                "
+            />
             <SettingsThemeColor />
             <SettingsClearCache />
             <SettingsReset />

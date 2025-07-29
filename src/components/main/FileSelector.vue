@@ -14,7 +14,9 @@ import DragTip from "./DragTip.vue";
 const file = ref<File | null>(null);
 const fileInfo = useFileInfo(file);
 
-const { files, open, reset, onCancel, onChange } = useFileDialog({ multiple: false });
+const { files, open, reset, onCancel, onChange } = useFileDialog({
+    multiple: false,
+});
 const { isOverDropZone } = useDropZone(() => document.body, {
     onDrop: (files: File[] | null) => {
         if (files !== null) {

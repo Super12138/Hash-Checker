@@ -6,7 +6,6 @@ export const useAlgorithmSuggestStore = defineStore("algorithmSuggest", () => {
     const enable = ref(false);
 
     function setState(newValue: boolean) {
-        console.log(newValue);
         enable.value = newValue;
     }
 

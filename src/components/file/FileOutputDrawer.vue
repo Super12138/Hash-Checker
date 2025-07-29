@@ -30,7 +30,13 @@ const fileList = ref([1, 2, 3, 4, 5]);
         </div>
         <mdui-list>
             <!--TODO: 进行具体实现-->
-            <FileOutputItem v-for="(file, index) in fileList" :key="file" :name="index.toString()" :status="`Item ${index}`" :progress="Math.random()" />
+            <FileOutputItem
+                v-for="(file, index) in fileList"
+                :key="file"
+                :name="index.toString()"
+                :status="`Item ${index}`"
+                :progress="Math.random()"
+            />
         </mdui-list>
     </mdui-navigation-drawer>
 </template>

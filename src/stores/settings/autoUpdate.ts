@@ -6,7 +6,6 @@ export const useAutoUpdateStore = defineStore("autoUpdate", () => {
 
     function setState(newValue: boolean) {
         enable.value = newValue;
-        console.log(newValue)
     }
 
     return { enable, setState };

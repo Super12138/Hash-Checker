@@ -26,7 +26,13 @@ export const useDrawerStore = defineStore("drawer", () => {
         }
     }
 
-    return { openFileOutputDrawer, openSettingsDrawer, toggleFileOutputDrawer, toggleSettingsDrawer, openOnlyFileOutputDrawer };
+    return {
+        openFileOutputDrawer,
+        openSettingsDrawer,
+        toggleFileOutputDrawer,
+        toggleSettingsDrawer,
+        openOnlyFileOutputDrawer,
+    };
 });
 
 // HMR 支持
