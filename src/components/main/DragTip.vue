@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
     <div>
         <h1>松开鼠标以读取文件</h1>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import "mdui/components/text-field.js";
+
 // const model = defineModel<string>({ required: true });
 const model = defineModel<string>();
 </script>

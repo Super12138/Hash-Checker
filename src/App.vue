@@ -1,18 +1,20 @@
 <script setup lang="ts">
-// MDUI 组件
-// MDUI 图标
-// 自定义组件
-// Vue 导入
-// 自定义函数导入
-// 程序代码
-// 事件绑定以及 Props
-// 自己写的代码
-// 生命周期钩子
+/*
+    顺序：
+    导入
+        MDUI 组件
+        MDUI 图标
+        自定义组件
+        Vue 导入
+        自定义函数导入
+    代码
+        事件绑定以及 Props
+        自己写的代码
+        生命周期钩子 
+*/
 
-import "mdui/components/button.js";
 import "mdui/components/layout-main.js";
 import "mdui/components/layout.js";
-import "mdui/components/text-field.js";
 
 import FileOutputDrawer from "./components/file/FileOutputDrawer.vue";
 import AlgorithmDropdown from "./components/main/AlgorithmSelect.vue";
@@ -54,7 +56,7 @@ onMounted(() => {
             <CheckButton @click="" />
         </mdui-layout-main>
     </mdui-layout>
-    <FileOutputDrawer :open="drawerStore.openFileDrawer" @close="drawerStore.toggleFileOutputDrawer()" />
+    <FileOutputDrawer :open="drawerStore.openFileOutputDrawer" @close="drawerStore.toggleFileOutputDrawer()" />
     <SettingsDrawer :open="drawerStore.openSettingsDrawer" @close="drawerStore.toggleSettingsDrawer()" />
 </template>
 

@@ -29,4 +29,9 @@ defineEmits<{
 mdui-top-app-bar {
     padding: 1rem 0.9rem;
 }
+
+mdui-top-app-bar[scrolling] {
+    background-color: rgb(var(--mdui-color-surface-container-low)) !important;
+    box-shadow: 0 0 0;
+}
 </style>

@@ -3,7 +3,8 @@ import "mdui/components/dialog.js";
 
 defineProps<{
     headline: string;
-    desctiption?: string;
+    closeOnOverlayClick: boolean;
+    enableCancelButton: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -25,8 +26,9 @@ const onCancel = () => {
 </script>
 
 <template>
-    <mdui-dialog :headline="headline" :description="desctiption" :open="open" close-on-overlay-click>
-        <mdui-button slot="action" variant="text" @click="onCancel()">取消</mdui-button>
+    <mdui-dialog :headline="headline" :open="open" :close-on-overlay-click="closeOnOverlayClick">
+        <slot></slot>
+        <mdui-button v-if="enableCancelButton" slot="action" variant="text" @click="onCancel()">取消</mdui-button>
         <mdui-button slot="action" variant="tonal" @click="onConfirm()">确定</mdui-button>
     </mdui-dialog>
 </template>

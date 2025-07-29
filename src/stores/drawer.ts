@@ -1,7 +1,7 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { ref } from "vue";
 
-export const useDrawerStore = defineStore("counter", () => {
+export const useDrawerStore = defineStore("drawer", () => {
     const openFileOutputDrawer = ref(false);
     const openSettingsDrawer = ref(false);
 
@@ -26,7 +26,7 @@ export const useDrawerStore = defineStore("counter", () => {
         }
     }
 
-    return { openFileDrawer: openFileOutputDrawer, openSettingsDrawer, toggleFileOutputDrawer, toggleSettingsDrawer, openOnlyFileDrawer: openOnlyFileOutputDrawer };
+    return { openFileOutputDrawer, openSettingsDrawer, toggleFileOutputDrawer, toggleSettingsDrawer, openOnlyFileDrawer: openOnlyFileOutputDrawer };
 });
 
 // HMR 支持
