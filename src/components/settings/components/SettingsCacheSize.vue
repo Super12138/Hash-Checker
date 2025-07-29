@@ -6,10 +6,30 @@ import "@mdui/icons/storage--outlined.js";
 
 import { TextField } from "mdui/components/text-field.js";
 
-import { useTemplateRef } from "vue";
+import { useTemplateRef, watch } from "vue";
+import { snackbar } from "mdui";
+import { isBlankOrEmpty } from "@/utils/text";
 
 const model = defineModel<number>({ required: true });
 const textField = useTemplateRef<TextField>("cache-text-field");
+
+watch(
+    () => model.value,
+    (value: number) => {
+        if (isBlankOrEmpty(value) || value.toString().length > 5 || value <= 0) {
+            model.value = 2048;
+            let message = "";
+            if (isBlankOrEmpty(value)) {
+                message = "单次缓存大小不能为空";
+            } else if (value.toString().length > 5) {
+                message = "单次缓存大小不能超过 5 位";
+            } else {
+                message = "单次缓存大小不能为 0 或负数";
+            }
+            snackbar({ message });
+        }
+    },
+);
 </script>
 
 <template>

@@ -18,7 +18,6 @@ import { useAlgorithmSuggestStore } from "@/stores/settings/algorithmSuggest";
 import { useAutoUpdateStore } from "@/stores/settings/autoUpdate";
 import { useCacheSizeStore } from "@/stores/settings/cacheSize";
 import { useSystemNotificationStore } from "@/stores/settings/systemNotification";
-import { ref } from "vue";
 
 const cacheSizeStore = useCacheSizeStore();
 const algorithmSuggestStore = useAlgorithmSuggestStore();
