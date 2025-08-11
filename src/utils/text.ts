@@ -18,7 +18,9 @@ export function useBlankOrEmptyCheck(text: MaybeRefOrGetter<string | null>): Ref
     return state;
 }
 
-export function useNotBlankOrEmptyCheck(text: MaybeRefOrGetter<string | null>): Ref<boolean, boolean> {
+export function useNotBlankOrEmptyCheck(
+    text: MaybeRefOrGetter<string | null>,
+): Ref<boolean, boolean> {
     const state = ref<boolean>(false);
     watchEffect(() => {
         state.value = !isBlankOrEmpty(toValue(text));
