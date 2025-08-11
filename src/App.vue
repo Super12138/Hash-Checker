@@ -28,25 +28,21 @@ import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
 import { onMounted, ref, toValue, watchEffect } from "vue";
 
-import { useDrawerStore } from "./stores/ui/drawer";
-import { useAlgorithmStore } from "./stores/ui/algorithm";
-import { useModeStore } from "./stores/ui/mode";
-import { useCheckSumStore } from "./stores/ui/checkSum";
-import { useFileStore } from "./stores/ui/file";
-import { useThemeColorStore } from "./stores/settings/themeColor";
 import { setColorScheme } from "mdui";
 
 import { FileItem } from "./components/file/FileItem";
 import { FileStatus } from "./interfaces/FileStatus";
+import { useThemeColorStore } from "./stores/settings/themeColor";
+import { useDrawerStore } from "./stores/ui/drawer";
+import { useFileConfigurationStore } from "./stores/ui/file-configuration";
+import { toAlgorithm } from "./interfaces/Algorithms";
+import { toMode } from "./interfaces/Modes";
 
 let fileList = ref<FileItem[]>([]);
 
 const drawerStore = useDrawerStore();
 
-const fileStore = useFileStore();
-const algorithmStore = useAlgorithmStore();
-const modeStore = useModeStore();
-const checkSumStore = useCheckSumStore();
+const fileConfigurationStore = useFileConfigurationStore();
 
 const themeColorStore = useThemeColorStore();
 
@@ -55,32 +51,39 @@ const processFile = (file: File) => {
     // 逻辑修复
     if (
         fileList.value.length > 0 &&
-        fileList.value[fileList.value.length - 1].status === FileStatus.WAITING
+        fileList.value[fileList.value.length - 1].status === FileStatus.Waiting
     ) {
         fileList.value[fileList.value.length - 1] = currentFile;
     } else {
         fileList.value.push(currentFile);
     }
-    fileStore.setFile(file);
+    fileConfigurationStore.setFile(file);
 };
 
 const checkConfigurationIsVaild = () => {
-    if (!fileStore.hasFile) {
+    if (!fileConfigurationStore.hasFile) {
         alert("请选择一个文件");
         return;
     }
-    if (!algorithmStore.isValid) {
+    if (!fileConfigurationStore.isAlgorithmValid) {
         alert("请选择一个算法");
         return;
     }
-    if (!modeStore.isValid) {
+    if (!fileConfigurationStore.isModeValid) {
         alert("请选择一个模式");
         return;
     }
-    if (modeStore.mode === "check" && !checkSumStore.isValid) {
+    if (fileConfigurationStore.mode === "check" && !fileConfigurationStore.isCheckSumValid) {
         alert("请输入校验值");
         return;
     }
+    fileList.value[fileList.value.length - 1].file = fileConfigurationStore.file!;
+    fileList.value[fileList.value.length - 1].status = FileStatus.Computing;
+    fileList.value[fileList.value.length - 1].algorithm = toAlgorithm(
+        fileConfigurationStore.algorithm,
+    );
+    fileList.value[fileList.value.length - 1].mode = toMode(fileConfigurationStore.mode);
+
     drawerStore.openOnlyFileOutputDrawer();
 };
 
@@ -101,32 +104,32 @@ onMounted(() => {
         />
 
         <mdui-layout-main class="container">
-            <FileSelector :file="fileStore.file" @changed="processFile" />
+            <FileSelector :file="fileConfigurationStore.file" @changed="processFile" />
             <ClipboardSelector />
             <div class="options-container">
                 <AlgorithmDropdown
-                    :value="algorithmStore.algorithm"
+                    :value="fileConfigurationStore.algorithm"
                     @change="
                         (value: string) => {
-                            algorithmStore.setAlgorithm(value);
+                            fileConfigurationStore.setAlgorithm(value);
                         }
                     "
                 />
                 <ModeDropdown
-                    :value="modeStore.mode"
+                    :value="fileConfigurationStore.mode"
                     @change="
                         (value: string) => {
-                            modeStore.setMode(value);
+                            fileConfigurationStore.setMode(value);
                         }
                     "
                 />
             </div>
             <CheckSumInput
-                :value="checkSumStore.checkSum"
-                :enabled="modeStore.mode === 'check'"
+                :value="fileConfigurationStore.checkSum"
+                :enabled="fileConfigurationStore.mode === 'check'"
                 @input="
                     (value: string) => {
-                        checkSumStore.setCheckSum(value);
+                        fileConfigurationStore.setCheckSum(value);
                     }
                 "
             />

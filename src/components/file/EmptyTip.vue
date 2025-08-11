@@ -7,5 +7,3 @@ const props = defineProps<{
 <template>
     <h1>{{ props.tip }}</h1>
 </template>
-
-<style lang="css"></style>

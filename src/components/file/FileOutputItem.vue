@@ -5,8 +5,7 @@ import "mdui/components/list-item.js";
 import { FileStatus } from "@/interfaces/FileStatus";
 import type { FileItem } from "./FileItem";
 
-import { computed, openBlock, ref } from "vue";
-import { Teleport } from "vue";
+import { computed, ref, Teleport } from "vue";
 
 import RichDialog from "../shared/RichDialog.vue";
 
@@ -17,26 +16,25 @@ const props = defineProps<{
 const dialogOpen = ref<boolean>(false);
 
 const fileStatus = computed(() => {
-    let text = "";
     switch (props.fileItem.status) {
-        case FileStatus.WAITING:
-            text = "等待中";
-            break;
-        case FileStatus.COMPUTING:
-            text = "计算中";
-            break;
-        case FileStatus.FINISHED:
-            text = "计算成功";
-            break;
-        case FileStatus.ERROR:
-            text = "计算失败";
-            break;
-        case FileStatus.CANCELED:
-            text = "计算已取消";
+        case FileStatus.Waiting:
+            return "等待中";
+
+        case FileStatus.Computing:
+            return "计算中";
+
+        case FileStatus.Finished:
+            return "计算成功";
+
+        case FileStatus.Error:
+            return "计算失败";
+
+        case FileStatus.Canceled:
+            return "计算已取消";
+
         default:
-            break;
+            return "状态错误";
     }
-    return text;
 });
 </script>
 
@@ -47,8 +45,11 @@ const fileStatus = computed(() => {
 
     <Teleport to="body">
         <RichDialog headline="文件信息" :enable-cancel-button="false" v-model="dialogOpen">
-            <p>{{ fileItem.name }}</p>
-            <p>{{ `Time: ${fileItem.addTime}` }}</p>
+            <p>{{ `文件名：${fileItem.name}` }}</p>
+            <p>{{ `添加事件: ${fileItem.addTime}` }}</p>
+            <p>{{ `当前状态：${fileStatus}` }}</p>
+            <p>{{ `模式：${fileItem.mode}` }}</p>
+            <p>{{ `算法：${fileItem.algorithm}` }}</p>
         </RichDialog>
     </Teleport>
 </template>

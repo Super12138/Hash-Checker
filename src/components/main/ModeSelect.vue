@@ -24,8 +24,8 @@ defineEmits<{
             placeholder="请选择模式"
             required
         >
-            <mdui-menu-item value="check">校验</mdui-menu-item>
-            <mdui-menu-item value="generate">生成</mdui-menu-item>
+            <mdui-menu-item value="Check">校验</mdui-menu-item>
+            <mdui-menu-item value="Generate">生成</mdui-menu-item>
         </mdui-select>
     </div>
 </template>
