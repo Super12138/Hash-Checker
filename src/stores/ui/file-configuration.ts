@@ -32,6 +32,13 @@ export const useFileConfigurationStore = defineStore("fileConfiguration", () => 
         checkSum.value = newCheckSum;
     }
 
+    function $reset() {
+        file.value = null;
+        mode.value = "";
+        algorithm.value = "";
+        checkSum.value = "";
+    }
+
     return {
         // file
         file,
@@ -49,6 +56,7 @@ export const useFileConfigurationStore = defineStore("fileConfiguration", () => 
         checkSum,
         isCheckSumValid,
         setCheckSum,
+        $reset,
     };
 });
 

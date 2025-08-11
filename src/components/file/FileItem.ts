@@ -3,7 +3,6 @@ import { FileStatus } from "@/interfaces/FileStatus";
 import { Modes } from "@/interfaces/Modes";
 
 export class FileItem {
-    file: File; // 可能不需要保存整个文件
     name: string;
     addTime: number;
     mode: Modes = Modes.Unselected;
@@ -12,9 +11,8 @@ export class FileItem {
     progress: number | undefined = 0;
     hash: string | undefined = undefined;
 
-    constructor(addTime: number, file: File) {
+    constructor(addTime: number, name: string) {
         this.addTime = addTime;
-        this.file = file;
-        this.name = file.name;
+        this.name = name;
     }
 }

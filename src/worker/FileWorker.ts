@@ -51,7 +51,7 @@ self.onmessage = async (ev: MessageEvent) => {
         const msg: WorkerPostData = {
             type: WorkerResult.Progress,
             data: {
-                progress: progress * 100,
+                progress: progress,
                 estimatedRemainingTime,
             },
         };

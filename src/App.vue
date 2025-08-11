@@ -40,6 +40,7 @@ import { WorkerResult } from "./interfaces/WorkerResults";
 import { useThemeColorStore } from "./stores/settings/themeColor";
 import { useDrawerStore } from "./stores/ui/drawer";
 import { useFileConfigurationStore } from "./stores/ui/file-configuration";
+import { useCacheSizeStore } from "./stores/settings/cacheSize";
 
 let fileList = ref<FileItem[]>([]);
 
@@ -47,6 +48,7 @@ let fileList = ref<FileItem[]>([]);
 const drawerStore = useDrawerStore();
 const fileConfigurationStore = useFileConfigurationStore();
 const themeColorStore = useThemeColorStore();
+const cacheSizeStore = useCacheSizeStore();
 
 // Web Worker
 const {
@@ -59,7 +61,7 @@ const {
 });
 
 const processFile = (file: File) => {
-    const currentFile = new FileItem(Date.now(), file);
+    const currentFile = new FileItem(Date.now(), file.name);
     if (
         fileList.value.length > 0 &&
         fileList.value[fileList.value.length - 1].status === FileStatus.Waiting
@@ -88,7 +90,6 @@ const checkConfigurationIsVaild = () => {
         alert("请输入校验值");
         return;
     }
-    fileList.value[fileList.value.length - 1].file = fileConfigurationStore.file!;
     fileList.value[fileList.value.length - 1].status = FileStatus.Computing;
     fileList.value[fileList.value.length - 1].algorithm = toAlgorithm(
         fileConfigurationStore.algorithm,
@@ -100,9 +101,10 @@ const checkConfigurationIsVaild = () => {
     const msg: MainPostData = {
         file: fileConfigurationStore.file!,
         algorithm: toAlgorithm(fileConfigurationStore.algorithm),
-        chunkSize: 2048,
+        chunkSize: cacheSizeStore.size,
     };
     post(msg);
+    fileConfigurationStore.$reset();
 };
 
 watchEffect(() => {
@@ -110,11 +112,16 @@ watchEffect(() => {
     if (!workerResult) return;
     switch (workerResult.type) {
         case WorkerResult.Progress:
+            console.log("Progress");
+            
             const progressData = workerResult.data as ProgressInfo;
             fileList.value[fileList.value.length - 1].progress = progressData.progress;
             break;
 
         case WorkerResult.Result:
+            console.log("Result"); // 莫名其妙调用这个方法
+            
+            fileList.value[fileList.value.length - 1].status = FileStatus.Finished;
             fileList.value[fileList.value.length - 1].hash = workerResult.data.toString();
             break;
 
