@@ -26,21 +26,22 @@ import HashTopBar from "./components/main/HashTopBar.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
-import { onMounted, onUnmounted, ref, toValue, watch, watchEffect } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 
 import { setColorScheme } from "mdui";
 
-import { useWebWorker } from "@vueuse/core";
 import { FileItem } from "./components/file/FileItem";
 import { toAlgorithm } from "./interfaces/Algorithms";
 import { FileStatus } from "./interfaces/FileStatus";
 import { toMode } from "./interfaces/Modes";
 import type { MainPostData, ProgressInfo, WorkerPostData } from "./interfaces/WorkerMessage";
 import { WorkerResult } from "./interfaces/WorkerResults";
+import { useCacheSizeStore } from "./stores/settings/cacheSize";
 import { useThemeColorStore } from "./stores/settings/themeColor";
 import { useDrawerStore } from "./stores/ui/drawer";
 import { useFileConfigurationStore } from "./stores/ui/file-configuration";
-import { useCacheSizeStore } from "./stores/settings/cacheSize";
+
+import { useWebWorker } from "@vueuse/core";
 
 let fileList = ref<FileItem[]>([]);
 
@@ -51,14 +52,8 @@ const themeColorStore = useThemeColorStore();
 const cacheSizeStore = useCacheSizeStore();
 
 // Web Worker
-const {
-    data: workerData,
-    post,
-    terminate,
-    worker,
-} = useWebWorker("/src/worker/FileWorker.ts", {
-    type: "module",
-});
+const fileWorker = new Worker(new URL("worker/FileWorker.ts", import.meta.url), { type: "module" });
+const { data: workerData, post, terminate, worker } = useWebWorker(fileWorker);
 
 const processFile = (file: File) => {
     const currentFile = new FileItem(Date.now(), file.name);
@@ -90,6 +85,7 @@ const checkConfigurationIsVaild = () => {
         alert("请输入校验值");
         return;
     }
+
     fileList.value[fileList.value.length - 1].status = FileStatus.Computing;
     fileList.value[fileList.value.length - 1].algorithm = toAlgorithm(
         fileConfigurationStore.algorithm,
