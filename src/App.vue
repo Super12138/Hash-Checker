@@ -26,7 +26,7 @@ import HashTopBar from "./components/main/HashTopBar.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
-import { onMounted, onUnmounted, ref, toValue, watchEffect } from "vue";
+import { onMounted, onUnmounted, ref, toValue, watch, watchEffect } from "vue";
 
 import { setColorScheme } from "mdui";
 
@@ -107,20 +107,15 @@ const checkConfigurationIsVaild = () => {
     fileConfigurationStore.$reset();
 };
 
-watchEffect(() => {
-    const workerResult = workerData.value as WorkerPostData;
-    if (!workerResult) return;
+watch(workerData, (workerResult: WorkerPostData) => {
+    //if (!workerResult) return;
     switch (workerResult.type) {
         case WorkerResult.Progress:
-            console.log("Progress");
-            
             const progressData = workerResult.data as ProgressInfo;
             fileList.value[fileList.value.length - 1].progress = progressData.progress;
             break;
 
         case WorkerResult.Result:
-            console.log("Result"); // 莫名其妙调用这个方法
-            
             fileList.value[fileList.value.length - 1].status = FileStatus.Finished;
             fileList.value[fileList.value.length - 1].hash = workerResult.data.toString();
             break;
@@ -130,8 +125,8 @@ watchEffect(() => {
     }
 });
 
-watchEffect(() => {
-    setColorScheme(toValue(themeColorStore.color));
+themeColorStore.$subscribe((mutation, state) => {
+    setColorScheme(state.color);
 });
 
 onMounted(() => {
