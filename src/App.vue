@@ -26,29 +26,40 @@ import HashTopBar from "./components/main/HashTopBar.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
-import { onMounted, ref, toValue, watchEffect } from "vue";
+import { onMounted, onUnmounted, ref, toValue, watchEffect } from "vue";
 
 import { setColorScheme } from "mdui";
 
+import { useWebWorker } from "@vueuse/core";
 import { FileItem } from "./components/file/FileItem";
+import { toAlgorithm } from "./interfaces/Algorithms";
 import { FileStatus } from "./interfaces/FileStatus";
+import { toMode } from "./interfaces/Modes";
+import type { MainPostData, ProgressInfo, WorkerPostData } from "./interfaces/WorkerMessage";
+import { WorkerResult } from "./interfaces/WorkerResults";
 import { useThemeColorStore } from "./stores/settings/themeColor";
 import { useDrawerStore } from "./stores/ui/drawer";
 import { useFileConfigurationStore } from "./stores/ui/file-configuration";
-import { toAlgorithm } from "./interfaces/Algorithms";
-import { toMode } from "./interfaces/Modes";
 
 let fileList = ref<FileItem[]>([]);
 
+// 各种 Store
 const drawerStore = useDrawerStore();
-
 const fileConfigurationStore = useFileConfigurationStore();
-
 const themeColorStore = useThemeColorStore();
+
+// Web Worker
+const {
+    data: workerData,
+    post,
+    terminate,
+    worker,
+} = useWebWorker("/src/worker/FileWorker.ts", {
+    type: "module",
+});
 
 const processFile = (file: File) => {
     const currentFile = new FileItem(Date.now(), file);
-    // 逻辑修复
     if (
         fileList.value.length > 0 &&
         fileList.value[fileList.value.length - 1].status === FileStatus.Waiting
@@ -85,7 +96,32 @@ const checkConfigurationIsVaild = () => {
     fileList.value[fileList.value.length - 1].mode = toMode(fileConfigurationStore.mode);
 
     drawerStore.openOnlyFileOutputDrawer();
+
+    const msg: MainPostData = {
+        file: fileConfigurationStore.file!,
+        algorithm: toAlgorithm(fileConfigurationStore.algorithm),
+        chunkSize: 2048,
+    };
+    post(msg);
 };
+
+watchEffect(() => {
+    const workerResult = workerData.value as WorkerPostData;
+    if (!workerResult) return;
+    switch (workerResult.type) {
+        case WorkerResult.Progress:
+            const progressData = workerResult.data as ProgressInfo;
+            fileList.value[fileList.value.length - 1].progress = progressData.progress;
+            break;
+
+        case WorkerResult.Result:
+            fileList.value[fileList.value.length - 1].hash = workerResult.data.toString();
+            break;
+
+        default:
+            break;
+    }
+});
 
 watchEffect(() => {
     setColorScheme(toValue(themeColorStore.color));
@@ -93,6 +129,10 @@ watchEffect(() => {
 
 onMounted(() => {
     document.body.classList.add("ready");
+});
+
+onUnmounted(() => {
+    terminate();
 });
 </script>
 

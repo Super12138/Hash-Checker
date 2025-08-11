@@ -50,6 +50,7 @@ const fileStatus = computed(() => {
             <p>{{ `当前状态：${fileStatus}` }}</p>
             <p>{{ `模式：${fileItem.mode}` }}</p>
             <p>{{ `算法：${fileItem.algorithm}` }}</p>
+            <p>{{ `哈希值：${fileItem.hash}` }}</p>
         </RichDialog>
     </Teleport>
 </template>
