@@ -26,7 +26,7 @@ import HashTopBar from "./components/main/HashTopBar.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 
-import { onMounted, toValue, watchEffect } from "vue";
+import { onMounted, ref, toValue, watchEffect } from "vue";
 
 import { useDrawerStore } from "./stores/ui/drawer";
 import { useAlgorithmStore } from "./stores/ui/algorithm";
@@ -36,6 +36,11 @@ import { useFileStore } from "./stores/ui/file";
 import { useThemeColorStore } from "./stores/settings/themeColor";
 import { setColorScheme } from "mdui";
 
+import { FileItem } from "./components/file/FileItem";
+import { FileStatus } from "./interfaces/FileStatus";
+
+let fileList = ref<FileItem[]>([]);
+
 const drawerStore = useDrawerStore();
 
 const fileStore = useFileStore();
@@ -44,6 +49,20 @@ const modeStore = useModeStore();
 const checkSumStore = useCheckSumStore();
 
 const themeColorStore = useThemeColorStore();
+
+const processFile = (file: File) => {
+    const currentFile = new FileItem(Date.now(), file);
+    // 逻辑修复
+    if (
+        fileList.value.length > 0 &&
+        fileList.value[fileList.value.length - 1].status === FileStatus.WAITING
+    ) {
+        fileList.value[fileList.value.length - 1] = currentFile;
+    } else {
+        fileList.value.push(currentFile);
+    }
+    fileStore.setFile(file);
+};
 
 const checkConfigurationIsVaild = () => {
     if (!fileStore.hasFile) {
@@ -62,7 +81,7 @@ const checkConfigurationIsVaild = () => {
         alert("请输入校验值");
         return;
     }
-    alert("OKK");
+    drawerStore.openOnlyFileOutputDrawer();
 };
 
 watchEffect(() => {
@@ -82,14 +101,7 @@ onMounted(() => {
         />
 
         <mdui-layout-main class="container">
-            <FileSelector
-                :file="fileStore.file"
-                @changed="
-                    (file: File) => {
-                        fileStore.setFile(file);
-                    }
-                "
-            />
+            <FileSelector :file="fileStore.file" @changed="processFile" />
             <ClipboardSelector />
             <div class="options-container">
                 <AlgorithmDropdown
@@ -122,6 +134,7 @@ onMounted(() => {
         </mdui-layout-main>
     </mdui-layout>
     <FileOutputDrawer
+        :file-list="fileList"
         :open="drawerStore.openFileOutputDrawer"
         @close="drawerStore.toggleFileOutputDrawer()"
     />

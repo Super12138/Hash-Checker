@@ -1,5 +1,20 @@
 import { ref, toValue, watchEffect, type MaybeRefOrGetter, type Ref } from "vue";
 
+export const formatFileSize = (size: number): string => {
+    if (!isFinite(size) || size < 0) {
+        return "文件大小无效";
+    }
+    const fileSizeUnits: string[] = ["Bytes", "KB", "MB", "GB", "TB"];
+    const kbUnit: number = 1024;
+    let counter: number = 0;
+    let calcSize: number = size;
+    while (calcSize >= kbUnit && counter < fileSizeUnits.length - 1) {
+        counter++;
+        calcSize = calcSize / kbUnit;
+    }
+    return `${calcSize.toFixed(2)} ${fileSizeUnits[counter]}`;
+};
+
 /**
  * 格式化文件大小
  *
@@ -8,21 +23,6 @@ import { ref, toValue, watchEffect, type MaybeRefOrGetter, type Ref } from "vue"
  */
 export function useFileInfo(file: MaybeRefOrGetter<File | null>): Ref<string, string> {
     const fileInfo = ref("");
-
-    const formatFileSize = (size: number): string => {
-        if (!isFinite(size) || size < 0) {
-            return "文件大小无效";
-        }
-        const fileSizeUnits: string[] = ["Bytes", "KB", "MB", "GB", "TB"];
-        const kbUnit: number = 1024;
-        let counter: number = 0;
-        let calcSize: number = size;
-        while (calcSize >= kbUnit && counter < fileSizeUnits.length - 1) {
-            counter++;
-            calcSize = calcSize / kbUnit;
-        }
-        return `${calcSize.toFixed(2)} ${fileSizeUnits[counter]}`;
-    };
 
     watchEffect(() => {
         const fileValue = toValue(file);

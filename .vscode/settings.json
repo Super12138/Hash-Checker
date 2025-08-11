@@ -12,5 +12,8 @@
   ],
   "css.customData": [
     "./node_modules/mdui/css-data.zh-cn.json"
-  ]
+  ],
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

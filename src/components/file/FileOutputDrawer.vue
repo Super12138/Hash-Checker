@@ -7,17 +7,20 @@ import "@mdui/icons/close--outlined.js";
 
 import FileOutputItem from "./FileOutputItem.vue";
 
-import { ref } from "vue";
+import type { FileItem } from "./FileItem";
+import { FileStatus } from "@/interfaces/FileStatus";
+import { computed } from "vue";
+import FadeOutInTransition from "../shared/FadeOutInTransition.vue";
+import EmptyTip from "./EmptyTip.vue";
 
 defineProps<{
     open: boolean;
+    fileList: FileItem[];
 }>();
 
 defineEmits<{
     close: () => void;
 }>();
-
-const fileList = ref([1, 2, 3, 4, 5]);
 </script>
 
 <template>
@@ -28,15 +31,11 @@ const fileList = ref([1, 2, 3, 4, 5]);
                 <mdui-icon-close--outlined></mdui-icon-close--outlined>
             </mdui-button-icon>
         </div>
-        <mdui-list>
-            <!--TODO: 进行具体实现-->
-            <FileOutputItem
-                v-for="(file, index) in fileList"
-                :key="file"
-                :name="index.toString()"
-                :status="`Item ${index}`"
-                :progress="Math.random()"
-            />
-        </mdui-list>
+        <FadeOutInTransition>
+            <EmptyTip tip="没有文件" v-if="fileList.length == 0" />
+            <mdui-list v-else>
+                <FileOutputItem v-for="file in fileList" :key="file.addTime" :file-item="file" />
+            </mdui-list>
+        </FadeOutInTransition>
     </mdui-navigation-drawer>
 </template>

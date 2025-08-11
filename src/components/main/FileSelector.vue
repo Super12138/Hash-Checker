@@ -6,7 +6,7 @@ import "@mdui/icons/upload-file--outlined.js";
 import { useFileInfo } from "@/utils/file";
 import { useDropZone, useFileDialog } from "@vueuse/core";
 
-import { ref, Teleport, watchEffect } from "vue";
+import { Teleport, watchEffect } from "vue";
 
 import FadeOutInTransition from "../shared/FadeOutInTransition.vue";
 import DragTip from "./DragTip.vue";

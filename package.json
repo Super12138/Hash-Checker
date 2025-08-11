@@ -17,7 +17,8 @@
     },
     "dependencies": {
         "@mdui/icons": "^1.0.3",
-        "@vueuse/core": "^13.5.0",
+        "@vueuse/core": "^13.6.0",
+        "crypto-js": "^4.2.0",
         "mdui": "^2.1.4",
         "pinia": "^3.0.3",
         "pinia-plugin-persistedstate": "^4.4.1",
@@ -25,15 +26,16 @@
     },
     "devDependencies": {
         "@tsconfig/node24": "^24.0.1",
+        "@types/crypto-js": "^4.2.2",
         "@types/node": "^24.0.14",
         "@vitejs/plugin-vue": "^6.0.0",
         "@vue/tsconfig": "^0.7.0",
         "npm-run-all2": "^8.0.4",
         "prettier": "3.6.2",
-        "typescript": "~5.8.3",
-        "vite": "^7.0.6",
+        "typescript": "^5.9.2",
+        "vite": "^7.1.1",
         "vite-plugin-html": "^3.2.2",
-        "vite-plugin-vue-devtools": "^7.7.7",
-        "vue-tsc": "^3.0.1"
+        "vite-plugin-vue-devtools": "^8.0.0",
+        "vue-tsc": "^3.0.5"
     }
 }
