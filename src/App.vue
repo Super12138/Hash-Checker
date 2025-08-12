@@ -42,6 +42,7 @@ import { useDrawerStore } from "./stores/ui/drawer";
 import { useFileConfigurationStore } from "./stores/ui/file-configuration";
 
 import { useWebWorker } from "@vueuse/core";
+import PWABadage from "./components/shared/PWABadage.vue";
 
 let fileList = ref<FileItem[]>([]);
 
@@ -183,6 +184,7 @@ onUnmounted(() => {
         :open="drawerStore.openSettingsDrawer"
         @close="drawerStore.toggleSettingsDrawer()"
     />
+    <PWABadage />
 </template>
 
 <style lang="css">

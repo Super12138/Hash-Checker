@@ -1,17 +1,15 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "automerge": true,
-  "extends": [
-    "config:recommended"
-  ],
-  "packageRules": [
-    {
-      "depTypeList": ["devDependencies"],
-      "updateTypes": ["minor", "patch"]
-    },
-    {
-      "depTypeList": ["dependencies"],
-      "updateTypes": ["minor", "patch"]
-    }
-  ]
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "automerge": true,
+    "extends": ["config:recommended"],
+    "packageRules": [
+        {
+            "depTypeList": ["devDependencies"],
+            "updateTypes": ["minor", "patch"]
+        },
+        {
+            "depTypeList": ["dependencies"],
+            "updateTypes": ["minor", "patch"]
+        }
+    ]
 }

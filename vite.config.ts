@@ -1,6 +1,7 @@
 import vue from "@vitejs/plugin-vue";
 import { defineConfig, UserConfig } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
+import { VitePWA } from "vite-plugin-pwa";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 import { exec } from "node:child_process";
@@ -50,6 +51,48 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
             vueDevTools(),
             createHtmlPlugin({
                 minify: true,
+            }),
+            VitePWA({
+                strategies: "injectManifest",
+                srcDir: "src/pwa",
+                filename: "sw.ts",
+                registerType: "prompt",
+                injectRegister: false,
+
+                pwaAssets: {
+                    disabled: false,
+                    config: true,
+                },
+
+                manifest: {
+                    name: "Super Hash",
+                    short_name: "Super Hash",
+                    start_url: "/Hash-Checker/",
+                    description: "一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器",
+                    lang: "zh",
+                    theme_color: "#ffffff",
+                    orientation: "any",
+                    dir: "ltr",
+                    categories: ["security"],
+                    shortcuts: [
+                        {
+                            name: "Super Hash",
+                            url: "index.html",
+                            description: "Super Hash",
+                        },
+                    ],
+                },
+
+                injectManifest: {
+                    globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
+                },
+
+                devOptions: {
+                    enabled: false,
+                    navigateFallback: "index.html",
+                    suppressWarnings: true,
+                    type: "module",
+                },
             }),
         ],
         resolve: {
