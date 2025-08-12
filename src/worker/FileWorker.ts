@@ -46,7 +46,7 @@ self.onmessage = async (ev: MessageEvent) => {
         const elapsedTime = (Date.now() - startTime) / 1000; // 秒
         const speed = processedSize / elapsedTime; // 字节/秒
         const remainingSize = file.size - processedSize;
-        const estimatedRemainingTime = remainingSize / speed; // 秒
+        const estimatedRemainingTime = (remainingSize / speed); // 秒
 
         const msg: WorkerPostData = {
             type: WorkerResult.Progress,

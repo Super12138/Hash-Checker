@@ -30,7 +30,7 @@ defineEmits<{
             </mdui-button-icon>
         </div>
         <FadeOutInTransition>
-            <EmptyTip tip="没有文件" v-if="fileList.length == 0" />
+            <EmptyTip class="tip" tip="暂未选择文件" v-if="fileList.length == 0" />
             <mdui-list v-else>
                 <FileOutputItem v-for="file in fileList" :key="file.addTime" :file-item="file" />
             </mdui-list>

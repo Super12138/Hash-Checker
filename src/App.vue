@@ -43,8 +43,11 @@ import { useFileConfigurationStore } from "./stores/ui/file-configuration";
 
 import { useWebWorker } from "@vueuse/core";
 import PWABadage from "./components/shared/PWABadage.vue";
+import SimpleDialog from "./components/shared/SimpleDialog.vue";
 
 let fileList = ref<FileItem[]>([]);
+const openTipDialog = ref(false);
+const tipDesc = ref("");
 
 // 各种 Store
 const drawerStore = useDrawerStore();
@@ -71,19 +74,23 @@ const processFile = (file: File) => {
 
 const checkConfigurationIsVaild = () => {
     if (!fileConfigurationStore.hasFile) {
-        alert("请选择一个文件");
+        tipDesc.value = "请选择一个文件";
+        openTipDialog.value = true;
         return;
     }
     if (!fileConfigurationStore.isAlgorithmValid) {
-        alert("请选择一个算法");
+        tipDesc.value = "请选择一个算法";
+        openTipDialog.value = true;
         return;
     }
     if (!fileConfigurationStore.isModeValid) {
-        alert("请选择一个模式");
+        tipDesc.value = "请选择一个模式";
+        openTipDialog.value = true;
         return;
     }
     if (fileConfigurationStore.mode === "check" && !fileConfigurationStore.isCheckSumValid) {
-        alert("请输入校验值");
+        tipDesc.value = "请输入校验值";
+        openTipDialog.value = true;
         return;
     }
 
@@ -101,6 +108,8 @@ const checkConfigurationIsVaild = () => {
         chunkSize: cacheSizeStore.size,
     };
     post(msg);
+
+    fileList.value[fileList.value.length - 1].progress = undefined;
     fileConfigurationStore.$reset();
 };
 
@@ -110,6 +119,7 @@ watch(workerData, (workerResult: WorkerPostData) => {
         case WorkerResult.Progress:
             const progressData = workerResult.data as ProgressInfo;
             fileList.value[fileList.value.length - 1].progress = progressData.progress;
+            fileList.value[fileList.value.length - 1].estimetedTime = progressData.estimatedRemainingTime;
             break;
 
         case WorkerResult.Result:
@@ -165,7 +175,7 @@ onUnmounted(() => {
             </div>
             <CheckSumInput
                 :value="fileConfigurationStore.checkSum"
-                :enabled="fileConfigurationStore.mode === 'check'"
+                :enabled="fileConfigurationStore.mode === 'Check'"
                 @input="
                     (value: string) => {
                         fileConfigurationStore.setCheckSum(value);
@@ -184,6 +194,15 @@ onUnmounted(() => {
         :open="drawerStore.openSettingsDrawer"
         @close="drawerStore.toggleSettingsDrawer()"
     />
+
+    <SimpleDialog
+        v-model="openTipDialog"
+        headline="错误"
+        :description="tipDesc"
+        :enable-cancel-button="false"
+        :close-on-overlay-click="true"
+    />
+
     <PWABadage />
 </template>
 

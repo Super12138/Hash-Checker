@@ -10,6 +10,7 @@ export class FileItem {
     status: FileStatus = FileStatus.Waiting;
     progress: number | undefined = 0;
     hash: string | undefined = undefined;
+    estimetedTime: number = 0;
 
     constructor(addTime: number, name: string) {
         this.addTime = addTime;

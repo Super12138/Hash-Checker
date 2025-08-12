@@ -1,15 +1,17 @@
 <script setup lang="ts">
+import "mdui/components/card.js";
 import "mdui/components/circular-progress.js";
 import "mdui/components/list-item.js";
 
+import { Algorithms } from "@/interfaces/Algorithms";
 import { FileStatus } from "@/interfaces/FileStatus";
+import { Modes } from "@/interfaces/Modes";
+import { formatDate, useFormatTime } from "@/utils/text";
 import type { FileItem } from "./FileItem";
 
 import { computed, ref, Teleport } from "vue";
 
 import RichDialog from "../shared/RichDialog.vue";
-import { Modes } from "@/interfaces/Modes";
-import { Algorithms } from "@/interfaces/Algorithms";
 
 const props = defineProps<{
     fileItem: FileItem;
@@ -23,7 +25,7 @@ const fileStatus = computed(() => {
             return "等待中";
 
         case FileStatus.Computing:
-            return "计算中";
+            return `计算中，预计剩余：${useFormatTime(props.fileItem.estimetedTime).value}`;
 
         case FileStatus.Finished:
             return "计算成功";
@@ -82,12 +84,24 @@ const fileAlgorithm = computed(() => {
 
     <Teleport to="body">
         <RichDialog headline="文件信息" :enable-cancel-button="false" v-model="dialogOpen">
-            <p>{{ `文件名：${fileItem.name}` }}</p>
-            <p>{{ `添加事件: ${fileItem.addTime}` }}</p>
-            <p>{{ `当前状态：${fileStatus}` }}</p>
-            <p>{{ `模式：${fileMode}` }}</p>
-            <p>{{ `算法：${fileAlgorithm}` }}</p>
-            <p>{{ `哈希值：${fileItem.hash}` }}</p>
+            <p>文件名：{{ fileItem.name }}</p>
+            <p>计算模式：{{ fileMode }}</p>
+            <p>计算算法：{{ fileAlgorithm }}</p>
+            <p>计算状态：{{ fileStatus }}</p>
+            <p>添加时间：{{ formatDate(fileItem.addTime) }}</p>
+            <p v-if="fileItem.estimetedTime > 0">
+                预计剩余时间：{{ useFormatTime(fileItem.estimetedTime).value }}
+            </p>
+            <div v-show="fileItem.hash !== undefined">
+                哈希值：<code>{{ fileItem.hash }}</code>
+            </div>
         </RichDialog>
     </Teleport>
 </template>
+
+<style lang="css" scoped>
+code {
+    word-break: break-all;
+    cursor: pointer;
+}
+</style>
