@@ -1,0 +1,12 @@
+{
+    "labels": {
+        "choose-file": "Click to choose file",
+        "choose-file-tip": "Or drag your file to this page",
+        "mode": {
+            "label": "Mode",
+            "placeholder": "Choose a mode",
+            "generate": "Generate",
+            "check": "Check"
+        }
+    }
+}

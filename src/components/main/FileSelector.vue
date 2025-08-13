@@ -45,8 +45,8 @@ watchEffect(() => {
 <template>
     <mdui-card variant="outlined" clickable @click="open()">
         <mdui-icon-upload-file--outlined></mdui-icon-upload-file--outlined>
-        <p>点击选择文件</p>
-        <small>或拖拽文件到本页</small>
+        <p>{{ $t("labels.choose-file") }}</p>
+        <small>{{ $t("labels.choose-file-tip") }}</small>
         <p class="file-info">{{ fileInfo }}</p>
     </mdui-card>
 

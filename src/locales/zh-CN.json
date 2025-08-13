@@ -1,0 +1,12 @@
+{
+  "labels": {
+    "choose-file": "点击选择文件",
+    "choose-file-tip": "或拖拽文件到本页",
+    "mode": {
+      "label": "模式",
+      "check": "校验",
+      "generate": "生成",
+      "placeholder": "请选择模式"
+    }
+  }
+}

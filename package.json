@@ -22,7 +22,8 @@
         "mdui": "^2.1.4",
         "pinia": "^3.0.3",
         "pinia-plugin-persistedstate": "^4.4.1",
-        "vue": "^3.5.18"
+        "vue": "^3.5.18",
+        "vue-i18n": "^11.1.11"
     },
     "devDependencies": {
         "@tsconfig/node24": "^24.0.1",
