@@ -8,7 +8,7 @@ import "@mdui/icons/close--outlined.js";
 import FileOutputItem from "./FileOutputItem.vue";
 
 import FadeOutInTransition from "../shared/FadeOutInTransition.vue";
-import EmptyTip from "./EmptyTip.vue";
+import EmptyTip from "../shared/EmptyTip.vue";
 import type { FileItem } from "./FileItem";
 
 defineProps<{

@@ -25,8 +25,10 @@ import FileSelector from "./components/main/FileSelector.vue";
 import HashTopBar from "./components/main/HashTopBar.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
 import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
+import PWABadage from "./components/shared/PWABadage.vue";
+import SimpleDialog from "./components/shared/SimpleDialog.vue";
 
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 import { setColorScheme } from "mdui";
 
@@ -42,8 +44,6 @@ import { useDrawerStore } from "./stores/ui/drawer";
 import { useFileConfigurationStore } from "./stores/ui/file-configuration";
 
 import { useWebWorker } from "@vueuse/core";
-import PWABadage from "./components/shared/PWABadage.vue";
-import SimpleDialog from "./components/shared/SimpleDialog.vue";
 
 let fileList = ref<FileItem[]>([]);
 const openTipDialog = ref(false);
@@ -58,6 +58,10 @@ const cacheSizeStore = useCacheSizeStore();
 // Web Worker
 const fileWorker = new Worker(new URL("worker/FileWorker.ts", import.meta.url), { type: "module" });
 const { data: workerData, post, terminate, worker } = useWebWorker(fileWorker);
+
+const isCheckMode = computed(() => {
+    return fileConfigurationStore.mode === "Check"
+});
 
 const processFile = (file: File) => {
     const currentFile = new FileItem(Date.now(), file.name);
@@ -88,7 +92,7 @@ const checkConfigurationIsVaild = () => {
         openTipDialog.value = true;
         return;
     }
-    if (fileConfigurationStore.mode === "check" && !fileConfigurationStore.isCheckSumValid) {
+    if (isCheckMode && !fileConfigurationStore.isCheckSumValid) {
         tipDesc.value = "请输入校验值";
         openTipDialog.value = true;
         return;
@@ -107,6 +111,7 @@ const checkConfigurationIsVaild = () => {
         algorithm: toAlgorithm(fileConfigurationStore.algorithm),
         chunkSize: cacheSizeStore.size,
     };
+    
     post(msg);
 
     fileList.value[fileList.value.length - 1].progress = undefined;
@@ -119,7 +124,8 @@ watch(workerData, (workerResult: WorkerPostData) => {
         case WorkerResult.Progress:
             const progressData = workerResult.data as ProgressInfo;
             fileList.value[fileList.value.length - 1].progress = progressData.progress;
-            fileList.value[fileList.value.length - 1].estimetedTime = progressData.estimatedRemainingTime;
+            fileList.value[fileList.value.length - 1].estimetedTime =
+                progressData.estimatedRemainingTime;
             break;
 
         case WorkerResult.Result:
@@ -175,7 +181,7 @@ onUnmounted(() => {
             </div>
             <CheckSumInput
                 :value="fileConfigurationStore.checkSum"
-                :enabled="fileConfigurationStore.mode === 'Check'"
+                :enabled="isCheckMode"
                 @input="
                     (value: string) => {
                         fileConfigurationStore.setCheckSum(value);
