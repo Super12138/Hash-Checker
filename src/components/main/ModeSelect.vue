@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import "mdui/components/menu-item.js";
 import "mdui/components/select.js";
-import { useI18n } from "vue-i18n";
 
 defineProps<{
     value: string;
