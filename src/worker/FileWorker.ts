@@ -24,8 +24,6 @@ function getHasher(algorithm: Algorithms) {
 }
 
 self.onmessage = async (ev: MessageEvent) => {
-    console.log(ev);
-
     const { file, algorithm, chunkSize }: MainPostData = ev.data;
     const hasher = getHasher(algorithm);
     const startTime = Date.now();
