@@ -60,7 +60,7 @@ const fileWorker = new Worker(new URL("worker/FileWorker.ts", import.meta.url), 
 const { data: workerData, post, terminate, worker } = useWebWorker(fileWorker);
 
 const isCheckMode = computed(() => {
-    return fileConfigurationStore.mode === "Check"
+    return fileConfigurationStore.mode === "Check";
 });
 
 const processFile = (file: File) => {
@@ -92,10 +92,12 @@ const checkConfigurationIsVaild = () => {
         openTipDialog.value = true;
         return;
     }
-    if (isCheckMode && !fileConfigurationStore.isCheckSumValid) {
-        tipDesc.value = "请输入校验值";
-        openTipDialog.value = true;
-        return;
+    if (!isCheckMode) {
+        if (!fileConfigurationStore.isCheckSumValid) {
+            tipDesc.value = "请输入校验值";
+            openTipDialog.value = true;
+            return;
+        }
     }
 
     fileList.value[fileList.value.length - 1].status = FileStatus.Computing;
@@ -111,7 +113,7 @@ const checkConfigurationIsVaild = () => {
         algorithm: toAlgorithm(fileConfigurationStore.algorithm),
         chunkSize: cacheSizeStore.size,
     };
-    
+
     post(msg);
 
     fileList.value[fileList.value.length - 1].progress = undefined;
