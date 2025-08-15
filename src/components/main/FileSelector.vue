@@ -6,7 +6,7 @@ import "@mdui/icons/upload-file--outlined.js";
 import { useFileInfo } from "@/utils/file";
 import { useDropZone, useFileDialog } from "@vueuse/core";
 
-import { Teleport, watchEffect } from "vue";
+import { Teleport, watch } from "vue";
 
 import FadeOutInTransition from "../shared/FadeOutInTransition.vue";
 import DragTip from "./DragTip.vue";
@@ -35,9 +35,11 @@ const { isOverDropZone } = useDropZone(() => document.body, {
 const { files, open, reset, onCancel, onChange } = useFileDialog({
     multiple: false,
 });
-watchEffect(() => {
-    if (files.value !== null) {
-        emit("changed", files.value[0]);
+
+watch(files, (file) => {
+    if (file !== null) {
+        emit("changed", file[0]);
+        reset();
     }
 });
 </script>
