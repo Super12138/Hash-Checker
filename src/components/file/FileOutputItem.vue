@@ -2,6 +2,7 @@
 import "mdui/components/card.js";
 import "mdui/components/circular-progress.js";
 import "mdui/components/list-item.js";
+import "mdui/components/tooltip.js";
 
 import { Algorithms } from "@/interfaces/Algorithms";
 import { FileStatus } from "@/interfaces/FileStatus";
@@ -12,12 +13,30 @@ import type { FileItem } from "./FileItem";
 import { computed, ref, Teleport } from "vue";
 
 import RichDialog from "../shared/RichDialog.vue";
+import { useClipboard } from "@vueuse/core";
+import { snackbar } from "mdui";
 
 const props = defineProps<{
     fileItem: FileItem;
 }>();
 
 const dialogOpen = ref<boolean>(false);
+const { text, copy, copied, isSupported } = useClipboard();
+
+const copyHash = () => {
+    if (!isSupported.value) {
+        snackbar({ message: "当前浏览器不支持复制功能" });
+        return;
+    }
+    if (props.fileItem.hash !== undefined) {
+        copy(props.fileItem.hash);
+        if (copied) {
+            snackbar({ message: "复制成功" });
+        } else {
+            snackbar({ message: "复制失败" });
+        }
+    }
+};
 
 const fileStatus = computed(() => {
     switch (props.fileItem.status) {
@@ -89,12 +108,12 @@ const fileAlgorithm = computed(() => {
             <p>计算算法：{{ fileAlgorithm }}</p>
             <p>计算状态：{{ fileStatus }}</p>
             <p>添加时间：{{ formatDate(fileItem.addTime) }}</p>
-            <p v-if="fileItem.estimetedTime > 0">
-                预计剩余时间：{{ useFormatTime(fileItem.estimetedTime).value }}
+            <p v-if="fileItem.hash !== undefined">
+                哈希值：
+                <mdui-tooltip content="单击即可复制">
+                    <code @click="copyHash()">{{ fileItem.hash }}</code>
+                </mdui-tooltip>
             </p>
-            <div v-show="fileItem.hash !== undefined">
-                哈希值：<code>{{ fileItem.hash }}</code>
-            </div>
         </RichDialog>
     </Teleport>
 </template>
