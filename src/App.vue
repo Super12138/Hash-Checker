@@ -37,6 +37,7 @@ import { FileStatus } from "./interfaces/FileStatus";
 import { toMode } from "./interfaces/Modes";
 import type { MainPostData, ProgressInfo, WorkerPostData } from "./interfaces/WorkerMessage";
 import { WorkerResult } from "./interfaces/WorkerResults";
+
 import { useCacheSizeStore } from "./stores/settings/cacheSize";
 import { useThemeColorStore } from "./stores/settings/themeColor";
 import { useDrawerStore } from "./stores/ui/drawer";

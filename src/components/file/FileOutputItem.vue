@@ -10,17 +10,18 @@ import { Modes } from "@/interfaces/Modes";
 import { formatDate, useFormatTime } from "@/utils/text";
 import type { FileItem } from "./FileItem";
 
-import { computed, ref, Teleport } from "vue";
+import { computed, ref, Teleport, watch } from "vue";
 
-import RichDialog from "../shared/RichDialog.vue";
+import { useAutoCopyStore } from "@/stores/settings/autoCopy";
 import { useClipboard } from "@vueuse/core";
 import { snackbar } from "mdui";
+import RichDialog from "../shared/RichDialog.vue";
 
-const props = defineProps<{
-    fileItem: FileItem;
-}>();
+const props = defineProps<{ fileItem: FileItem }>();
 
 const dialogOpen = ref<boolean>(false);
+
+const autoCopyStore = useAutoCopyStore();
 const { text, copy, copied, isSupported } = useClipboard();
 
 const copyHash = () => {
@@ -31,9 +32,9 @@ const copyHash = () => {
     if (props.fileItem.hash !== undefined) {
         copy(props.fileItem.hash);
         if (copied) {
-            snackbar({ message: "复制成功" });
+            snackbar({ message: "成功将哈希值写入剪贴板" });
         } else {
-            snackbar({ message: "复制失败" });
+            snackbar({ message: "无法写入到剪贴板" });
         }
     }
 };
@@ -89,6 +90,14 @@ const fileAlgorithm = computed(() => {
             return "未选择（未接收）";
     }
 });
+
+watch(
+    () => props.fileItem.hash,
+    () => {
+        console.log(autoCopyStore.enable);
+        if (autoCopyStore.enable) copyHash();
+    },
+);
 </script>
 
 <template>
