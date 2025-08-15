@@ -20,7 +20,6 @@ import FileOutputDrawer from "./components/file/FileOutputDrawer.vue";
 import AlgorithmDropdown from "./components/main/AlgorithmSelect.vue";
 import CheckButton from "./components/main/CheckButton.vue";
 import CheckSumInput from "./components/main/CheckSumInput.vue";
-import ClipboardSelector from "./components/main/ClipboardCheckbox.vue";
 import FileSelector from "./components/main/FileSelector.vue";
 import HashTopBar from "./components/main/HashTopBar.vue";
 import ModeDropdown from "./components/main/ModeSelect.vue";
@@ -162,7 +161,6 @@ onUnmounted(() => {
 
         <mdui-layout-main class="container">
             <FileSelector :file="fileConfigurationStore.file" @changed="processFile" />
-            <ClipboardSelector />
             <div class="options-container">
                 <AlgorithmDropdown
                     :value="fileConfigurationStore.algorithm"
@@ -254,6 +252,7 @@ mdui-layout {
     flex-direction: row;
     gap: 1rem;
     margin-bottom: 1rem;
+    margin-top: 2rem;
 }
 
 @media (max-width: 500px) {

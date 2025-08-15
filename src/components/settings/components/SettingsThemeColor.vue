@@ -2,12 +2,17 @@
 import "mdui/components/list-item.js";
 
 import "@mdui/icons/color-lens--outlined.js";
+
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 </script>
 
 <template>
-    <mdui-list-item headline="主题色" description="为应用配置你心仪的主题色">
+    <mdui-list-item
+        :headline="t('settings.theme-color.label')"
+        :description="t('settings.theme-color.description')"
+    >
         <mdui-icon-color-lens--outlined slot="icon"></mdui-icon-color-lens--outlined>
     </mdui-list-item>
 </template>
-
-<style lang="css"></style>

@@ -5,7 +5,11 @@ import "@mdui/icons/info--outlined.js";
 
 import { computed, ref, Teleport } from "vue";
 
+import { useI18n } from "vue-i18n";
+
 import RichDialog from "@/components/shared/RichDialog.vue";
+
+const { t } = useI18n();
 
 const dialogOpen = ref(false);
 
@@ -15,11 +19,15 @@ const version = computed(() => {
 </script>
 
 <template>
-    <mdui-list-item headline="关于" @click="dialogOpen = true">
+    <mdui-list-item :headline="t('settings.about.label')" @click="dialogOpen = true">
         <mdui-icon-info--outlined slot="icon"></mdui-icon-info--outlined>
     </mdui-list-item>
     <Teleport to="body">
-        <RichDialog headline="关于" v-model="dialogOpen" :enable-cancel-button="false">
+        <RichDialog
+            :headline="t('settings.about.label')"
+            v-model="dialogOpen"
+            :enable-cancel-button="false"
+        >
             <p>{{ version }}</p>
         </RichDialog>
     </Teleport>

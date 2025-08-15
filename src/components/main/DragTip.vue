@@ -1,6 +1,12 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+</script>
+
 <template>
     <div>
-        <h1>松开鼠标以读取文件</h1>
+        <h1>{{ t("drag-tip") }}</h1>
     </div>
 </template>
 

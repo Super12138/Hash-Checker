@@ -5,6 +5,7 @@ import "@mdui/icons/upload-file--outlined.js";
 
 import { useFileInfo } from "@/utils/file";
 import { useDropZone, useFileDialog } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
 
 import { Teleport, watch } from "vue";
 
@@ -18,6 +19,8 @@ const props = defineProps<{
 const emit = defineEmits<{
     (e: "changed", file: File): void;
 }>();
+
+const { t } = useI18n();
 
 const fileInfo = useFileInfo(() => props.file);
 
@@ -47,8 +50,8 @@ watch(files, (file) => {
 <template>
     <mdui-card variant="outlined" clickable @click="open()">
         <mdui-icon-upload-file--outlined></mdui-icon-upload-file--outlined>
-        <p>{{ $t("labels.choose-file") }}</p>
-        <small>{{ $t("labels.choose-file-tip") }}</small>
+        <p>{{ t("choose-file.label") }}</p>
+        <small>{{ t("choose-file.helper") }}</small>
         <p class="file-info">{{ fileInfo }}</p>
     </mdui-card>
 

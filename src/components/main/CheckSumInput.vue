@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import "mdui/components/text-field.js";
 
+import { useI18n } from "vue-i18n";
+
 defineProps<{
     value: string;
     enabled: boolean;
@@ -9,12 +11,14 @@ defineProps<{
 defineEmits<{
     (e: "input", value: string): void;
 }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
     <mdui-text-field
-        label="校验值"
-        helper="在此处粘贴您获取到的校验值"
+        :label="t('checkSum-input.label')"
+        :helper="t('checkSum-input.helper')"
         clearable
         :disabled="!enabled"
         :value="value"

@@ -4,6 +4,8 @@ import "mdui/components/switch.js";
 
 import "@mdui/icons/tips-and-updates--outlined.js";
 
+import { useI18n } from "vue-i18n";
+
 defineProps<{
     checked: boolean;
 }>();
@@ -11,12 +13,14 @@ defineProps<{
 defineEmits<{
     (e: "change", value: boolean): void;
 }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
     <mdui-list-item
-        headline="自动匹配校验方法"
-        description="根据输入的校验值自动匹配校验方法"
+        :headline="t('settings.algorithm-suggest.label')"
+        :description="t('settings.algorithm-suggest.description')"
         @click.self="$emit('change', !checked)"
     >
         <mdui-icon-tips-and-updates--outlined slot="icon"></mdui-icon-tips-and-updates--outlined>

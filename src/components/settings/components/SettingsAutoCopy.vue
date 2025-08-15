@@ -2,7 +2,7 @@
 import "mdui/components/list-item.js";
 import "mdui/components/switch.js";
 
-import "@mdui/icons/update--outlined.js";
+import '@mdui/icons/content-copy--outlined.js';
 import { useI18n } from "vue-i18n";
 
 defineProps<{
@@ -18,11 +18,11 @@ const { t } = useI18n();
 
 <template>
     <mdui-list-item
-        :headline="t('settings.auto-update.label')"
-        :description="t('settings.auto-update.description')"
+        :headline="t('settings.auto-copy.label')"
+        :description="t('settings.auto-copy.description')"
         @click.self="$emit('change', !checked)"
     >
-        <mdui-icon-update--outlined slot="icon"></mdui-icon-update--outlined>
+        <mdui-icon-content-copy--outlined slot="icon"></mdui-icon-content-copy--outlined>
         <mdui-switch
             slot="end-icon"
             :checked="checked"

@@ -6,12 +6,15 @@ import "@mdui/icons/storage--outlined.js";
 
 import { TextField } from "mdui/components/text-field.js";
 
-import { useTemplateRef, watch } from "vue";
-import { snackbar } from "mdui";
 import { isBlankOrEmpty } from "@/utils/text";
+import { snackbar } from "mdui";
+import { useTemplateRef, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 const model = defineModel<number>({ required: true });
 const textField = useTemplateRef<TextField>("cache-text-field");
+
+const { t } = useI18n();
 
 watch(
     () => model.value,
@@ -34,8 +37,8 @@ watch(
 
 <template>
     <mdui-list-item
-        headline="单次缓存大小"
-        description="分片缓存文件时单次缓存文件大小"
+        :headline="t('settings.cache-size.label')"
+        :description="t('settings.cache-size.description')"
         @click="textField?.focus()"
     >
         <mdui-icon-storage--outlined slot="icon"></mdui-icon-storage--outlined>

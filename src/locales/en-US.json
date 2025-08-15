@@ -1,12 +1,71 @@
 {
-    "labels": {
-        "choose-file": "Click to choose file",
-        "choose-file-tip": "Or drag your file to this page",
-        "mode": {
-            "label": "Mode",
-            "placeholder": "Choose a mode",
-            "generate": "Generate",
-            "check": "Check"
+    "choose-file": {
+        "label": "Click to choose a file",
+        "helper": "or drag and drop a file to this page"
+    },
+    "copy-to-clipboard": "Copy checksum to clipboard after calculation (only works in <strong>Generate</strong> mode)",
+    "check-btn-label": "Check",
+    "drag-tip": "Release mouse to read the file",
+    "mode": {
+        "label": "Mode",
+        "placeholder": "Choose a mode",
+        "generate": "Generate",
+        "check": "Check"
+    },
+    "algorithm": {
+        "label": "Algorithm",
+        "placeholder": "Choose a algorithm"
+    },
+    "checkSum-input": {
+        "label": "Checksum",
+        "helper": "Paste or enter the checksum here"
+    },
+    "file-list": {
+        "label": "File List",
+        "empty-tip": "No files currently",
+        "remove-all": "Remove All"
+    },
+    "settings": {
+        "label": "Settings",
+        "cache-size": {
+            "label": "Single Cache Size",
+            "description": "The size of each cached file when sharding cache files. Larger values improve read speed but consume more memory"
+        },
+        "system-notification": {
+            "label": "System Notification",
+            "description": "Send system notification when computation is complete",
+            "button": "Click to send a test notification"
+        },
+        "algorithm-suggest": {
+            "label": "Algorithm Suggestion",
+            "description": "Automatically match algorithms based on input checksum values"
+        },
+        "auto-copy": {
+            "label": "Auto Copy",
+            "description": "Automatically copy the checksum to the clipboard after calculation (only works in generation mode)"
+        },
+        "auto-update": {
+            "label": "Auto Update",
+            "description": "Automatically check for updates when the app starts"
+        },
+        "theme-color": {
+            "label": "Theme Color",
+            "description": "Configure your preferred theme color for the app"
+        },
+        "language": {
+            "label": "Language",
+            "description": "Select the display language for the app"
+        },
+        "clear-cache": {
+            "label": "Clear Cache",
+            "description": "Clear the app's cached data (personal settings will not be deleted)"
+        },
+        "reset": {
+            "label": "Reset",
+            "description": "Clear all data including personal settings"
+        },
+        "about": {
+            "label": "About"
         }
     }
 }

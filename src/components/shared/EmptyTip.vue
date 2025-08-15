@@ -5,13 +5,11 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div>
-        <h3>{{ props.tip }}</h3>
-    </div>
+    <h3>{{ props.tip }}</h3>
 </template>
 
 <style lang="css" scoped>
-div {
+h3 {
     text-align: center;
 }
 </style>

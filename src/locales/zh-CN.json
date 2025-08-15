@@ -1,12 +1,71 @@
 {
-  "labels": {
-    "choose-file": "点击选择文件",
-    "choose-file-tip": "或拖拽文件到本页",
+    "choose-file": {
+        "label": "点击选择文件",
+        "helper": "或拖拽文件到本页"
+    },
+    "copy-to-clipboard": "计算完成后将校验值写入剪贴板（仅在<strong>生成</strong>模式下生效）",
+    "check-btn-label": "检查",
+    "drag-tip": "松开鼠标以读取文件",
     "mode": {
-      "label": "模式",
-      "check": "校验",
-      "generate": "生成",
-      "placeholder": "请选择模式"
+        "label": "模式",
+        "check": "校验",
+        "generate": "生成",
+        "placeholder": "请选择模式"
+    },
+    "algorithm": {
+        "label": "算法",
+        "placeholder": "请选择算法"
+    },
+    "checkSum-input": {
+        "label": "校验值",
+        "helper": "在此处粘贴您获取到的校验值"
+    },
+    "file-list": {
+        "label": "文件列表",
+        "empty-tip": "当前暂无文件",
+        "remove-all": "全部移除"
+    },
+    "settings": {
+        "label": "设置",
+        "cache-size": {
+            "label": "单次缓存大小",
+            "description": "分片缓存文件时单次缓存文件大小，数值越大读取速度越快，但会占用更多内存"
+        },
+        "system-notification": {
+            "label": "系统通知",
+            "description": "在计算完成后发送系统通知",
+            "button": "点击发送一条测试通知"
+        },
+        "algorithm-suggest": {
+            "label": "算法建议",
+            "description": "根据输入的校验值自动匹配算法"
+        },
+        "auto-copy": {
+            "label": "自动复制",
+            "description": "计算完成后将自动复制校验值到剪贴板，仅在生成模式下生效"
+        },
+        "auto-update": {
+            "label": "自动更新",
+            "description": "在应用启动时将自动检查更新"
+        },
+        "theme-color": {
+            "label": "主题色",
+            "description": "为应用配置你心仪的主题色"
+        },
+        "language": {
+            "label": "语言",
+            "description": "选择应用显示语言"
+        },
+        "clear-cache": {
+            "label": "清除缓存",
+            "description": "清除应用的缓存数据（不删除个人设置）"
+        },
+        "reset": {
+            "label": "重置应用",
+            "description": "清除包括个人设置在内的所有数据"
+        },
+        "about": {
+            "label": "关于"
+        }
     }
-  }
 }

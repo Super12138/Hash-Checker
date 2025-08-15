@@ -2,6 +2,8 @@
 import "mdui/components/menu-item.js";
 import "mdui/components/select.js";
 
+import { useI18n } from "vue-i18n";
+
 defineProps<{
     value: string;
 }>();
@@ -9,11 +11,13 @@ defineProps<{
 defineEmits<{
     (e: "change", value: string): void;
 }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
     <div class="select">
-        <span class="select-label">算法</span>
+        <span class="select-label">{{ t("algorithm.label") }}</span>
         <mdui-select
             :value="value"
             @change="
@@ -21,7 +25,7 @@ defineEmits<{
                     $emit('change', (e.target as HTMLSelectElement).value);
                 }
             "
-            placeholder="请选择算法"
+            :placeholder="t('algorithm.placeholder')"
             required
         >
             <mdui-menu-item value="MD5">MD5</mdui-menu-item>
