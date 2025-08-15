@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "mdui/components/dialog.js";
-import { Dialog } from 'mdui/components/dialog.js';
+import type { Dialog } from "mdui/components/dialog.js";
 import { useTemplateRef } from "vue";
 
 defineProps<{
@@ -17,13 +17,23 @@ const emit = defineEmits<{
 
 const open = defineModel<boolean>({ required: true });
 
-const onConfirm = () => {
+const dialogRef = useTemplateRef<Dialog>("dialog");
+
+const onClosed = () => {
     open.value = false;
+};
+
+const onConfirm = () => {
+    if (dialogRef.value) {
+        dialogRef.value.open = false;
+    }
     emit("confirm");
 };
 
 const onCancel = () => {
-    open.value = false;
+    if (dialogRef.value) {
+        dialogRef.value.open = false;
+    }
     emit("cancel");
 };
 </script>
@@ -33,9 +43,13 @@ const onCancel = () => {
         :headline="headline"
         :description="desctiption"
         :open="open"
-        :close-on-overlay-click="closeOnOverlayClick" 
+        :close-on-overlay-click="closeOnOverlayClick"
+        @closed="onClosed()"
+        ref="dialog"
     >
-        <mdui-button v-if="enableCancelButton" slot="action" variant="text" @click="onCancel()">取消</mdui-button>
+        <mdui-button v-if="enableCancelButton" slot="action" variant="text" @click="onCancel()">
+            取消
+        </mdui-button>
         <mdui-button slot="action" variant="tonal" @click="onConfirm()">确定</mdui-button>
     </mdui-dialog>
 </template>
