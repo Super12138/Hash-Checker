@@ -44,7 +44,7 @@ const onCancel = () => {
         :description="desctiption"
         :open="open"
         :close-on-overlay-click="closeOnOverlayClick"
-        @closed="onClosed()"
+        @closed.self="onClosed()"
         ref="dialog"
     >
         <mdui-button v-if="enableCancelButton" slot="action" variant="text" @click="onCancel()">

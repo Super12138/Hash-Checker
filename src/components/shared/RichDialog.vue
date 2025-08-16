@@ -49,7 +49,7 @@ const onCancel = () => {
         :headline="headline"
         :open="open"
         :close-on-overlay-click="closeOnOverlayClick"
-        @closed="onClosed()"
+        @closed.self="onClosed()"
         ref="dialog"
     >
         <slot></slot>
