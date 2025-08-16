@@ -92,7 +92,7 @@ const checkConfigurationIsVaild = () => {
         openTipDialog.value = true;
         return;
     }
-    if (isCheckMode) {
+    if (isCheckMode.value) {
         if (!fileConfigurationStore.isCheckSumValid) {
             tipDesc.value = "请输入校验值";
             openTipDialog.value = true;
