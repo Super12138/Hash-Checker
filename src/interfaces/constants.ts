@@ -1,0 +1,1 @@
+export const UPDATE_URL = "https://api.github.com/repos/Super12138/Hash-Checker/releases/latest";

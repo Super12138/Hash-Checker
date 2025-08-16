@@ -7,6 +7,7 @@ import { useTemplateRef } from "vue";
 withDefaults(
     defineProps<{
         headline: string;
+        description?: string;
         closeOnOverlayClick?: boolean;
         enableCancelButton?: boolean;
     }>(),
@@ -47,6 +48,7 @@ const onCancel = () => {
 <template>
     <mdui-dialog
         :headline="headline"
+        :description="description"
         :open="open"
         :close-on-overlay-click="closeOnOverlayClick"
         @closed.self="onClosed()"

@@ -44,6 +44,7 @@ import { useDrawerStore } from "./stores/ui/drawer";
 import { useFileConfigurationStore } from "./stores/ui/file-configuration";
 
 import { useWebWorker } from "@vueuse/core";
+import UpdateDialog from "./components/shared/UpdateDialog.vue";
 
 let fileList = ref<FileItem[]>([]);
 const openTipDialog = ref(false);
@@ -212,6 +213,7 @@ onUnmounted(() => {
     />
 
     <PWABadage />
+    <UpdateDialog />
 </template>
 
 <style lang="css">
