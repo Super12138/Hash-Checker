@@ -13,7 +13,8 @@ import type { FileItem } from "./FileItem";
 import { computed, ref, Teleport, watch } from "vue";
 
 import { useAutoCopyStore } from "@/stores/settings/autoCopy";
-import { useClipboard } from "@vueuse/core";
+import { useSystemNotificationStore } from "@/stores/settings/systemNotification";
+import { useClipboard, useWebNotification } from "@vueuse/core";
 import { snackbar } from "mdui";
 import RichDialog from "../shared/RichDialog.vue";
 
@@ -22,7 +23,10 @@ const props = defineProps<{ fileItem: FileItem }>();
 const dialogOpen = ref<boolean>(false);
 
 const autoCopyStore = useAutoCopyStore();
-const { text, copy, copied, isSupported } = useClipboard();
+const systemNotificationStore = useSystemNotificationStore();
+
+const { copy, copied, isSupported } = useClipboard();
+const { isSupported: isSupportedNotification, permissionGranted, show } = useWebNotification();
 
 const copyHash = () => {
     if (!isSupported.value) {
@@ -94,8 +98,22 @@ const fileAlgorithm = computed(() => {
 watch(
     () => props.fileItem.hash,
     () => {
-        console.log(autoCopyStore.enable);
         if (autoCopyStore.enable) copyHash();
+        if (systemNotificationStore.enable) {
+            if (isSupportedNotification.value && permissionGranted.value) {
+                show({
+                    title: `计算完成，${fileAlgorithm.value} 值为 ${props.fileItem.hash}`,
+                    dir: "auto",
+                    lang: "zh",
+                    renotify: true,
+                    tag: "hash-notification",
+                });
+            } else {
+                snackbar({
+                    message: "您的浏览器不支持通知或未授权通知权限",
+                });
+            }
+        }
     },
 );
 </script>

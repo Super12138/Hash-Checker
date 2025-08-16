@@ -20,14 +20,8 @@ const { t } = useI18n();
 
 const {
     isSupported,
-    notification,
     permissionGranted,
     show,
-    close,
-    onClick,
-    onShow,
-    onError,
-    onClose,
 } = useWebNotification();
 
 const sendTestNotification = () => {
