@@ -29,4 +29,13 @@ const i18n = createI18n({
 
 app.use(pinia);
 app.use(i18n);
+app.config.errorHandler = (err, instance, info) => {
+    console.error(`-----应用发生全局错误 | Global Error Catched-----`);
+    console.error("-----Error-----");
+    console.error(err);
+    console.error("-----Instance-----");
+    console.error(instance);
+    console.error("-----Info-----");
+    console.error(info);
+};
 app.mount("#app");
