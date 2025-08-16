@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import 'mdui/components/snackbar.js';
+// import { snackbar } from 'mdui';
+import "mdui/components/snackbar.js";
 
 import { useRegisterSW } from "virtual:pwa-register/vue";
 import { ref } from "vue";
@@ -45,6 +46,18 @@ const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({
             });
         }
     },
+    /* onOfflineReady() {
+        snackbar({
+            message: "Super Hash 已准备好在离线环境下运行",
+        });
+    },
+    onNeedRefresh() {
+        snackbar({
+            message: "Super Hash 有新版本",
+            action: "立即更新",
+            onActionClick: () => updateServiceWorker(true),
+        });
+    }, */
 });
 </script>
 
@@ -52,6 +65,8 @@ const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({
     <mdui-snackbar :open="offlineReady">Super Hash 已准备好在离线环境下运行</mdui-snackbar>
     <mdui-snackbar :open="needRefresh">
         Super Hash 有新版本
-        <mdui-button slot="action" variant="text" @click="updateServiceWorker()">立即更新</mdui-button>
+        <mdui-button slot="action" variant="text" @click="updateServiceWorker()">
+            立即更新
+        </mdui-button>
     </mdui-snackbar>
 </template>

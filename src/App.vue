@@ -92,7 +92,7 @@ const checkConfigurationIsVaild = () => {
         openTipDialog.value = true;
         return;
     }
-    if (!isCheckMode) {
+    if (isCheckMode) {
         if (!fileConfigurationStore.isCheckSumValid) {
             tipDesc.value = "请输入校验值";
             openTipDialog.value = true;
@@ -105,6 +105,7 @@ const checkConfigurationIsVaild = () => {
         fileConfigurationStore.algorithm,
     );
     fileList.value[fileList.value.length - 1].mode = toMode(fileConfigurationStore.mode);
+    fileList.value[fileList.value.length - 1].checkSum = fileConfigurationStore.checkSum;
 
     drawerStore.openOnlyFileOutputDrawer();
 

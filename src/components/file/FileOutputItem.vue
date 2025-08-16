@@ -21,12 +21,23 @@ import RichDialog from "../shared/RichDialog.vue";
 const props = defineProps<{ fileItem: FileItem }>();
 
 const dialogOpen = ref<boolean>(false);
+const isCheckSumMatch = ref<boolean>(false);
 
 const autoCopyStore = useAutoCopyStore();
 const systemNotificationStore = useSystemNotificationStore();
 
 const { copy, copied, isSupported } = useClipboard();
 const { isSupported: isSupportedNotification, permissionGranted, show } = useWebNotification();
+
+const showCompare = computed(() => {
+    return (
+        props.fileItem.mode === Modes.Check &&
+        props.fileItem.checkSum !== undefined &&
+        props.fileItem.hash !== undefined
+    );
+});
+
+const compareResult = computed(() => (isCheckSumMatch.value ? "校验成功" : "校验失败"));
 
 const copyHash = () => {
     if (!isSupported.value) {
@@ -98,6 +109,12 @@ const fileAlgorithm = computed(() => {
 watch(
     () => props.fileItem.hash,
     () => {
+        if (showCompare.value) {
+            // showCompare 的值里已经计算了 hash 和 checkSum 一定不为空，因此下方使用非空断言
+            isCheckSumMatch.value =
+                props.fileItem.hash!.trim().toLocaleLowerCase() ===
+                props.fileItem.checkSum!.trim().toLowerCase();
+        }
         if (autoCopyStore.enable) copyHash();
         if (systemNotificationStore.enable) {
             if (isSupportedNotification.value && permissionGranted.value) {
@@ -138,16 +155,30 @@ watch(
             <p v-if="fileItem.hash !== undefined">
                 哈希值：
                 <mdui-tooltip content="单击即可复制">
-                    <code @click="copyHash()">{{ fileItem.hash }}</code>
+                    <code class="hash-code" @click="copyHash()">{{ fileItem.hash }}</code>
                 </mdui-tooltip>
+            </p>
+            <p v-if="showCompare">
+                校验状态：
+                <strong :class="isCheckSumMatch ? 'color-green' : 'color-red'">
+                    {{ compareResult }}
+                </strong>
             </p>
         </RichDialog>
     </Teleport>
 </template>
 
-<style lang="css" scoped>
-code {
+<style lang="css">
+.hash-code {
     word-break: break-all;
     cursor: pointer;
+}
+
+.color-red {
+    color: #d32f2f !important;
+}
+
+.color-green {
+    color: #00c853 !important;
 }
 </style>
