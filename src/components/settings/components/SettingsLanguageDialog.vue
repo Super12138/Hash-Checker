@@ -54,7 +54,7 @@ onMounted(() => {
             <SettingsLanguageItem
                 v-for="language in APP_LANGUAGES"
                 :display-name="language.displayName"
-                :checked="languageStore.language === language.languageTag"
+                :checked="locale === language.languageTag"
                 @select="setLanguage(language.languageTag)"
             />
         </mdui-list>
