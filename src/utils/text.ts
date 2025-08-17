@@ -53,11 +53,11 @@ export const formatDate = (date: number): string => {
     }
     // 返回格式化后的日期字符串
     return `${year}年${month}月${day}日 ${hour}:${minute}:${second}`;
-}
+};
 
 /**
  * 格式化时间
- * 
+ *
  * @param seconds 传入的时间（单位：秒）
  * @returns 格式化的时间字符串；输出：`ss秒`，`mm分钟`，`hh 小时 mm 分钟 ss 秒`
  */
@@ -67,11 +67,11 @@ export const useFormatTime = (seconds: MaybeRefOrGetter<number>): Ref<string, st
         str.value = formatTime(toValue(seconds));
     });
     return str;
-}
+};
 
 /**
  * 格式化时间
- * 
+ *
  * @param seconds 传入的时间（单位：秒）
  * @returns 格式化的时间字符串；输出：`ss秒`，`mm分钟`，`hh 小时 mm 分钟 ss 秒`
  */
@@ -91,4 +91,4 @@ export const formatTime = (seconds: number): string => {
         const secs = Math.floor(seconds % 60); // 秒
         return `${hours} 小时 ${minutes} 分钟 ${secs} 秒`;
     }
-}
+};

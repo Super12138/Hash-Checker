@@ -2,7 +2,7 @@
 import "mdui/components/list-item.js";
 import "mdui/components/switch.js";
 
-import '@mdui/icons/content-copy--outlined.js';
+import "@mdui/icons/content-copy--outlined.js";
 import { useI18n } from "vue-i18n";
 
 defineProps<{

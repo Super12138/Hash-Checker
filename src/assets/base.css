@@ -108,7 +108,8 @@ h1 {
 }
 
 h2,
-.headline-small { /* TODO: headline-small 要验证是否还需要*/
+.headline-small {
+    /* TODO: headline-small 要验证是否还需要*/
     line-height: var(--mdui-typescale-headline-small-line-height);
     font-size: var(--mdui-typescale-headline-small-size);
     letter-spacing: var(--mdui-typescale-headline-small-tracking);

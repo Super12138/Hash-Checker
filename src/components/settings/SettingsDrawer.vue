@@ -30,7 +30,6 @@ const systemNotificationStore = useSystemNotificationStore();
 const autoUpdateStore = useAutoUpdateStore();
 const autoCopyStore = useAutoCopyStore();
 
-
 defineProps<{
     open: boolean;
 }>();

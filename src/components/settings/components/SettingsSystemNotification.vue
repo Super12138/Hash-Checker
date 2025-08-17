@@ -18,11 +18,7 @@ defineEmits<{
 
 const { t } = useI18n();
 
-const {
-    isSupported,
-    permissionGranted,
-    show,
-} = useWebNotification();
+const { isSupported, permissionGranted, show } = useWebNotification();
 
 const sendTestNotification = () => {
     if (isSupported.value && permissionGranted.value) {

@@ -10,7 +10,11 @@ export const useThemeColorStore = defineStore(
             color.value = newColor;
         }
 
-        return { color, setColor };
+        function $reset() {
+            color.value = "#0f032b";
+        }
+
+        return { color, setColor, $reset };
     },
     { persist: true },
 );

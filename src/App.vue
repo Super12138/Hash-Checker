@@ -142,9 +142,12 @@ watch(workerData, (workerResult: WorkerPostData) => {
     }
 });
 
-themeColorStore.$subscribe((mutation, state) => {
-    setColorScheme(state.color);
-});
+themeColorStore.$subscribe(
+    (mutation, state) => {
+        setColorScheme(state.color);
+    },
+    { immediate: true },
+);
 
 onMounted(() => {
     document.body.classList.add("ready");
