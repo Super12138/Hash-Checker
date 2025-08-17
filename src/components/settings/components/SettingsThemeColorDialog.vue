@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useThemeColorStore } from "@/stores/settings/themeColor";
-import { setColorScheme } from "mdui";
 import "mdui/components/dialog.js";
-
+import { setColorScheme } from "mdui";
 import type { Dialog } from "mdui/components/dialog.js";
+
+import { useThemeColorStore } from "@/stores/settings/themeColor";
+
 import { ref, useTemplateRef, watch } from "vue";
 
 const open = defineModel<boolean>({ required: true });
@@ -57,7 +58,8 @@ watch(inputColor, (newColor) => {
         ref="dialog"
     >
         <input type="color" v-model="inputColor" />
-        <mdui-button @click="resetToDefault()">重置到默认颜色</mdui-button>
+        <br />
+        <mdui-button @click="resetToDefault()" full-width>重置到默认颜色</mdui-button>
         <mdui-button slot="action" variant="text" @click="onCancel()">取消</mdui-button>
         <mdui-button slot="action" variant="tonal" @click="onConfirm()">确定</mdui-button>
     </mdui-dialog>
