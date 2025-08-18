@@ -21,11 +21,12 @@ const onClosed = () => {
 };
 
 const setLanguage = (languageTag: string) => {
-    console.log(languageTag);
+    console.log(`Selected: ${languageTag}`);
     if (dialogRef.value) {
         dialogRef.value.open = false;
     }
     if (languageStore.language !== languageTag) {
+        console.log(`Apply: ${languageTag}`);
         languageStore.setLanguage(languageTag);
         locale.value = languageTag;
     }
@@ -53,6 +54,7 @@ onMounted(() => {
         <mdui-list>
             <SettingsLanguageItem
                 v-for="language in APP_LANGUAGES"
+                :key="language.languageTag"
                 :display-name="language.displayName"
                 :checked="locale === language.languageTag"
                 @select="setLanguage(language.languageTag)"
