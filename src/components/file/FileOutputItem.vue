@@ -83,7 +83,7 @@ const fileMode = computed(() => {
         case Modes.Generate:
             return "生成";
         case Modes.Unselected:
-            return "未选择（未接收）";
+            return "未选择";
     }
 });
 
@@ -102,7 +102,7 @@ const fileAlgorithm = computed(() => {
         case Algorithms.SHA512:
             return "SHA512";
         case Algorithms.Unselected:
-            return "未选择（未接收）";
+            return "未选择";
     }
 });
 

@@ -39,22 +39,26 @@ const version = computed(() => {
         style="text-align: center"
     >
         <img width="120px" src="/icon.png" />
-        <h2 style="margin-top: 10px">Super Hash</h2>
-        <p id="version" style="margin-top: 5px">
+        <h2 style="margin-top: 10px; margin-bottom: 5px">Super Hash</h2>
+
+        <p style="margin-top: 5px">
             版本：
             <mdui-tooltip content="单击即可复制">
                 <span style="cursor: pointer">{{ version }}</span>
             </mdui-tooltip>
         </p>
-        <p>
+
+        <p style="margin-top: 1.5rem">
             本应用在
             <a target="_blank" href="https://github.com/Super12138/Hash-Checker/">GitHub</a> 上开源
             <br />
             由 <a target="_blank" href="https://github.com/Super12138/">Super12138</a> 开发
         </p>
-        <img width="45%" src="../../../assets/gpl.svg" />
+        <img width="35%" src="../../../assets/gpl.svg" />
         <p>遵循 GPL-3.0 协议</p>
+
         <mdui-divider></mdui-divider>
+
         <p>
             开源库
             <br />
@@ -68,6 +72,7 @@ const version = computed(() => {
             <br />
             <a target="_blank" href="https://icon.kitchen/">IconKitchen</a>
         </p>
+
         <mdui-button slot="action" variant="tonal" @click="onConfirm()">确定</mdui-button>
     </mdui-dialog>
 </template>

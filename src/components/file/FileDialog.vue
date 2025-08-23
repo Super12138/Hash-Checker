@@ -54,30 +54,38 @@ const onConfirm = () => {
 
 <template>
     <mdui-dialog
-        headline="文件信息"
+        headline="文件详细信息"
         :open="open"
         close-on-overlay-click="true"
         @closed.self="onClosed()"
         ref="dialog"
     >
-        <p>文件名：{{ fileName }}</p>
-        <p>计算模式：{{ fileMode }}</p>
-        <p>计算算法：{{ fileAlgorithm }}</p>
-        <p>计算状态：{{ fileStatus }}</p>
-        <p>添加时间：{{ formatDate(addTime) }}</p>
-        <p v-if="checkSum?.trim() != ''">校验值：{{ checkSum }}</p>
-        <p v-if="hash !== undefined">
-            哈希值：
-            <mdui-tooltip content="单击即可复制">
-                <code @click="copyHash()">{{ hash }}</code>
-            </mdui-tooltip>
-        </p>
-        <p v-if="showCompare">
-            校验状态：
-            <strong :class="isCheckSumMatch ? 'green' : 'red'">
-                {{ isCheckSumMatch ? "校验成功" : "校验失败" }}
-            </strong>
-        </p>
+        <div>
+            <h3>基本信息</h3>
+            <p>文件名：{{ fileName }}</p>
+            <p>计算模式：{{ fileMode }}</p>
+            <p>计算算法：{{ fileAlgorithm }}</p>
+            <p>计算状态：{{ fileStatus }}</p>
+            <p>添加时间：{{ formatDate(addTime) }}</p>
+        </div>
+        <div class="check-info" v-if="hash !== undefined">
+            <h3>校验信息</h3>
+            <p v-if="checkSum?.trim() != ''">
+                校验值：<code>{{ checkSum }}</code>
+            </p>
+            <p>
+                哈希值：
+                <mdui-tooltip content="单击即可复制">
+                    <code @click="copyHash()">{{ hash }}</code>
+                </mdui-tooltip>
+            </p>
+            <p v-if="showCompare">
+                校验状态：
+                <strong :class="isCheckSumMatch ? 'green' : 'red'">
+                    {{ isCheckSumMatch ? "校验成功" : "校验失败" }}
+                </strong>
+            </p>
+        </div>
 
         <mdui-button slot="action" variant="tonal" @click="onConfirm()">确定</mdui-button>
     </mdui-dialog>
@@ -95,5 +103,10 @@ const onConfirm = () => {
 code {
     word-break: break-all;
     cursor: pointer;
+}
+
+.check-info{
+
+    margin-top: 2rem;
 }
 </style>

@@ -107,13 +107,18 @@ h1 {
     font-weight: var(--mdui-typescale-headline-medium-weight);
 }
 
-h2,
-.headline-small {
-    /* TODO: headline-small 要验证是否还需要*/
+h2 {
     line-height: var(--mdui-typescale-headline-small-line-height);
     font-size: var(--mdui-typescale-headline-small-size);
     letter-spacing: var(--mdui-typescale-headline-small-tracking);
     font-weight: var(--mdui-typescale-headline-small-weight);
+}
+
+h3 {
+    line-height: var(--mdui-typescale-title-large-line-height);
+    font-size: var(--mdui-typescale-title-large-size);
+    letter-spacing: var(--mdui-typescale-title-large-tracking);
+    font-weight: var(--mdui-typescale-title-large-weight);
 }
 
 p,

@@ -5,11 +5,16 @@ const props = defineProps<{
 </script>
 
 <template>
-    <h3>{{ props.tip }}</h3>
+    <span>{{ props.tip }}</span>
 </template>
 
 <style lang="css" scoped>
-h3 {
+span {
+    display: block;
     text-align: center;
+    line-height: var(--mdui-typescale-body-large-line-height);
+    font-size: var(--mdui-typescale-body-large-size);
+    letter-spacing: var(--mdui-typescale-body-large-tracking);
+    font-weight: var(--mdui-typescale-body-large-weight);
 }
 </style>
