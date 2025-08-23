@@ -7,7 +7,7 @@ import "mdui/components/tooltip.js";
 import { Algorithms } from "@/interfaces/Algorithms";
 import { FileStatus } from "@/interfaces/FileStatus";
 import { Modes } from "@/interfaces/Modes";
-import { formatDate, useFormatTime } from "@/utils/text";
+import { useFormatTime } from "@/utils/text";
 import type { FileItem } from "./FileItem";
 
 import { computed, ref, Teleport, watch } from "vue";
@@ -16,7 +16,7 @@ import { useAutoCopyStore } from "@/stores/settings/autoCopy";
 import { useSystemNotificationStore } from "@/stores/settings/systemNotification";
 import { useClipboard, useWebNotification } from "@vueuse/core";
 import { snackbar } from "mdui";
-import RichDialog from "../shared/RichDialog.vue";
+import FileDialog from "./FileDialog.vue";
 
 const props = defineProps<{ fileItem: FileItem }>();
 
@@ -146,39 +146,17 @@ watch(
     </mdui-list-item>
 
     <Teleport to="body">
-        <RichDialog headline="文件信息" :enable-cancel-button="false" v-model="dialogOpen">
-            <p>文件名：{{ fileItem.name }}</p>
-            <p>计算模式：{{ fileMode }}</p>
-            <p>计算算法：{{ fileAlgorithm }}</p>
-            <p>计算状态：{{ fileStatus }}</p>
-            <p>添加时间：{{ formatDate(fileItem.addTime) }}</p>
-            <p v-if="fileItem.hash !== undefined">
-                哈希值：
-                <mdui-tooltip content="单击即可复制">
-                    <code class="hash-code" @click="copyHash()">{{ fileItem.hash }}</code>
-                </mdui-tooltip>
-            </p>
-            <p v-if="showCompare">
-                校验状态：
-                <strong :class="isCheckSumMatch ? 'color-green' : 'color-red'">
-                    {{ compareResult }}
-                </strong>
-            </p>
-        </RichDialog>
+        <FileDialog
+            :fileName="fileItem.name"
+            :fileMode="fileMode"
+            :fileAlgorithm="fileAlgorithm"
+            :fileStatus="fileStatus"
+            :addTime="fileItem.addTime"
+            :hash="fileItem.hash"
+            :checkSum="fileItem.checkSum"
+            :showCompare="showCompare"
+            :isCheckSumMatch="isCheckSumMatch"
+            v-model="dialogOpen"
+        />
     </Teleport>
 </template>
-
-<style lang="css">
-.hash-code {
-    word-break: break-all;
-    cursor: pointer;
-}
-
-.color-red {
-    color: #d32f2f !important;
-}
-
-.color-green {
-    color: #00c853 !important;
-}
-</style>
