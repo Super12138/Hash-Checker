@@ -12,6 +12,8 @@ import packageJson from "./package.json";
 
 const execPromise = promisify(exec);
 
+const host = process.env.TAURI_DEV_HOST;
+
 /**
  * 获取版本信息
  *
@@ -104,8 +106,22 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
     if (command === "serve") {
         return {
             ...baseConfig,
+            clearScreen: false,
             server: {
-                open: true,
+                port: 5173,
+                strictPort: true,
+                host: host || false,
+                hmr: host
+                    ? {
+                          protocol: "ws",
+                          host,
+                          port: 1421,
+                      }
+                    : undefined,
+                watch: {
+                    // 3. tell Vite to ignore watching `src-tauri`
+                    ignored: ["**/src-tauri/**"],
+                },
             },
             define: {
                 VERSION_NAME: JSON.stringify(packageJson.version),

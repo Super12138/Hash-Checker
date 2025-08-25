@@ -13,10 +13,15 @@
         "build-only:store": "vite build --mode store",
         "type-check": "vue-tsc --build",
         "preview": "vite preview",
-        "format": "prettier --write src/"
+        "tauri": "tauri",
+        "format": "prettier --write src-tauri/"
     },
     "dependencies": {
         "@mdui/icons": "^1.0.3",
+        "@tauri-apps/api": "^2.8.0",
+        "@tauri-apps/plugin-notification": "^2.3.1",
+        "@tauri-apps/plugin-process": "^2.3.0",
+        "@tauri-apps/plugin-updater": "^2.9.0",
         "@vueuse/core": "^13.6.0",
         "crypto-js": "^4.2.0",
         "markdown-it": "^14.1.0",
@@ -28,6 +33,7 @@
         "vue-i18n": "^11.1.11"
     },
     "devDependencies": {
+        "@tauri-apps/cli": "^2.8.2",
         "@tsconfig/node24": "^24.0.1",
         "@types/crypto-js": "^4.2.2",
         "@types/markdown-it": "^14.1.2",
