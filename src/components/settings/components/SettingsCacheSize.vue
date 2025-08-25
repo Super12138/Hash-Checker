@@ -23,11 +23,11 @@ watch(
             model.value = 2048;
             let message = "";
             if (isBlankOrEmpty(value)) {
-                message = "单次缓存大小不能为空";
+                message = t("settings.cache-size.tips.blank");
             } else if (value.toString().length > 5) {
-                message = "单次缓存大小不能超过 5 位";
+                message = t("settings.cache-size.tips.length-exceed");
             } else {
-                message = "单次缓存大小不能为 0 或负数";
+                message = t("settings.cache-size.tips.less-0");
             }
             snackbar({ message });
         }

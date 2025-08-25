@@ -6,7 +6,9 @@ import type { Dialog } from "mdui/components/dialog.js";
 import { useThemeColorStore } from "@/stores/settings/themeColor";
 
 import { ref, useTemplateRef, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const open = defineModel<boolean>({ required: true });
 const dialogRef = useTemplateRef<Dialog>("dialog");
 const themeColorStore = useThemeColorStore();
@@ -50,8 +52,8 @@ watch(inputColor, (newColor) => {
 
 <template>
     <mdui-dialog
-        headline="选择主题色"
-        description="选择一个你心仪的主题色"
+        :headline="t('settings.theme-color.dialog.headline')"
+        :description="t('settings.theme-color.dialog.description')"
         :open="open"
         close-on-overlay-click="true"
         @closed.self="onClosed()"
@@ -59,8 +61,14 @@ watch(inputColor, (newColor) => {
     >
         <input type="color" v-model="inputColor" />
         <br />
-        <mdui-button @click="resetToDefault()" full-width>重置到默认颜色</mdui-button>
-        <mdui-button slot="action" variant="text" @click="onCancel()">取消</mdui-button>
-        <mdui-button slot="action" variant="tonal" @click="onConfirm()">确定</mdui-button>
+        <mdui-button @click="resetToDefault()" full-width style="margin-top: 1rem">
+            {{ t("settings.theme-color.dialog.reset") }}
+        </mdui-button>
+        <mdui-button slot="action" variant="text" @click="onCancel()">
+            {{ t("cancel") }}
+        </mdui-button>
+        <mdui-button slot="action" variant="tonal" @click="onConfirm()">
+            {{ t("confirm") }}
+        </mdui-button>
     </mdui-dialog>
 </template>

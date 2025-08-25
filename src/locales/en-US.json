@@ -3,7 +3,6 @@
         "label": "Click to choose a file",
         "helper": "or drag and drop a file to this page"
     },
-    "copy-to-clipboard": "Copy checksum to clipboard after calculation (only works in <strong>Generate</strong> mode)",
     "check-btn-label": "Check",
     "drag-tip": "Release mouse to read the file",
     "mode": {
@@ -16,10 +15,7 @@
         "label": "Algorithm",
         "placeholder": "Choose a algorithm"
     },
-    "checkSum-input": {
-        "label": "Checksum",
-        "helper": "Paste or enter the checksum here"
-    },
+    "checkSum-input": {},
     "file-list": {
         "label": "File List",
         "empty-tip": "No files currently",
@@ -29,12 +25,18 @@
         "label": "Settings",
         "cache-size": {
             "label": "Single Cache Size",
-            "description": "The size of each cached file when sharding cache files. Larger values improve read speed but consume more memory"
+            "description": "The size of each cached file when sharding cache files. Larger values improve read speed but consume more memory",
+            "tips": {
+                "blank": "Cache size cannot be empty",
+                "less-0": "Cache size must be greater than 0",
+                "length-exceed": "Cache size cannot exceed 5 digits"
+            }
         },
         "system-notification": {
             "label": "System Notification",
             "description": "Send system notification when computation is complete",
-            "button": "Click to send a test notification"
+            "button": "Click to send a test notification",
+            "permission-info": "Super Hash needs notification permissions to alert you when calculations are complete. You can choose to deny this permission, and the app will continue to function normally."
         },
         "algorithm-suggest": {
             "label": "Algorithm Suggestion",
@@ -50,22 +52,117 @@
         },
         "theme-color": {
             "label": "Theme Color",
-            "description": "Configure your preferred theme color for the app"
+            "description": "Configure your preferred theme color for the app",
+            "dialog": {
+                "headline": "Pick theme color",
+                "description": "Choose a theme color you like for the app",
+                "reset": "Reset to default color"
+            }
         },
         "language": {
             "label": "Language",
-            "description": "Select the display language for the app"
+            "description": "Select the display language for the app",
+            "dialog": {
+                "description": "Select your preferred language for the app interface",
+                "headline": "Choose Language"
+            }
         },
         "clear-cache": {
             "label": "Clear Cache",
-            "description": "Clear the app's cached data (personal settings will not be deleted)"
+            "description": "Clear the app's cached data (personal settings will not be deleted)",
+            "dialog": {
+                "description": "The app is about to clear its cache. This will not delete any of your personal settings. The app will reload immediately after the process is complete. Continue?"
+            }
         },
         "reset": {
             "label": "Reset",
-            "description": "Clear all data including personal settings"
+            "description": "Clear all data including personal settings",
+            "dialog": {
+                "description": "The app is about to reset. After resetting, all cache and personal settings will be cleared, and the app will be restored to its initial state. Additionally, the app will reload immediately to apply the changes. Confirm to continue?"
+            }
         },
         "about": {
-            "label": "About"
+            "label": "About",
+            "dialog": {
+                "author": {
+                    "prefix": "Developed by",
+                    "suffix": ""
+                },
+                "licence": "Licensed under GPL-3.0",
+                "open-source-libraries": "Open Source Libraries",
+                "source-code": {
+                    "prefix": "Open source on",
+                    "suffix": ""
+                },
+                "thanks": "Thanks",
+                "version": "Version: "
+            }
         }
+    },
+    "click-to-copy": "Click to copy",
+    "confirm": "Confirm",
+    "file-dialog": {
+        "basic-info": {
+            "add-time": "Add time: ",
+            "algorithm": "Algorithm: ",
+            "file-name": "File name: ",
+            "mode": "Mode: ",
+            "status": "Status: ",
+            "title": "Basic Info"
+        },
+        "headline": "Details",
+        "checksum-info": {
+            "headline": "Checksum Info",
+            "success": "Success",
+            "failed": "Failed",
+            "verification-result": "Verification Result: ",
+            "checksum-generate": "Checksum (Generate): ",
+            "checksum-user": "Checksum (User provided): "
+        }
+    },
+    "pwa": {
+        "new-version": {
+            "action": "Update Now",
+            "tip": "Super Hash update available"
+        },
+        "offline-ready": "Super Hash is ready for offline use"
+    },
+    "update-dialog": {
+        "headline": "New version {version} available",
+        "description": "Current version {version}, update now?"
+    },
+    "cancel": "Cancel",
+    "warning": "Warning",
+    "tip": "Tip",
+    "clipboard": {
+        "copy-hash-successful": "Checksum copied to clipboard",
+        "copy-failed": "Failed copy to clipboard",
+        "not-supported": "\nCopying not supported"
+    },
+    "notification": {
+        "not-supported": "Browser notifications arenot supported or denied the permission",
+        "hash-generated": "Calculation finished. ${algorithm}: ${hash}",
+        "test-title": "This is a test notification"
+    },
+    "status": {
+        "canceled": "Canceled",
+        "computing-estimated": "Calculating, estimating: ",
+        "error": "Error",
+        "finish": "Finished",
+        "unknown": "Unknown State",
+        "waiting": "Waiting"
+    },
+    "unselected": "Unselected",
+    "checksum-input": {
+        "helper": "Paste or enter the checksum here",
+        "label": "Checksum",
+        "match-algorithm": "Automatically matched algorithm!"
+    },
+    "error": "Error",
+    "errors": {
+        "no-algorithm": "Please select an algorithm",
+        "no-checksum": "Please enter a checksum",
+        "no-file": "Please choose a file",
+        "no-mode": "Please select a mode"
     }
 }

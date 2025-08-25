@@ -7,6 +7,7 @@ import { watch } from "vue";
 import { useWebNotification } from "@vueuse/core";
 import { alert, dialog, snackbar } from "mdui";
 import { useI18n } from "vue-i18n";
+import { NOTIFICATION_TAG } from "@/interfaces/constants";
 
 const props = defineProps<{
     checked: boolean;
@@ -23,15 +24,15 @@ const { isSupported, permissionGranted, show } = useWebNotification();
 const sendTestNotification = () => {
     if (isSupported.value && permissionGranted.value) {
         show({
-            title: "这是一条测试通知",
+            title: t("notification.test-title"),
             dir: "auto",
             lang: "zh",
             renotify: true,
-            tag: "hash-notification",
+            tag: NOTIFICATION_TAG,
         });
     } else {
         snackbar({
-            message: "您的浏览器不支持通知或未授权通知权限",
+            message: t("notification.not-supported"),
         });
     }
 };
@@ -42,9 +43,8 @@ watch(
     (granted) => {
         if (!granted) {
             alert({
-                headline: "提示",
-                description:
-                    "Super Hash 需要通知权限以便更好地提示您计算已经完成。您当然也可以不授予此权限，应用仍可正常运行。",
+                headline: t("tip"),
+                description: t("settings.system-notification.permission-info"),
             });
         }
     },

@@ -17,9 +17,12 @@ import { useSystemNotificationStore } from "@/stores/settings/systemNotification
 import { useClipboard, useWebNotification } from "@vueuse/core";
 import { snackbar } from "mdui";
 import FileDialog from "./FileDialog.vue";
+import { useI18n } from "vue-i18n";
+import { NOTIFICATION_TAG } from "@/interfaces/constants";
 
 const props = defineProps<{ fileItem: FileItem }>();
 
+const { t } = useI18n();
 const dialogOpen = ref<boolean>(false);
 const isCheckSumMatch = ref<boolean>(false);
 
@@ -37,19 +40,17 @@ const showCompare = computed(() => {
     );
 });
 
-const compareResult = computed(() => (isCheckSumMatch.value ? "校验成功" : "校验失败"));
-
 const copyHash = () => {
     if (!isSupported.value) {
-        snackbar({ message: "当前浏览器不支持复制功能" });
+        snackbar({ message: t("clipboard.not-supported") });
         return;
     }
     if (props.fileItem.hash !== undefined) {
         copy(props.fileItem.hash);
         if (copied) {
-            snackbar({ message: "成功将哈希值写入剪贴板" });
+            snackbar({ message: t("clipboard.copy-hash-successful") });
         } else {
-            snackbar({ message: "无法写入到剪贴板" });
+            snackbar({ message: t("clipboard.copy-failed") });
         }
     }
 };
@@ -57,33 +58,33 @@ const copyHash = () => {
 const fileStatus = computed(() => {
     switch (props.fileItem.status) {
         case FileStatus.Waiting:
-            return "等待中";
+            return t("status.waiting");
 
         case FileStatus.Computing:
-            return `计算中，预计剩余：${useFormatTime(props.fileItem.estimetedTime).value}`;
+            return `${t("status.computing-estimated")}${useFormatTime(props.fileItem.estimetedTime).value}`;
 
         case FileStatus.Finished:
-            return "计算成功";
+            return t("status.finish");
 
         case FileStatus.Error:
-            return "计算失败";
+            return t("status.error");
 
         case FileStatus.Canceled:
-            return "计算已取消";
+            return t("status.canceled");
 
         default:
-            return "状态错误";
+            return t("status.unknown");
     }
 });
 
 const fileMode = computed(() => {
     switch (props.fileItem.mode) {
         case Modes.Check:
-            return "校验";
+            return t("mode.check");
         case Modes.Generate:
-            return "生成";
+            return t("mode.generate");
         case Modes.Unselected:
-            return "未选择";
+            return t("unselected");
     }
 });
 
@@ -102,7 +103,7 @@ const fileAlgorithm = computed(() => {
         case Algorithms.SHA512:
             return "SHA512";
         case Algorithms.Unselected:
-            return "未选择";
+            return t("unselected");
     }
 });
 
@@ -119,15 +120,15 @@ watch(
         if (systemNotificationStore.enable) {
             if (isSupportedNotification.value && permissionGranted.value) {
                 show({
-                    title: `计算完成，${fileAlgorithm.value} 值为 ${props.fileItem.hash}`,
+                    title: t("notification.hash-generated"),
                     dir: "auto",
                     lang: "zh",
                     renotify: true,
-                    tag: "hash-notification",
+                    tag: NOTIFICATION_TAG,
                 });
             } else {
                 snackbar({
-                    message: "您的浏览器不支持通知或未授权通知权限",
+                    message: t("notification.not-supported"),
                 });
             }
         }
@@ -157,6 +158,7 @@ watch(
             :showCompare="showCompare"
             :isCheckSumMatch="isCheckSumMatch"
             v-model="dialogOpen"
+            @copy-hash="copyHash()"
         />
     </Teleport>
 </template>

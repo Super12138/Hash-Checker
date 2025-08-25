@@ -3,18 +3,15 @@ import "mdui/components/dialog.js";
 import type { Dialog } from "mdui/components/dialog.js";
 
 import { formatDate } from "@/utils/text";
-import { useClipboard } from "@vueuse/core";
-import { snackbar } from "mdui";
 import { useTemplateRef } from "vue";
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
-const { copy, copied, isSupported } = useClipboard();
+const { t, d, locale } = useI18n();
 
 const open = defineModel<boolean>({ required: true });
 const dialogRef = useTemplateRef<Dialog>("dialog");
 
-const props = defineProps<{
+defineProps<{
     fileName: string;
     fileMode: string;
     fileAlgorithm: string;
@@ -26,20 +23,9 @@ const props = defineProps<{
     isCheckSumMatch: boolean;
 }>();
 
-const copyHash = () => {
-    if (!isSupported.value) {
-        snackbar({ message: "当前浏览器不支持复制功能" });
-        return;
-    }
-    if (props.hash !== undefined) {
-        copy(props.hash);
-        if (copied) {
-            snackbar({ message: "成功将哈希值写入剪贴板" });
-        } else {
-            snackbar({ message: "无法写入到剪贴板" });
-        }
-    }
-};
+defineEmits<{
+    (e: "copy-hash"): void;
+}>();
 
 const onClosed = () => {
     open.value = false;
@@ -54,40 +40,46 @@ const onConfirm = () => {
 
 <template>
     <mdui-dialog
-        headline="文件详细信息"
+        :headline="t('file-dialog.headline')"
         :open="open"
         close-on-overlay-click="true"
         @closed.self="onClosed()"
         ref="dialog"
     >
         <div>
-            <h3>基本信息</h3>
-            <p>文件名：{{ fileName }}</p>
-            <p>计算模式：{{ fileMode }}</p>
-            <p>计算算法：{{ fileAlgorithm }}</p>
-            <p>计算状态：{{ fileStatus }}</p>
-            <p>添加时间：{{ formatDate(addTime) }}</p>
+            <h3>{{ t("file-dialog.basic-info.title") }}</h3>
+            <p>{{ t("file-dialog.basic-info.file-name") + fileName }}</p>
+            <p>{{ t("file-dialog.basic-info.mode") + fileMode }}</p>
+            <p>{{ t("file-dialog.basic-info.algorithm") + fileAlgorithm }}</p>
+            <p>{{ t("file-dialog.basic-info.status") + fileStatus }}</p>
+            <p>{{ t("file-dialog.basic-info.add-time") + d(addTime, "long", locale) }}</p>
         </div>
         <div class="check-info" v-if="hash !== undefined">
-            <h3>校验信息</h3>
+            <h3>{{ t("file-dialog.checksum-info.headline") }}</h3>
             <p v-if="checkSum?.trim() != ''">
-                校验值：<code>{{ checkSum }}</code>
+                {{ t("file-dialog.checksum-info.checksum-user") }}<code>{{ checkSum }}</code>
             </p>
             <p>
-                哈希值：
-                <mdui-tooltip content="单击即可复制">
-                    <code @click="copyHash()">{{ hash }}</code>
+                {{ t("file-dialog.checksum-info.checksum-generate") }}
+                <mdui-tooltip :content="t('click-to-copy')">
+                    <code @click="$emit('copy-hash')">{{ hash }}</code>
                 </mdui-tooltip>
             </p>
             <p v-if="showCompare">
-                校验状态：
+                {{ t("file-dialog.checksum-info.verification-result") }}
                 <strong :class="isCheckSumMatch ? 'green' : 'red'">
-                    {{ isCheckSumMatch ? "校验成功" : "校验失败" }}
+                    {{
+                        isCheckSumMatch
+                            ? t("file-dialog.checksum-info.success")
+                            : t("file-dialog.checksum-info.failed")
+                    }}
                 </strong>
             </p>
         </div>
 
-        <mdui-button slot="action" variant="tonal" @click="onConfirm()">确定</mdui-button>
+        <mdui-button slot="action" variant="tonal" @click="onConfirm()">
+            {{ t("confirm") }}
+        </mdui-button>
     </mdui-dialog>
 </template>
 
@@ -105,8 +97,7 @@ code {
     cursor: pointer;
 }
 
-.check-info{
-
+.check-info {
     margin-top: 2rem;
 }
 </style>

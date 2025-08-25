@@ -45,10 +45,13 @@ import { useFileConfigurationStore } from "./stores/ui/file-configuration";
 
 import { useWebWorker } from "@vueuse/core";
 import UpdateDialog from "./components/shared/UpdateDialog.vue";
+import { useI18n } from "vue-i18n";
 
 let fileList = ref<FileItem[]>([]);
 const openTipDialog = ref(false);
 const tipDesc = ref("");
+
+const { t } = useI18n();
 
 // 各种 Store
 const drawerStore = useDrawerStore();
@@ -79,23 +82,23 @@ const processFile = (file: File) => {
 
 const checkConfigurationIsVaild = () => {
     if (!fileConfigurationStore.hasFile) {
-        tipDesc.value = "请选择一个文件";
+        tipDesc.value = t("errors.no-file");
         openTipDialog.value = true;
         return;
     }
     if (!fileConfigurationStore.isAlgorithmValid) {
-        tipDesc.value = "请选择一个算法";
+        tipDesc.value = t("errors.no-algorithm");
         openTipDialog.value = true;
         return;
     }
     if (!fileConfigurationStore.isModeValid) {
-        tipDesc.value = "请选择一个模式";
+        tipDesc.value = t("errors.no-mode");
         openTipDialog.value = true;
         return;
     }
     if (isCheckMode.value) {
         if (!fileConfigurationStore.isCheckSumValid) {
-            tipDesc.value = "请输入校验值";
+            tipDesc.value = t("errors.no-checksum");
             openTipDialog.value = true;
             return;
         }
@@ -209,7 +212,7 @@ onUnmounted(() => {
 
     <SimpleDialog
         v-model="openTipDialog"
-        headline="错误"
+        :headline="t('error')"
         :description="tipDesc"
         :enable-cancel-button="false"
         :close-on-overlay-click="true"

@@ -11,7 +11,7 @@ import { onMounted, useTemplateRef } from "vue";
 
 import { useI18n } from "vue-i18n";
 
-const { locale } = useI18n();
+const { t, locale } = useI18n();
 const open = defineModel<boolean>({ required: true });
 const dialogRef = useTemplateRef<Dialog>("dialog");
 const languageStore = useLanguageStore();
@@ -44,8 +44,8 @@ onMounted(() => {
 
 <template>
     <mdui-dialog
-        headline="选择语言"
-        description="选择语言界面的显示语言"
+        :headline="t('settings.language.dialog.headline')"
+        :description="t('settings.language.dialog.description')"
         :open="open"
         close-on-overlay-click="true"
         @closed.self="onClosed()"

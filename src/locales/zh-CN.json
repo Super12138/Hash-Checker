@@ -3,7 +3,6 @@
         "label": "点击选择文件",
         "helper": "或拖拽文件到本页"
     },
-    "copy-to-clipboard": "计算完成后将校验值写入剪贴板（仅在<strong>生成</strong>模式下生效）",
     "check-btn-label": "检查",
     "drag-tip": "松开鼠标以读取文件",
     "mode": {
@@ -16,10 +15,7 @@
         "label": "算法",
         "placeholder": "请选择算法"
     },
-    "checkSum-input": {
-        "label": "校验值",
-        "helper": "在此处粘贴您获取到的校验值"
-    },
+    "checkSum-input": {},
     "file-list": {
         "label": "文件列表",
         "empty-tip": "当前暂无文件",
@@ -29,12 +25,18 @@
         "label": "设置",
         "cache-size": {
             "label": "单次缓存大小",
-            "description": "分片缓存文件时单次缓存文件大小，数值越大读取速度越快，但会占用更多内存"
+            "description": "分片缓存文件时单次缓存文件大小，数值越大读取速度越快，但会占用更多内存",
+            "tips": {
+                "blank": "单次缓存大小不能为空",
+                "length-exceed": "单次缓存大小不能超过 5 位",
+                "less-0": "单次缓存大小不能为 0 或负数"
+            }
         },
         "system-notification": {
             "label": "系统通知",
             "description": "在计算完成后发送系统通知",
-            "button": "点击发送一条测试通知"
+            "button": "点击发送一条测试通知",
+            "permission-info": "Super Hash 需要通知权限以便更好地提示您计算已经完成。您当然也可以不授予此权限，应用仍可正常运行。"
         },
         "algorithm-suggest": {
             "label": "算法建议",
@@ -50,22 +52,117 @@
         },
         "theme-color": {
             "label": "主题色",
-            "description": "为应用配置你心仪的主题色"
+            "description": "为应用配置你心仪的主题色",
+            "dialog": {
+                "headline": "选择主题色",
+                "description": "为应用选择一个你心仪的主题色",
+                "reset": "重置到默认颜色"
+            }
         },
         "language": {
             "label": "语言",
-            "description": "选择应用显示语言"
+            "description": "选择应用显示语言",
+            "dialog": {
+                "headline": "选择语言",
+                "description": "选择应用的显示语言"
+            }
         },
         "clear-cache": {
             "label": "清除缓存",
-            "description": "清除应用的缓存数据（不删除个人设置）"
+            "description": "清除应用的缓存数据（不删除个人设置）",
+            "dialog": {
+                "description": "即将清除应用缓存，这不会删除任何你的个人设置。此外，清除后应用将会立即重载，是否继续？"
+            }
         },
         "reset": {
             "label": "重置应用",
-            "description": "清除包括个人设置在内的所有数据"
+            "description": "清除包括个人设置在内的所有数据",
+            "dialog": {
+                "description": "即将重置应用，重置应用后缓存、个人设置都将被清除，应用将恢复到初始状态。此外，重置后应用将会立即重载以应用数据，确定继续？"
+            }
         },
         "about": {
-            "label": "关于"
+            "label": "关于",
+            "dialog": {
+                "version": "版本：",
+                "licence": "遵循 GPL-3.0 协议",
+                "open-source-libraries": "开源库",
+                "thanks": "感谢",
+                "source-code": {
+                    "prefix": "本应用在",
+                    "suffix": "上开源"
+                },
+                "author": {
+                    "prefix": "由",
+                    "suffix": "开发"
+                }
+            }
         }
+    },
+    "pwa": {
+        "offline-ready": "Super Hash 已准备好在离线环境下运行",
+        "new-version": {
+            "tip": "Super Hash 有新版本",
+            "action": "立即更新"
+        }
+    },
+    "confirm": "确定",
+    "file-dialog": {
+        "headline": "详细信息",
+        "basic-info": {
+            "title": "基本信息",
+            "file-name": "文件名：",
+            "mode": "计算模式：",
+            "algorithm": "计算算法：",
+            "status": "计算状态：",
+            "add-time": "添加时间："
+        },
+        "checksum-info": {
+            "headline": "校验信息",
+            "checksum-user": "校验值（用户提供）：",
+            "checksum-generate": "校验值（生成）：",
+            "success": "校验成功",
+            "failed": "校验失败",
+            "verification-result": "校验结果："
+        }
+    },
+    "click-to-copy": "单击即可复制",
+    "cancel": "取消",
+    "update-dialog": {
+        "headline": "检测到新版本 {version}",
+        "description": "当前版本 {version}，是否更新？"
+    },
+    "warning": "警告",
+    "tip": "提示",
+    "unselected": "未选择",
+    "status": {
+        "waiting": "等待中",
+        "computing-estimated": "计算中，预计剩余：",
+        "finish": "计算成功",
+        "error": "计算时发生错误",
+        "canceled": "计算已取消",
+        "unknown": "未知状态"
+    },
+    "clipboard": {
+        "not-supported": "当前浏览器不支持复制功能",
+        "copy-hash-successful": "成功将哈希值写入剪贴板",
+        "copy-failed": "无法写入剪贴板"
+    },
+    "notification": {
+        "not-supported": "您的浏览器不支持通知或未授权通知权限",
+        "hash-generated": "计算完成，${algorithm} 值为 ${hash}",
+        "test-title": "这是一条测试通知"
+    },
+    "checksum-input": {
+        "helper": "在此处粘贴您获取到的校验值",
+        "label": "校验值",
+        "match-algorithm": "自动匹配到校验算法！"
+    },
+    "error": "错误",
+    "errors": {
+        "no-file": "请选择一个文件",
+        "no-algorithm": "请选择一个算法",
+        "no-mode": "请选择一个模式",
+        "no-checksum": "请输入校验值"
     }
 }

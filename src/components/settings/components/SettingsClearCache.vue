@@ -33,8 +33,8 @@ const clearCache = () => {
     </mdui-list-item>
     <Teleport to="body">
         <SimpleDialog
-            headline="提示"
-            description="即将清除应用缓存，这不会删除任何你的个人设置。此外，清除后应用将会立即重载，是否继续？"
+            :headline="t('tip')"
+            :description="t('settings.clear-cache.dialog.description')"
             v-model="dialogOpen"
             :close-on-overlay-click="true"
             :enable-cancel-button="true"

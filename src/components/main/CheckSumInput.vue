@@ -51,7 +51,9 @@ const detectAndWritrAlgorithm = () => {
 };
 
 const textFieldHelper = computed(() => {
-    return suggestSuccessful.value ? "自动匹配到方法！" : t("checkSum-input.helper");
+    return suggestSuccessful.value
+        ? t("checksum-input.match-algorithm")
+        : t("checksum-input.helper");
 });
 
 // TODO: 看看能不能用 $subscribe 替代
@@ -63,7 +65,7 @@ watch(
 
 <template>
     <mdui-text-field
-        :label="t('checkSum-input.label')"
+        :label="t('checksum-input.label')"
         :helper="textFieldHelper"
         clearable
         :disabled="!enabled"

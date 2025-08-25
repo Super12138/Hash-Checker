@@ -4,6 +4,9 @@ import "mdui/components/snackbar.js";
 
 import { useRegisterSW } from "virtual:pwa-register/vue";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 // check for updates every hour
 const period = 60 * 60 * 1000;
@@ -62,11 +65,11 @@ const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({
 </script>
 
 <template>
-    <mdui-snackbar :open="offlineReady">Super Hash 已准备好在离线环境下运行</mdui-snackbar>
+    <mdui-snackbar :open="offlineReady">{{ t("pwa.offline-ready") }}</mdui-snackbar>
     <mdui-snackbar :open="needRefresh">
-        Super Hash 有新版本
+        {{ t("pwa.new-version.tip") }}
         <mdui-button slot="action" variant="text" @click="updateServiceWorker()">
-            立即更新
+            {{ t("pwa.new-version.action") }}
         </mdui-button>
     </mdui-snackbar>
 </template>

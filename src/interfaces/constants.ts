@@ -64,3 +64,5 @@ export const OPEN_SOURCE_LIBRARIES: OpenSourceLibrary[] = [
         url: "https://github.com/vite-pwa/vite-plugin-pwa",
     },
 ];
+
+export const NOTIFICATION_TAG = "super-hash-notification";

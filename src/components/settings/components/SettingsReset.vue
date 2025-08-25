@@ -34,8 +34,8 @@ const resetApp = () => {
     </mdui-list-item>
     <Teleport to="body">
         <SimpleDialog
-            headline="警告"
-            description="即将重置应用，重置应用后缓存、个人设置都将被清除，应用将恢复到初始状态。此外，重置后应用将会立即重载以应用数据，确定继续？"
+            :headline="t('warning')"
+            :description="t('settings.reset.dialog.description')"
             v-model="dialogOpen"
             :close-on-overlay-click="true"
             :enable-cancel-button="true"

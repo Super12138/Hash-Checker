@@ -3,6 +3,7 @@ import "mdui/components/dialog.js";
 
 import type { Dialog } from "mdui/components/dialog.js";
 import { useTemplateRef } from "vue";
+import { useI18n } from "vue-i18n";
 
 withDefaults(
     defineProps<{
@@ -22,6 +23,7 @@ const emit = defineEmits<{
     (e: "cancel"): void;
 }>();
 
+const { t } = useI18n();
 const open = defineModel<boolean>({ required: true });
 
 const dialogRef = useTemplateRef<Dialog>("dialog");
@@ -56,8 +58,10 @@ const onCancel = () => {
     >
         <slot></slot>
         <mdui-button v-if="enableCancelButton" slot="action" variant="text" @click="onCancel()">
-            取消
+            {{ t("cancel") }}
         </mdui-button>
-        <mdui-button slot="action" variant="tonal" @click="onConfirm()">确定</mdui-button>
+        <mdui-button slot="action" variant="tonal" @click="onConfirm()">
+            {{ t("confirm") }}
+        </mdui-button>
     </mdui-dialog>
 </template>

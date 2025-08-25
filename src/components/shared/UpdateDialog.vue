@@ -9,7 +9,9 @@ import { lt } from "semver";
 import { onUnmounted, ref, watch } from "vue";
 
 import RichDialog from "./RichDialog.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const markdownIt = new MarkdownIt({
     html: true,
     linkify: true,
@@ -75,8 +77,8 @@ onUnmounted(() => {
 
 <template>
     <RichDialog
-        :headline="`检测到新版本 ${newVersion}`"
-        :description="`当前版本 ${currentVersion}，是否更新？`"
+        :headline="t('update-dialog.headline', { version: newVersion })"
+        :description="t('update-dialog.description', { version: currentVersion })"
         v-model="dialogOpen"
         :close-on-overlay-click="false"
         @confirm="openUpdateURLInBrowser()"
