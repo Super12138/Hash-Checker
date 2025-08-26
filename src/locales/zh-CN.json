@@ -130,7 +130,15 @@
     "cancel": "取消",
     "update-dialog": {
         "headline": "检测到新版本 {version}",
-        "description": "当前版本 {version}，是否更新？"
+        "description": "当前版本 {version}，是否更新？",
+        "progress": {
+            "fetching": "正在从 GitHub 上获取更新配置",
+            "downloading": "正在下载更新，下载完成后应用会自动重启安装更新",
+            "starting": "开始下载更新",
+            "finished": "更新包下载完成，应用即将重启安装更新",
+            "error": "获取更新配置时出错"
+        },
+        "downloading": "正在下载"
     },
     "warning": "警告",
     "tip": "提示",

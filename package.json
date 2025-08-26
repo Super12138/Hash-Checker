@@ -14,7 +14,7 @@
         "type-check": "vue-tsc --build",
         "preview": "vite preview",
         "tauri": "tauri",
-        "format": "prettier --write src-tauri/"
+        "format": "prettier --write src/"
     },
     "dependencies": {
         "@mdui/icons": "^1.0.3",

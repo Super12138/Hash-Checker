@@ -44,7 +44,7 @@ import { useDrawerStore } from "./stores/ui/drawer";
 import { useFileConfigurationStore } from "./stores/ui/file-configuration";
 
 import { useWebWorker } from "@vueuse/core";
-import UpdateDialog from "./components/shared/UpdateDialog.vue";
+import UpdateDialog from "./components/update/UpdateDialog.vue";
 import { useI18n } from "vue-i18n";
 
 let fileList = ref<FileItem[]>([]);

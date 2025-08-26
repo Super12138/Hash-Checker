@@ -68,7 +68,7 @@ const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({
     <mdui-snackbar :open="offlineReady">{{ t("pwa.offline-ready") }}</mdui-snackbar>
     <mdui-snackbar :open="needRefresh">
         {{ t("pwa.new-version.tip") }}
-        <mdui-button slot="action" variant="text" @click="updateServiceWorker()">
+        <mdui-button slot="action" variant="text" @click="updateServiceWorker(true)">
             {{ t("pwa.new-version.action") }}
         </mdui-button>
     </mdui-snackbar>

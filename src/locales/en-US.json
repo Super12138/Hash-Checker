@@ -129,7 +129,15 @@
     },
     "update-dialog": {
         "headline": "New version {version} available",
-        "description": "Current version {version}, update now?"
+        "description": "Current version {version}, update now?",
+        "downloading": "Downloading",
+        "progress": {
+            "fetching": "Fetching updated config from GitHub...",
+            "downloading": "Downloading... App will automatically restart and install the update once the download is complete.",
+            "error": "An error occurred while fetching the update config",
+            "finished": "Download complete. App will restart to install the update",
+            "starting": "Starting..."
+        }
     },
     "cancel": "Cancel",
     "warning": "Warning",

@@ -60,6 +60,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 filename: "sw.ts",
                 registerType: "prompt",
                 injectRegister: false,
+                disable: mode === "desktop",
 
                 pwaAssets: {
                     disabled: false,
