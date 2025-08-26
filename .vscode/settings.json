@@ -14,5 +14,8 @@
     },
     "i18n-ally.localesPaths": ["src/locales"],
     "i18n-ally.keystyle": "nested",
-    "i18n-ally.sourceLanguage": "zh-CN"
+    "i18n-ally.sourceLanguage": "zh-CN",
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    }
 }
