@@ -10,7 +10,7 @@
     代码
         事件绑定以及 Props
         自己写的代码
-        生命周期钩子 
+        生命周期钩子
 */
 
 import "mdui/components/layout-main.js";
@@ -40,12 +40,11 @@ import { WorkerResult } from "./interfaces/WorkerResults";
 
 import { useCacheSizeStore } from "./stores/settings/cacheSize";
 import { useThemeColorStore } from "./stores/settings/themeColor";
-import { useDrawerStore } from "./stores/ui/drawer";
 import { useFileConfigurationStore } from "./stores/ui/file-configuration";
 
 import { useWebWorker } from "@vueuse/core";
-import UpdateDialog from "./components/update/UpdateDialog.vue";
 import { useI18n } from "vue-i18n";
+import UpdateDialog from "./components/update/UpdateDialog.vue";
 
 let fileList = ref<FileItem[]>([]);
 const openTipDialog = ref(false);
@@ -54,10 +53,33 @@ const tipDesc = ref("");
 const { t } = useI18n();
 
 // 各种 Store
-const drawerStore = useDrawerStore();
 const fileConfigurationStore = useFileConfigurationStore();
 const themeColorStore = useThemeColorStore();
 const cacheSizeStore = useCacheSizeStore();
+
+const openFileOutputDrawer = ref(false);
+const openSettingsDrawer = ref(false);
+
+const toggleFileDrawer = () => {
+    openFileOutputDrawer.value = !openFileOutputDrawer.value;
+    if (openSettingsDrawer.value) {
+        openSettingsDrawer.value = false;
+    }
+};
+
+const toggleSettingsDrawer = () => {
+    openSettingsDrawer.value = !openSettingsDrawer.value;
+    if (openFileOutputDrawer.value) {
+        openFileOutputDrawer.value = false;
+    }
+};
+
+const openOnlyFileDrawer = () => {
+    openFileOutputDrawer.value = true;
+    if (openSettingsDrawer.value) {
+        openSettingsDrawer.value = false;
+    }
+};
 
 // Web Worker
 const fileWorker = new Worker(new URL("worker/FileWorker.ts", import.meta.url), { type: "module" });
@@ -111,7 +133,7 @@ const checkConfigurationIsVaild = () => {
     fileList.value[fileList.value.length - 1].mode = toMode(fileConfigurationStore.mode);
     fileList.value[fileList.value.length - 1].checkSum = fileConfigurationStore.checkSum;
 
-    drawerStore.openOnlyFileOutputDrawer();
+    openOnlyFileDrawer();
 
     const msg: MainPostData = {
         file: fileConfigurationStore.file!,
@@ -163,10 +185,7 @@ onUnmounted(() => {
 
 <template>
     <mdui-layout>
-        <HashTopBar
-            @toggle-output="drawerStore.toggleFileOutputDrawer()"
-            @toggle-settings="drawerStore.toggleSettingsDrawer()"
-        />
+        <HashTopBar @toggle-output="toggleFileDrawer()" @toggle-settings="toggleSettingsDrawer()" />
 
         <mdui-layout-main class="container">
             <FileSelector :file="fileConfigurationStore.file" @changed="processFile" />
@@ -200,15 +219,8 @@ onUnmounted(() => {
             <CheckButton @click="checkConfigurationIsVaild()" />
         </mdui-layout-main>
     </mdui-layout>
-    <FileOutputDrawer
-        :file-list="fileList"
-        :open="drawerStore.openFileOutputDrawer"
-        @close="drawerStore.toggleFileOutputDrawer()"
-    />
-    <SettingsDrawer
-        :open="drawerStore.openSettingsDrawer"
-        @close="drawerStore.toggleSettingsDrawer()"
-    />
+    <FileOutputDrawer :file-list="fileList" v-model="openFileOutputDrawer" />
+    <SettingsDrawer v-model="openSettingsDrawer" />
 
     <SimpleDialog
         v-model="openTipDialog"

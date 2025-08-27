@@ -12,24 +12,42 @@ import FadeOutInTransition from "../shared/FadeOutInTransition.vue";
 import FileOutputItem from "./FileOutputItem.vue";
 
 import type { FileItem } from "./FileItem";
+import { useTemplateRef } from "vue";
+import type { NavigationDrawer } from "mdui/components/navigation-drawer.js";
 
-defineProps<{
-    open: boolean;
-    fileList: FileItem[];
-}>();
+defineProps<{ fileList: FileItem[] }>();
 
 defineEmits<{
     close: () => void;
 }>();
+const open = defineModel<boolean>({ required: true });
 
 const { t } = useI18n();
+const fileDrawer = useTemplateRef<NavigationDrawer>("file-drawer");
+
+const onClosed = () => {
+    open.value = false;
+};
+
+const closeDrawer = () => {
+    if (fileDrawer.value) {
+        fileDrawer.value.open = false;
+    }
+};
 </script>
 
 <template>
-    <mdui-navigation-drawer placement="left" close-on-esc close-on-overlay-click :open="open">
+    <mdui-navigation-drawer
+        placement="left"
+        close-on-esc
+        close-on-overlay-click
+        :open="open"
+        ref="file-drawer"
+        @closed="onClosed()"
+    >
         <div class="drawer-title">
             <span>{{ t("file-list.label") }}</span>
-            <mdui-button-icon @click="$emit('close')">
+            <mdui-button-icon @click="closeDrawer()">
                 <mdui-icon-close--outlined></mdui-icon-close--outlined>
             </mdui-button-icon>
         </div>

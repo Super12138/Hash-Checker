@@ -23,6 +23,8 @@ import { useCacheSizeStore } from "@/stores/settings/cacheSize";
 import { useSystemNotificationStore } from "@/stores/settings/systemNotification";
 
 import { useI18n } from "vue-i18n";
+import { useTemplateRef } from "vue";
+import type { NavigationDrawer } from "mdui/components/navigation-drawer.js";
 
 const cacheSizeStore = useCacheSizeStore();
 const algorithmSuggestStore = useAlgorithmSuggestStore();
@@ -30,24 +32,35 @@ const systemNotificationStore = useSystemNotificationStore();
 const autoUpdateStore = useAutoUpdateStore();
 const autoCopyStore = useAutoCopyStore();
 
-defineProps<{
-    open: boolean;
-}>();
-
-defineEmits<{
-    close: () => void;
-}>();
+const open = defineModel<boolean>({ required: true });
 
 const { t } = useI18n();
-
+const settingsDrawer = useTemplateRef<NavigationDrawer>("settings-drawer");
 const isStoreOrWeb = VARIANT === "web" || STORE;
+
+const onClosed = () => {
+    open.value = false;
+};
+
+const closeDrawer = () => {
+    if (settingsDrawer.value) {
+        settingsDrawer.value.open = false;
+    }
+};
 </script>
 
 <template>
-    <mdui-navigation-drawer placement="right" close-on-esc close-on-overlay-click :open="open">
+    <mdui-navigation-drawer
+        placement="right"
+        close-on-esc
+        close-on-overlay-click
+        :open="open"
+        ref="settings-drawer"
+        @closed="onClosed()"
+    >
         <div class="drawer-title">
             <span>{{ t("settings.label") }}</span>
-            <mdui-button-icon @click="$emit('close')">
+            <mdui-button-icon @click="closeDrawer()">
                 <mdui-icon-close--outlined></mdui-icon-close--outlined>
             </mdui-button-icon>
         </div>
