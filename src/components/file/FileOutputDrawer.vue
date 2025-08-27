@@ -17,9 +17,6 @@ import type { NavigationDrawer } from "mdui/components/navigation-drawer.js";
 
 defineProps<{ fileList: FileItem[] }>();
 
-defineEmits<{
-    close: () => void;
-}>();
 const open = defineModel<boolean>({ required: true });
 
 const { t } = useI18n();
