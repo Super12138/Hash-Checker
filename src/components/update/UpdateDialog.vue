@@ -95,7 +95,7 @@ const downloadAndIntallUpdate = async () => {
                         break;
                     case "Progress":
                         downloaded += event.data.chunkLength;
-                        downloadStatus.value = contentLength > 0 ? downloaded / contentLength : 0;
+                        downloadProgress.value = contentLength > 0 ? downloaded / contentLength : 0;
                         break;
                     case "Finished":
                         downloadStatus.value = DownloadStatus.Finished;
