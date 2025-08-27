@@ -103,11 +103,22 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 "@": fileURLToPath(new URL("./src", import.meta.url)),
             },
         },
+        build: {
+            rollupOptions: {
+                output: {
+                    manualChunks(id) {
+                        if (id.includes("mdui")) {
+                            return "mdui";
+                        }
+                    },
+                },
+            },
+        },
     };
     if (command === "serve") {
         return {
             ...baseConfig,
-            clearScreen: false,
+            // clearScreen: false,
             server: {
                 port: 5173,
                 strictPort: true,
@@ -120,7 +131,6 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                       }
                     : undefined,
                 watch: {
-                    // 3. tell Vite to ignore watching `src-tauri`
                     ignored: ["**/src-tauri/**"],
                 },
             },
