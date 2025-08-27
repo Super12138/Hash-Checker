@@ -27,7 +27,7 @@ import SettingsDrawer from "./components/settings/SettingsDrawer.vue";
 import PWABadage from "./components/shared/PWABadage.vue";
 import SimpleDialog from "./components/shared/SimpleDialog.vue";
 
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch, type Ref } from "vue";
 
 import { setColorScheme } from "mdui";
 
@@ -46,11 +46,15 @@ import { useWebWorker } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import UpdateDialog from "./components/update/UpdateDialog.vue";
 
-let fileList = ref<FileItem[]>([]);
+let fileList: Ref<FileItem[]> = ref<FileItem[]>([]);
 const openTipDialog = ref(false);
 const tipDesc = ref("");
 
 const { t } = useI18n();
+
+// Web Worker
+const fileWorker = new Worker(new URL("worker/FileWorker.ts", import.meta.url), { type: "module" });
+const { data: workerData, post, terminate, worker } = useWebWorker(fileWorker);
 
 // 各种 Store
 const fileConfigurationStore = useFileConfigurationStore();
@@ -59,6 +63,10 @@ const cacheSizeStore = useCacheSizeStore();
 
 const openFileOutputDrawer = ref(false);
 const openSettingsDrawer = ref(false);
+
+const isCheckMode = computed(() => {
+    return fileConfigurationStore.mode === "Check";
+});
 
 const toggleFileDrawer = () => {
     openFileOutputDrawer.value = !openFileOutputDrawer.value;
@@ -80,14 +88,6 @@ const openOnlyFileDrawer = () => {
         openSettingsDrawer.value = false;
     }
 };
-
-// Web Worker
-const fileWorker = new Worker(new URL("worker/FileWorker.ts", import.meta.url), { type: "module" });
-const { data: workerData, post, terminate, worker } = useWebWorker(fileWorker);
-
-const isCheckMode = computed(() => {
-    return fileConfigurationStore.mode === "Check";
-});
 
 const processFile = (file: File) => {
     const currentFile = new FileItem(Date.now(), file.name);
@@ -126,6 +126,7 @@ const checkConfigurationIsVaild = () => {
         }
     }
 
+    if (!fileList.value[fileList.value.length - 1]) return;
     fileList.value[fileList.value.length - 1].status = FileStatus.Computing;
     fileList.value[fileList.value.length - 1].algorithm = toAlgorithm(
         fileConfigurationStore.algorithm,

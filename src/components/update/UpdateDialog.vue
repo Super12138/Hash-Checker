@@ -54,9 +54,13 @@ watch(data, (d) => {
     if (lt(VERSION_NAME, remoteVersion)) {
         console.log("检测到新版本");
         // TODO: 不要直接用字符串切割
-        const text = json.body.split("# 🚀 更新内容")[1].split("# ⬇️ 下载")[0];
-        updateContent.value = markdownIt.render(text);
-        showUpdateDialog.value = true;
+        const body = json.body.split("# 🚀 更新内容");
+        if (body !== undefined && body[1] !== undefined) {
+            const mainPart = body[1].split("# ⬇️ 下载");
+            const text = mainPart[0] ?? "";
+            updateContent.value = markdownIt.render(text);
+            showUpdateDialog.value = true;
+        }
     } else {
         console.log("当前版本已是最新");
         snackbar({ message: "当前已是最新版本" });
