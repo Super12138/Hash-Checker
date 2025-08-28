@@ -11,6 +11,9 @@ on:
 
 env:
   NODE_OPTIONS: "--max-old-space-size=4096"
+  TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+  TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+
 
 jobs:
   build:
@@ -82,10 +85,10 @@ jobs:
         uses: tauri-apps/tauri-action@v0.5.23
         with:
           args: ${{ matrix.args }}
-          tagName: __VERSION__
-          releaseName: __VERSION__
-          releaseBody: ""
-          releaseDraft: true
+        #  tagName: __VERSION__
+        #  releaseName: __VERSION__
+        #  releaseBody: ""
+        #  releaseDraft: true
         env: 
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
 

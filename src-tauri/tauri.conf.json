@@ -60,7 +60,7 @@
     },
     "plugins": {
         "updater": {
-            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEEzNDYzRTMzNDczREU5RjcKUldUMzZUMUhNejVHb3doMUhmY3hZR2toeUoxVGkxbDdOa3Y2MHJ1dWd3WkhleGZqMUpzVWI5TVkK",
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEE1MUYwRjI3ODlBNDgwRTcKUldUbmdLU0pKdzhmcGQwL2dJSUU1dmdCYkVOZFFKbmxuU1huSUM3NVUwN2I5ZEN3bGxJTE1sUjEK",
             "endpoints": [
                 "https://github.com/Super12138/Hash-Checker/releases/latest/download/latest.json"
             ],
