@@ -1,13 +1,28 @@
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import { defineConfig } from 'vite';
-import { createHtmlPlugin } from 'vite-plugin-html';
-import { VitePWA } from 'vite-plugin-pwa';
-import packageJson from './package.json';
+import vue from "@vitejs/plugin-vue";
+import { defineConfig, UserConfig } from "vite";
+import { createHtmlPlugin } from "vite-plugin-html";
+import { VitePWA } from "vite-plugin-pwa";
+import vueDevTools from "vite-plugin-vue-devtools";
+
+import { exec } from "node:child_process";
+import { fileURLToPath, URL } from "node:url";
+import { promisify } from "node:util";
+
+import packageJson from "./package.json";
 
 const execPromise = promisify(exec);
 
-async function getVersionInfo() {
+const host = process.env.TAURI_DEV_HOST;
+
+/**
+ * 获取版本信息
+ *
+ * * 版本号：Git 提交计数
+ * * 提交哈希：Git 短哈希
+ *
+ * @returns { versionCode: string, commitHash: string }
+ */
+const getVersionInfo = async () => {
     try {
         const { stdout: versionCode } = await execPromise("git rev-list --count HEAD");
         const { stdout: commitHash } = await execPromise("git rev-parse --short HEAD");
@@ -19,25 +34,33 @@ async function getVersionInfo() {
         console.error(`执行命令时发生错误: ${error}`);
         throw error;
     }
-}
+};
 
-// @ts-expect-error process is a nodejs global
-const host = process.env.TAURI_DEV_HOST;
-
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => {
     const { versionCode, commitHash } = await getVersionInfo();
-    const baseConfig = {
+
+    const baseConfig: UserConfig = {
         plugins: [
+            vue({
+                template: {
+                    compilerOptions: {
+                        // 所有以 mdui- 开头的标签名都是 mdui 组件
+                        isCustomElement: (tag) => tag.startsWith("mdui-"),
+                    },
+                },
+            }),
+            vueDevTools(),
             createHtmlPlugin({
                 minify: true,
             }),
             VitePWA({
-                strategies: 'injectManifest',
-                srcDir: 'src/pwa',
-                filename: 'sw.ts',
-                registerType: 'prompt',
+                strategies: "injectManifest",
+                srcDir: "src/pwa",
+                filename: "sw.ts",
+                registerType: "prompt",
                 injectRegister: false,
+                disable: mode === "desktop",
 
                 pwaAssets: {
                     disabled: false,
@@ -45,63 +68,69 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 },
 
                 manifest: {
-                    name: 'Super Hash',
-                    short_name: 'Super Hash',
-                    start_url: '/Hash-Checker/',
-                    description: '一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器',
+                    name: "Super Hash",
+                    short_name: "Super Hash",
+                    start_url: "/Hash-Checker/",
+                    description: "一个快速、随时可用，且遵循 Material Design 3 的跨平台文件校验器",
                     lang: "zh",
-                    theme_color: '#ffffff',
+                    theme_color: "#ffffff",
                     orientation: "any",
                     dir: "ltr",
-                    categories: [
-                        "security"
-                    ],
+                    categories: ["security"],
                     shortcuts: [
                         {
-                            "name": "Super Hash",
-                            "url": "index.html",
-                            "description": "Super Hash"
-                        }
+                            name: "Super Hash",
+                            url: "index.html",
+                            description: "Super Hash",
+                        },
                     ],
                 },
 
                 injectManifest: {
-                    globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+                    globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
                 },
 
                 devOptions: {
                     enabled: false,
-                    navigateFallback: 'index.html',
+                    navigateFallback: "index.html",
                     suppressWarnings: true,
-                    type: 'module',
+                    type: "module",
                 },
-            })
+            }),
         ],
-    }
-
-    if (command === 'serve') {
+        resolve: {
+            alias: {
+                "@": fileURLToPath(new URL("./src", import.meta.url)),
+            },
+        },
+        build: {
+            rollupOptions: {
+                output: {
+                    manualChunks(id) {
+                        if (id.includes("mdui")) {
+                            return "mdui";
+                        }
+                    },
+                },
+            },
+        },
+    };
+    if (command === "serve") {
         return {
             ...baseConfig,
-            base: '/',
-            // Tauri相关配置
-            // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
-            //
-            // 1. prevent vite from obscuring rust errors
-            clearScreen: false,
-            // 2. tauri expects a fixed port, fail if that port is not available
+            // clearScreen: false,
             server: {
                 port: 5173,
                 strictPort: true,
                 host: host || false,
                 hmr: host
                     ? {
-                        protocol: "ws",
-                        host,
-                        port: 5174,
-                    }
+                          protocol: "ws",
+                          host,
+                          port: 1421,
+                      }
                     : undefined,
                 watch: {
-                    // 3. tell vite to ignore watching `src-tauri`
                     ignored: ["**/src-tauri/**"],
                 },
             },
@@ -112,13 +141,13 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 COMMIT_HASH: JSON.stringify(commitHash),
                 VERSION_CODE: JSON.stringify(versionCode),
             },
-        }
+        };
     } else {
         switch (mode) {
-            case 'web':
+            case "web":
                 return {
                     ...baseConfig,
-                    base: '/Hash-Checker/',
+                    base: "/Hash-Checker/",
                     define: {
                         VERSION_NAME: JSON.stringify(packageJson.version),
                         VARIANT: JSON.stringify("web"),
@@ -126,11 +155,11 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
                     },
-                }
-            case 'desktop':
+                };
+            case "desktop":
                 return {
                     ...baseConfig,
-                    base: '/',
+                    base: "/",
                     define: {
                         VERSION_NAME: JSON.stringify(packageJson.version),
                         VARIANT: JSON.stringify("desktop"),
@@ -138,11 +167,11 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
                     },
-                }
-            case 'store':
+                };
+            case "store":
                 return {
                     ...baseConfig,
-                    base: '/',
+                    base: "/",
                     define: {
                         VERSION_NAME: JSON.stringify(packageJson.version),
                         VARIANT: JSON.stringify("desktop"),
@@ -150,11 +179,11 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
                     },
-                }
+                };
             default:
                 return {
                     ...baseConfig,
-                    base: '/',
+                    base: "/",
                     define: {
                         VERSION_NAME: JSON.stringify(packageJson.version),
                         VARIANT: JSON.stringify("unknown"),
@@ -162,7 +191,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
                     },
-                }
+                };
         }
     }
 });

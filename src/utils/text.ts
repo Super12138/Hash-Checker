@@ -1,81 +1,94 @@
-import { Change, diffChars } from "diff";
-
-/**
- * 比较两个哈希字符串的差异，并用红色加粗显示新增的部分，用删除线显示被删除的部分。
- * 
- * @param userHash 用户输入的哈希字符串
- * @param genHash 生成的哈希字符串
- * @returns 高亮显示差异的 HTMLSpanElement
- */
-export const compareHash = (userHash: string, genHash: string): HTMLSpanElement => {
-    const differences: Change[] = diffChars(userHash, genHash);
-    const virtualDOM: HTMLSpanElement = document.createElement("span");
-
-    differences.forEach((part: Change) => {
-        const span: HTMLSpanElement = document.createElement('span');
-        if (part.added) {
-            span.classList.add('color-red');
-        }
-        if (part.removed) {
-            span.style.textDecoration = 'line-through';
-        }
-        span.appendChild(document.createTextNode(part.value));
-        virtualDOM.appendChild(span);
-    });
-    return virtualDOM;
-}
-
-/**
- * 将一个文本（比如文本类型的 `true` ）转换成布尔值
- * 
- * * 文本类型的 `true` 或 `false` 会转换成布尔值
- * * 若为普通文本，默认返回 `false`
- * 
- * @param str 要转换成布尔值的文本
- * @returns 转换好的布尔值
- */
-export function string2Boolean(str: string | null): boolean {
-    if (str === null) {
-        return false;
-    } else {
-        switch (str.toLowerCase()) {
-            case 'true':
-                return true;
-            case 'false':
-                return false;
-            default:
-                return false;
-        }
-    }
-}
-
-/**
- * 格式化文件大小
- * 
- * @param size 文件大小（字节）
- * @returns 格式化后的文件大小字符串（最大支持TB），如 `1 GB`
- */
-export const formatFileSize = (size: number): string => {
-    if (!isFinite(size) || size < 0) {
-        return '文件大小无效';
-    }
-    const units: string[] = ["Bytes", "KB", "MB", "GB", "TB"];
-    const kb: number = 1024;
-    let counter: number = 0;
-    let calcSize: number = size;
-    while (calcSize >= kb && counter < units.length - 1) {
-        counter++;
-        calcSize = calcSize / kb;
-    }
-    return `${calcSize.toFixed(2)} ${units[counter]}`;
-}
+import { ref, toValue, watchEffect, type MaybeRefOrGetter, type Ref } from "vue";
 
 /**
  * 判断一个字符串是否为空或者只包含空白字符
- * 
+ *
  * @param str 要判断的字符串
  * @returns 是否为空或者只包含空白字符
  */
-export function isBlankOrEmpty(str: string | null): boolean {
-    return str === null || str.trim() === '';
+export function isBlankOrEmpty(str: number | string | null): boolean {
+    return str === null || str.toString().trim() === "";
 }
+
+export function useBlankOrEmptyCheck(text: MaybeRefOrGetter<string | null>): Ref<boolean, boolean> {
+    const state = ref<boolean>(false);
+    watchEffect(() => {
+        state.value = isBlankOrEmpty(toValue(text));
+    });
+    return state;
+}
+
+export function useNotBlankOrEmptyCheck(
+    text: MaybeRefOrGetter<string | null>,
+): Ref<boolean, boolean> {
+    const state = ref<boolean>(false);
+    watchEffect(() => {
+        state.value = !isBlankOrEmpty(toValue(text));
+    });
+    return state;
+}
+
+export const formatDate = (date: number): string => {
+    let dateObj: Date = new Date(date);
+    let year: number = dateObj.getFullYear();
+    let month: string | number = dateObj.getMonth() + 1;
+    let day: string | number = dateObj.getDate();
+    let hour: string | number = dateObj.getHours();
+    let minute: string | number = dateObj.getMinutes();
+    let second: string | number = dateObj.getSeconds();
+    if (month < 10) {
+        month = `0${month}`;
+    }
+    if (day < 10) {
+        day = `0${day}`;
+    }
+    if (hour < 10) {
+        hour = `0${hour}`;
+    }
+    if (minute < 10) {
+        minute = `0${minute}`;
+    }
+    if (second < 10) {
+        second = `0${second}`;
+    }
+    // 返回格式化后的日期字符串
+    return `${year}年${month}月${day}日 ${hour}:${minute}:${second}`;
+};
+
+/**
+ * 格式化时间
+ *
+ * @param seconds 传入的时间（单位：秒）
+ * @returns 格式化的时间字符串；输出：`ss秒`，`mm分钟`，`hh 小时 mm 分钟 ss 秒`
+ */
+export const useFormatTime = (seconds: MaybeRefOrGetter<number>): Ref<string, string> => {
+    const str = ref<string>("");
+    watchEffect(() => {
+        str.value = formatTime(toValue(seconds));
+    });
+    return str;
+};
+
+/**
+ * 格式化时间
+ *
+ * @param seconds 传入的时间（单位：秒）
+ * @returns 格式化的时间字符串；输出：`ss秒`，`mm分钟`，`hh 小时 mm 分钟 ss 秒`
+ */
+export const formatTime = (seconds: number): string => {
+    if (seconds < 60) {
+        // 小于 60 秒，直接返回秒数
+        return `${Math.round(seconds)} 秒`;
+    } else if (seconds < 3600) {
+        // 小于 1 小时，返回分钟数（向下取整）和秒数
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes} 分钟 ${secs} 秒`;
+    } else {
+        // 1 小时及以上，分别计算小时、分钟、秒，均为整数
+        const hours = Math.floor(seconds / 3600); // 小时
+        const minutes = Math.floor((seconds % 3600) / 60); // 分钟
+        const secs = Math.floor(seconds % 60); // 秒
+        return `${hours} 小时 ${minutes} 分钟 ${secs} 秒`;
+    }
+};

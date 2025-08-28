@@ -82,6 +82,12 @@ jobs:
         uses: tauri-apps/tauri-action@v0.5.23
         with:
           args: ${{ matrix.args }}
+          tagName: __VERSION__
+          releaseName: __VERSION__
+          releaseBody: ""
+          releaseDraft: true
+        env: 
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
       - name: Upload artifact
         if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
