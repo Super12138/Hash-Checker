@@ -54,7 +54,7 @@
                 "type": "downloadBootstrapper"
             },
             "wix": {
-                "language": "zh-CN"
+                "language": ["zh-CN", "en-US"]
             }
         }
     },
