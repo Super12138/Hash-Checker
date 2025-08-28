@@ -51,7 +51,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
         with:
           fetch-depth: 0
 
@@ -79,9 +79,15 @@ jobs:
         run: npm install
 
       - name: Build app
-        uses: tauri-apps/tauri-action@v0.5.22
+        uses: tauri-apps/tauri-action@v0.5.23
         with:
           args: ${{ matrix.args }}
+          tagName: __VERSION__
+          releaseName: __VERSION__
+          releaseBody: ""
+          releaseDraft: true
+        env: 
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
       - name: Upload artifact
         if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
