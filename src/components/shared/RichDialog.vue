@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "mdui/components/button.js";
 import "mdui/components/dialog.js";
 
 import type { Dialog } from "mdui/components/dialog.js";

@@ -63,7 +63,7 @@ watch(data, (d) => {
         }
     } else {
         console.log("当前版本已是最新");
-        snackbar({ message: "当前已是最新版本" });
+        snackbar({ message: t("update-dialog.check-update.latest") });
     }
 });
 
@@ -72,7 +72,7 @@ watch(error, (err) => {
     if (err.name !== "AbortError") {
         // 过滤掉主动取消的错误 @DeepSeek
         console.error(err);
-        snackbar({ message: `检查更新时出错（${err}）` });
+        snackbar({ message: t("update-dialog.check-update.error", { error: err }) });
     }
 });
 
@@ -114,7 +114,7 @@ const downloadAndIntallUpdate = async () => {
         downloadStatus.value = DownloadStatus.Error;
         downloadProgress.value = 0;
         console.error("Tauri Updater：更新失败", error);
-        snackbar({ message: `更新失败: ${error}` });
+        snackbar({ message: t("update-dialog.failed", { error: error }) });
     }
 };
 

@@ -138,7 +138,12 @@
             "finished": "更新包下载完成，应用即将重启安装更新",
             "error": "获取更新配置时出错"
         },
-        "downloading": "正在下载"
+        "downloading": "正在下载",
+        "check-update": {
+            "latest": "当前已是最新版本",
+            "error": "检查更新时出错（{error}）"
+        },
+        "failed": "更新失败（{error}）"
     },
     "warning": "警告",
     "tip": "提示",

@@ -137,7 +137,12 @@
             "error": "An error occurred while fetching the update config",
             "finished": "Download complete. App will restart to install the update",
             "starting": "Starting..."
-        }
+        },
+        "check-update": {
+            "error": "Error occurred while checking for updates ({error})",
+            "latest": "App is up-to-date"
+        },
+        "failed": "Update failed ({error})"
     },
     "cancel": "Cancel",
     "warning": "Warning",

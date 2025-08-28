@@ -3,11 +3,12 @@ import "mdui/components/list-item.js";
 import "mdui/components/switch.js";
 
 import "@mdui/icons/notifications-active--outlined.js";
-import { watch } from "vue";
-import { useWebNotification } from "@vueuse/core";
-import { alert, dialog, snackbar } from "mdui";
-import { useI18n } from "vue-i18n";
+
 import { NOTIFICATION_TAG } from "@/interfaces/constants";
+import { useWebNotification } from "@vueuse/core";
+import { snackbar } from "mdui";
+import { watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps<{
     checked: boolean;
@@ -38,7 +39,7 @@ const sendTestNotification = () => {
 };
 
 // 可能需要在确定一次以后再也不显示弹窗
-watch(
+/* watch(
     permissionGranted,
     (granted) => {
         if (!granted) {
@@ -49,7 +50,7 @@ watch(
         }
     },
     { immediate: true },
-);
+); */
 
 watch(
     () => props.checked,
