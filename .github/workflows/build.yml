@@ -80,10 +80,6 @@ jobs:
         with:
           workspaces: ./src-tauri -> target
 
-      - name: Remove package-lock.json # macOS 删除 package-lock.json 文件，避免跨平台依赖安装冲突
-        if: runner.os == 'macos'
-        run: rm -f package-lock.json
-
       - name: Install dependencies
         run: npm install
 
