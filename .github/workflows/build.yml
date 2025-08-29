@@ -81,7 +81,7 @@ jobs:
           workspaces: ./src-tauri -> target
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build app
         uses: tauri-apps/tauri-action@v0.5.23
