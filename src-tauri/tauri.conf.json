@@ -5,9 +5,9 @@
     "version": "4.0.0",
     "identifier": "cn.super12138.hash",
     "build": {
-        "beforeDevCommand": "npm run dev",
+        "beforeDevCommand": "pnpm run dev",
         "devUrl": "http://localhost:5173",
-        "beforeBuildCommand": "npm run build:desktop",
+        "beforeBuildCommand": "pnpm run build:desktop",
         "frontendDist": "../dist"
     },
     "app": {

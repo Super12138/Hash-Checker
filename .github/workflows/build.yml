@@ -58,10 +58,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4.1.0
+        with:
+          version: latest
+
       - name: Setup Node
         uses: actions/setup-node@v4.4.0
         with:
-          node-version: 22
+          node-version: 24
+          cache: pnpm
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable

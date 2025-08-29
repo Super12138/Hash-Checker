@@ -24,19 +24,25 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4.1.0
+        with:
+          version: latest
+
       - name: Setup Node
         uses: actions/setup-node@v4.4.0
         with:
-          node-version: 22
+          node-version: 24
+          cache: pnpm
 
       - name: Setup Pages
         uses: actions/configure-pages@v5.0.0
 
       - name: Install dependencies
-        run: rm -f package-lock.json && npm install # 移除 package-lock.json 文件，避免跨平台依赖安装冲突
+        run: pnpm install
 
       - name: Build
-        run: npm run build:web
+        run: pnpm run build:web
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4.0.0
