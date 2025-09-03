@@ -64,6 +64,9 @@ const cacheSizeStore = useCacheSizeStore();
 const openFileOutputDrawer = ref(false);
 const openSettingsDrawer = ref(false);
 
+const enablePWA = VARIANT === "web" || VARIANT === "dev";
+const enableUpdateDialog = VARIANT === "desktop" || VARIANT === "dev";
+
 const isCheckMode = computed(() => {
     return fileConfigurationStore.mode === "Check";
 });
@@ -231,8 +234,8 @@ onUnmounted(() => {
         :close-on-overlay-click="true"
     />
 
-    <PWABadage />
-    <UpdateDialog />
+    <PWABadage v-if="enablePWA" />
+    <UpdateDialog v-if="enableUpdateDialog" />
 </template>
 
 <style lang="css">
