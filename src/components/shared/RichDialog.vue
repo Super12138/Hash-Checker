@@ -25,12 +25,12 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
-const open = defineModel<boolean>({ required: true });
+const isOpen = defineModel<boolean>({ required: true });
 
 const dialogRef = useTemplateRef<Dialog>("dialog");
 
 const onClosed = () => {
-    open.value = false;
+    isOpen.value = false;
 };
 
 const onConfirm = () => {
@@ -52,7 +52,7 @@ const onCancel = () => {
     <mdui-dialog
         :headline="headline"
         :description="description"
-        :open="open"
+        :open="isOpen"
         :close-on-overlay-click="closeOnOverlayClick"
         @closed.self="onClosed()"
         ref="dialog"

@@ -17,13 +17,13 @@ import type { NavigationDrawer } from "mdui/components/navigation-drawer.js";
 
 defineProps<{ fileList: FileItem[] }>();
 
-const open = defineModel<boolean>({ required: true });
+const isOpen = defineModel<boolean>({ required: true });
 
 const { t } = useI18n();
 const fileDrawer = useTemplateRef<NavigationDrawer>("file-drawer");
 
 const onClosed = () => {
-    open.value = false;
+    isOpen.value = false;
 };
 
 const closeDrawer = () => {
@@ -38,7 +38,7 @@ const closeDrawer = () => {
         placement="left"
         close-on-esc
         close-on-overlay-click
-        :open="open"
+        :open="isOpen"
         ref="file-drawer"
         @closed="onClosed()"
     >

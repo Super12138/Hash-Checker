@@ -12,12 +12,12 @@ import { onMounted, useTemplateRef } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
-const open = defineModel<boolean>({ required: true });
+const isOpen = defineModel<boolean>({ required: true });
 const dialogRef = useTemplateRef<Dialog>("dialog");
 const languageStore = useLanguageStore();
 
 const onClosed = () => {
-    open.value = false;
+    isOpen.value = false;
 };
 
 const setLanguage = (languageTag: string) => {
@@ -46,7 +46,7 @@ onMounted(() => {
     <mdui-dialog
         :headline="t('settings.language.dialog.headline')"
         :description="t('settings.language.dialog.description')"
-        :open="open"
+        :open="isOpen"
         close-on-overlay-click="true"
         @closed.self="onClosed()"
         ref="dialog"

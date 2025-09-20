@@ -2,16 +2,15 @@
 import "mdui/components/dialog.js";
 import type { Dialog } from "mdui/components/dialog.js";
 
-import { formatDate } from "@/utils/text";
-import { useTemplateRef } from "vue";
+import { computed, useTemplateRef } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t, d, locale } = useI18n();
 
-const open = defineModel<boolean>({ required: true });
+const isOpen = defineModel<boolean>({ required: true });
 const dialogRef = useTemplateRef<Dialog>("dialog");
 
-defineProps<{
+const props = defineProps<{
     fileName: string;
     fileMode: string;
     fileAlgorithm: string;
@@ -28,7 +27,7 @@ defineEmits<{
 }>();
 
 const onClosed = () => {
-    open.value = false;
+    isOpen.value = false;
 };
 
 const onConfirm = () => {
@@ -36,12 +35,23 @@ const onConfirm = () => {
         dialogRef.value.open = false;
     }
 };
+
+/** 使用计算属性优化状态文本和颜色的计算 */
+const checksumStatusText = computed(() => {
+    return props.isCheckSumMatch
+        ? t("file-dialog.checksum-info.success")
+        : t("file-dialog.checksum-info.failed");
+});
+
+const checksumStatusClass = computed(() => {
+    return props.isCheckSumMatch ? "green" : "red";
+});
 </script>
 
 <template>
     <mdui-dialog
         :headline="t('file-dialog.headline')"
-        :open="open"
+        :open="isOpen"
         close-on-overlay-click="true"
         @closed.self="onClosed()"
         ref="dialog"
@@ -67,12 +77,8 @@ const onConfirm = () => {
             </p>
             <p v-if="showCompare">
                 {{ t("file-dialog.checksum-info.verification-result") }}
-                <strong :class="isCheckSumMatch ? 'green' : 'red'">
-                    {{
-                        isCheckSumMatch
-                            ? t("file-dialog.checksum-info.success")
-                            : t("file-dialog.checksum-info.failed")
-                    }}
+                <strong :class="checksumStatusClass">
+                    {{ checksumStatusText }}
                 </strong>
             </p>
         </div>

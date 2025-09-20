@@ -21,11 +21,11 @@ const markdownIt = new MarkdownIt({
     typographer: true,
 });
 
-const autoUpdateStore = useAutoUpdateStore(); // autoUpdateStore.enable是一个常量，用于控制是否启用自动更新
+const autoUpdateStore = useAutoUpdateStore();
 
-const showUpdateDialog = ref<boolean>(false);
-const showProgressDialog = ref<boolean>(false);
-const updateContent = ref<string>("");
+const isUpdateDialogOpen = ref<boolean>(false);
+const isProgressDialogOpen = ref<boolean>(false);
+const updateContentHtml = ref<string>("");
 const currentVersion = VERSION_NAME;
 const newVersion = ref<string>("");
 
@@ -46,20 +46,20 @@ watch(
     { immediate: true },
 );
 
-watch(data, (d) => {
-    if (!d || !autoUpdateStore.enable) return;
-    const json = JSON.parse(d as string) as GitHubRelease;
-    const remoteVersion = json.name;
-    newVersion.value = json.name;
-    if (lt(VERSION_NAME, remoteVersion)) {
+watch(data, (responseData) => {
+    if (!responseData || !autoUpdateStore.enable) return;
+    const releaseData = JSON.parse(responseData as string) as GitHubRelease;
+    const remoteVer = releaseData.name;
+    newVersion.value = releaseData.name;
+    if (lt(VERSION_NAME, remoteVer)) {
         console.log("检测到新版本");
         // TODO: 不要直接用字符串切割
-        const body = json.body.split("# 🚀 更新内容");
-        if (body !== undefined && body[1] !== undefined) {
-            const mainPart = body[1].split("# ⬇️ 下载");
+        const bodyParts = releaseData.body.split("# 🚀 更新内容");
+        if (bodyParts !== undefined && bodyParts[1] !== undefined) {
+            const mainPart = bodyParts[1].split("# ⬇️ 下载");
             const text = mainPart[0] ?? "";
-            updateContent.value = markdownIt.render(text);
-            showUpdateDialog.value = true;
+            updateContentHtml.value = markdownIt.render(text);
+            isUpdateDialogOpen.value = true;
         }
     } else {
         console.log("当前版本已是最新");
@@ -70,36 +70,35 @@ watch(data, (d) => {
 watch(error, (err) => {
     if (!err || !autoUpdateStore.enable) return;
     if (err.name !== "AbortError") {
-        // 过滤掉主动取消的错误 @DeepSeek
         console.error(err);
         snackbar({ message: t("update-dialog.check-update.error", { error: err }) });
     }
 });
 
-const downloadAndIntallUpdate = async () => {
+const downloadUpdate = async () => {
     try {
         downloadStatus.value = DownloadStatus.Fetching;
-        showProgressDialog.value = true;
+        isProgressDialogOpen.value = true;
 
         const update = await check();
         if (update) {
             console.log(`Tauri Updater：发现更新 ${update.version}`);
             let downloaded = 0;
-            let contentLength = 0;
+            let totalSize = 0;
             downloadStatus.value = DownloadStatus.Started;
-            // alternatively we could also call update.download() and update.install() separately
+
             await update.downloadAndInstall((event) => {
                 switch (event.event) {
                     case "Started":
                         if (event.data.contentLength) {
-                            contentLength = event.data.contentLength;
-                            console.log(`Tauri Updater：文件大小 ${contentLength} 字节`);
+                            totalSize = event.data.contentLength;
+                            console.log(`Tauri Updater：文件大小 ${totalSize} 字节`);
                         }
                         downloadStatus.value = DownloadStatus.Downloading;
                         break;
                     case "Progress":
                         downloaded += event.data.chunkLength;
-                        downloadProgress.value = contentLength > 0 ? downloaded / contentLength : 0;
+                        downloadProgress.value = totalSize > 0 ? downloaded / totalSize : 0;
                         break;
                     case "Finished":
                         downloadStatus.value = DownloadStatus.Finished;
@@ -127,15 +126,15 @@ onUnmounted(() => {
     <RichDialog
         :headline="t('update-dialog.headline', { version: newVersion })"
         :description="t('update-dialog.description', { version: currentVersion })"
-        v-model="showUpdateDialog"
+        v-model="isUpdateDialogOpen"
         :close-on-overlay-click="false"
-        @confirm="downloadAndIntallUpdate()"
+        @confirm="downloadUpdate()"
     >
-        <div v-html="updateContent"></div>
+        <div v-html="updateContentHtml"></div>
     </RichDialog>
     <UpdateProgressDialog
         :progress="downloadProgress"
         :status="downloadStatus"
-        v-model="showProgressDialog"
+        v-model="isProgressDialogOpen"
     />
 </template>

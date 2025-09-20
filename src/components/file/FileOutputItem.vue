@@ -5,34 +5,39 @@ import "mdui/components/list-item.js";
 import "mdui/components/tooltip.js";
 
 import { Algorithms } from "@/interfaces/Algorithms";
+import { NOTIFICATION_TAG } from "@/interfaces/constants";
 import { FileStatus } from "@/interfaces/FileStatus";
 import { Modes } from "@/interfaces/Modes";
 import { useFormatTime } from "@/utils/text";
 import type { FileItem } from "./FileItem";
 
-import { computed, ref, Teleport, watch } from "vue";
+import { snackbar } from "mdui";
 
 import { useAutoCopyStore } from "@/stores/settings/autoCopy";
 import { useSystemNotificationStore } from "@/stores/settings/systemNotification";
 import { useClipboard, useWebNotification } from "@vueuse/core";
-import { snackbar } from "mdui";
-import FileDialog from "./FileDialog.vue";
+import { computed, ref, Teleport, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { NOTIFICATION_TAG } from "@/interfaces/constants";
+
+import FileDialog from "./FileDialog.vue";
 
 const props = defineProps<{ fileItem: FileItem }>();
 
 const { t } = useI18n();
-const dialogOpen = ref<boolean>(false);
-const isCheckSumMatch = ref<boolean>(false);
+const isDialogOpen = ref<boolean>(false);
+const isChecksumMatch = ref<boolean>(false);
 
 const autoCopyStore = useAutoCopyStore();
 const systemNotificationStore = useSystemNotificationStore();
 
-const { copy, copied, isSupported } = useClipboard();
-const { isSupported: isSupportedNotification, permissionGranted, show } = useWebNotification();
+const { copy, copied, isSupported: isClipboardSupported } = useClipboard();
+const {
+    isSupported: isNotifcationSupported,
+    permissionGranted,
+    show: showNotification,
+} = useWebNotification();
 
-const showCompare = computed(() => {
+const shouldShowCompare = computed(() => {
     return (
         props.fileItem.mode === Modes.Check &&
         props.fileItem.checkSum !== undefined &&
@@ -41,7 +46,7 @@ const showCompare = computed(() => {
 });
 
 const copyHash = () => {
-    if (!isSupported.value) {
+    if (!isClipboardSupported.value) {
         snackbar({ message: t("clipboard.not-supported") });
         return;
     }
@@ -55,7 +60,7 @@ const copyHash = () => {
     }
 };
 
-const fileStatus = computed(() => {
+const statusText = computed(() => {
     switch (props.fileItem.status) {
         case FileStatus.Waiting:
             return t("status.waiting");
@@ -77,7 +82,7 @@ const fileStatus = computed(() => {
     }
 });
 
-const fileMode = computed(() => {
+const modeText = computed(() => {
     switch (props.fileItem.mode) {
         case Modes.Check:
             return t("mode.check");
@@ -88,7 +93,7 @@ const fileMode = computed(() => {
     }
 });
 
-const fileAlgorithm = computed(() => {
+const algorithmText = computed(() => {
     switch (props.fileItem.algorithm) {
         case Algorithms.MD5:
             return "MD5";
@@ -110,16 +115,16 @@ const fileAlgorithm = computed(() => {
 watch(
     () => props.fileItem.hash,
     () => {
-        if (showCompare.value) {
+        if (shouldShowCompare.value) {
             // showCompare 的值里已经计算了 hash 和 checkSum 一定不为空，因此下方使用非空断言
-            isCheckSumMatch.value =
+            isChecksumMatch.value =
                 props.fileItem.hash!.trim().toLocaleLowerCase() ===
                 props.fileItem.checkSum!.trim().toLowerCase();
         }
         if (autoCopyStore.enable) copyHash();
         if (systemNotificationStore.enable) {
-            if (isSupportedNotification.value && permissionGranted.value) {
-                show({
+            if (isNotifcationSupported.value && permissionGranted.value) {
+                showNotification({
                     title: t("notification.hash-generated"),
                     dir: "auto",
                     lang: "zh",
@@ -137,7 +142,11 @@ watch(
 </script>
 
 <template>
-    <mdui-list-item :headline="fileItem.name" :description="fileStatus" @click="dialogOpen = true">
+    <mdui-list-item
+        :headline="fileItem.name"
+        :description="statusText"
+        @click="isDialogOpen = true"
+    >
         <mdui-circular-progress
             :value="fileItem.progress"
             min="0"
@@ -149,15 +158,15 @@ watch(
     <Teleport to="body">
         <FileDialog
             :fileName="fileItem.name"
-            :fileMode="fileMode"
-            :fileAlgorithm="fileAlgorithm"
-            :fileStatus="fileStatus"
+            :fileMode="modeText"
+            :fileAlgorithm="algorithmText"
+            :fileStatus="statusText"
             :addTime="fileItem.addTime"
             :hash="fileItem.hash"
             :checkSum="fileItem.checkSum"
-            :showCompare="showCompare"
-            :isCheckSumMatch="isCheckSumMatch"
-            v-model="dialogOpen"
+            :showCompare="shouldShowCompare"
+            :isCheckSumMatch="isChecksumMatch"
+            v-model="isDialogOpen"
             @copy-hash="copyHash()"
         />
     </Teleport>

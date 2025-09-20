@@ -9,13 +9,13 @@ import { useTemplateRef } from "vue";
 import { useI18n } from "vue-i18n";
 import { OPEN_SOURCE_LIBRARIES } from "@/interfaces/constants";
 
-const open = defineModel<boolean>({ required: true });
+const isDialogOpen = defineModel<boolean>({ required: true });
 const dialogRef = useTemplateRef<Dialog>("dialog");
 
 const { t } = useI18n();
 
 const onClosed = () => {
-    open.value = false;
+    isDialogOpen.value = false;
 };
 
 const onConfirm = () => {
@@ -32,7 +32,7 @@ const version = computed(() => {
 <template>
     <mdui-dialog
         :headline="t('settings.about.label')"
-        :open="open"
+        :open="isDialogOpen"
         close-on-overlay-click="true"
         @closed.self="onClosed()"
         ref="dialog"
@@ -76,8 +76,8 @@ const version = computed(() => {
             <a target="_blank" href="https://icon.kitchen/">IconKitchen</a>
         </p>
 
-        <mdui-button slot="action" variant="tonal" @click="onConfirm()">{{
-            t("confirm")
-        }}</mdui-button>
+        <mdui-button slot="action" variant="tonal" @click="onConfirm()">
+            {{ t("confirm") }}
+        </mdui-button>
     </mdui-dialog>
 </template>

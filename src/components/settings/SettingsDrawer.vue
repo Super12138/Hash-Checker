@@ -32,14 +32,14 @@ const systemNotificationStore = useSystemNotificationStore();
 const autoUpdateStore = useAutoUpdateStore();
 const autoCopyStore = useAutoCopyStore();
 
-const open = defineModel<boolean>({ required: true });
+const isOpen = defineModel<boolean>({ required: true });
 
 const { t } = useI18n();
 const settingsDrawer = useTemplateRef<NavigationDrawer>("settings-drawer");
 const isStoreOrWeb = VARIANT === "web" || STORE;
 
 const onClosed = () => {
-    open.value = false;
+    isOpen.value = false;
 };
 
 const closeDrawer = () => {
@@ -54,7 +54,7 @@ const closeDrawer = () => {
         placement="right"
         close-on-esc
         close-on-overlay-click
-        :open="open"
+        :open="isOpen"
         ref="settings-drawer"
         @closed="onClosed()"
     >

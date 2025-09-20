@@ -9,7 +9,7 @@ const props = defineProps<{
     status: DownloadStatus;
 }>();
 
-const open = defineModel<boolean>({ required: true });
+const isOpen = defineModel<boolean>({ required: true });
 const canClose = ref<boolean>(false);
 
 const { t } = useI18n();
@@ -43,10 +43,9 @@ watch(
     <mdui-dialog
         :headline="t('update-dialog.downloading')"
         :description="description"
-        :open="open"
+        :open="isOpen"
         :close-on-overlay-click="canClose"
         :close-on-esc="canClose"
-        ref="dialog"
     >
         <mdui-linear-progress :value="progress" min="0" max="100"></mdui-linear-progress>
     </mdui-dialog>

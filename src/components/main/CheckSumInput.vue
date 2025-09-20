@@ -19,7 +19,7 @@ defineEmits<{
 
 const { t } = useI18n();
 
-const suggestSuccessful = ref<boolean>(false);
+const isSuggestionSuccessful = ref<boolean>(false);
 
 const algorithmSuggestStore = useAlgorithmSuggestStore();
 const fileConfigurationStore = useFileConfigurationStore();
@@ -29,29 +29,29 @@ const detectAndWritrAlgorithm = () => {
         switch (props.value.trim().length) {
             case 32:
                 fileConfigurationStore.setAlgorithm("MD5");
-                suggestSuccessful.value = true;
+                isSuggestionSuccessful.value = true;
                 break;
             case 40:
                 fileConfigurationStore.setAlgorithm("SHA1");
-                suggestSuccessful.value = true;
+                isSuggestionSuccessful.value = true;
                 break;
             case 64:
                 fileConfigurationStore.setAlgorithm("SHA256");
-                suggestSuccessful.value = true;
+                isSuggestionSuccessful.value = true;
                 break;
             case 96:
                 fileConfigurationStore.setAlgorithm("SHA384");
-                suggestSuccessful.value = true;
+                isSuggestionSuccessful.value = true;
                 break;
             default:
-                suggestSuccessful.value = false;
+                isSuggestionSuccessful.value = false;
                 break;
         }
     }
 };
 
 const textFieldHelper = computed(() => {
-    return suggestSuccessful.value
+    return isSuggestionSuccessful.value
         ? t("checksum-input.match-algorithm")
         : t("checksum-input.helper");
 });
@@ -59,7 +59,7 @@ const textFieldHelper = computed(() => {
 // TODO: 看看能不能用 $subscribe 替代
 watch(
     () => fileConfigurationStore.mode,
-    () => (suggestSuccessful.value = false),
+    () => (isSuggestionSuccessful.value = false),
 );
 </script>
 

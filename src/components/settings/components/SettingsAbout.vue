@@ -3,11 +3,10 @@ import "mdui/components/list-item.js";
 
 import "@mdui/icons/info--outlined.js";
 
-import { computed, ref, Teleport } from "vue";
+import { ref, Teleport } from "vue";
 
 import { useI18n } from "vue-i18n";
 
-import RichDialog from "@/components/shared/RichDialog.vue";
 import SettingsAboutDialog from "./SettingsAboutDialog.vue";
 
 const { t } = useI18n();

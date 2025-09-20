@@ -9,14 +9,14 @@ import { ref, useTemplateRef, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const open = defineModel<boolean>({ required: true });
+const isOpen = defineModel<boolean>({ required: true });
 const dialogRef = useTemplateRef<Dialog>("dialog");
 const themeColorStore = useThemeColorStore();
 
 const inputColor = ref<string>(themeColorStore.color);
 
 const onClosed = () => {
-    open.value = false;
+    isOpen.value = false;
 };
 
 const onConfirm = () => {
@@ -54,7 +54,7 @@ watch(inputColor, (newColor) => {
     <mdui-dialog
         :headline="t('settings.theme-color.dialog.headline')"
         :description="t('settings.theme-color.dialog.description')"
-        :open="open"
+        :open="isOpen"
         close-on-overlay-click="true"
         @closed.self="onClosed()"
         ref="dialog"
