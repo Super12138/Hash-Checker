@@ -4,12 +4,12 @@
     "extends": ["config:recommended"],
     "packageRules": [
         {
-            "depTypeList": ["devDependencies"],
-            "updateTypes": ["minor", "patch"]
+            "matchDepTypes": ["devDependencies"],
+            "matchUpdateTypes": ["minor", "patch"]
         },
         {
-            "depTypeList": ["dependencies"],
-            "updateTypes": ["minor", "patch"]
+            "matchDepTypes": ["dependencies"],
+            "matchUpdateTypes": ["minor", "patch"]
         }
     ]
 }
