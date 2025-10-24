@@ -96,7 +96,7 @@ jobs:
 
       - name: Upload artifact
         if: success() && github.event_name != 'pull_request' && github.repository == 'Super12138/Hash-Checker'
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: ${{ matrix.name }}
           path: |
