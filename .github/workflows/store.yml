@@ -57,7 +57,7 @@ jobs:
         uses: tauri-apps/tauri-action@v0.6.0
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: Microsoft Store
           path: |
