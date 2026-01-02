@@ -25,3 +25,8 @@ declare const VARIANT: string;
  * 商店版
  */
 declare const STORE: boolean;
+
+/**
+ * 构建时间（ISO 格式的 UTC 时间）
+ */
+declare const BUILD_TIME: string;

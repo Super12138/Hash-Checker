@@ -140,6 +140,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                 STORE: JSON.stringify(false),
                 COMMIT_HASH: JSON.stringify(commitHash),
                 VERSION_CODE: JSON.stringify(versionCode),
+                BUILD_TIME: JSON.stringify(new Date().toISOString()),
             },
         };
     } else {
@@ -154,6 +155,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                         STORE: JSON.stringify(false),
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
+                        BUILD_TIME: JSON.stringify(new Date().toISOString()),
                     },
                 };
             case "desktop":
@@ -166,6 +168,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                         STORE: JSON.stringify(false),
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
+                        BUILD_TIME: JSON.stringify(new Date().toISOString()),
                     },
                 };
             case "store":
@@ -178,6 +181,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                         STORE: JSON.stringify(true),
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
+                        BUILD_TIME: JSON.stringify(new Date().toISOString()),
                     },
                 };
             default:
@@ -190,6 +194,7 @@ export default defineConfig(async ({ command, mode, isSsrBuild, isPreview }) => 
                         STORE: JSON.stringify(false),
                         COMMIT_HASH: JSON.stringify(commitHash),
                         VERSION_CODE: JSON.stringify(versionCode),
+                        BUILD_TIME: JSON.stringify(new Date().toISOString()),
                     },
                 };
         }

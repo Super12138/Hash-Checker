@@ -53,7 +53,7 @@ const copyHash = () => {
     if (props.fileItem.hash !== undefined) {
         copy(props.fileItem.hash);
         if (copied) {
-            snackbar({ message: t("clipboard.copy-hash-successful") });
+            snackbar({ message: t("clipboard.copy-successful") });
         } else {
             snackbar({ message: t("clipboard.copy-failed") });
         }

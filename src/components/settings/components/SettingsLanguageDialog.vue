@@ -21,12 +21,16 @@ const onClosed = () => {
 };
 
 const setLanguage = (languageTag: string) => {
-    console.log(`Selected: ${languageTag}`);
+    if (import.meta.env.DEV) {
+        console.log(`Selected: ${languageTag}`);
+    }
     if (dialogRef.value) {
         dialogRef.value.open = false;
     }
     if (languageStore.language !== languageTag) {
-        console.log(`Apply: ${languageTag}`);
+        if (import.meta.env.DEV) {
+            console.log(`Apply: ${languageTag}`);
+        }
         languageStore.setLanguage(languageTag);
         locale.value = languageTag;
     }

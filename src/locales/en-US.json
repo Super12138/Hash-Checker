@@ -95,7 +95,8 @@
                     "suffix": ""
                 },
                 "thanks": "Thanks",
-                "version": "Version: "
+                "version": "Version: ",
+                "build-time": "Build Time: "
             }
         }
     },
@@ -148,7 +149,7 @@
     "warning": "Warning",
     "tip": "Tip",
     "clipboard": {
-        "copy-hash-successful": "Checksum copied to clipboard",
+        "copy-successful": "Copied to clipboard",
         "copy-failed": "Failed copy to clipboard",
         "not-supported": "\nCopying not supported"
     },
