@@ -1,3 +1,4 @@
 .github/
 .tauri/
 index.html
+pnpm-lock.yaml
