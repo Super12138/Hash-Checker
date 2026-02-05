@@ -37,7 +37,7 @@ const copyVersion = () => {
     if (!isClipboardSupported.value) {
         snackbar({ message: t("clipboard.not-supported") });
         return;
-    }else {
+    } else {
         copy(version.value);
         if (copied) {
             snackbar({ message: t("clipboard.copy-successful") });

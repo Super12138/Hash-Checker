@@ -189,42 +189,53 @@ onUnmounted(() => {
 
 <template>
     <mdui-layout>
-        <HashTopBar @toggle-output="toggleFileDrawer()" @toggle-settings="toggleSettingsDrawer()" />
+        <nav>
+            <HashTopBar
+                @toggle-output="toggleFileDrawer()"
+                @toggle-settings="toggleSettingsDrawer()"
+            />
+        </nav>
 
         <mdui-layout-main class="container">
-            <FileSelector :file="fileConfigurationStore.file" @changed="processFile" />
-            <div class="options-container">
-                <AlgorithmDropdown
-                    :value="fileConfigurationStore.algorithm"
-                    @change="
+            <main>
+                <FileSelector :file="fileConfigurationStore.file" @changed="processFile" />
+                <div class="options-container">
+                    <AlgorithmDropdown
+                        :value="fileConfigurationStore.algorithm"
+                        @change="
+                            (value: string) => {
+                                fileConfigurationStore.setAlgorithm(value);
+                            }
+                        "
+                    />
+                    <ModeDropdown
+                        :value="fileConfigurationStore.mode"
+                        @change="
+                            (value: string) => {
+                                fileConfigurationStore.setMode(value);
+                            }
+                        "
+                    />
+                </div>
+                <CheckSumInput
+                    :value="fileConfigurationStore.checkSum"
+                    :enabled="isCheckMode"
+                    @input="
                         (value: string) => {
-                            fileConfigurationStore.setAlgorithm(value);
+                            fileConfigurationStore.setCheckSum(value);
                         }
                     "
                 />
-                <ModeDropdown
-                    :value="fileConfigurationStore.mode"
-                    @change="
-                        (value: string) => {
-                            fileConfigurationStore.setMode(value);
-                        }
-                    "
-                />
-            </div>
-            <CheckSumInput
-                :value="fileConfigurationStore.checkSum"
-                :enabled="isCheckMode"
-                @input="
-                    (value: string) => {
-                        fileConfigurationStore.setCheckSum(value);
-                    }
-                "
-            />
-            <CheckButton @click="checkConfigurationIsVaild()" />
+                <CheckButton @click="checkConfigurationIsVaild()" />
+            </main>
         </mdui-layout-main>
     </mdui-layout>
-    <FileOutputDrawer :file-list="fileList" v-model="openFileOutputDrawer" />
-    <SettingsDrawer v-model="openSettingsDrawer" />
+    <aside>
+        <FileOutputDrawer :file-list="fileList" v-model="openFileOutputDrawer" />
+    </aside>
+    <aside>
+        <SettingsDrawer v-model="openSettingsDrawer" />
+    </aside>
 
     <SimpleDialog
         v-model="openTipDialog"
