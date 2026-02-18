@@ -1,3 +1,4 @@
+
 [package]
 name = "super-hash"
 version = "3.0.0"
@@ -19,7 +20,7 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2.5.3", features = [] }
 
 [dependencies]
-tauri = { version = "2.9.5", features = [] }
+tauri = { version = "2.10.1", features = [] }
 tauri-plugin-shell = "2.3.3"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.148"
