@@ -84,7 +84,7 @@ jobs:
         run: pnpm install
 
       - name: Build app
-        uses: tauri-apps/tauri-action@v0.6.1
+        uses: tauri-apps/tauri-action@v0.6.2
         with:
           args: ${{ matrix.args }}
         #  tagName: __VERSION__
